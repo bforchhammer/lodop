@@ -1,0 +1,14 @@
+subprojects {
+	apply plugin: 'java'
+	/*apply plugin: 'scala'*/
+	apply plugin: 'application'
+	apply plugin: 'idea'
+	/*apply plugin: 'eclipse'*/
+
+	apply plugin: 'project-report'
+	apply plugin: 'build-dashboard'
+
+	repositories{
+		mavenCentral()
+	}
+}
