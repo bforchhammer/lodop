@@ -1,4 +1,15 @@
 dependencies {
 	compile 'org.apache.pig:pig:0.11.1'
-	compile 'org.apache.hadoop:hadoop-core:1.1.2'
+}
+
+jar {
+    dependsOn configurations.runtime
+    from {
+        configurations.runtime.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    manifest {
+        attributes("Main-Class": "de.uni_potsdam.hpi.loddp.benchmark.Main")
+    }
 }
