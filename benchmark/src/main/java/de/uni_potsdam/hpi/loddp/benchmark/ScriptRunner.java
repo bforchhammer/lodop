@@ -1,6 +1,5 @@
 package de.uni_potsdam.hpi.loddp.benchmark;
 
-import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.ExecType;
@@ -35,8 +34,8 @@ public class ScriptRunner {
      *
      * @param script A pig script.
      */
-    public void runScript(PigScript script) {
-        runScript(script, true);
+    public PigStats runScript(PigScript script) {
+        return runScript(script, true);
     }
 
     /**
@@ -45,7 +44,7 @@ public class ScriptRunner {
      * @param script          A pig script.
      * @param replaceExisting Whether to override existing results.
      */
-    public void runScript(PigScript script, boolean replaceExisting) {
+    public PigStats runScript(PigScript script, boolean replaceExisting) {
         String resultsFile = "results-" + script.getScriptName();
 
         // Handle existing results
@@ -55,7 +54,7 @@ public class ScriptRunner {
                     this.pig.deleteFile(resultsFile);
                     log.info(String.format("Previous results deleted (%s)", resultsFile));
                 } else {
-                    return;
+                    return null;
                 }
             }
         } catch (IOException e) {
@@ -68,7 +67,7 @@ public class ScriptRunner {
             this.pig.registerScript(script.getInputStream());
         } catch (IOException e) {
             log.error("Error while trying to load pig script.", e);
-            return;
+            return null;
         }
 
         // Execute job and store results.
@@ -77,11 +76,10 @@ public class ScriptRunner {
             job = this.pig.store(script.getResultAlias(), resultsFile);
         } catch (IOException e) {
             log.error("Error while trying to execute pig script.", e);
-            return;
+            return null;
         }
 
-        PigStats stats = job.getStatistics();
-        log.info(String.format("Pig job took %s.", DurationFormatUtils.formatDurationHMS(stats.getDuration())));
+        return job.getStatistics();
     }
 
     public void shutdown() {
