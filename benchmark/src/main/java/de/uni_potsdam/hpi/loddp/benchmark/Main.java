@@ -26,7 +26,7 @@ public class Main {
         Set<PigScript> scripts = PigScriptHelper.findPigScripts();
 
         Set<String> blacklist = new HashSet<String>();
-        blacklist.add("classes_by_entity");
+        /*blacklist.add("classes_by_entity");
         blacklist.add("classes_by_url");
         blacklist.add("classes_by_tld");
         blacklist.add("classes_by_pld");
@@ -42,7 +42,7 @@ public class Main {
         blacklist.add("vocabularies_by_entity");
         blacklist.add("vocabularies_by_pld");
         blacklist.add("vocabularies_by_tld");
-        blacklist.add("vocabularies_by_url");
+        blacklist.add("vocabularies_by_url");*/
 
         runSequential(scripts, blacklist);
     }
@@ -53,11 +53,14 @@ public class Main {
 
     public static void runSequential(Set<PigScript> scripts, Set<String> blacklist) {
         for (PigScript script : scripts) {
-            System.out.print(script);
+            StringBuilder sb = new StringBuilder();
+            sb.append(script);
             if (blacklist.contains(script.getScriptName())) {
-                System.out.println(" - SKIPPED");
+                sb.append(" - SKIPPED");
+                log.info(sb.toString());
             } else {
-                System.out.println(" - RUNNING");
+                sb.append(" - RUNNING");
+                log.info(sb.toString());
                 runScript(script);
             }
         }
@@ -75,8 +78,13 @@ public class Main {
         }
 
         // Execute script.
-        PigStats stats = runner.runScript(script);
-        System.out.println(String.format("Pig job took %s.", DurationFormatUtils.formatDurationHMS(stats.getDuration())));
+        try {
+            PigStats stats = runner.runScript(script);
+            log.info(String.format("Pig job took %s.", DurationFormatUtils.formatDurationHMS(stats.getDuration())));
+        } catch (RuntimeException e) {
+            log.error("Pig runtime error", e);
+            return;
+        }
 
         // Shutdown pig server.
         runner.shutdown();
