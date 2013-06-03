@@ -1,56 +1,47 @@
 package de.uni_potsdam.hpi.loddp.benchmark;
 
-import org.apache.pig.ExecType;
-import org.apache.pig.PigServer;
-import org.apache.pig.backend.executionengine.ExecJob;
-import org.apache.pig.tools.pigstats.PigStats;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
-import java.util.Properties;
+import java.util.Set;
 
 /**
  * Main class.
  */
 public class Main {
 
-    private PigServer pig;
+    protected static final Log log = LogFactory.getLog(Main.class);
 
-    protected Main() throws IOException {
-        this.pig = new PigServer(ExecType.MAPREDUCE);
-
-        // Register UDF + required libraries.
-        this.pig.registerJar("ldif-single-0.5.1-jar-with-dependencies.jar");
-        this.pig.registerJar("loddesc-core-0.1.jar");
-    }
-
-    protected void runScript() throws IOException {
-        if (this.pig.existsFile("results-topClassesByEntities")) {
-            this.pig.deleteFile("results-topClassesByEntities");
-            System.out.println("Previous output files deleted");
-        }
-        this.pig.registerScript(ClassLoader.getSystemClassLoader().getResourceAsStream("classes_by_entity.pig"));
-        ExecJob job = this.pig.store("topClassesByEntities", "results-topClassesByEntities");
-        PigStats stats = job.getStatistics();
-        System.out.println(String.format("Pig job took %dms.", stats.getDuration()));
-    }
-
-    protected void shutdown() {
-        if (this.pig != null) {
-            this.pig.shutdown();
-        }
-    }
-
-    public static void main(String[] args) throws IOException {
+    /**
+     * Looks for scripts, and runs complete benchmark.
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
         System.out.println();
-        Main main = null;
+
+        ScriptRunner runner = null;
         try {
-            main = new Main();
-            main.runScript();
+            runner = new ScriptRunner();
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (main != null) main.shutdown();
+            log.error("Failed to create ScriptRunner", e);
+            return;
         }
+
+        Set<PigScript> scripts = PigScriptHelper.findPigScripts();
+        for (PigScript script : scripts) {
+            System.out.print(script);
+            if (script.getScriptName().equals("number_of_triples")) {
+                System.out.println(" - RUNNING");
+                runner.runScript(script);
+            } else {
+                System.out.println(" - SKIPPED");
+            }
+        }
+
+        // Shutdown pig server.
+        runner.shutdown();
     }
 
 }
