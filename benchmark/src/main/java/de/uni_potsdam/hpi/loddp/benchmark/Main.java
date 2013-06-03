@@ -27,22 +27,22 @@ public class Main {
 
         Set<String> blacklist = new HashSet<String>();
         blacklist.add("classes_by_entity");
-        blacklist.add("property_cooc_by_urls");
-        blacklist.add("number_of_triples");
-        blacklist.add("properties_by_entity");
-        blacklist.add("incoming_property_cooc");
         blacklist.add("classes_by_url");
-        blacklist.add("vocabularies_by_entity");
-        blacklist.add("property_cooc_by_entities");
         blacklist.add("classes_by_tld");
         blacklist.add("classes_by_pld");
+        blacklist.add("incoming_property_cooc");
+        blacklist.add("number_of_triples");
+        blacklist.add("property_cooc_by_entities");
+        blacklist.add("property_cooc_by_urls");
+        blacklist.add("properties_by_entity");
         blacklist.add("properties_by_pld");
-        blacklist.add("vocabularies_by_pld");
-        blacklist.add("vocabularies_by_tld");
         blacklist.add("properties_by_statement");
         blacklist.add("properties_by_tld");
-        blacklist.add("vocabularies_by_url");
         blacklist.add("properties_by_url");
+        blacklist.add("vocabularies_by_entity");
+        blacklist.add("vocabularies_by_pld");
+        blacklist.add("vocabularies_by_tld");
+        blacklist.add("vocabularies_by_url");
 
         runSequential(scripts, blacklist);
     }
