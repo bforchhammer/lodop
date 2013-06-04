@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pig.ExecType;
 import org.apache.pig.PigServer;
 import org.apache.pig.backend.executionengine.ExecJob;
+import org.apache.pig.impl.PigContext;
 import org.apache.pig.tools.pigstats.PigStats;
 
 import java.io.IOException;
@@ -82,7 +83,8 @@ public class ScriptRunner {
         }
 
         // Handle existing results
-        String resultsFile = "results-" + script.getScriptName();
+        String scriptName = script.getScriptName();
+        String resultsFile = "results-" + scriptName;
         try {
             if (getPig().existsFile(resultsFile)) {
                 if (replaceExisting) {
@@ -98,7 +100,8 @@ public class ScriptRunner {
 
         // Register script
         try {
-            getPig().setJobName(script.getScriptName());
+            getPig().setJobName(scriptName);
+            getPig().getPigContext().getProperties().setProperty(PigContext.JOB_NAME, scriptName);
             getPig().registerScript(script.getInputStream());
         } catch (IOException e) {
             log.error("Error while trying to load pig script.", e);

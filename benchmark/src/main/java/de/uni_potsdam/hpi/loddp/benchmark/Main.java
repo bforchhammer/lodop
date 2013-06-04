@@ -62,7 +62,7 @@ public class Main {
         blacklist.add("vocabularies_by_tld");
         blacklist.add("vocabularies_by_url");*/
 
-        boolean reuseServer = true;
+        boolean reuseServer = false;
         ScriptRunner runner = new ScriptRunner(reuseServer);
         runSequential(runner, scripts, blacklist);
     }
@@ -112,6 +112,5 @@ public class Main {
                 DurationFormatUtils.formatDurationHMS(stats.getDuration())));
         }
     }
-
 }
 
