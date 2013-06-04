@@ -4,7 +4,9 @@ import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.tools.pigstats.PigStats;
+import org.joda.time.DateTime;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +16,25 @@ import java.util.Set;
  */
 public class Main {
 
-    protected static final Log log = LogFactory.getLog(Main.class);
+    protected static final Log log;
+    protected static final String LOG_DIRECTORY;
+    protected static final String LOG_FILENAME_APACHE = "apache.log";
+    protected static final String LOG_FILENAME_BENCHMARK = "benchmark.log";
+
+    static {
+        // Setup directory for log files (this will only work, if executed before any logger is initialised.
+        LOG_DIRECTORY = String.format("logs/%s", new DateTime().toString("YYYY-MM-dd-HH-mm-ss"));
+        new File(LOG_DIRECTORY).mkdirs();
+        System.setProperty("log.directory", LOG_DIRECTORY);
+        System.out.println("Logging to = " + System.getProperty("log.directory"));
+
+        // Configure file names for log files.
+        System.setProperty("log.filename.apache", LOG_FILENAME_APACHE);
+        System.setProperty("log.filename.benchmark", LOG_FILENAME_BENCHMARK);
+
+        // Initialize Logger.
+        log = LogFactory.getLog(Main.class);
+    }
 
     /**
      * Looks for scripts, and runs complete benchmark.
@@ -22,7 +42,6 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println();
         Set<PigScript> scripts = PigScriptHelper.findPigScripts();
 
         Set<String> blacklist = new HashSet<String>();
