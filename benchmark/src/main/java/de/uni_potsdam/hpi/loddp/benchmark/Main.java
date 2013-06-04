@@ -7,7 +7,6 @@ import org.apache.pig.tools.pigstats.PigStats;
 import org.joda.time.DateTime;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -63,14 +62,29 @@ public class Main {
         blacklist.add("vocabularies_by_tld");
         blacklist.add("vocabularies_by_url");*/
 
-        runSequential(scripts, blacklist);
+        boolean reuseServer = true;
+        ScriptRunner runner = new ScriptRunner(reuseServer);
+        runSequential(runner, scripts, blacklist);
     }
 
-    public static void runSequential(Set<PigScript> scripts) {
-        runSequential(scripts, new HashSet<String>());
+    /**
+     * Benchmark the given set of pig scripts.
+     *
+     * @param runner  A script runner.
+     * @param scripts A set of pig scripts.
+     */
+    public static void runSequential(ScriptRunner runner, Set<PigScript> scripts) {
+        runSequential(runner, scripts, new HashSet<String>());
     }
 
-    public static void runSequential(Set<PigScript> scripts, Set<String> blacklist) {
+    /**
+     * Benchmark the given set of pig scripts.
+     *
+     * @param runner    A script runner.
+     * @param scripts   A set of pig scripts.
+     * @param blacklist A list of script names to skip and not execute.
+     */
+    public static void runSequential(ScriptRunner runner, Set<PigScript> scripts, Set<String> blacklist) {
         for (PigScript script : scripts) {
             StringBuilder sb = new StringBuilder();
             sb.append(script);
@@ -80,30 +94,23 @@ public class Main {
             } else {
                 sb.append(" - RUNNING");
                 log.info(sb.toString());
-                runScript(script);
+                runScript(runner, script);
             }
         }
     }
 
-    public static void runScript(PigScript script) {
-        ScriptRunner runner = null;
-
-        // Create pig server.
-        try {
-            runner = new ScriptRunner();
-        } catch (IOException e) {
-            log.error("Failed to create ScriptRunner.", e);
-            return;
-        }
-
-        // Execute script.
+    /**
+     * Execute the given pig script.
+     *
+     * @param runner A script runner.
+     * @param script A pig script.
+     */
+    private static void runScript(ScriptRunner runner, PigScript script) {
         PigStats stats = runner.runScript(script);
         if (stats != null) {
-            log.info(String.format("Pig job took %s.", DurationFormatUtils.formatDurationHMS(stats.getDuration())));
+            log.info(String.format("Job time for %s[12] = %s", script.getScriptName(),
+                DurationFormatUtils.formatDurationHMS(stats.getDuration())));
         }
-
-        // Shutdown pig server.
-        runner.shutdown();
     }
 
 }
