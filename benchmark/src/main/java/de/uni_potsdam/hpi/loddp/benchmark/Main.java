@@ -97,12 +97,9 @@ public class Main {
         }
 
         // Execute script.
-        try {
-            PigStats stats = runner.runScript(script);
+        PigStats stats = runner.runScript(script);
+        if (stats != null) {
             log.info(String.format("Pig job took %s.", DurationFormatUtils.formatDurationHMS(stats.getDuration())));
-        } catch (RuntimeException e) {
-            log.error("Pig runtime error", e);
-            return;
         }
 
         // Shutdown pig server.
