@@ -1,0 +1,74 @@
+18:20:18 INFO  benchmark.PigScriptHelper  - Found pig scripts in: /home/bforchhammer/thesis/code/benchmark/build/resources/main/pig-queries
+18:20:18 INFO  benchmark.PigScriptHelper  - Loaded 17 pig scripts.
+18:20:18 INFO  benchmark.Main  - PigScript[properties_by_pld] - RUNNING
+18:20:21 ERROR benchmark.ScriptRunner  - Error while trying to execute pig script.
+org.apache.pig.PigException: ERROR 1002: Unable to store alias propSortedTop
+	at org.apache.pig.PigServer.storeEx(PigServer.java:935)
+	at org.apache.pig.PigServer.store(PigServer.java:898)
+	at org.apache.pig.PigServer.store(PigServer.java:866)
+	at de.uni_potsdam.hpi.loddp.benchmark.ScriptRunner.runScript(ScriptRunner.java:76)
+	at de.uni_potsdam.hpi.loddp.benchmark.ScriptRunner.runScript(ScriptRunner.java:38)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runScript(Main.java:82)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runSequential(Main.java:64)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.main(Main.java:47)
+Caused by: org.apache.pig.impl.plan.PlanValidationException: ERROR 1025: 
+<line 4, column 36> Invalid field projection. Projected field [type] does not exist in schema: subject:chararray,predicate:chararray,object:tuple(ntype:int,value:chararray,dtlang:chararray),graph:chararray.
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.findColNum(ProjectExpression.java:183)
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.setColumnNumberFromAlias(ProjectExpression.java:166)
+	at org.apache.pig.newplan.logical.visitor.ColumnAliasConversionVisitor$1.visit(ColumnAliasConversionVisitor.java:53)
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.accept(ProjectExpression.java:207)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.newplan.logical.optimizer.AllExpressionVisitor.visit(AllExpressionVisitor.java:142)
+	at org.apache.pig.newplan.logical.relational.LOInnerLoad.accept(LOInnerLoad.java:128)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.logical.optimizer.AllExpressionVisitor.visit(AllExpressionVisitor.java:124)
+	at org.apache.pig.newplan.logical.relational.LOForEach.accept(LOForEach.java:76)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.PigServer$Graph.compile(PigServer.java:1626)
+	at org.apache.pig.PigServer$Graph.compile(PigServer.java:1621)
+	at org.apache.pig.PigServer$Graph.access$200(PigServer.java:1340)
+	at org.apache.pig.PigServer.storeEx(PigServer.java:930)
+	... 7 more
+18:20:21 ERROR benchmark.Main  - Pig runtime error
+java.lang.NullPointerException
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runScript(Main.java:83)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runSequential(Main.java:64)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.main(Main.java:47)
+18:20:21 INFO  benchmark.Main  - PigScript[properties_by_statement] - RUNNING
+18:22:46 INFO  benchmark.Main  - Pig job took 0:02:20.850.
+18:22:46 INFO  benchmark.Main  - PigScript[property_cooc_by_entities] - RUNNING
+18:40:25 INFO  benchmark.Main  - Pig job took 0:17:39.306.
+18:40:25 INFO  benchmark.Main  - PigScript[classes_by_tld] - RUNNING
+18:40:25 INFO  benchmark.ScriptRunner  - Previous results deleted (results-classes_by_tld)
+18:43:00 INFO  benchmark.Main  - Pig job took 0:02:34.580.
+18:43:00 INFO  benchmark.Main  - PigScript[property_cooc_by_urls] - RUNNING
+19:08:41 INFO  benchmark.Main  - Pig job took 0:25:40.865.
+19:08:41 INFO  benchmark.Main  - PigScript[properties_by_tld] - RUNNING
+19:11:41 INFO  benchmark.Main  - Pig job took 0:02:59.790.
+19:11:42 INFO  benchmark.Main  - PigScript[classes_by_entity] - RUNNING
+19:11:42 INFO  benchmark.ScriptRunner  - Previous results deleted (results-classes_by_entity)
+19:13:46 INFO  benchmark.Main  - Pig job took 0:02:04.700.
+19:13:46 INFO  benchmark.Main  - PigScript[vocabularies_by_entity] - RUNNING
+19:17:37 INFO  benchmark.Main  - Pig job took 0:03:50.357.
+19:17:37 INFO  benchmark.Main  - PigScript[classes_by_pld] - RUNNING
+19:20:13 INFO  benchmark.Main  - Pig job took 0:02:35.936.
+19:20:13 INFO  benchmark.Main  - PigScript[vocabularies_by_pld] - RUNNING
+19:24:28 INFO  benchmark.Main  - Pig job took 0:04:14.611.
+19:24:28 INFO  benchmark.Main  - PigScript[properties_by_url] - RUNNING
+19:27:29 INFO  benchmark.Main  - Pig job took 0:03:00.224.
+19:27:29 INFO  benchmark.Main  - PigScript[incoming_property_cooc] - RUNNING
+19:45:28 INFO  benchmark.Main  - Pig job took 0:17:59.357.
+19:45:28 INFO  benchmark.Main  - PigScript[vocabularies_by_url] - RUNNING
+19:49:24 INFO  benchmark.Main  - Pig job took 0:03:55.057.
+19:49:24 INFO  benchmark.Main  - PigScript[classes_by_url] - RUNNING
+19:49:24 INFO  benchmark.ScriptRunner  - Previous results deleted (results-classes_by_url)
+19:51:55 INFO  benchmark.Main  - Pig job took 0:02:30.548.
+19:51:55 INFO  benchmark.Main  - PigScript[vocabularies_by_tld] - RUNNING
+19:56:19 INFO  benchmark.Main  - Pig job took 0:04:24.052.
+19:56:19 INFO  benchmark.Main  - PigScript[number_of_triples] - RUNNING
+19:56:19 INFO  benchmark.ScriptRunner  - Previous results deleted (results-number_of_triples)
+19:57:35 INFO  benchmark.Main  - Pig job took 0:01:15.754.
+19:57:35 INFO  benchmark.Main  - PigScript[properties_by_entity] - RUNNING
+20:00:36 INFO  benchmark.Main  - Pig job took 0:03:00.471.
