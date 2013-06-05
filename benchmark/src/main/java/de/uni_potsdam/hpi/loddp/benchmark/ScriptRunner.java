@@ -45,7 +45,25 @@ public class ScriptRunner {
         this.pig.registerJar("ldif-single-0.5.1-jar-with-dependencies.jar");
         this.pig.registerJar("loddesc-core-0.1.jar");
 
-        this.log.debug("Created new pig server.");
+        this.log.info("Created new pig server.");
+    }
+
+    /**
+     * Load quads from the specified filename (must be on HDFS) into the 'quads' alias, using the wbsg QuadLoader.
+     *
+     * @param filename
+     *
+     * @throws IOException
+     */
+    private void loadQuads(String filename) throws IOException {
+        if (!getPig().existsFile(filename)) {
+            throw new IOException("File not found on HDFS: " + filename);
+        }
+        String statement = "quads = LOAD '" + filename + "' USING de.wbsg.loddesc.importer.QuadLoader() AS " +
+            "(subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), " +
+            "graph:chararray);";
+        getPig().registerQuery(statement);
+        log.info("Loading quads from " + filename);
     }
 
     /**
@@ -67,32 +85,34 @@ public class ScriptRunner {
      *
      * Overrides any already existing results.
      *
-     * @param script A pig script.
+     * @param script        A pig script.
+     * @param inputFilename The name of the input file.
      */
-    public PigStats runScript(PigScript script) {
-        return runScript(script, true);
+    public PigStats runScript(PigScript script, String inputFilename) {
+        return runScript(script, inputFilename, true);
     }
 
     /**
      * Execute the given pig script.
      *
      * @param script          A pig script.
+     * @param inputFilename   The name of the input file.
      * @param replaceExisting Whether to override existing results.
      */
-    public PigStats runScript(PigScript script, boolean replaceExisting) {
+    public PigStats runScript(PigScript script, String inputFilename, boolean replaceExisting) {
         // If server reuse is turned off, clean up any previous instance.
         if (!reuseServer && this.pig != null) {
             shutdown();
         }
 
-        // Handle existing results
+        // Handle existing results.
         String scriptName = script.getScriptName();
         String resultsFile = "results-" + scriptName;
         try {
             if (getPig().existsFile(resultsFile)) {
                 if (replaceExisting) {
                     getPig().deleteFile(resultsFile);
-                    log.debug(String.format("Previous results deleted (%s)", resultsFile));
+                    log.info(String.format("Previous results deleted (%s)", resultsFile));
                 } else {
                     return null;
                 }
@@ -101,7 +121,15 @@ public class ScriptRunner {
             log.error("Error while trying to access HDFS.", e);
         }
 
-        // Register script
+        // Load input data.
+        try {
+            loadQuads(inputFilename);
+        } catch (IOException e) {
+            log.error("Error while trying to load input data.", e);
+            return null;
+        }
+
+        // Register script.
         try {
             getPig().setJobName(scriptName);
             getPig().getPigContext().getProperties().setProperty(PigContext.JOB_NAME, scriptName);
@@ -130,7 +158,7 @@ public class ScriptRunner {
      */
     public void shutdown() {
         if (this.pig != null) {
-            this.log.debug("Shutting down pig server.");
+            this.log.info("Shutting down pig server.");
             this.pig.shutdown();
             this.pig = null;
         }
