@@ -28,6 +28,9 @@ public class ScriptRunner {
      */
     public ScriptRunner(boolean reuseServer) {
         this.reuseServer = reuseServer;
+
+        log.info(String.format("ScriptRunner is using %s PigServer(s) for executing scripts.",
+            reuseServer ? "ONE" : "SEPARATE"));
     }
 
     /**
@@ -42,7 +45,7 @@ public class ScriptRunner {
         this.pig.registerJar("ldif-single-0.5.1-jar-with-dependencies.jar");
         this.pig.registerJar("loddesc-core-0.1.jar");
 
-        this.log.info("Created new pig server.");
+        this.log.debug("Created new pig server.");
     }
 
     /**
@@ -89,7 +92,7 @@ public class ScriptRunner {
             if (getPig().existsFile(resultsFile)) {
                 if (replaceExisting) {
                     getPig().deleteFile(resultsFile);
-                    log.info(String.format("Previous results deleted (%s)", resultsFile));
+                    log.debug(String.format("Previous results deleted (%s)", resultsFile));
                 } else {
                     return null;
                 }
@@ -127,7 +130,7 @@ public class ScriptRunner {
      */
     public void shutdown() {
         if (this.pig != null) {
-            this.log.info("Shutting down pig server.");
+            this.log.debug("Shutting down pig server.");
             this.pig.shutdown();
             this.pig = null;
         }

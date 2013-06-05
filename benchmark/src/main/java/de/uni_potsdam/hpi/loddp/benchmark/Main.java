@@ -3,11 +3,15 @@ package de.uni_potsdam.hpi.loddp.benchmark;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pig.tools.pigstats.InputStats;
+import org.apache.pig.tools.pigstats.JobStats;
+import org.apache.pig.tools.pigstats.OutputStats;
 import org.apache.pig.tools.pigstats.PigStats;
 import org.joda.time.DateTime;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -108,9 +112,66 @@ public class Main {
     private static void runScript(ScriptRunner runner, PigScript script) {
         PigStats stats = runner.runScript(script);
         if (stats != null) {
-            log.info(String.format("Job time for %s[12] = %s", script.getScriptName(),
-                DurationFormatUtils.formatDurationHMS(stats.getDuration())));
+            printStats(script.getScriptName(), stats);
         }
     }
-}
 
+    private static void printStats(String scriptName, PigStats stats) {
+        StringBuffer sb = new StringBuffer();
+
+        sb.append("Total job time = ");
+        sb.append(DurationFormatUtils.formatDurationHMS(stats.getDuration()));
+        sb.append("\n");
+
+        if (stats.isSuccessful()) {
+            sb.append("JobId\tMaps\tReduces\tMaxMapTime\tMinMapTime\tAvgMapTime\tMaxReduceTime\t" +
+                "MinReduceTime\tAvgReduceTime\tAlias\tFeature\tOutputs\n");
+            List<JobStats> arr = stats.getJobGraph().getSuccessfulJobs();
+            for (JobStats js : arr) {
+                String id = (js.getJobId() == null) ? "N/A" : js.getJobId().toString();
+                if (js.getState() == JobStats.JobState.FAILED) {
+                    sb.append(id).append("\t")
+                        .append(js.getAlias()).append("\t")
+                        .append(js.getFeature()).append("\t");
+                    if (js.getState() == JobStats.JobState.FAILED) {
+                        sb.append("Message: ").append(js.getErrorMessage()).append("\t");
+                    }
+                } else if (js.getState() == JobStats.JobState.SUCCESS) {
+                    sb.append(id).append("\t")
+                        .append(js.getNumberMaps()).append("\t")
+                        .append(js.getNumberReduces()).append("\t");
+                    if (js.getMaxMapTime() < 0) {
+                        sb.append("n/a\t").append("n/a\t").append("n/a\t");
+                    } else {
+                        sb.append(DurationFormatUtils.formatDurationHMS(js.getMaxMapTime())).append("\t")
+                            .append(DurationFormatUtils.formatDurationHMS(js.getMinMapTime())).append("\t")
+                            .append(DurationFormatUtils.formatDurationHMS(js.getAvgMapTime())).append("\t");
+                    }
+                    if (js.getMaxReduceTime() < 0) {
+                        sb.append("n/a\t").append("n/a\t").append("n/a\t");
+                    } else {
+                        sb.append(DurationFormatUtils.formatDurationHMS(js.getMaxReduceTime())).append("\t")
+                            .append(DurationFormatUtils.formatDurationHMS(js.getMinReduceTime())).append("\t")
+                            .append(DurationFormatUtils.formatDurationHMS(js.getAvgREduceTime())).append("\t");
+                    }
+                    sb.append(js.getAlias()).append("\t")
+                        .append(js.getFeature()).append("\t");
+                }
+                for (OutputStats os : js.getOutputs()) {
+                    sb.append(os.getLocation()).append(",");
+                }
+                sb.append("\n");
+            }
+        } else {
+            sb.append("Failed Jobs:\n");
+            sb.append(JobStats.FAILURE_HEADER).append("\n");
+            List<JobStats> arr = stats.getJobGraph().getFailedJobs();
+            for (JobStats js : arr) {
+                sb.append(js.toString());
+            }
+            sb.append("\n");
+        }
+
+        log.info(sb.toString());
+    }
+}

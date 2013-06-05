@@ -144,8 +144,9 @@ public class PigScriptHelper {
     public static String guessResultAlias(File file) throws IOException {
         String lastStatement = readLastLine(file);
         String[] pieces = lastStatement.split("=");
-        if (pieces.length != 2) {
-            throw new IOException(String.format("Last line of %s is not a valid assignment.", file.getName()));
+        if (pieces.length < 2) {
+            throw new IOException(String.format("Last line of %s is not a valid assignment: %s", file.getName(),
+                lastStatement));
         }
         String alias = pieces[0].trim();
         return alias;
