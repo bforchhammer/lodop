@@ -9,7 +9,6 @@ import org.apache.pig.tools.pigstats.JobStats;
 import org.apache.pig.tools.pigstats.OutputStats;
 import org.apache.pig.tools.pigstats.PigStats;
 
-import java.io.PrintStream;
 import java.util.List;
 
 /**
@@ -35,14 +34,10 @@ public class ExecutionStats {
         this.pigScript = pigScript;
     }
 
-    public void printStats(PrintStream output) {
-        printStats();
-    }
-
     public void printStats() {
         StringBuffer sb = new StringBuffer();
 
-        sb.append("Statistics for ").append(pigScript.toString().toUpperCase()).append("\n");
+        sb.append("Statistics for ").append(pigScript.getScriptName().toUpperCase()).append("\n");
 
         InputStats is = pigStats.getInputStats().get(0);
         sb.append("Input: ").append(is.getNumberRecords()).append(" records")

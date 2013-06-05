@@ -8,7 +8,9 @@ import org.apache.pig.backend.executionengine.ExecJob;
 import org.apache.pig.impl.PigContext;
 import org.apache.pig.tools.pigstats.PigStats;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 
 public class ScriptRunner {
 
@@ -142,15 +144,33 @@ public class ScriptRunner {
         // Execute job and store results.
         ExecJob job = null;
         try {
+            log.info("Starting execution of pig script.");
             job = getPig().store(script.getResultAlias(), resultsFile);
+            log.info("Finished execution of pig script.");
         } catch (IOException e) {
             log.error("Error while trying to execute pig script.", e);
             return null;
         }
 
-        // @todo maybe use this.pig.printHistory(true) to show complete script in order
-
+        printHistory();
         return job.getStatistics();
+    }
+
+    /**
+     * Prints the pig statement history to the DEBUG log.
+     */
+    private void printHistory() {
+        // Redirect any output printed to System.out by PigServer.printHistory().
+        PrintStream original = System.out;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(baos));
+        this.pig.printHistory(true);
+        System.setOut(original);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Query history:\n");
+        sb.append(new String(baos.toByteArray()));
+        log.debug(sb.toString());
     }
 
     /**
