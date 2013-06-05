@@ -1,5 +1,6 @@
-package de.uni_potsdam.hpi.loddp.benchmark;
+package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
+import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScript;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.loddp.benchmark;
+package de.uni_potsdam.hpi.loddp.benchmark.execution;
 
 public class PigScriptException extends Exception {
     public PigScriptException(String message) {
