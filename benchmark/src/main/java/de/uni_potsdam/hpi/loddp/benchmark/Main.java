@@ -4,6 +4,7 @@ import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScript;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScriptHelper;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ExecutionStats;
+import de.uni_potsdam.hpi.loddp.benchmark.reporting.ReportGenerator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.tools.pigstats.PigStats;
@@ -57,6 +58,7 @@ public class Main {
         blacklist.add("classes_by_pld");
         blacklist.add("incoming_property_cooc");
         blacklist.add("number_of_triples");
+        blacklist.add("number_of_instances");
         blacklist.add("property_cooc_by_entities");
         blacklist.add("property_cooc_by_urls");
         blacklist.add("properties_by_entity");
@@ -71,7 +73,32 @@ public class Main {
 
         boolean reuseServer = false;
         ScriptRunner runner = new ScriptRunner(reuseServer);
-        runSequential(runner, scripts, "file.nq", blacklist);
+
+        //runSequential(runner, scripts, "file.nq", blacklist);
+        runSequentialMultiple(runner, scripts, "data-0-", 100, 10000000, 10, blacklist);
+
+        ReportGenerator rg = new ReportGenerator(statisticsCollection);
+        rg.scalabilityReport();
+        rg.scriptComparison();
+    }
+
+    /**
+     * Benchmark the given set of pig scripts, with different numbers of triples.
+     *
+     * @param runner      A script runner.
+     * @param scripts     A set of pig scripts.
+     * @param inputPrefix A common prefix for the filename, for all sizes.
+     * @param start       The input size to start with.
+     * @param end         The input size to stop at.
+     * @param factor      The factor by which to multiple the input size during each iteration.
+     * @param blacklist   A list of script names to skip and not execute.
+     */
+    public static void runSequentialMultiple(ScriptRunner runner, Set<PigScript> scripts, String inputPrefix,
+                                             int start, int end, int factor, Set<String> blacklist) {
+        for (int i = start; i <= end; i *= factor) {
+            String filename = inputPrefix + i + ".nq.gz";
+            runSequential(runner, scripts, filename, blacklist);
+        }
     }
 
     /**
