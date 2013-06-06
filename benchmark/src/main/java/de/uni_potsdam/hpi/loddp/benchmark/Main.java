@@ -1,8 +1,6 @@
 package de.uni_potsdam.hpi.loddp.benchmark;
 
-import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScript;
-import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScriptHelper;
-import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner;
+import de.uni_potsdam.hpi.loddp.benchmark.execution.*;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ExecutionStats;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ReportGenerator;
 import org.apache.commons.logging.Log;
@@ -69,58 +67,34 @@ public class Main {
         blacklist.add("vocabularies_by_entity");
         blacklist.add("vocabularies_by_pld");
         blacklist.add("vocabularies_by_tld");
-        blacklist.add("vocabularies_by_url");*/
+        blacklist.add("vocabularies_by_url");//*/
 
         boolean reuseServer = false;
         ScriptRunner runner = new ScriptRunner(reuseServer);
 
-        //runSequential(runner, scripts, "file.nq", blacklist);
-        runSequentialMultiple(runner, scripts, "data-0-", 100, 10000000, 10, blacklist);
+        InputFileSet dbpedia = new InputFileSet("BTC2012/DBPedia", "data/dbpedia-", 10, 10000000);
+        InputFileSet freebase = new InputFileSet("BTC2012/Freebase", "data/freebase-", 10, 10000000);
+
+        //runSequential(runner, scripts, freebase.getBySize(10000L), blacklist);
+        //runSequential(runner, scripts, dbpedia.getBySize(10000L), blacklist);
+        runSequential(runner, scripts, freebase, blacklist);
 
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
         rg.scalabilityReport();
         rg.scriptComparison();
-    }
 
-    /**
-     * Benchmark the given set of pig scripts, with different numbers of triples.
-     *
-     * @param runner      A script runner.
-     * @param scripts     A set of pig scripts.
-     * @param inputPrefix A common prefix for the filename, for all sizes.
-     * @param start       The input size to start with.
-     * @param end         The input size to stop at.
-     * @param factor      The factor by which to multiple the input size during each iteration.
-     * @param blacklist   A list of script names to skip and not execute.
-     */
-    public static void runSequentialMultiple(ScriptRunner runner, Set<PigScript> scripts, String inputPrefix,
-                                             int start, int end, int factor, Set<String> blacklist) {
-        for (int i = start; i <= end; i *= factor) {
-            String filename = inputPrefix + i + ".nq.gz";
-            runSequential(runner, scripts, filename, blacklist);
-        }
+        // @todo compare different datasets, e.g. dbpedia 10M vs. freebase 10M
     }
 
     /**
      * Benchmark the given set of pig scripts.
      *
-     * @param runner        A script runner.
-     * @param scripts       A set of pig scripts.
-     * @param inputFilename The quads input file.
+     * @param runner    A script runner.
+     * @param scripts   A set of pig scripts.
+     * @param input     The quads input file.
+     * @param blacklist A list of script names to skip and not execute.
      */
-    public static void runSequential(ScriptRunner runner, Set<PigScript> scripts, String inputFilename) {
-        runSequential(runner, scripts, inputFilename, new HashSet<String>());
-    }
-
-    /**
-     * Benchmark the given set of pig scripts.
-     *
-     * @param runner        A script runner.
-     * @param scripts       A set of pig scripts.
-     * @param inputFilename The quads input file.
-     * @param blacklist     A list of script names to skip and not execute.
-     */
-    public static void runSequential(ScriptRunner runner, Set<PigScript> scripts, String inputFilename, Set<String> blacklist) {
+    public static void runSequential(ScriptRunner runner, Set<PigScript> scripts, InputFile input, Set<String> blacklist) {
         for (PigScript script : scripts) {
             StringBuilder sb = new StringBuilder();
             sb.append(script);
@@ -130,22 +104,36 @@ public class Main {
             } else {
                 sb.append(" - RUNNING");
                 log.info(sb.toString());
-                runScript(runner, script, inputFilename);
+                runScript(runner, script, input);
             }
+        }
+    }
+
+    /**
+     * Benchmark the given set of pig scripts, for multiple different input files.
+     *
+     * @param runner    A script runner.
+     * @param scripts   A set of pig scripts.
+     * @param inputs    The set of quad input files.
+     * @param blacklist A list of script names to skip and not execute.
+     */
+    public static void runSequential(ScriptRunner runner, Set<PigScript> scripts, InputFileSet inputs, Set<String> blacklist) {
+        for (InputFile file : inputs.getAll()) {
+            runSequential(runner, scripts, file, blacklist);
         }
     }
 
     /**
      * Execute the given pig script.
      *
-     * @param runner        A script runner.
-     * @param script        A pig script.
-     * @param inputFilename The quads input file.
+     * @param runner A script runner.
+     * @param script A pig script.
+     * @param input  The quads input file.
      */
-    private static void runScript(ScriptRunner runner, PigScript script, String inputFilename) {
-        PigStats stats = runner.runScript(script, inputFilename);
+    private static void runScript(ScriptRunner runner, PigScript script, InputFile input) {
+        PigStats stats = runner.runScript(script, input);
         if (stats != null) {
-            ExecutionStats s = new ExecutionStats(inputFilename, stats, script);
+            ExecutionStats s = new ExecutionStats(input, stats, script);
             statisticsCollection.add(s);
             s.printStats();
         }

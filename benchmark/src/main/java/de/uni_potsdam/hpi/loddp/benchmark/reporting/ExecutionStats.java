@@ -1,5 +1,6 @@
 package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
+import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScript;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
@@ -17,7 +18,7 @@ import java.util.List;
 public class ExecutionStats {
 
     protected static final Log log = LogFactory.getLog(ExecutionStats.class);
-    private final String inputFilename;
+    private final InputFile inputFile;
     private final PigStats pigStats;
     private final PigScript pigScript;
     private final long inputSize;
@@ -29,27 +30,16 @@ public class ExecutionStats {
     /**
      * Constructor.
      *
-     * @param inputFilename
+     * @param input
      * @param pigStats
      * @param pigScript
      */
-    public ExecutionStats(String inputFilename, PigStats pigStats, PigScript pigScript) {
-        this(inputFilename, pigStats, pigScript, pigStats.getInputStats().get(0).getNumberRecords());
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param inputFilename
-     * @param pigStats
-     * @param pigScript
-     * @param inputSize
-     */
-    public ExecutionStats(String inputFilename, PigStats pigStats, PigScript pigScript, long inputSize) {
-        this.inputFilename = inputFilename;
+    public ExecutionStats(InputFile input, PigStats pigStats, PigScript pigScript) {
+        this.inputFile = input;
         this.pigStats = pigStats;
         this.pigScript = pigScript;
-        this.inputSize = inputSize;
+        long inputSize = inputFile.getTupleCount();
+        this.inputSize = (inputSize > 0) ? inputSize : this.pigStats.getInputStats().get(0).getNumberRecords();
     }
 
     public long getOutputSize() {
@@ -123,7 +113,8 @@ public class ExecutionStats {
         InputStats is = pigStats.getInputStats().get(0);
         sb.append("Input: \t").append(is.getNumberRecords()).append(" records")
             .append(" (").append(is.getBytes()).append(" Bytes)")
-            .append(" from ").append(is.getName()).append("\n");
+            .append(" from DataSet ").append(inputFile.getFileSetIdentifier())
+            .append(", filename = ").append(inputFile.getFilename()).append("\n");
 
         sb.append("Total time: \t").append(DurationFormatUtils.formatDurationHMS(pigStats.getDuration())).append("\n");
 

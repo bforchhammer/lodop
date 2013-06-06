@@ -53,11 +53,12 @@ public class ScriptRunner {
     /**
      * Load quads from the specified filename (must be on HDFS) into the 'quads' alias, using the wbsg QuadLoader.
      *
-     * @param filename
+     * @param inputFile The input file.
      *
      * @throws IOException
      */
-    private void loadQuads(String filename) throws IOException {
+    private void loadQuads(InputFile inputFile) throws IOException {
+        String filename = inputFile.getFilename();
         if (!getPig().existsFile(filename)) {
             throw new IOException("File not found on HDFS: " + filename);
         }
@@ -87,21 +88,21 @@ public class ScriptRunner {
      *
      * Overrides any already existing results.
      *
-     * @param script        A pig script.
-     * @param inputFilename The name of the input file.
+     * @param script    A pig script.
+     * @param inputFile The input file.
      */
-    public PigStats runScript(PigScript script, String inputFilename) {
-        return runScript(script, inputFilename, true);
+    public PigStats runScript(PigScript script, InputFile inputFile) {
+        return runScript(script, inputFile, true);
     }
 
     /**
      * Execute the given pig script.
      *
      * @param script          A pig script.
-     * @param inputFilename   The name of the input file.
+     * @param inputFile       The input file.
      * @param replaceExisting Whether to override existing results.
      */
-    public PigStats runScript(PigScript script, String inputFilename, boolean replaceExisting) {
+    public PigStats runScript(PigScript script, InputFile inputFile, boolean replaceExisting) {
         // If server reuse is turned off, clean up any previous instance.
         if (!reuseServer && this.pig != null) {
             shutdown();
@@ -125,7 +126,7 @@ public class ScriptRunner {
 
         // Load input data.
         try {
-            loadQuads(inputFilename);
+            loadQuads(inputFile);
         } catch (IOException e) {
             log.error("Error while trying to load input data.", e);
             return null;
