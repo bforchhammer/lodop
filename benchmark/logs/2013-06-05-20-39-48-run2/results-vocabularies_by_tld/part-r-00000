@@ -1,0 +1,17 @@
+org	http://schema.org/	1
+org	http://dbpedia.org/	1
+org	http://purl.org/dc/terms/	1
+org	http://umbel.org/umbel/rc/	1
+org	http://xmlns.com/foaf/0.1/	1
+org	http://www.opengis.net/gml/	1
+org	http://dbpedia.org/ontology/	1
+org	http://dbpedia.org/property/	1
+org	http://www.w3.org/2006/http#	1
+org	http://www.georss.org/georss/	1
+org	http://www.w3.org/2002/07/owl#	1
+org	http://purl.org/dc/elements/1.1/	1
+org	http://www.w3.org/2004/02/skos/core#	1
+org	http://code.google.com/p/ldspider/ns#	1
+org	http://www.w3.org/2000/01/rdf-schema#	1
+org	http://www.w3.org/2003/01/geo/wgs84_pos#	1
+org	http://www.w3.org/1999/02/22-rdf-syntax-ns#	1

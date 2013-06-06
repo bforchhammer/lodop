@@ -1,0 +1,465 @@
+20:39:48 INFO  execution.PigScriptHelper  - Found pig scripts in: /home/bforchhammer/thesis/code/benchmark/build/resources/main/pig-queries
+20:39:48 INFO  execution.PigScriptHelper  - Loaded 18 pig scripts.
+20:39:48 INFO  execution.ScriptRunner  - ScriptRunner is using SEPARATE PigServer(s) for executing scripts.
+20:39:48 INFO  benchmark.Main  - PigScript[properties_by_entity] - RUNNING
+20:39:48 INFO  execution.ScriptRunner  - Created new pig server.
+20:39:48 INFO  execution.ScriptRunner  - Previous results deleted (results-properties_by_entity)
+20:39:49 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+20:39:49 INFO  execution.ScriptRunner  - Starting execution of pig script.
+20:48:49 INFO  execution.ScriptRunner  - Finished execution of pig script.
+20:48:49 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   subjPredAll = FOREACH quads GENERATE subject, predicate;
+3   subjPred = DISTINCT subjPredAll;
+4   propGroups = GROUP subjPred BY predicate;
+5   propStatements = FOREACH propGroups GENERATE group AS predicate, COUNT(subjPred) AS cnt;
+6   propSorted = ORDER propStatements BY cnt DESC;
+7   propSortedTop = FILTER propSorted BY cnt > 1;
+
+20:48:49 INFO  reporting.ExecutionStats  - Statistics for PROPERTIES_BY_ENTITY
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:08:59.905
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0338	1	1	0:04:55.655	0:04:55.655	0:04:55.655	0:01:16.908	0:01:16.908	0:01:16.908	quads,subjPredAll	DISTINCT	
+job_201306031819_0339	10	1	0:00:16.878	0:00:11.454	0:00:14.639	0:01:06.913	0:01:06.913	0:01:06.913	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_0340	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.739	0:00:08.739	0:00:08.739	propSorted	SAMPLER	
+job_201306031819_0341	1	1	0:00:02.718	0:00:02.718	0:00:02.718	0:00:09.346	0:00:09.346	0:00:09.346	propSorted	ORDER_BY	results-properties_by_entity,
+
+20:48:49 INFO  benchmark.Main  - PigScript[number_of_instances] - RUNNING
+20:48:49 INFO  execution.ScriptRunner  - Shutting down pig server.
+20:48:50 INFO  execution.ScriptRunner  - Created new pig server.
+20:48:50 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+20:48:50 INFO  execution.ScriptRunner  - Starting execution of pig script.
+20:48:50 ERROR execution.ScriptRunner  - Error while trying to execute pig script.
+org.apache.pig.PigException: ERROR 1002: Unable to store alias R
+	at org.apache.pig.PigServer.storeEx(PigServer.java:935)
+	at org.apache.pig.PigServer.store(PigServer.java:898)
+	at org.apache.pig.PigServer.store(PigServer.java:866)
+	at de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner.runScript(ScriptRunner.java:149)
+	at de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner.runScript(ScriptRunner.java:95)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runScript(Main.java:125)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runSequential(Main.java:112)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.main(Main.java:76)
+Caused by: org.apache.pig.impl.plan.PlanValidationException: ERROR 1025: 
+<line 2, column 19> Invalid field projection. Projected field [s] does not exist in schema: subject:chararray,predicate:chararray,object:tuple(ntype:int,value:chararray,dtlang:chararray),graph:chararray.
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.findColNum(ProjectExpression.java:183)
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.setColumnNumberFromAlias(ProjectExpression.java:166)
+	at org.apache.pig.newplan.logical.visitor.ColumnAliasConversionVisitor$1.visit(ColumnAliasConversionVisitor.java:53)
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.accept(ProjectExpression.java:207)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.newplan.logical.optimizer.AllExpressionVisitor.visitAll(AllExpressionVisitor.java:72)
+	at org.apache.pig.newplan.logical.optimizer.AllExpressionVisitor.visit(AllExpressionVisitor.java:112)
+	at org.apache.pig.newplan.logical.relational.LOCogroup.accept(LOCogroup.java:235)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.PigServer$Graph.compile(PigServer.java:1626)
+	at org.apache.pig.PigServer$Graph.compile(PigServer.java:1621)
+	at org.apache.pig.PigServer$Graph.access$200(PigServer.java:1340)
+	at org.apache.pig.PigServer.storeEx(PigServer.java:930)
+	... 7 more
+20:48:50 INFO  benchmark.Main  - PigScript[vocabularies_by_entity] - RUNNING
+20:48:50 INFO  execution.ScriptRunner  - Shutting down pig server.
+20:48:50 INFO  execution.ScriptRunner  - Created new pig server.
+20:48:50 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+20:48:50 INFO  execution.ScriptRunner  - Starting execution of pig script.
+20:58:37 INFO  execution.ScriptRunner  - Finished execution of pig script.
+20:58:37 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   predicateVocabs = FOREACH quads GENERATE de.wbsg.loddesc.functions.Vocab(predicate) AS vocab, subject;
+3   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+4   objectVocabs = FOREACH typedstuff GENERATE de.wbsg.loddesc.functions.Vocab(object.value) AS vocab, subject;
+5   allVocabsEntities = UNION predicateVocabs, objectVocabs;
+6   vocabsEntities = DISTINCT allVocabsEntities;
+7   vocabs = GROUP vocabsEntities BY vocab;
+8   vocabCounts = FOREACH vocabs GENERATE group, COUNT(vocabsEntities) AS cnt;
+9   topVocabsEntities = ORDER vocabCounts BY cnt DESC;
+
+20:58:37 INFO  reporting.ExecutionStats  - Statistics for VOCABULARIES_BY_ENTITY
+Input: 9999702 records (-1 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:09:47.075
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0342	2	1	0:07:20.814	0:05:40.431	0:06:30.622	0:02:10.931	0:02:10.931	0:02:10.931	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_0343	4	1	0:00:15.372	0:00:12.959	0:00:13.940	0:00:21.704	0:00:21.704	0:00:21.704	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_0344	1	1	0:00:01.813	0:00:01.813	0:00:01.813	0:00:09.042	0:00:09.042	0:00:09.042	topVocabsEntities	SAMPLER	
+job_201306031819_0345	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.742	0:00:08.742	0:00:08.742	topVocabsEntities	ORDER_BY	results-vocabularies_by_entity,
+
+20:58:37 INFO  benchmark.Main  - PigScript[number_of_triples] - RUNNING
+20:58:37 INFO  execution.ScriptRunner  - Shutting down pig server.
+20:58:37 INFO  execution.ScriptRunner  - Created new pig server.
+20:58:37 INFO  execution.ScriptRunner  - Previous results deleted (results-number_of_triples)
+20:58:37 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+20:58:37 INFO  execution.ScriptRunner  - Starting execution of pig script.
+21:04:18 INFO  execution.ScriptRunner  - Finished execution of pig script.
+21:04:18 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   B = GROUP quads ALL;
+3   C = FOREACH B GENERATE COUNT($1);
+
+21:04:18 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_TRIPLES
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:05:41.291
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0346	1	1	0:05:18.325	0:05:18.325	0:05:18.325	0:00:08.740	0:00:08.740	0:00:08.740	B,C,quads	GROUP_BY,COMBINER	results-number_of_triples,
+
+21:04:18 INFO  benchmark.Main  - PigScript[classes_by_pld] - RUNNING
+21:04:18 INFO  execution.ScriptRunner  - Shutting down pig server.
+21:04:19 INFO  execution.ScriptRunner  - Created new pig server.
+21:04:19 INFO  execution.ScriptRunner  - Previous results deleted (results-classes_by_pld)
+21:04:19 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+21:04:19 INFO  execution.ScriptRunner  - Starting execution of pig script.
+21:09:39 INFO  execution.ScriptRunner  - Finished execution of pig script.
+21:09:39 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classesAndDomainsA = FOREACH typedstuff GENERATE object.value AS class,de.wbsg.loddesc.functions.PayLevelDomain(graph) AS domain;
+4   classesAndDomains = DISTINCT classesAndDomainsA;
+5   classes = GROUP classesAndDomains by class;
+6   classCounts = FOREACH classes GENERATE group, COUNT(classesAndDomains) AS cnt;
+7   topClasses = ORDER classCounts BY cnt DESC;
+
+21:09:39 INFO  reporting.ExecutionStats  - Statistics for CLASSES_BY_PLD
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:05:20.575
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0347	1	1	0:03:37.992	0:03:37.992	0:03:37.992	0:00:09.946	0:00:09.946	0:00:09.946	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_0348	1	1	0:00:04.522	0:00:04.522	0:00:04.522	0:00:09.943	0:00:09.943	0:00:09.943	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_0349	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:08.844	0:00:08.844	0:00:08.844	topClasses	SAMPLER	
+job_201306031819_0350	1	1	0:00:03.015	0:00:03.015	0:00:03.015	0:00:09.958	0:00:09.958	0:00:09.958	topClasses	ORDER_BY	results-classes_by_pld,
+
+21:09:39 INFO  benchmark.Main  - PigScript[property_cooc_by_urls] - RUNNING
+21:09:39 INFO  execution.ScriptRunner  - Shutting down pig server.
+21:09:39 INFO  execution.ScriptRunner  - Created new pig server.
+21:09:39 INFO  execution.ScriptRunner  - Previous results deleted (results-property_cooc_by_urls)
+21:09:39 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+21:09:39 INFO  execution.ScriptRunner  - Starting execution of pig script.
+00:20:02 INFO  execution.ScriptRunner  - Finished execution of pig script.
+00:20:02 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   groups = GROUP quads BY graph;
+3   groupsCopy = FOREACH groups GENERATE FLATTEN(quads.predicate) AS p1, FLATTEN(quads.predicate) AS p2;
+4   propertyCooc = FILTER groupsCopy BY p1 < p2;
+5   propertyCoocGroup = GROUP propertyCooc BY *;
+6   propertyCoocCounts = FOREACH propertyCoocGroup GENERATE FLATTEN(group) AS (p1,p2), COUNT(propertyCooc) AS cnt;
+7   propertyCoocSorted = ORDER propertyCoocCounts BY p1, cnt DESC;
+8   propertyCoocSortedTop = FILTER propertyCoocSorted BY cnt > 1;
+
+00:20:02 INFO  reporting.ExecutionStats  - Statistics for PROPERTY_COOC_BY_URLS
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 3:10:22.563
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0351	1	1	0:10:34.477	0:10:34.477	0:10:34.477	0:46:48.427	0:46:48.427	0:46:48.427	groups,groupsCopy,propertyCooc,quads	GROUP_BY	
+job_201306031819_0352	778	53	0:00:21.689	0:00:15.053	0:00:18.441	1:53:46.343	0:00:19.053	0:04:43.059	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_0353	2	1	0:00:06.328	0:00:05.121	0:00:05.724	0:00:09.946	0:00:09.946	0:00:09.946	propertyCoocSorted	SAMPLER	
+job_201306031819_0354	2	1	0:00:33.251	0:00:23.816	0:00:28.533	0:00:27.451	0:00:27.451	0:00:27.451	propertyCoocSorted	ORDER_BY	results-property_cooc_by_urls,
+
+00:20:02 INFO  benchmark.Main  - PigScript[properties_by_pld] - RUNNING
+00:20:02 INFO  execution.ScriptRunner  - Shutting down pig server.
+00:20:02 INFO  execution.ScriptRunner  - Created new pig server.
+00:20:03 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+00:20:03 INFO  execution.ScriptRunner  - Starting execution of pig script.
+00:20:03 ERROR execution.ScriptRunner  - Error while trying to execute pig script.
+org.apache.pig.PigException: ERROR 1002: Unable to store alias propSortedTop
+	at org.apache.pig.PigServer.storeEx(PigServer.java:935)
+	at org.apache.pig.PigServer.store(PigServer.java:898)
+	at org.apache.pig.PigServer.store(PigServer.java:866)
+	at de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner.runScript(ScriptRunner.java:149)
+	at de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner.runScript(ScriptRunner.java:95)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runScript(Main.java:125)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runSequential(Main.java:112)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.main(Main.java:76)
+Caused by: org.apache.pig.impl.plan.PlanValidationException: ERROR 1025: 
+<line 2, column 36> Invalid field projection. Projected field [type] does not exist in schema: subject:chararray,predicate:chararray,object:tuple(ntype:int,value:chararray,dtlang:chararray),graph:chararray.
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.findColNum(ProjectExpression.java:183)
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.setColumnNumberFromAlias(ProjectExpression.java:166)
+	at org.apache.pig.newplan.logical.visitor.ColumnAliasConversionVisitor$1.visit(ColumnAliasConversionVisitor.java:53)
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.accept(ProjectExpression.java:207)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.newplan.logical.optimizer.AllExpressionVisitor.visit(AllExpressionVisitor.java:142)
+	at org.apache.pig.newplan.logical.relational.LOInnerLoad.accept(LOInnerLoad.java:128)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.logical.optimizer.AllExpressionVisitor.visit(AllExpressionVisitor.java:124)
+	at org.apache.pig.newplan.logical.relational.LOForEach.accept(LOForEach.java:76)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.PigServer$Graph.compile(PigServer.java:1626)
+	at org.apache.pig.PigServer$Graph.compile(PigServer.java:1621)
+	at org.apache.pig.PigServer$Graph.access$200(PigServer.java:1340)
+	at org.apache.pig.PigServer.storeEx(PigServer.java:930)
+	... 7 more
+00:20:03 INFO  benchmark.Main  - PigScript[properties_by_url] - RUNNING
+00:20:03 INFO  execution.ScriptRunner  - Shutting down pig server.
+00:20:03 INFO  execution.ScriptRunner  - Created new pig server.
+00:20:03 INFO  execution.ScriptRunner  - Previous results deleted (results-properties_by_url)
+00:20:03 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+00:20:03 INFO  execution.ScriptRunner  - Starting execution of pig script.
+00:29:09 INFO  execution.ScriptRunner  - Finished execution of pig script.
+00:29:09 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   urlPredAll = FOREACH quads GENERATE graph, predicate;
+3   urlPred = DISTINCT urlPredAll;
+4   propGroups = GROUP urlPred BY predicate;
+5   propStatements = FOREACH propGroups GENERATE group AS predicate, COUNT(urlPred) AS cnt;
+6   propSorted = ORDER propStatements BY cnt DESC;
+7   propSortedTop = FILTER propSorted BY cnt > 1;
+
+00:29:09 INFO  reporting.ExecutionStats  - Statistics for PROPERTIES_BY_URL
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:09:06.103
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0355	1	1	0:05:24.640	0:05:24.640	0:05:24.640	0:01:07.545	0:01:07.545	0:01:07.545	quads,urlPredAll	DISTINCT	
+job_201306031819_0356	9	1	0:00:16.882	0:00:04.526	0:00:14.067	0:00:57.277	0:00:57.277	0:00:57.277	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_0357	1	1	0:00:01.867	0:00:01.867	0:00:01.867	0:00:09.042	0:00:09.042	0:00:09.042	propSorted	SAMPLER	
+job_201306031819_0358	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:09.344	0:00:09.344	0:00:09.344	propSorted	ORDER_BY	results-properties_by_url,
+
+00:29:09 INFO  benchmark.Main  - PigScript[properties_by_statement] - RUNNING
+00:29:09 INFO  execution.ScriptRunner  - Shutting down pig server.
+00:29:09 INFO  execution.ScriptRunner  - Created new pig server.
+00:29:09 INFO  execution.ScriptRunner  - Previous results deleted (results-properties_by_statement)
+00:29:09 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+00:29:09 INFO  execution.ScriptRunner  - Starting execution of pig script.
+00:34:59 INFO  execution.ScriptRunner  - Finished execution of pig script.
+00:34:59 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   propGroups = GROUP quads BY predicate;
+3   propStatements = FOREACH propGroups GENERATE group AS predicate, COUNT(quads) AS cnt;
+4   propSorted = ORDER propStatements BY cnt DESC;
+5   propSortedTop = FILTER propSorted BY cnt > 1;
+
+00:34:59 INFO  reporting.ExecutionStats  - Statistics for PROPERTIES_BY_STATEMENT
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:05:49.758
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0359	1	1	0:04:31.621	0:04:31.621	0:04:31.621	0:00:09.345	0:00:09.345	0:00:09.345	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201306031819_0360	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.742	0:00:08.742	0:00:08.742	propSorted	SAMPLER	
+job_201306031819_0361	1	1	0:00:02.410	0:00:02.410	0:00:02.410	0:00:09.343	0:00:09.343	0:00:09.343	propSorted	ORDER_BY	results-properties_by_statement,
+
+00:34:59 INFO  benchmark.Main  - PigScript[vocabularies_by_url] - RUNNING
+00:34:59 INFO  execution.ScriptRunner  - Shutting down pig server.
+00:34:59 INFO  execution.ScriptRunner  - Created new pig server.
+00:34:59 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+00:34:59 INFO  execution.ScriptRunner  - Starting execution of pig script.
+00:44:16 INFO  execution.ScriptRunner  - Finished execution of pig script.
+00:44:16 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   predicateVocabs = FOREACH quads GENERATE de.wbsg.loddesc.functions.Vocab(predicate) AS vocab, graph;
+3   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+4   objectVocabs = FOREACH typedstuff GENERATE de.wbsg.loddesc.functions.Vocab(object.value) AS vocab, graph;
+5   allVocabsUrls = UNION predicateVocabs, objectVocabs;
+6   vocabsUrls = DISTINCT allVocabsUrls;
+7   vocabs = GROUP vocabsUrls BY vocab;
+8   vocabCounts = FOREACH vocabs GENERATE group, COUNT(vocabsUrls) AS cnt;
+9   topVocabsEntities = ORDER vocabCounts BY cnt DESC;
+
+00:44:16 INFO  reporting.ExecutionStats  - Statistics for VOCABULARIES_BY_URL
+Input: 9999702 records (-1 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:09:16.994
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0362	2	1	0:07:11.959	0:05:40.455	0:06:26.207	0:01:52.167	0:01:52.167	0:01:52.167	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_0363	3	1	0:00:16.277	0:00:06.635	0:00:11.956	0:00:11.158	0:00:11.158	0:00:11.158	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_0364	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.742	0:00:08.742	0:00:08.742	topVocabsEntities	SAMPLER	
+job_201306031819_0365	1	1	0:00:02.114	0:00:02.114	0:00:02.114	0:00:08.739	0:00:08.739	0:00:08.739	topVocabsEntities	ORDER_BY	results-vocabularies_by_url,
+
+00:44:16 INFO  benchmark.Main  - PigScript[incoming_property_cooc] - RUNNING
+00:44:16 INFO  execution.ScriptRunner  - Shutting down pig server.
+00:44:16 INFO  execution.ScriptRunner  - Created new pig server.
+00:44:16 INFO  execution.ScriptRunner  - Previous results deleted (results-incoming_property_cooc)
+00:44:16 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+00:44:16 INFO  execution.ScriptRunner  - Starting execution of pig script.
+03:26:59 INFO  execution.ScriptRunner  - Finished execution of pig script.
+03:26:59 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   resourceObjects = FILTER quads BY (NOT predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') AND (object.ntype == 4 OR object.ntype == 5);
+3   resourceObjectsFlat = FOREACH resourceObjects GENERATE object.value AS resourceObject, predicate;
+4   groups = GROUP resourceObjectsFlat BY resourceObject;
+5   groupsCopy = FOREACH groups GENERATE FLATTEN(resourceObjectsFlat.predicate) AS p1, FLATTEN(resourceObjectsFlat.predicate) AS p2;
+6   propertyCooc = FILTER groupsCopy BY p1 < p2;
+7   propertyCoocGroup = GROUP propertyCooc BY *;
+8   propertyCoocCounts = FOREACH propertyCoocGroup GENERATE FLATTEN(group) AS (p1,p2), COUNT(propertyCooc) AS cnt;
+9   propertyCoocSorted = ORDER propertyCoocCounts BY p1, cnt DESC;
+10   propertyCoocSortedTop = FILTER propertyCoocSorted BY cnt > 1;
+
+03:26:59 INFO  reporting.ExecutionStats  - Statistics for INCOMING_PROPERTY_COOC
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 2:42:42.332
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0366	1	1	0:04:07.061	0:04:07.061	0:04:07.061	0:56:45.226	0:56:45.226	0:56:45.226	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	
+job_201306031819_0367	654	44	0:00:20.453	0:00:09.044	0:00:17.338	1:29:51.209	0:00:15.412	0:04:21.302	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_0368	1	1	0:00:03.014	0:00:03.014	0:00:03.014	0:00:09.039	0:00:09.039	0:00:09.039	propertyCoocSorted	SAMPLER	
+job_201306031819_0369	1	1	0:00:06.637	0:00:06.637	0:00:06.637	0:00:12.054	0:00:12.054	0:00:12.054	propertyCoocSorted	ORDER_BY	results-incoming_property_cooc,
+
+03:26:59 INFO  benchmark.Main  - PigScript[classes_by_entity] - RUNNING
+03:26:59 INFO  execution.ScriptRunner  - Shutting down pig server.
+03:26:59 INFO  execution.ScriptRunner  - Created new pig server.
+03:26:59 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+03:26:59 INFO  execution.ScriptRunner  - Starting execution of pig script.
+03:32:33 INFO  execution.ScriptRunner  - Finished execution of pig script.
+03:32:33 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classes = GROUP typedstuff BY object.value;
+4   classCounts = FOREACH classes GENERATE group, COUNT(typedstuff) AS cnt;
+5   topClassesByEntities = ORDER classCounts BY cnt DESC;
+
+03:32:33 INFO  reporting.ExecutionStats  - Statistics for CLASSES_BY_ENTITY
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:05:34.143
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0370	1	1	0:04:18.585	0:04:18.585	0:04:18.585	0:00:09.945	0:00:09.945	0:00:09.945	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201306031819_0371	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:09.040	0:00:09.040	0:00:09.040	topClassesByEntities	SAMPLER	
+job_201306031819_0372	1	1	0:00:03.015	0:00:03.015	0:00:03.015	0:00:09.646	0:00:09.646	0:00:09.646	topClassesByEntities	ORDER_BY	results-classes_by_entity,
+
+03:32:33 INFO  benchmark.Main  - PigScript[vocabularies_by_tld] - RUNNING
+03:32:33 INFO  execution.ScriptRunner  - Shutting down pig server.
+03:32:34 INFO  execution.ScriptRunner  - Created new pig server.
+03:32:34 INFO  execution.ScriptRunner  - Previous results deleted (results-vocabularies_by_tld)
+03:32:34 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+03:32:34 INFO  execution.ScriptRunner  - Starting execution of pig script.
+03:42:40 INFO  execution.ScriptRunner  - Finished execution of pig script.
+03:42:40 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   predicateVocabs = FOREACH quads GENERATE de.wbsg.loddesc.functions.Vocab(predicate) AS vocab, de.wbsg.loddesc.functions.PayLevelDomain(graph) AS pld;
+3   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+4   objectVocabs = FOREACH typedstuff GENERATE de.wbsg.loddesc.functions.Vocab(object.value) AS vocab, de.wbsg.loddesc.functions.PayLevelDomain(graph) AS pld;
+5   allVocabsTlds = UNION predicateVocabs, objectVocabs;
+6   vocabsAndTlds = DISTINCT allVocabsTlds;
+7   tlds = GROUP vocabsAndTlds BY (de.wbsg.loddesc.functions.TopLevelDomain(pld),vocab);
+8   tldTypeCounts = FOREACH tlds GENERATE FLATTEN(group) AS (tld,vocab), COUNT(vocabsAndTlds) AS cnt;
+9   topClassesTld = ORDER tldTypeCounts BY tld, cnt DESC;
+
+03:42:40 INFO  reporting.ExecutionStats  - Statistics for VOCABULARIES_BY_TLD
+Input: 9999702 records (-1 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:10:06.402
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0373	2	1	0:08:25.778	0:05:51.132	0:07:08.455	0:02:38.864	0:02:38.864	0:02:38.864	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_0374	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.042	0:00:09.042	0:00:09.042	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_0375	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.744	0:00:08.744	0:00:08.744	topClassesTld	SAMPLER	
+job_201306031819_0376	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.049	0:00:09.049	0:00:09.049	topClassesTld	ORDER_BY	results-vocabularies_by_tld,
+
+03:42:40 INFO  benchmark.Main  - PigScript[classes_by_tld] - RUNNING
+03:42:40 INFO  execution.ScriptRunner  - Shutting down pig server.
+03:42:40 INFO  execution.ScriptRunner  - Created new pig server.
+03:42:40 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+03:42:40 INFO  execution.ScriptRunner  - Starting execution of pig script.
+03:48:51 INFO  execution.ScriptRunner  - Finished execution of pig script.
+03:48:51 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classesAndDomainsA = FOREACH typedstuff GENERATE object.value AS type,de.wbsg.loddesc.functions.PayLevelDomain(graph) AS domain;
+4   classesAndDomains = DISTINCT classesAndDomainsA;
+5   tlds = GROUP classesAndDomains BY (de.wbsg.loddesc.functions.TopLevelDomain(domain),type);
+6   tldTypeCounts = FOREACH tlds GENERATE FLATTEN(group) AS (tld,type), COUNT(classesAndDomains) AS cnt;
+7   topClassesTld = ORDER tldTypeCounts BY tld, cnt DESC;
+
+03:48:51 INFO  reporting.ExecutionStats  - Statistics for CLASSES_BY_TLD
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:06:11.017
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0377	1	1	0:04:22.548	0:04:22.548	0:04:22.548	0:00:09.942	0:00:09.942	0:00:09.942	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_0378	1	1	0:00:05.425	0:00:05.425	0:00:05.425	0:00:11.468	0:00:11.468	0:00:11.468	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_0379	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:09.040	0:00:09.040	0:00:09.040	topClassesTld	SAMPLER	
+job_201306031819_0380	1	1	0:00:03.017	0:00:03.017	0:00:03.017	0:00:09.946	0:00:09.946	0:00:09.946	topClassesTld	ORDER_BY	results-classes_by_tld,
+
+03:48:51 INFO  benchmark.Main  - PigScript[properties_by_tld] - RUNNING
+03:48:51 INFO  execution.ScriptRunner  - Shutting down pig server.
+03:48:52 INFO  execution.ScriptRunner  - Created new pig server.
+03:48:52 INFO  execution.ScriptRunner  - Previous results deleted (results-properties_by_tld)
+03:48:52 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+03:48:52 INFO  execution.ScriptRunner  - Starting execution of pig script.
+03:55:48 INFO  execution.ScriptRunner  - Finished execution of pig script.
+03:55:48 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   tldPredAll = FOREACH quads GENERATE de.wbsg.loddesc.functions.PayLevelDomain(graph) AS tld, predicate;
+3   tldPred = DISTINCT tldPredAll;
+4   tlds = GROUP tldPred BY (de.wbsg.loddesc.functions.TopLevelDomain(tld),predicate);
+5   tldPredCounts = FOREACH tlds GENERATE FLATTEN(group) AS (tld,predicate), COUNT(tldPred) AS cnt;
+6   topPredicatesTld = ORDER tldPredCounts BY tld, cnt DESC;
+
+03:55:48 INFO  reporting.ExecutionStats  - Statistics for PROPERTIES_BY_TLD
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:06:55.935
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0381	1	1	0:05:11.685	0:05:11.685	0:05:11.685	0:00:09.340	0:00:09.340	0:00:09.340	quads,tldPredAll	DISTINCT	
+job_201306031819_0382	1	1	0:00:03.617	0:00:03.617	0:00:03.617	0:00:09.646	0:00:09.646	0:00:09.646	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_0383	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.740	0:00:08.740	0:00:08.740	topPredicatesTld	SAMPLER	
+job_201306031819_0384	1	1	0:00:02.712	0:00:02.712	0:00:02.712	0:00:09.341	0:00:09.341	0:00:09.341	topPredicatesTld	ORDER_BY	results-properties_by_tld,
+
+03:55:48 INFO  benchmark.Main  - PigScript[vocabularies_by_pld] - RUNNING
+03:55:48 INFO  execution.ScriptRunner  - Shutting down pig server.
+03:55:48 INFO  execution.ScriptRunner  - Created new pig server.
+03:55:48 INFO  execution.ScriptRunner  - Previous results deleted (results-vocabularies_by_pld)
+03:55:48 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+03:55:48 INFO  execution.ScriptRunner  - Starting execution of pig script.
+04:05:45 INFO  execution.ScriptRunner  - Finished execution of pig script.
+04:05:45 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   predicateVocabs = FOREACH quads GENERATE de.wbsg.loddesc.functions.Vocab(predicate) AS vocab, de.wbsg.loddesc.functions.PayLevelDomain(graph) AS pld;
+3   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+4   objectVocabs = FOREACH typedstuff GENERATE de.wbsg.loddesc.functions.Vocab(object.value) AS vocab, de.wbsg.loddesc.functions.PayLevelDomain(graph) as pld;
+5   allVocabsPlds = UNION predicateVocabs, objectVocabs;
+6   vocabsPlds = DISTINCT allVocabsPlds;
+7   vocabs = GROUP vocabsPlds BY vocab;
+8   vocabCounts = FOREACH vocabs GENERATE group, COUNT(vocabsPlds) AS cnt;
+9   topVocabsPlds = ORDER vocabCounts BY cnt DESC;
+
+04:05:45 INFO  reporting.ExecutionStats  - Statistics for VOCABULARIES_BY_PLD
+Input: 9999702 records (-1 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:09:57.362
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0385	2	1	0:08:18.342	0:05:51.534	0:07:04.938	0:02:29.221	0:02:29.221	0:02:29.221	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_0386	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.039	0:00:09.039	0:00:09.039	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_0387	1	1	0:00:01.807	0:00:01.807	0:00:01.807	0:00:08.740	0:00:08.740	0:00:08.740	topVocabsPlds	SAMPLER	
+job_201306031819_0388	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:08.748	0:00:08.748	0:00:08.748	topVocabsPlds	ORDER_BY	results-vocabularies_by_pld,
+
+04:05:45 INFO  benchmark.Main  - PigScript[classes_by_url] - RUNNING
+04:05:45 INFO  execution.ScriptRunner  - Shutting down pig server.
+04:05:46 INFO  execution.ScriptRunner  - Created new pig server.
+04:05:46 INFO  execution.ScriptRunner  - Previous results deleted (results-classes_by_url)
+04:05:46 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+04:05:46 INFO  execution.ScriptRunner  - Starting execution of pig script.
+04:11:12 INFO  execution.ScriptRunner  - Finished execution of pig script.
+04:11:12 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classesAndDomainsA = FOREACH typedstuff GENERATE object.value AS class,graph;
+4   classesAndDomains = DISTINCT classesAndDomainsA;
+5   classes = GROUP classesAndDomains BY class;
+6   classCounts = FOREACH classes GENERATE group, COUNT(classesAndDomains) AS cnt;
+7   topClassesByUrls = ORDER classCounts BY cnt DESC;
+
+04:11:12 INFO  reporting.ExecutionStats  - Statistics for CLASSES_BY_URL
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 0:05:26.595
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0389	1	1	0:03:28.475	0:03:28.475	0:03:28.475	0:00:16.243	0:00:16.243	0:00:16.243	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_0390	2	1	0:00:14.170	0:00:07.836	0:00:11.003	0:00:11.458	0:00:11.458	0:00:11.458	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_0391	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.741	0:00:08.741	0:00:08.741	topClassesByUrls	SAMPLER	
+job_201306031819_0392	1	1	0:00:03.014	0:00:03.014	0:00:03.014	0:00:09.946	0:00:09.946	0:00:09.946	topClassesByUrls	ORDER_BY	results-classes_by_url,
+
+04:11:12 INFO  benchmark.Main  - PigScript[property_cooc_by_entities] - RUNNING
+04:11:12 INFO  execution.ScriptRunner  - Shutting down pig server.
+04:11:12 INFO  execution.ScriptRunner  - Created new pig server.
+04:11:12 INFO  execution.ScriptRunner  - Previous results deleted (results-property_cooc_by_entities)
+04:11:12 INFO  execution.ScriptRunner  - Loading quads from data-0-10000000.nq.gz
+04:11:12 INFO  execution.ScriptRunner  - Starting execution of pig script.
+05:29:09 INFO  execution.ScriptRunner  - Finished execution of pig script.
+05:29:09 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD 'data-0-10000000.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   subjGroups = GROUP quads BY subject;
+3   subjGroupsCopy = FOREACH subjGroups GENERATE FLATTEN(quads.predicate) AS p1, FLATTEN(quads.predicate) AS p2;
+4   propertyCooc = FILTER subjGroupsCopy BY p1 < p2;
+5   propertyCoocGroup = GROUP propertyCooc BY *;
+6   propertyCoocCounts = FOREACH propertyCoocGroup GENERATE FLATTEN(group) AS (p1,p2), COUNT(propertyCooc) AS cnt;
+7   propertyCoocSorted = ORDER propertyCoocCounts BY p1, cnt DESC;
+8   propertyCoocSortedTop = FILTER propertyCoocSorted BY cnt > 1;
+
+05:29:09 INFO  reporting.ExecutionStats  - Statistics for PROPERTY_COOC_BY_ENTITIES
+Input: 9999702 records (251502535 Bytes) from data-0-10000000.nq.gz
+Total job time = 1:17:56.405
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_0393	1	1	0:12:14.704	0:12:14.704	0:12:14.704	0:18:00.279	0:18:00.279	0:18:00.279	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201306031819_0394	285	20	0:00:20.480	0:00:09.651	0:00:17.812	0:40:11.033	0:00:22.132	0:04:22.192	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_0395	1	1	0:00:03.621	0:00:03.621	0:00:03.621	0:00:09.039	0:00:09.039	0:00:09.039	propertyCoocSorted	SAMPLER	
+job_201306031819_0396	1	1	0:00:24.427	0:00:24.427	0:00:24.427	0:00:13.874	0:00:13.874	0:00:13.874	propertyCoocSorted	ORDER_BY	results-property_cooc_by_entities,
+
