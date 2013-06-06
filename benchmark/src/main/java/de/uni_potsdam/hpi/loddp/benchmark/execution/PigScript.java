@@ -10,7 +10,6 @@ import java.util.Set;
 public class PigScript {
     private File script;
     private String resultAlias;
-    private InputStream inputStream;
 
     /**
      * Constructor.
@@ -73,20 +72,18 @@ public class PigScript {
     }
 
     /**
-     * Get InputStream for wrapped pig script file.
+     * Returns a new InputStream for wrapped pig script file.
      *
      * @return InputStream instance.
      */
-    public InputStream getInputStream() {
-        if (inputStream == null) {
-            try {
-                inputStream = new FileInputStream(script);
-            } catch (FileNotFoundException e) {
-                // Should not happen because usually we open and read the file already during initialization, see #fromFile
-                PigScriptHelper.log.error(e.getMessage(), e);
-            }
+    public InputStream getNewInputStream() {
+        try {
+            return new FileInputStream(script);
+        } catch (FileNotFoundException e) {
+            // Should not happen because usually we open and read the file already during initialization, see #fromFile
+            PigScriptHelper.log.error(e.getMessage(), e);
         }
-        return inputStream;
+        return null;
     }
 
     /**

@@ -47,7 +47,7 @@ public class ScriptRunner {
         this.pig.registerJar("ldif-single-0.5.1-jar-with-dependencies.jar");
         this.pig.registerJar("loddesc-core-0.1.jar");
 
-        this.log.info("Created new pig server.");
+        this.log.debug("Created new pig server.");
     }
 
     /**
@@ -133,9 +133,9 @@ public class ScriptRunner {
 
         // Register script.
         try {
-            getPig().setJobName(scriptName);
+            getPig().setJobName(scriptName); // doesn't seem to do anything.
             getPig().getPigContext().getProperties().setProperty(PigContext.JOB_NAME, scriptName);
-            getPig().registerScript(script.getInputStream());
+            getPig().registerScript(script.getNewInputStream());
         } catch (IOException e) {
             log.error("Error while trying to load pig script.", e);
             return null;
@@ -144,9 +144,9 @@ public class ScriptRunner {
         // Execute job and store results.
         ExecJob job = null;
         try {
-            log.info("Starting execution of pig script.");
+            log.debug("Starting execution of pig script.");
             job = getPig().store(script.getResultAlias(), resultsFile);
-            log.info("Finished execution of pig script.");
+            log.debug("Finished execution of pig script.");
         } catch (IOException e) {
             log.error("Error while trying to execute pig script.", e);
             return null;
