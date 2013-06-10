@@ -58,6 +58,10 @@ public class ExecutionStats {
         return pigScript.getScriptName();
     }
 
+    public String getDatasetIdentifier() {
+        return inputFile.getFileSetIdentifier();
+    }
+
     /**
      * Computes values of {@link #numberMapsTotal} and {@link #numberReducesTotal}.
      */

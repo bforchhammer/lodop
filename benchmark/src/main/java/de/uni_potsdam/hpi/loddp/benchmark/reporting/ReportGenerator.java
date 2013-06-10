@@ -1,5 +1,7 @@
 package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
+import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFileSet;
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,8 +13,10 @@ import java.util.*;
 public class ReportGenerator {
     protected static final Log log = LogFactory.getLog(ReportGenerator.class);
     private static final NumberFormat DECIMAL_SCIENTIFIC = new DecimalFormat("0.#E0");
-    private Map<String, Map<Long, ExecutionStats>> statsByNameAndSize = new TreeMap<String, Map<Long, ExecutionStats>>();
-    private Map<Long, Map<String, ExecutionStats>> statsBySizeAndName = new TreeMap<Long, Map<String, ExecutionStats>>();
+    private Map<String, Map<String, Map<Long, ExecutionStats>>> statsByNameAndSize = new TreeMap<String, Map<String,
+        Map<Long, ExecutionStats>>>();
+    private Map<String, Map<Long, Map<String, ExecutionStats>>> statsBySizeAndName = new TreeMap<String, Map<Long,
+        Map<String, ExecutionStats>>>();
 
     /**
      * Constructor.
@@ -30,25 +34,33 @@ public class ReportGenerator {
      */
     private void init(Set<ExecutionStats> stats) {
         for (ExecutionStats stat : stats) {
+            String dataset = stat.getDatasetIdentifier();
+            if (!statsBySizeAndName.containsKey(dataset)) {
+                statsBySizeAndName.put(dataset, new TreeMap<Long, Map<String, ExecutionStats>>());
+            }
+            if (!statsByNameAndSize.containsKey(dataset)) {
+                statsByNameAndSize.put(dataset, new TreeMap<String, Map<Long, ExecutionStats>>());
+            }
+
             String name = stat.getScriptName();
             long size = stat.getInputSize();
 
             Map<String, ExecutionStats> statsByName;
-            if (!statsBySizeAndName.containsKey(size)) {
+            if (!statsBySizeAndName.get(dataset).containsKey(size)) {
                 statsByName = new HashMap<String, ExecutionStats>();
-                statsBySizeAndName.put(size, statsByName);
+                statsBySizeAndName.get(dataset).put(size, statsByName);
             } else {
-                statsByName = statsBySizeAndName.get(size);
+                statsByName = statsBySizeAndName.get(dataset).get(size);
             }
 
             statsByName.put(name, stat);
 
             Map<Long, ExecutionStats> statsBySize;
-            if (!statsByNameAndSize.containsKey(name)) {
+            if (!statsByNameAndSize.get(dataset).containsKey(name)) {
                 statsBySize = new HashMap<Long, ExecutionStats>();
-                statsByNameAndSize.put(name, statsBySize);
+                statsByNameAndSize.get(dataset).put(name, statsBySize);
             } else {
-                statsBySize = statsByNameAndSize.get(name);
+                statsBySize = statsByNameAndSize.get(dataset).get(name);
             }
 
             statsBySize.put(size, stat);
@@ -56,11 +68,25 @@ public class ReportGenerator {
     }
 
     public void scalabilityReport() {
-        scalabilityReport(ReportType.EXECUTION_TIME);
-        scalabilityReport(ReportType.OUTPUT_SIZE);
+        for (String dataset : statsByNameAndSize.keySet()) {
+            scalabilityReport(dataset);
+        }
     }
 
-    public void scalabilityReport(ReportType type) {
+    public void scalabilityReport(String dataset) {
+        scalabilityReport(dataset, ReportType.EXECUTION_TIME);
+        scalabilityReport(dataset, ReportType.OUTPUT_SIZE);
+    }
+
+    public void scalabilityReport(InputFileSet dataset) {
+        scalabilityReport(dataset.getIdentifier());
+    }
+
+    public void scalabilityReport(InputFileSet dataset, ReportType type) {
+        scalabilityReport(dataset.getIdentifier(), type);
+    }
+
+    public void scalabilityReport(String dataset, ReportType type) {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Scalability (");
@@ -69,16 +95,16 @@ public class ReportGenerator {
 
         // Build table header:
         sb.append("Script name");
-        for (Long size : statsBySizeAndName.keySet()) {
+        for (Long size : statsBySizeAndName.get(dataset).keySet()) {
             sb.append("\t");
             sb.append(DECIMAL_SCIENTIFIC.format(size));
         }
         sb.append("\n");
 
-        for (String scriptName : statsByNameAndSize.keySet()) {
+        for (String scriptName : statsByNameAndSize.get(dataset).keySet()) {
             sb.append(scriptName);
-            Map<Long, ExecutionStats> statsBySize = statsByNameAndSize.get(scriptName);
-            for (Long size : statsBySizeAndName.keySet()) {
+            Map<Long, ExecutionStats> statsBySize = statsByNameAndSize.get(dataset).get(scriptName);
+            for (Long size : statsBySizeAndName.get(dataset).keySet()) {
                 sb.append("\t");
                 if (statsBySize.containsKey(size)) {
                     ExecutionStats stat = statsBySize.get(size);
@@ -98,11 +124,25 @@ public class ReportGenerator {
     }
 
     public void scriptComparison() {
-        Long maxInputSize = Collections.max(statsBySizeAndName.keySet());
-        scriptComparison(maxInputSize);
+        for (String dataset : statsByNameAndSize.keySet()) {
+            scriptComparison(dataset);
+        }
     }
 
-    protected void scriptComparison(Long inputSize) {
+    public void scriptComparison(InputFileSet dataset) {
+        scriptComparison(dataset.getIdentifier());
+    }
+
+    public void scriptComparison(String dataset) {
+        Long maxInputSize = Collections.max(statsBySizeAndName.get(dataset).keySet());
+        scriptComparison(dataset, maxInputSize);
+    }
+
+    public void scriptComparison(InputFileSet dataset, Long inputSize) {
+        scriptComparison(dataset.getIdentifier(), inputSize);
+    }
+
+    public void scriptComparison(String dataset, Long inputSize) {
         StringBuilder sb = new StringBuilder();
         sb.append("Comparison of script counters (");
         sb.append(DECIMAL_SCIENTIFIC.format(inputSize));
@@ -118,7 +158,7 @@ public class ReportGenerator {
         sb.append("\t").append("Average reduce time");
         sb.append("\n");
 
-        Map<String, ExecutionStats> statsByName = statsBySizeAndName.get(inputSize);
+        Map<String, ExecutionStats> statsByName = statsBySizeAndName.get(dataset).get(inputSize);
         for (ExecutionStats stat : statsByName.values()) {
             sb.append(stat.getScriptName());
             sb.append("\t").append(DurationFormatUtils.formatDurationHMS(stat.getTimeTotal()));
@@ -131,6 +171,35 @@ public class ReportGenerator {
         }
 
         log.info(sb.toString());
+    }
+
+    public void datasetComparison(InputFileSet dataset1, InputFileSet dataset2, long inputSize) {
+        datasetComparison(dataset1.getIdentifier(), dataset2.getIdentifier(), inputSize);
+    }
+
+    public void datasetComparison(String dataset1, String dataset2, long inputSize) {
+        if (dataset1 == null || dataset1.isEmpty() || dataset2 == null || dataset2.isEmpty()) {
+            log.error("Cannot compare datasets, because one of the identifiers is empty.");
+            return;
+        }
+        if (!statsBySizeAndName.containsKey(dataset1) || !statsBySizeAndName.get(dataset1).containsKey(inputSize)) {
+            log.error(String.format("Cannot compare datasets %s and %s, because there are no suitable results for %s.",
+                dataset1, dataset2, dataset1));
+        }
+        if (!statsBySizeAndName.containsKey(dataset2) || !statsBySizeAndName.get(dataset2).containsKey(inputSize)) {
+            log.error(String.format("Cannot compare datasets %s and %s, because there are no suitable results for %s.",
+                dataset1, dataset2, dataset2));
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Comparison of ").append(dataset1).append(" and ").append(dataset2)
+            .append(" for ").append(DECIMAL_SCIENTIFIC.format(inputSize)).append(" tuple.\n");
+
+        // @todo implement comparison
+
+        log.info(sb.toString());
+
+        throw new NotImplementedException();
     }
 
     public static enum ReportType {
