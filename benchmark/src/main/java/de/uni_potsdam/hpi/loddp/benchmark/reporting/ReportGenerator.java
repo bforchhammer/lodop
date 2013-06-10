@@ -5,6 +5,8 @@ import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.math.stat.descriptive.SummaryStatistics;
+import org.apache.pig.tools.pigstats.JobStats;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -13,6 +15,7 @@ import java.util.*;
 public class ReportGenerator {
     protected static final Log log = LogFactory.getLog(ReportGenerator.class);
     private static final NumberFormat DECIMAL_SCIENTIFIC = new DecimalFormat("0.#E0");
+    private static final NumberFormat DECIMAL_FLOAT = new DecimalFormat("#.#");
     private Map<String, Map<String, Map<Long, ExecutionStats>>> statsByNameAndSize = new TreeMap<String, Map<String,
         Map<Long, ExecutionStats>>>();
     private Map<String, Map<Long, Map<String, ExecutionStats>>> statsBySizeAndName = new TreeMap<String, Map<Long,
@@ -200,6 +203,80 @@ public class ReportGenerator {
         log.info(sb.toString());
 
         throw new NotImplementedException();
+    }
+
+    public void featureRuntimeAnalysis() {
+        for (String dataset : statsByNameAndSize.keySet()) {
+            featureRuntimeAnalysis(dataset);
+        }
+    }
+
+    public void featureRuntimeAnalysis(String dataset) {
+        Long maxInputSize = Collections.max(statsBySizeAndName.get(dataset).keySet());
+        featureRuntimeAnalysis(dataset, maxInputSize);
+    }
+
+    /**
+     * Tries to highlight runtime implications of different features used by pig scripts.
+     */
+    public void featureRuntimeAnalysis(String dataset, long inputSize) {
+        Map<String, ExecutionStats> statsByName = statsBySizeAndName.get(dataset).get(inputSize);
+        Map<String, Map<String, SummaryStatistics>> statsByFeatures = new TreeMap<String, Map<String, SummaryStatistics>>();
+
+        final String[] counterTypes = new String[] {
+            "mapMaxTime", "mapMinTime", "mapNumber", "mapInputNumber", "mapOutputNumber",
+            "reduceMaxTime", "reduceMinTime", "reduceNumber", "reduceInputNumber", "reduceOutputNumber"
+        };
+
+        for (ExecutionStats stats : statsByName.values()) {
+            List<JobStats> jobs = stats.getJobStats();
+            for (JobStats js : jobs) {
+                if (!statsByFeatures.containsKey(js.getFeature())) {
+                    statsByFeatures.put(js.getFeature(), new HashMap<String, SummaryStatistics>());
+                }
+                Map<String, SummaryStatistics> counters = statsByFeatures.get(js.getFeature());
+
+                for (String counterType : counterTypes) {
+                    if (!counters.containsKey(counterType)) {
+                        counters.put(counterType, new SummaryStatistics());
+                    }
+                }
+
+                counters.get("mapMaxTime").addValue(js.getMaxMapTime());
+                counters.get("mapMinTime").addValue(js.getMinMapTime());
+                counters.get("mapNumber").addValue(js.getNumberMaps());
+                counters.get("mapInputNumber").addValue(js.getMapInputRecords());
+                counters.get("mapOutputNumber").addValue(js.getMapOutputRecords());
+                counters.get("reduceMaxTime").addValue(js.getMaxReduceTime());
+                counters.get("reduceMinTime").addValue(js.getMinReduceTime());
+                counters.get("reduceNumber").addValue(js.getNumberReduces());
+                counters.get("reduceInputNumber").addValue(js.getReduceInputRecords());
+                counters.get("reduceOutputNumber").addValue(js.getReduceOutputRecords());
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Comparison of PIG features.\n");
+        sb.append("Feature");
+        sb.append("\t").append("Usage count");
+        for (String counterType : counterTypes) {
+            sb.append("\t").append(counterType).append(" MEAN");
+            sb.append("\t").append(counterType).append(" STD");
+        }
+        sb.append("\n");
+
+        for (String feature : statsByFeatures.keySet()) {
+            sb.append(feature);
+            sb.append("\t").append(statsByFeatures.get(feature).get("mapMaxTime").getN());
+            for (String counterType : counterTypes) {
+                SummaryStatistics s = statsByFeatures.get(feature).get(counterType);
+                sb.append("\t").append(DurationFormatUtils.formatDurationHMS(Math.round(s.getMean())));
+                sb.append("\t").append(DECIMAL_FLOAT.format(s.getStandardDeviation() / 1000)).append("s");
+            }
+            sb.append("\n");
+        }
+
+        log.info(sb.toString());
     }
 
     public static enum ReportType {

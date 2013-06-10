@@ -75,14 +75,15 @@ public class Main {
         InputFileSet dbpedia = new InputFileSet("BTC2012/DBPedia", "data/dbpedia-", 10, 10000000);
         InputFileSet freebase = new InputFileSet("BTC2012/Freebase", "data/freebase-", 10, 10000000);
 
-        runSequential(runner, scripts, freebase.getBySize(1000), blacklist);
-        runSequential(runner, scripts, dbpedia.getBySize(1000), blacklist);
-        //runSequential(runner, scripts, freebase, blacklist);
+        //runSequential(runner, scripts, freebase.getBySize(10000000), blacklist);
+        //runSequential(runner, scripts, dbpedia.getBySize(10000000), blacklist);
+        runSequential(runner, scripts, dbpedia, blacklist);
 
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
         rg.scalabilityReport();
         rg.scriptComparison();
-        rg.datasetComparison(freebase, dbpedia, 1000);
+        rg.featureRuntimeAnalysis();
+        //rg.datasetComparison(freebase, dbpedia, 10000000);
     }
 
     /**

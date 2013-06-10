@@ -66,7 +66,7 @@ public class ExecutionStats {
      * Computes values of {@link #numberMapsTotal} and {@link #numberReducesTotal}.
      */
     private void summarizeJobStats() {
-        List<JobStats> arr = pigStats.getJobGraph().getSuccessfulJobs();
+        List<JobStats> arr = getJobStats();
 
         // Reset field values.
         numberMapsTotal = 0;
@@ -81,8 +81,12 @@ public class ExecutionStats {
             reduceTimeTotal += js.getAvgREduceTime() * js.getNumberReduces();
         }
 
-        avgMapTimeTotal = mapTimeTotal / numberMapsTotal;
-        avgReduceTimeTotal = reduceTimeTotal / numberReducesTotal;
+        avgMapTimeTotal = (numberMapsTotal > 0) ? mapTimeTotal / numberMapsTotal : 0;
+        avgReduceTimeTotal = (numberReducesTotal > 0) ? reduceTimeTotal / numberReducesTotal : 0;
+    }
+
+    public List<JobStats> getJobStats() {
+        return pigStats.getJobGraph().getSuccessfulJobs();
     }
 
     public int getNumberJobs() {
