@@ -11,10 +11,24 @@ import org.apache.pig.tools.pigstats.PigStats;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Properties;
 
 public class ScriptRunner {
 
     protected static final Log log = LogFactory.getLog(ScriptRunner.class);
+    protected static final Properties serverProperties;
+
+    static {
+        serverProperties = new Properties();
+        // Cluster config
+        serverProperties.setProperty("fs.default.name", "hdfs://tenemhead2");
+        serverProperties.setProperty("mapred.job.tracker", "tenemhead2:9001");
+
+        // Local config
+        //serverProperties.setProperty("fs.default.name", "hdfs://localhost:9000");
+        //serverProperties.setProperty("mapred.job.tracker", "localhost:9001");
+    }
+
     private PigServer pig;
     private boolean reuseServer;
 
@@ -41,7 +55,7 @@ public class ScriptRunner {
      * @throws IOException
      */
     private void initialisePig() throws IOException {
-        this.pig = new PigServer(ExecType.MAPREDUCE);
+        this.pig = new PigServer(ExecType.MAPREDUCE, serverProperties);
 
         // Register UDF + required libraries.
         this.pig.registerJar("ldif-single-0.5.1-jar-with-dependencies.jar");
