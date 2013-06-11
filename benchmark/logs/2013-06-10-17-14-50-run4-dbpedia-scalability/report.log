@@ -1,0 +1,1028 @@
+Statistics for PROPERTY_COOC_BY_ENTITIES
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:43.406
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1004	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.460	0:00:09.460	0:00:09.460	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201306031819_1005	1	1	0:00:02.413	0:00:02.413	0:00:02.413	0:00:08.884	0:00:08.884	0:00:08.884	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1006	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.022	0:00:08.022	0:00:08.022	propertyCoocSorted	SAMPLER	
+job_201306031819_1007	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.863	0:00:08.863	0:00:08.863	propertyCoocSorted	ORDER_BY	results-property_cooc_by_entities,
+
+Statistics for PROPERTIES_BY_ENTITY
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:41.002
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1008	1	1	0:00:02.349	0:00:02.349	0:00:02.349	0:00:08.743	0:00:08.743	0:00:08.743	quads,subjPredAll	DISTINCT	
+job_201306031819_1009	1	1	0:00:01.814	0:00:01.814	0:00:01.814	0:00:08.741	0:00:08.741	0:00:08.741	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1010	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.004	0:00:08.004	0:00:08.004	propSorted	SAMPLER	
+job_201306031819_1011	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.749	0:00:08.749	0:00:08.749	propSorted	ORDER_BY	results-properties_by_entity,
+
+Statistics for VOCABULARIES_BY_PLD
+Input: 	10 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:45.164
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1012	2	1	0:00:03.318	0:00:03.317	0:00:03.317	0:00:09.202	0:00:09.202	0:00:09.202	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1013	1	1	0:00:01.807	0:00:01.807	0:00:01.807	0:00:08.738	0:00:08.738	0:00:08.738	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1014	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:09.943	0:00:09.943	0:00:09.943	topVocabsPlds	SAMPLER	
+job_201306031819_1015	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.741	0:00:08.741	0:00:08.741	topVocabsPlds	ORDER_BY	results-vocabularies_by_pld,
+
+Statistics for VOCABULARIES_BY_URL
+Input: 	10 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:40.267
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1016	2	1	0:00:04.220	0:00:03.617	0:00:03.918	0:00:09.044	0:00:09.044	0:00:09.044	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1017	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:08.737	0:00:08.737	0:00:08.737	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1018	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.742	0:00:08.742	0:00:08.742	topVocabsEntities	SAMPLER	
+job_201306031819_1019	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.093	0:00:08.093	0:00:08.093	topVocabsEntities	ORDER_BY	results-vocabularies_by_url,
+
+Statistics for CLASSES_BY_URL
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:45.548
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1020	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.863	0:00:08.863	0:00:08.863	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1021	1	1	0:00:02.397	0:00:02.397	0:00:02.397	0:00:08.740	0:00:08.740	0:00:08.740	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1022	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.738	0:00:08.738	0:00:08.738	topClassesByUrls	SAMPLER	
+job_201306031819_1023	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.739	0:00:08.739	0:00:08.739	topClassesByUrls	ORDER_BY	results-classes_by_url,
+
+Statistics for PROPERTIES_BY_TLD
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:45.503
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1024	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:08.737	0:00:08.737	0:00:08.737	quads,tldPredAll	DISTINCT	
+job_201306031819_1025	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.747	0:00:08.747	0:00:08.747	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1026	1	1	0:00:01.815	0:00:01.815	0:00:01.815	0:00:08.739	0:00:08.739	0:00:08.739	topPredicatesTld	SAMPLER	
+job_201306031819_1027	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.749	0:00:08.749	0:00:08.749	topPredicatesTld	ORDER_BY	results-properties_by_tld,
+
+Statistics for NUMBER_OF_TRIPLES
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:00:26.229
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1028	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:08.746	0:00:08.746	0:00:08.746	B,C,quads	GROUP_BY,COMBINER	results-number_of_triples,
+
+Statistics for PROPERTIES_BY_URL
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:40.589
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1029	1	1	0:00:02.270	0:00:02.270	0:00:02.270	0:00:09.042	0:00:09.042	0:00:09.042	quads,urlPredAll	DISTINCT	
+job_201306031819_1030	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:07.866	0:00:07.866	0:00:07.866	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1031	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.743	0:00:08.743	0:00:08.743	propSorted	SAMPLER	
+job_201306031819_1032	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.737	0:00:08.737	0:00:08.737	propSorted	ORDER_BY	results-properties_by_url,
+
+Statistics for VOCABULARIES_BY_TLD
+Input: 	10 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:45.722
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1033	2	1	0:00:04.220	0:00:03.315	0:00:03.767	0:00:09.643	0:00:09.643	0:00:09.643	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1034	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.738	0:00:08.738	0:00:08.738	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1035	1	1	0:00:01.943	0:00:01.943	0:00:01.943	0:00:09.041	0:00:09.041	0:00:09.041	topClassesTld	SAMPLER	
+job_201306031819_1036	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.740	0:00:08.740	0:00:08.740	topClassesTld	ORDER_BY	results-vocabularies_by_tld,
+
+Statistics for VOCABULARIES_BY_ENTITY
+Input: 	10 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:45.448
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1037	2	1	0:00:03.344	0:00:03.344	0:00:03.344	0:00:08.738	0:00:08.738	0:00:08.738	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1038	1	1	0:00:01.813	0:00:01.813	0:00:01.813	0:00:08.736	0:00:08.736	0:00:08.736	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1039	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.740	0:00:08.740	0:00:08.740	topVocabsEntities	SAMPLER	
+job_201306031819_1040	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.043	0:00:09.043	0:00:09.043	topVocabsEntities	ORDER_BY	results-vocabularies_by_entity,
+
+Statistics for PROPERTY_COOC_BY_URLS
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:45.566
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1041	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.582	0:00:08.582	0:00:08.582	groups,groupsCopy,propertyCooc,quads	GROUP_BY	
+job_201306031819_1042	1	1	0:00:01.811	0:00:01.811	0:00:01.811	0:00:09.345	0:00:09.345	0:00:09.345	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1043	1	1	0:00:01.811	0:00:01.811	0:00:01.811	0:00:08.743	0:00:08.743	0:00:08.743	propertyCoocSorted	SAMPLER	
+job_201306031819_1044	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:08.741	0:00:08.741	0:00:08.741	propertyCoocSorted	ORDER_BY	results-property_cooc_by_urls,
+
+Statistics for CLASSES_BY_ENTITY
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:19.005
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1045	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:08.745	0:00:08.745	0:00:08.745	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201306031819_1046	1	1	0:00:01.812	0:00:01.812	0:00:01.812	0:00:08.743	0:00:08.743	0:00:08.743	topClassesByEntities	SAMPLER	
+job_201306031819_1047	1	1	0:00:02.037	0:00:02.037	0:00:02.037	0:00:08.738	0:00:08.738	0:00:08.738	topClassesByEntities	ORDER_BY	results-classes_by_entity,
+
+Statistics for INCOMING_PROPERTY_COOC
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:44.984
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1048	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.742	0:00:08.742	0:00:08.742	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	
+job_201306031819_1049	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:09.040	0:00:09.040	0:00:09.040	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1050	1	1	0:00:02.088	0:00:02.088	0:00:02.088	0:00:09.045	0:00:09.045	0:00:09.045	propertyCoocSorted	SAMPLER	
+job_201306031819_1051	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.739	0:00:08.739	0:00:08.739	propertyCoocSorted	ORDER_BY	results-incoming_property_cooc,
+
+Statistics for CLASSES_BY_PLD
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:40.345
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1052	1	1	0:00:02.410	0:00:02.410	0:00:02.410	0:00:09.042	0:00:09.042	0:00:09.042	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1053	1	1	0:00:01.814	0:00:01.814	0:00:01.814	0:00:08.350	0:00:08.350	0:00:08.350	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1054	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.743	0:00:08.743	0:00:08.743	topClasses	SAMPLER	
+job_201306031819_1055	1	1	0:00:01.759	0:00:01.759	0:00:01.759	0:00:09.041	0:00:09.041	0:00:09.041	topClasses	ORDER_BY	results-classes_by_pld,
+
+Statistics for PROPERTIES_BY_STATEMENT
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:14.273
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1056	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.739	0:00:08.739	0:00:08.739	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201306031819_1057	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.130	0:00:08.130	0:00:08.130	propSorted	SAMPLER	
+job_201306031819_1058	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.038	0:00:09.038	0:00:09.038	propSorted	ORDER_BY	results-properties_by_statement,
+
+Statistics for CLASSES_BY_TLD
+Input: 	10 records (1066 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10.nq.gz
+Total time: 	0:01:45.445
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1059	1	1	0:00:02.158	0:00:02.158	0:00:02.158	0:00:08.745	0:00:08.745	0:00:08.745	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1060	1	1	0:00:02.086	0:00:02.086	0:00:02.086	0:00:08.741	0:00:08.741	0:00:08.741	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1061	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.738	0:00:08.738	0:00:08.738	topClassesTld	SAMPLER	
+job_201306031819_1062	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.041	0:00:09.041	0:00:09.041	topClassesTld	ORDER_BY	results-classes_by_tld,
+
+Statistics for PROPERTY_COOC_BY_ENTITIES
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:45.474
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1063	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.040	0:00:09.040	0:00:09.040	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201306031819_1064	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.040	0:00:09.040	0:00:09.040	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1065	1	1	0:00:02.112	0:00:02.112	0:00:02.112	0:00:08.738	0:00:08.738	0:00:08.738	propertyCoocSorted	SAMPLER	
+job_201306031819_1066	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.738	0:00:08.738	0:00:08.738	propertyCoocSorted	ORDER_BY	results-property_cooc_by_entities,
+
+Statistics for PROPERTIES_BY_ENTITY
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:46.060
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1067	1	1	0:00:02.112	0:00:02.112	0:00:02.112	0:00:08.495	0:00:08.495	0:00:08.495	quads,subjPredAll	DISTINCT	
+job_201306031819_1068	1	1	0:00:01.807	0:00:01.807	0:00:01.807	0:00:09.285	0:00:09.285	0:00:09.285	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1069	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.043	0:00:09.043	0:00:09.043	propSorted	SAMPLER	
+job_201306031819_1070	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.914	0:00:08.914	0:00:08.914	propSorted	ORDER_BY	results-properties_by_entity,
+
+Statistics for VOCABULARIES_BY_PLD
+Input: 	100 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:41.059
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1071	2	1	0:00:03.617	0:00:03.616	0:00:03.616	0:00:09.042	0:00:09.042	0:00:09.042	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1072	1	1	0:00:01.911	0:00:01.911	0:00:01.911	0:00:08.748	0:00:08.748	0:00:08.748	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1073	1	1	0:00:02.713	0:00:02.713	0:00:02.713	0:00:08.743	0:00:08.743	0:00:08.743	topVocabsPlds	SAMPLER	
+job_201306031819_1074	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.079	0:00:08.079	0:00:08.079	topVocabsPlds	ORDER_BY	results-vocabularies_by_pld,
+
+Statistics for VOCABULARIES_BY_URL
+Input: 	100 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:40.951
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1075	2	1	0:00:03.918	0:00:03.315	0:00:03.616	0:00:09.343	0:00:09.343	0:00:09.343	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1076	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.441	0:00:09.441	0:00:09.441	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1077	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:09.044	0:00:09.044	0:00:09.044	topVocabsEntities	SAMPLER	
+job_201306031819_1078	1	1	0:00:01.811	0:00:01.811	0:00:01.811	0:00:08.093	0:00:08.093	0:00:08.093	topVocabsEntities	ORDER_BY	results-vocabularies_by_url,
+
+Statistics for CLASSES_BY_URL
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:40.980
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1079	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.741	0:00:08.741	0:00:08.741	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1080	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.741	0:00:08.741	0:00:08.741	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1081	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.981	0:00:08.981	0:00:08.981	topClassesByUrls	SAMPLER	
+job_201306031819_1082	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.641	0:00:08.641	0:00:08.641	topClassesByUrls	ORDER_BY	results-classes_by_url,
+
+Statistics for PROPERTIES_BY_TLD
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:40.888
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1083	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.181	0:00:08.181	0:00:08.181	quads,tldPredAll	DISTINCT	
+job_201306031819_1084	1	1	0:00:01.807	0:00:01.807	0:00:01.807	0:00:09.041	0:00:09.041	0:00:09.041	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1085	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.739	0:00:08.739	0:00:08.739	topPredicatesTld	SAMPLER	
+job_201306031819_1086	1	1	0:00:02.414	0:00:02.414	0:00:02.414	0:00:08.740	0:00:08.740	0:00:08.740	topPredicatesTld	ORDER_BY	results-properties_by_tld,
+
+Statistics for NUMBER_OF_TRIPLES
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:00:26.252
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1087	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.740	0:00:08.740	0:00:08.740	B,C,quads	GROUP_BY,COMBINER	results-number_of_triples,
+
+Statistics for PROPERTIES_BY_URL
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:40.660
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1088	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:07.958	0:00:07.958	0:00:07.958	quads,urlPredAll	DISTINCT	
+job_201306031819_1089	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:09.352	0:00:09.352	0:00:09.352	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1090	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.240	0:00:08.240	0:00:08.240	propSorted	SAMPLER	
+job_201306031819_1091	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.738	0:00:08.738	0:00:08.738	propSorted	ORDER_BY	results-properties_by_url,
+
+Statistics for VOCABULARIES_BY_TLD
+Input: 	100 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:40.442
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1092	2	1	0:00:04.219	0:00:04.219	0:00:04.219	0:00:09.643	0:00:09.643	0:00:09.643	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1093	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.738	0:00:08.738	0:00:08.738	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1094	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.368	0:00:08.368	0:00:08.368	topClassesTld	SAMPLER	
+job_201306031819_1095	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.745	0:00:08.745	0:00:08.745	topClassesTld	ORDER_BY	results-vocabularies_by_tld,
+
+Statistics for VOCABULARIES_BY_ENTITY
+Input: 	100 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:35.692
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1096	2	1	0:00:03.919	0:00:03.919	0:00:03.919	0:00:09.047	0:00:09.047	0:00:09.047	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1097	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.134	0:00:08.134	0:00:08.134	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1098	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.038	0:00:09.038	0:00:09.038	topVocabsEntities	SAMPLER	
+job_201306031819_1099	1	1	0:00:01.811	0:00:01.811	0:00:01.811	0:00:08.148	0:00:08.148	0:00:08.148	topVocabsEntities	ORDER_BY	results-vocabularies_by_entity,
+
+Statistics for PROPERTY_COOC_BY_URLS
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:45.693
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1100	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:08.812	0:00:08.812	0:00:08.812	groups,groupsCopy,propertyCooc,quads	GROUP_BY	
+job_201306031819_1101	1	1	0:00:02.411	0:00:02.411	0:00:02.411	0:00:09.049	0:00:09.049	0:00:09.049	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1102	1	1	0:00:02.116	0:00:02.116	0:00:02.116	0:00:08.740	0:00:08.740	0:00:08.740	propertyCoocSorted	SAMPLER	
+job_201306031819_1103	1	1	0:00:02.114	0:00:02.114	0:00:02.114	0:00:09.041	0:00:09.041	0:00:09.041	propertyCoocSorted	ORDER_BY	results-property_cooc_by_urls,
+
+Statistics for CLASSES_BY_ENTITY
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:19.266
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1104	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:08.739	0:00:08.739	0:00:08.739	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201306031819_1105	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.737	0:00:08.737	0:00:08.737	topClassesByEntities	SAMPLER	
+job_201306031819_1106	1	1	0:00:01.965	0:00:01.965	0:00:01.965	0:00:08.744	0:00:08.744	0:00:08.744	topClassesByEntities	ORDER_BY	results-classes_by_entity,
+
+Statistics for INCOMING_PROPERTY_COOC
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:41.009
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1107	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.040	0:00:09.040	0:00:09.040	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	
+job_201306031819_1108	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.064	0:00:08.064	0:00:08.064	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1109	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.939	0:00:08.939	0:00:08.939	propertyCoocSorted	SAMPLER	
+job_201306031819_1110	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.740	0:00:09.740	0:00:09.740	propertyCoocSorted	ORDER_BY	results-incoming_property_cooc,
+
+Statistics for CLASSES_BY_PLD
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:36.350
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1111	1	1	0:00:02.410	0:00:02.410	0:00:02.410	0:00:08.398	0:00:08.398	0:00:08.398	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1112	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.045	0:00:08.045	0:00:08.045	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1113	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.041	0:00:09.041	0:00:09.041	topClasses	SAMPLER	
+job_201306031819_1114	1	1	0:00:01.842	0:00:01.842	0:00:01.842	0:00:08.233	0:00:08.233	0:00:08.233	topClasses	ORDER_BY	results-classes_by_pld,
+
+Statistics for PROPERTIES_BY_STATEMENT
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:09.503
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1115	1	1	0:00:02.339	0:00:02.339	0:00:02.339	0:00:09.044	0:00:09.044	0:00:09.044	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201306031819_1116	1	1	0:00:01.813	0:00:01.813	0:00:01.813	0:00:08.226	0:00:08.226	0:00:08.226	propSorted	SAMPLER	
+job_201306031819_1117	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:07.946	0:00:07.946	0:00:07.946	propSorted	ORDER_BY	results-properties_by_statement,
+
+Statistics for CLASSES_BY_TLD
+Input: 	100 records (3321 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100.nq.gz
+Total time: 	0:01:46.681
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1118	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.744	0:00:08.744	0:00:08.744	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1119	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:08.741	0:00:08.741	0:00:08.741	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1120	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.739	0:00:08.739	0:00:08.739	topClassesTld	SAMPLER	
+job_201306031819_1121	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:09.044	0:00:09.044	0:00:09.044	topClassesTld	ORDER_BY	results-classes_by_tld,
+
+Statistics for PROPERTY_COOC_BY_ENTITIES
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:46.580
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1122	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:09.042	0:00:09.042	0:00:09.042	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201306031819_1123	1	1	0:00:03.313	0:00:03.313	0:00:03.313	0:00:09.345	0:00:09.345	0:00:09.345	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1124	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.739	0:00:08.739	0:00:08.739	propertyCoocSorted	SAMPLER	
+job_201306031819_1125	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:09.040	0:00:09.040	0:00:09.040	propertyCoocSorted	ORDER_BY	results-property_cooc_by_entities,
+
+Statistics for PROPERTIES_BY_ENTITY
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:45.097
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1126	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:09.250	0:00:09.250	0:00:09.250	quads,subjPredAll	DISTINCT	
+job_201306031819_1127	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:09.043	0:00:09.043	0:00:09.043	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1128	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.738	0:00:08.738	0:00:08.738	propSorted	SAMPLER	
+job_201306031819_1129	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.740	0:00:08.740	0:00:08.740	propSorted	ORDER_BY	results-properties_by_entity,
+
+Statistics for VOCABULARIES_BY_PLD
+Input: 	1000 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:46.046
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1130	2	1	0:00:04.520	0:00:04.218	0:00:04.369	0:00:09.043	0:00:09.043	0:00:09.043	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1131	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.754	0:00:08.754	0:00:08.754	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1132	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.040	0:00:09.040	0:00:09.040	topVocabsPlds	SAMPLER	
+job_201306031819_1133	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.444	0:00:08.444	0:00:08.444	topVocabsPlds	ORDER_BY	results-vocabularies_by_pld,
+
+Statistics for VOCABULARIES_BY_URL
+Input: 	1000 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:45.226
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1134	2	1	0:00:04.219	0:00:03.917	0:00:04.068	0:00:09.342	0:00:09.342	0:00:09.342	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1135	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.339	0:00:09.339	0:00:09.339	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1136	1	1	0:00:01.807	0:00:01.807	0:00:01.807	0:00:08.708	0:00:08.708	0:00:08.708	topVocabsEntities	SAMPLER	
+job_201306031819_1137	1	1	0:00:01.807	0:00:01.807	0:00:01.807	0:00:09.342	0:00:09.342	0:00:09.342	topVocabsEntities	ORDER_BY	results-vocabularies_by_url,
+
+Statistics for CLASSES_BY_URL
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:45.928
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1138	1	1	0:00:02.410	0:00:02.410	0:00:02.410	0:00:09.043	0:00:09.043	0:00:09.043	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1139	1	1	0:00:01.812	0:00:01.812	0:00:01.812	0:00:09.044	0:00:09.044	0:00:09.044	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1140	1	1	0:00:02.011	0:00:02.011	0:00:02.011	0:00:08.743	0:00:08.743	0:00:08.743	topClassesByUrls	SAMPLER	
+job_201306031819_1141	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.738	0:00:08.738	0:00:08.738	topClassesByUrls	ORDER_BY	results-classes_by_url,
+
+Statistics for PROPERTIES_BY_TLD
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:46.102
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1142	1	1	0:00:02.411	0:00:02.411	0:00:02.411	0:00:08.742	0:00:08.742	0:00:08.742	quads,tldPredAll	DISTINCT	
+job_201306031819_1143	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.041	0:00:09.041	0:00:09.041	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1144	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.736	0:00:08.736	0:00:08.736	topPredicatesTld	SAMPLER	
+job_201306031819_1145	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.739	0:00:08.739	0:00:08.739	topPredicatesTld	ORDER_BY	results-properties_by_tld,
+
+Statistics for NUMBER_OF_TRIPLES
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:00:26.918
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1146	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:08.891	0:00:08.891	0:00:08.891	B,C,quads	GROUP_BY,COMBINER	results-number_of_triples,
+
+Statistics for PROPERTIES_BY_URL
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:40.705
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1147	1	1	0:00:02.411	0:00:02.411	0:00:02.411	0:00:09.047	0:00:09.047	0:00:09.047	quads,urlPredAll	DISTINCT	
+job_201306031819_1148	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.745	0:00:08.745	0:00:08.745	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1149	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:07.918	0:00:07.918	0:00:07.918	propSorted	SAMPLER	
+job_201306031819_1150	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.884	0:00:08.884	0:00:08.884	propSorted	ORDER_BY	results-properties_by_url,
+
+Statistics for VOCABULARIES_BY_TLD
+Input: 	1000 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:46.211
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1151	2	1	0:00:04.892	0:00:04.892	0:00:04.892	0:00:09.043	0:00:09.043	0:00:09.043	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1152	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.743	0:00:08.743	0:00:08.743	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1153	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.801	0:00:08.801	0:00:08.801	topClassesTld	SAMPLER	
+job_201306031819_1154	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.744	0:00:08.744	0:00:08.744	topClassesTld	ORDER_BY	results-vocabularies_by_tld,
+
+Statistics for VOCABULARIES_BY_ENTITY
+Input: 	1000 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:41.526
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1155	2	1	0:00:04.221	0:00:03.919	0:00:04.070	0:00:09.043	0:00:09.043	0:00:09.043	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1156	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:07.869	0:00:07.869	0:00:07.869	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1157	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.738	0:00:08.738	0:00:08.738	topVocabsEntities	SAMPLER	
+job_201306031819_1158	1	1	0:00:02.112	0:00:02.112	0:00:02.112	0:00:08.225	0:00:08.225	0:00:08.225	topVocabsEntities	ORDER_BY	results-vocabularies_by_entity,
+
+Statistics for PROPERTY_COOC_BY_URLS
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:46.460
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1159	1	1	0:00:02.411	0:00:02.411	0:00:02.411	0:00:09.423	0:00:09.423	0:00:09.423	groups,groupsCopy,propertyCooc,quads	GROUP_BY	
+job_201306031819_1160	1	1	0:00:03.947	0:00:03.947	0:00:03.947	0:00:09.340	0:00:09.340	0:00:09.340	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1161	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.043	0:00:09.043	0:00:09.043	propertyCoocSorted	SAMPLER	
+job_201306031819_1162	1	1	0:00:03.170	0:00:03.170	0:00:03.170	0:00:09.040	0:00:09.040	0:00:09.040	propertyCoocSorted	ORDER_BY	results-property_cooc_by_urls,
+
+Statistics for CLASSES_BY_ENTITY
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:19.015
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1163	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:08.741	0:00:08.741	0:00:08.741	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201306031819_1164	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.739	0:00:08.739	0:00:08.739	topClassesByEntities	SAMPLER	
+job_201306031819_1165	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.740	0:00:08.740	0:00:08.740	topClassesByEntities	ORDER_BY	results-classes_by_entity,
+
+Statistics for INCOMING_PROPERTY_COOC
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:46.322
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1166	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:09.039	0:00:09.039	0:00:09.039	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	
+job_201306031819_1167	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.739	0:00:08.739	0:00:08.739	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1168	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.739	0:00:08.739	0:00:08.739	propertyCoocSorted	SAMPLER	
+job_201306031819_1169	1	1	0:00:02.113	0:00:02.113	0:00:02.113	0:00:09.041	0:00:09.041	0:00:09.041	propertyCoocSorted	ORDER_BY	results-incoming_property_cooc,
+
+Statistics for CLASSES_BY_PLD
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:46.272
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1170	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:08.740	0:00:08.740	0:00:08.740	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1171	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.040	0:00:09.040	0:00:09.040	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1172	1	1	0:00:01.807	0:00:01.807	0:00:01.807	0:00:08.738	0:00:08.738	0:00:08.738	topClasses	SAMPLER	
+job_201306031819_1173	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.406	0:00:09.406	0:00:09.406	topClasses	ORDER_BY	results-classes_by_pld,
+
+Statistics for PROPERTIES_BY_STATEMENT
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:19.665
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1174	1	1	0:00:02.411	0:00:02.411	0:00:02.411	0:00:09.042	0:00:09.042	0:00:09.042	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201306031819_1175	1	1	0:00:01.816	0:00:01.816	0:00:01.816	0:00:08.741	0:00:08.741	0:00:08.741	propSorted	SAMPLER	
+job_201306031819_1176	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:09.038	0:00:09.038	0:00:09.038	propSorted	ORDER_BY	results-properties_by_statement,
+
+Statistics for CLASSES_BY_TLD
+Input: 	1000 records (19521 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000.nq.gz
+Total time: 	0:01:40.170
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1177	1	1	0:00:02.571	0:00:02.571	0:00:02.571	0:00:09.040	0:00:09.040	0:00:09.040	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1178	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.783	0:00:08.783	0:00:08.783	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1179	1	1	0:00:02.114	0:00:02.114	0:00:02.114	0:00:08.744	0:00:08.744	0:00:08.744	topClassesTld	SAMPLER	
+job_201306031819_1180	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.042	0:00:09.042	0:00:09.042	topClassesTld	ORDER_BY	results-classes_by_tld,
+
+Statistics for PROPERTY_COOC_BY_ENTITIES
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:51.050
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1181	1	1	0:00:03.617	0:00:03.617	0:00:03.617	0:00:11.588	0:00:11.588	0:00:11.588	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201306031819_1182	1	1	0:00:05.146	0:00:05.146	0:00:05.146	0:00:09.645	0:00:09.645	0:00:09.645	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1183	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.909	0:00:08.909	0:00:08.909	propertyCoocSorted	SAMPLER	
+job_201306031819_1184	1	1	0:00:03.740	0:00:03.740	0:00:03.740	0:00:09.340	0:00:09.340	0:00:09.340	propertyCoocSorted	ORDER_BY	results-property_cooc_by_entities,
+
+Statistics for PROPERTIES_BY_ENTITY
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:46.016
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1185	1	1	0:00:04.915	0:00:04.915	0:00:04.915	0:00:09.343	0:00:09.343	0:00:09.343	quads,subjPredAll	DISTINCT	
+job_201306031819_1186	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:08.741	0:00:08.741	0:00:08.741	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1187	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.737	0:00:08.737	0:00:08.737	propSorted	SAMPLER	
+job_201306031819_1188	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:09.042	0:00:09.042	0:00:09.042	propSorted	ORDER_BY	results-properties_by_entity,
+
+Statistics for VOCABULARIES_BY_PLD
+Input: 	10000 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:46.192
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1189	2	1	0:00:06.930	0:00:05.423	0:00:06.176	0:00:09.342	0:00:09.342	0:00:09.342	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1190	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.744	0:00:08.744	0:00:08.744	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1191	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.975	0:00:08.975	0:00:08.975	topVocabsPlds	SAMPLER	
+job_201306031819_1192	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:09.343	0:00:09.343	0:00:09.343	topVocabsPlds	ORDER_BY	results-vocabularies_by_pld,
+
+Statistics for VOCABULARIES_BY_URL
+Input: 	10000 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:51.078
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1193	2	1	0:00:07.839	0:00:05.426	0:00:06.632	0:00:10.249	0:00:10.249	0:00:10.249	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1194	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:08.739	0:00:08.739	0:00:08.739	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1195	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.743	0:00:08.743	0:00:08.743	topVocabsEntities	SAMPLER	
+job_201306031819_1196	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.741	0:00:08.741	0:00:08.741	topVocabsEntities	ORDER_BY	results-vocabularies_by_url,
+
+Statistics for CLASSES_BY_URL
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:45.848
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1197	1	1	0:00:03.016	0:00:03.016	0:00:03.016	0:00:09.436	0:00:09.436	0:00:09.436	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1198	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:09.091	0:00:09.091	0:00:09.091	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1199	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.743	0:00:08.743	0:00:08.743	topClassesByUrls	SAMPLER	
+job_201306031819_1200	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.340	0:00:09.340	0:00:09.340	topClassesByUrls	ORDER_BY	results-classes_by_url,
+
+Statistics for PROPERTIES_BY_TLD
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:46.016
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1201	1	1	0:00:04.518	0:00:04.518	0:00:04.518	0:00:09.046	0:00:09.046	0:00:09.046	quads,tldPredAll	DISTINCT	
+job_201306031819_1202	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.041	0:00:09.041	0:00:09.041	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1203	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.738	0:00:08.738	0:00:08.738	topPredicatesTld	SAMPLER	
+job_201306031819_1204	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.041	0:00:09.041	0:00:09.041	topPredicatesTld	ORDER_BY	results-properties_by_tld,
+
+Statistics for NUMBER_OF_TRIPLES
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:00:26.466
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1205	1	1	0:00:03.617	0:00:03.617	0:00:03.617	0:00:08.742	0:00:08.742	0:00:08.742	B,C,quads	GROUP_BY,COMBINER	results-number_of_triples,
+
+Statistics for PROPERTIES_BY_URL
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:45.527
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1206	1	1	0:00:04.219	0:00:04.219	0:00:04.219	0:00:09.345	0:00:09.345	0:00:09.345	quads,urlPredAll	DISTINCT	
+job_201306031819_1207	1	1	0:00:02.411	0:00:02.411	0:00:02.411	0:00:09.041	0:00:09.041	0:00:09.041	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1208	1	1	0:00:01.807	0:00:01.807	0:00:01.807	0:00:08.740	0:00:08.740	0:00:08.740	propSorted	SAMPLER	
+job_201306031819_1209	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.740	0:00:08.740	0:00:08.740	propSorted	ORDER_BY	results-properties_by_url,
+
+Statistics for VOCABULARIES_BY_TLD
+Input: 	10000 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:45.764
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1210	2	1	0:00:07.535	0:00:05.726	0:00:06.630	0:00:09.943	0:00:09.943	0:00:09.943	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1211	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.746	0:00:08.746	0:00:08.746	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1212	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.744	0:00:08.744	0:00:08.744	topClassesTld	SAMPLER	
+job_201306031819_1213	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.740	0:00:08.740	0:00:08.740	topClassesTld	ORDER_BY	results-vocabularies_by_tld,
+
+Statistics for VOCABULARIES_BY_ENTITY
+Input: 	10000 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:51.311
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1214	2	1	0:00:07.536	0:00:05.423	0:00:06.479	0:00:10.247	0:00:10.247	0:00:10.247	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1215	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.041	0:00:09.041	0:00:09.041	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1216	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.738	0:00:08.738	0:00:08.738	topVocabsEntities	SAMPLER	
+job_201306031819_1217	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.742	0:00:08.742	0:00:08.742	topVocabsEntities	ORDER_BY	results-vocabularies_by_entity,
+
+Statistics for PROPERTY_COOC_BY_URLS
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:55.931
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1218	1	1	0:00:03.617	0:00:03.617	0:00:03.617	0:00:11.877	0:00:11.877	0:00:11.877	groups,groupsCopy,propertyCooc,quads	GROUP_BY	
+job_201306031819_1219	1	1	0:00:07.106	0:00:07.106	0:00:07.106	0:00:09.642	0:00:09.642	0:00:09.642	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1220	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:08.738	0:00:08.738	0:00:08.738	propertyCoocSorted	SAMPLER	
+job_201306031819_1221	1	1	0:00:03.641	0:00:03.641	0:00:03.641	0:00:09.646	0:00:09.646	0:00:09.646	propertyCoocSorted	ORDER_BY	results-property_cooc_by_urls,
+
+Statistics for CLASSES_BY_ENTITY
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:19.187
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1222	1	1	0:00:03.015	0:00:03.015	0:00:03.015	0:00:09.038	0:00:09.038	0:00:09.038	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201306031819_1223	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.739	0:00:08.739	0:00:08.739	topClassesByEntities	SAMPLER	
+job_201306031819_1224	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:09.043	0:00:09.043	0:00:09.043	topClassesByEntities	ORDER_BY	results-classes_by_entity,
+
+Statistics for INCOMING_PROPERTY_COOC
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:45.732
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1225	1	1	0:00:03.315	0:00:03.315	0:00:03.315	0:00:09.342	0:00:09.342	0:00:09.342	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	
+job_201306031819_1226	1	1	0:00:02.712	0:00:02.712	0:00:02.712	0:00:09.177	0:00:09.177	0:00:09.177	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1227	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.043	0:00:09.043	0:00:09.043	propertyCoocSorted	SAMPLER	
+job_201306031819_1228	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.041	0:00:09.041	0:00:09.041	propertyCoocSorted	ORDER_BY	results-incoming_property_cooc,
+
+Statistics for CLASSES_BY_PLD
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:46.222
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1229	1	1	0:00:03.015	0:00:03.015	0:00:03.015	0:00:08.741	0:00:08.741	0:00:08.741	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1230	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:09.041	0:00:09.041	0:00:09.041	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1231	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.745	0:00:08.745	0:00:08.745	topClasses	SAMPLER	
+job_201306031819_1232	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.764	0:00:08.764	0:00:08.764	topClasses	ORDER_BY	results-classes_by_pld,
+
+Statistics for PROPERTIES_BY_STATEMENT
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:19.718
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1233	1	1	0:00:04.474	0:00:04.474	0:00:04.474	0:00:09.050	0:00:09.050	0:00:09.050	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201306031819_1234	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.275	0:00:08.275	0:00:08.275	propSorted	SAMPLER	
+job_201306031819_1235	1	1	0:00:01.813	0:00:01.813	0:00:01.813	0:00:09.043	0:00:09.043	0:00:09.043	propSorted	ORDER_BY	results-properties_by_statement,
+
+Statistics for CLASSES_BY_TLD
+Input: 	10000 records (239002 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000.nq.gz
+Total time: 	0:01:41.159
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1236	1	1	0:00:03.014	0:00:03.014	0:00:03.014	0:00:09.044	0:00:09.044	0:00:09.044	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1237	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.989	0:00:08.989	0:00:08.989	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1238	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.738	0:00:08.738	0:00:08.738	topClassesTld	SAMPLER	
+job_201306031819_1239	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.741	0:00:08.741	0:00:08.741	topClassesTld	ORDER_BY	results-classes_by_tld,
+
+Statistics for PROPERTY_COOC_BY_ENTITIES
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:02:25.757
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1240	1	1	0:00:07.790	0:00:07.790	0:00:07.790	0:00:19.896	0:00:19.896	0:00:19.896	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201306031819_1241	3	1	0:00:20.145	0:00:12.656	0:00:16.543	0:00:18.080	0:00:18.080	0:00:18.080	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1242	1	1	0:00:02.115	0:00:02.115	0:00:02.115	0:00:08.738	0:00:08.738	0:00:08.738	propertyCoocSorted	SAMPLER	
+job_201306031819_1243	1	1	0:00:04.522	0:00:04.522	0:00:04.522	0:00:09.945	0:00:09.945	0:00:09.945	propertyCoocSorted	ORDER_BY	results-property_cooc_by_entities,
+
+Statistics for PROPERTIES_BY_ENTITY
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:50.821
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1244	1	1	0:00:06.333	0:00:06.333	0:00:06.333	0:00:09.943	0:00:09.943	0:00:09.943	quads,subjPredAll	DISTINCT	
+job_201306031819_1245	1	1	0:00:03.619	0:00:03.619	0:00:03.619	0:00:09.040	0:00:09.040	0:00:09.040	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1246	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.739	0:00:08.739	0:00:08.739	propSorted	SAMPLER	
+job_201306031819_1247	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.042	0:00:09.042	0:00:09.042	propSorted	ORDER_BY	results-properties_by_entity,
+
+Statistics for VOCABULARIES_BY_PLD
+Input: 	99997 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:52.097
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1248	2	1	0:00:12.853	0:00:10.741	0:00:11.797	0:00:09.643	0:00:09.643	0:00:09.643	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1249	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.753	0:00:08.753	0:00:08.753	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1250	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.046	0:00:09.046	0:00:09.046	topVocabsPlds	SAMPLER	
+job_201306031819_1251	1	1	0:00:02.112	0:00:02.112	0:00:02.112	0:00:08.741	0:00:08.741	0:00:08.741	topVocabsPlds	ORDER_BY	results-vocabularies_by_pld,
+
+Statistics for VOCABULARIES_BY_URL
+Input: 	99997 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:55.996
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1252	2	1	0:00:12.367	0:00:10.557	0:00:11.462	0:00:10.246	0:00:10.246	0:00:10.246	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1253	1	1	0:00:03.014	0:00:03.014	0:00:03.014	0:00:09.477	0:00:09.477	0:00:09.477	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1254	1	1	0:00:01.813	0:00:01.813	0:00:01.813	0:00:08.743	0:00:08.743	0:00:08.743	topVocabsEntities	SAMPLER	
+job_201306031819_1255	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.867	0:00:08.867	0:00:08.867	topVocabsEntities	ORDER_BY	results-vocabularies_by_url,
+
+Statistics for CLASSES_BY_URL
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:50.873
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1256	1	1	0:00:05.726	0:00:05.726	0:00:05.726	0:00:09.043	0:00:09.043	0:00:09.043	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1257	1	1	0:00:02.713	0:00:02.713	0:00:02.713	0:00:09.038	0:00:09.038	0:00:09.038	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1258	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.042	0:00:09.042	0:00:09.042	topClassesByUrls	SAMPLER	
+job_201306031819_1259	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.340	0:00:09.340	0:00:09.340	topClassesByUrls	ORDER_BY	results-classes_by_url,
+
+Statistics for PROPERTIES_BY_TLD
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:50.568
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1260	1	1	0:00:07.239	0:00:07.239	0:00:07.239	0:00:09.041	0:00:09.041	0:00:09.041	quads,tldPredAll	DISTINCT	
+job_201306031819_1261	1	1	0:00:02.710	0:00:02.710	0:00:02.710	0:00:09.041	0:00:09.041	0:00:09.041	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1262	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.041	0:00:09.041	0:00:09.041	topPredicatesTld	SAMPLER	
+job_201306031819_1263	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.040	0:00:09.040	0:00:09.040	topPredicatesTld	ORDER_BY	results-properties_by_tld,
+
+Statistics for NUMBER_OF_TRIPLES
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:00:32.207
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1264	1	1	0:00:06.935	0:00:06.935	0:00:06.935	0:00:08.743	0:00:08.743	0:00:08.743	B,C,quads	GROUP_BY,COMBINER	results-number_of_triples,
+
+Statistics for PROPERTIES_BY_URL
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:50.529
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1265	1	1	0:00:06.940	0:00:06.940	0:00:06.940	0:00:09.642	0:00:09.642	0:00:09.642	quads,urlPredAll	DISTINCT	
+job_201306031819_1266	1	1	0:00:03.624	0:00:03.624	0:00:03.624	0:00:09.644	0:00:09.644	0:00:09.644	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1267	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.738	0:00:08.738	0:00:08.738	propSorted	SAMPLER	
+job_201306031819_1268	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:09.043	0:00:09.043	0:00:09.043	propSorted	ORDER_BY	results-properties_by_url,
+
+Statistics for VOCABULARIES_BY_TLD
+Input: 	99997 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:55.895
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1269	2	1	0:00:12.978	0:00:10.563	0:00:11.770	0:00:09.946	0:00:09.946	0:00:09.946	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1270	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.742	0:00:08.742	0:00:08.742	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1271	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.802	0:00:08.802	0:00:08.802	topClassesTld	SAMPLER	
+job_201306031819_1272	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:09.039	0:00:09.039	0:00:09.039	topClassesTld	ORDER_BY	results-vocabularies_by_tld,
+
+Statistics for VOCABULARIES_BY_ENTITY
+Input: 	99997 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:56.628
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1273	2	1	0:00:11.452	0:00:09.644	0:00:10.548	0:00:10.244	0:00:10.244	0:00:10.244	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1274	1	1	0:00:03.017	0:00:03.017	0:00:03.017	0:00:09.045	0:00:09.045	0:00:09.045	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1275	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.742	0:00:08.742	0:00:08.742	topVocabsEntities	SAMPLER	
+job_201306031819_1276	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.739	0:00:08.739	0:00:08.739	topVocabsEntities	ORDER_BY	results-vocabularies_by_entity,
+
+Statistics for PROPERTY_COOC_BY_URLS
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:04:56.513
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1277	1	1	0:00:07.033	0:00:07.033	0:00:07.033	0:01:00.083	0:01:00.083	0:01:00.083	groups,groupsCopy,propertyCooc,quads	GROUP_BY	
+job_201306031819_1278	16	2	0:00:18.852	0:00:12.931	0:00:16.857	0:02:06.230	0:02:05.626	0:02:05.928	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1279	1	1	0:00:02.411	0:00:02.411	0:00:02.411	0:00:09.042	0:00:09.042	0:00:09.042	propertyCoocSorted	SAMPLER	
+job_201306031819_1280	1	1	0:00:06.027	0:00:06.027	0:00:06.027	0:00:12.089	0:00:12.089	0:00:12.089	propertyCoocSorted	ORDER_BY	results-property_cooc_by_urls,
+
+Statistics for CLASSES_BY_ENTITY
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:19.458
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1281	1	1	0:00:06.631	0:00:06.631	0:00:06.631	0:00:09.039	0:00:09.039	0:00:09.039	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201306031819_1282	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.743	0:00:08.743	0:00:08.743	topClassesByEntities	SAMPLER	
+job_201306031819_1283	1	1	0:00:02.410	0:00:02.410	0:00:02.410	0:00:09.043	0:00:09.043	0:00:09.043	topClassesByEntities	ORDER_BY	results-classes_by_entity,
+
+Statistics for INCOMING_PROPERTY_COOC
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:03:26.062
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1284	1	1	0:00:06.028	0:00:06.028	0:00:06.028	0:00:37.319	0:00:37.319	0:00:37.319	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	
+job_201306031819_1285	10	1	0:00:16.875	0:00:08.137	0:00:14.830	0:01:07.226	0:01:07.226	0:01:07.226	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1286	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.741	0:00:08.741	0:00:08.741	propertyCoocSorted	SAMPLER	
+job_201306031819_1287	1	1	0:00:03.013	0:00:03.013	0:00:03.013	0:00:09.944	0:00:09.944	0:00:09.944	propertyCoocSorted	ORDER_BY	results-incoming_property_cooc,
+
+Statistics for CLASSES_BY_PLD
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:50.162
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1288	1	1	0:00:06.846	0:00:06.846	0:00:06.846	0:00:09.040	0:00:09.040	0:00:09.040	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1289	1	1	0:00:03.415	0:00:03.415	0:00:03.415	0:00:09.342	0:00:09.342	0:00:09.342	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1290	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.742	0:00:08.742	0:00:08.742	topClasses	SAMPLER	
+job_201306031819_1291	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.322	0:00:09.322	0:00:09.322	topClasses	ORDER_BY	results-classes_by_pld,
+
+Statistics for PROPERTIES_BY_STATEMENT
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:19.453
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1292	1	1	0:00:07.234	0:00:07.234	0:00:07.234	0:00:09.044	0:00:09.044	0:00:09.044	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201306031819_1293	1	1	0:00:01.814	0:00:01.814	0:00:01.814	0:00:08.275	0:00:08.275	0:00:08.275	propSorted	SAMPLER	
+job_201306031819_1294	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.039	0:00:09.039	0:00:09.039	propSorted	ORDER_BY	results-properties_by_statement,
+
+Statistics for CLASSES_BY_TLD
+Input: 	99997 records (2425337 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-100000.nq.gz
+Total time: 	0:01:50.467
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1295	1	1	0:00:06.333	0:00:06.333	0:00:06.333	0:00:09.039	0:00:09.039	0:00:09.039	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1296	1	1	0:00:02.712	0:00:02.712	0:00:02.712	0:00:09.039	0:00:09.039	0:00:09.039	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1297	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.415	0:00:08.415	0:00:08.415	topClassesTld	SAMPLER	
+job_201306031819_1298	1	1	0:00:02.411	0:00:02.411	0:00:02.411	0:00:09.121	0:00:09.121	0:00:09.121	topClassesTld	ORDER_BY	results-classes_by_tld,
+
+Statistics for PROPERTY_COOC_BY_ENTITIES
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:08:12.683
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1299	1	1	0:00:41.148	0:00:41.148	0:00:41.148	0:01:37.573	0:01:37.573	0:01:37.573	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201306031819_1300	28	2	0:00:20.150	0:00:08.119	0:00:17.472	0:03:58.542	0:03:54.318	0:03:56.430	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1301	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:09.040	0:00:09.040	0:00:09.040	propertyCoocSorted	SAMPLER	
+job_201306031819_1302	1	1	0:00:09.344	0:00:09.344	0:00:09.344	0:00:11.492	0:00:11.492	0:00:11.492	propertyCoocSorted	ORDER_BY	results-property_cooc_by_entities,
+
+Statistics for PROPERTIES_BY_ENTITY
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:02:29.035
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1303	1	1	0:00:31.648	0:00:31.648	0:00:31.648	0:00:14.446	0:00:14.446	0:00:14.446	quads,subjPredAll	DISTINCT	
+job_201306031819_1304	1	1	0:00:09.046	0:00:09.046	0:00:09.046	0:00:09.943	0:00:09.943	0:00:09.943	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1305	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.756	0:00:08.756	0:00:08.756	propSorted	SAMPLER	
+job_201306031819_1306	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:09.677	0:00:09.677	0:00:09.677	propSorted	ORDER_BY	results-properties_by_entity,
+
+Statistics for VOCABULARIES_BY_PLD
+Input: 	999971 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:02:36.193
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1307	2	1	0:00:59.622	0:00:43.341	0:00:51.481	0:00:20.498	0:00:20.498	0:00:20.498	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1308	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.741	0:00:08.741	0:00:08.741	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1309	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.749	0:00:08.749	0:00:08.749	topVocabsPlds	SAMPLER	
+job_201306031819_1310	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.043	0:00:09.043	0:00:09.043	topVocabsPlds	ORDER_BY	results-vocabularies_by_pld,
+
+Statistics for VOCABULARIES_BY_URL
+Input: 	999971 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:02:30.932
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1311	2	1	0:00:50.931	0:00:41.587	0:00:46.259	0:00:16.580	0:00:16.580	0:00:16.580	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1312	1	1	0:00:04.829	0:00:04.829	0:00:04.829	0:00:08.742	0:00:08.742	0:00:08.742	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1313	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:09.040	0:00:09.040	0:00:09.040	topVocabsEntities	SAMPLER	
+job_201306031819_1314	1	1	0:00:02.113	0:00:02.113	0:00:02.113	0:00:08.739	0:00:08.739	0:00:08.739	topVocabsEntities	ORDER_BY	results-vocabularies_by_url,
+
+Statistics for CLASSES_BY_URL
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:02:06.165
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1315	1	1	0:00:24.421	0:00:24.421	0:00:24.421	0:00:10.033	0:00:10.033	0:00:10.033	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1316	1	1	0:00:04.863	0:00:04.863	0:00:04.863	0:00:09.647	0:00:09.647	0:00:09.647	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1317	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.101	0:00:09.101	0:00:09.101	topClassesByUrls	SAMPLER	
+job_201306031819_1318	1	1	0:00:02.411	0:00:02.411	0:00:02.411	0:00:09.341	0:00:09.341	0:00:09.341	topClassesByUrls	ORDER_BY	results-classes_by_url,
+
+Statistics for PROPERTIES_BY_TLD
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:02:16.950
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1319	1	1	0:00:35.219	0:00:35.219	0:00:35.219	0:00:09.040	0:00:09.040	0:00:09.040	quads,tldPredAll	DISTINCT	
+job_201306031819_1320	1	1	0:00:03.314	0:00:03.314	0:00:03.314	0:00:08.513	0:00:08.513	0:00:08.513	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1321	1	1	0:00:01.806	0:00:01.806	0:00:01.806	0:00:08.743	0:00:08.743	0:00:08.743	topPredicatesTld	SAMPLER	
+job_201306031819_1322	1	1	0:00:02.412	0:00:02.412	0:00:02.412	0:00:09.343	0:00:09.343	0:00:09.343	topPredicatesTld	ORDER_BY	results-properties_by_tld,
+
+Statistics for NUMBER_OF_TRIPLES
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:01:01.333
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1323	1	1	0:00:35.871	0:00:35.871	0:00:35.871	0:00:08.741	0:00:08.741	0:00:08.741	B,C,quads	GROUP_BY,COMBINER	results-number_of_triples,
+
+Statistics for PROPERTIES_BY_URL
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:02:25.577
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1324	1	1	0:00:35.514	0:00:35.514	0:00:35.514	0:00:14.013	0:00:14.013	0:00:14.013	quads,urlPredAll	DISTINCT	
+job_201306031819_1325	1	1	0:00:08.741	0:00:08.741	0:00:08.741	0:00:09.341	0:00:09.341	0:00:09.341	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1326	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.739	0:00:08.739	0:00:08.739	propSorted	SAMPLER	
+job_201306031819_1327	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.042	0:00:09.042	0:00:09.042	propSorted	ORDER_BY	results-properties_by_url,
+
+Statistics for VOCABULARIES_BY_TLD
+Input: 	999971 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:02:36.079
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1328	2	1	0:00:58.159	0:00:43.684	0:00:50.921	0:00:20.199	0:00:20.199	0:00:20.199	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1329	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.742	0:00:08.742	0:00:08.742	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1330	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.740	0:00:08.740	0:00:08.740	topClassesTld	SAMPLER	
+job_201306031819_1331	1	1	0:00:01.813	0:00:01.813	0:00:01.813	0:00:08.928	0:00:08.928	0:00:08.928	topClassesTld	ORDER_BY	results-vocabularies_by_tld,
+
+Statistics for VOCABULARIES_BY_ENTITY
+Input: 	999971 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:02:31.439
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1332	2	1	0:00:52.491	0:00:41.315	0:00:46.903	0:00:18.108	0:00:18.108	0:00:18.108	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1333	1	1	0:00:05.125	0:00:05.125	0:00:05.125	0:00:08.742	0:00:08.742	0:00:08.742	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1334	1	1	0:00:01.810	0:00:01.810	0:00:01.810	0:00:08.743	0:00:08.743	0:00:08.743	topVocabsEntities	SAMPLER	
+job_201306031819_1335	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.738	0:00:08.738	0:00:08.738	topVocabsEntities	ORDER_BY	results-vocabularies_by_entity,
+
+Statistics for PROPERTY_COOC_BY_URLS
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:18:18.480
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1336	1	1	0:00:41.988	0:00:41.988	0:00:41.988	0:04:12.666	0:04:12.666	0:04:12.666	groups,groupsCopy,propertyCooc,quads	GROUP_BY	
+job_201306031819_1337	77	6	0:00:19.552	0:00:09.643	0:00:17.069	0:10:38.640	0:00:16.281	0:03:43.633	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1338	1	1	0:00:03.015	0:00:03.015	0:00:03.015	0:00:09.944	0:00:09.944	0:00:09.944	propertyCoocSorted	SAMPLER	
+job_201306031819_1339	1	1	0:00:15.420	0:00:15.420	0:00:15.420	0:00:12.269	0:00:12.269	0:00:12.269	propertyCoocSorted	ORDER_BY	results-property_cooc_by_urls,
+
+Statistics for CLASSES_BY_ENTITY
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:01:49.685
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1340	1	1	0:00:30.211	0:00:30.211	0:00:30.211	0:00:09.643	0:00:09.643	0:00:09.643	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201306031819_1341	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:09.045	0:00:09.045	0:00:09.045	topClassesByEntities	SAMPLER	
+job_201306031819_1342	1	1	0:00:02.713	0:00:02.713	0:00:02.713	0:00:09.711	0:00:09.711	0:00:09.711	topClassesByEntities	ORDER_BY	results-classes_by_entity,
+
+Statistics for INCOMING_PROPERTY_COOC
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:08:27.493
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1343	1	1	0:00:32.600	0:00:32.600	0:00:32.600	0:02:00.175	0:02:00.175	0:02:00.175	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	
+job_201306031819_1344	31	3	0:00:19.107	0:00:09.936	0:00:16.211	0:04:03.856	0:00:11.159	0:02:46.188	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1345	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:09.047	0:00:09.047	0:00:09.047	propertyCoocSorted	SAMPLER	
+job_201306031819_1346	1	1	0:00:03.315	0:00:03.315	0:00:03.315	0:00:09.646	0:00:09.646	0:00:09.646	propertyCoocSorted	ORDER_BY	results-incoming_property_cooc,
+
+Statistics for CLASSES_BY_PLD
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:02:11.824
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1347	1	1	0:00:30.451	0:00:30.451	0:00:30.451	0:00:10.248	0:00:10.248	0:00:10.248	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1348	1	1	0:00:03.617	0:00:03.617	0:00:03.617	0:00:09.640	0:00:09.640	0:00:09.640	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1349	1	1	0:00:01.811	0:00:01.811	0:00:01.811	0:00:08.738	0:00:08.738	0:00:08.738	topClasses	SAMPLER	
+job_201306031819_1350	1	1	0:00:02.414	0:00:02.414	0:00:02.414	0:00:09.341	0:00:09.341	0:00:09.341	topClasses	ORDER_BY	results-classes_by_pld,
+
+Statistics for PROPERTIES_BY_STATEMENT
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:01:48.577
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1351	1	1	0:00:31.656	0:00:31.656	0:00:31.656	0:00:09.342	0:00:09.342	0:00:09.342	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201306031819_1352	1	1	0:00:01.812	0:00:01.812	0:00:01.812	0:00:08.739	0:00:08.739	0:00:08.739	propSorted	SAMPLER	
+job_201306031819_1353	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.045	0:00:09.045	0:00:09.045	propSorted	ORDER_BY	results-properties_by_statement,
+
+Statistics for CLASSES_BY_TLD
+Input: 	999971 records (25192780 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-1000000.nq.gz
+Total time: 	0:02:11.564
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1354	1	1	0:00:25.628	0:00:25.628	0:00:25.628	0:00:09.944	0:00:09.944	0:00:09.944	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1355	1	1	0:00:03.918	0:00:03.918	0:00:03.918	0:00:09.643	0:00:09.643	0:00:09.643	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1356	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.741	0:00:08.741	0:00:08.741	topClassesTld	SAMPLER	
+job_201306031819_1357	1	1	0:00:02.716	0:00:02.716	0:00:02.716	0:00:09.343	0:00:09.343	0:00:09.343	topClassesTld	ORDER_BY	results-classes_by_tld,
+
+Statistics for PROPERTY_COOC_BY_ENTITIES
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	1:18:54.087
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1358	1	1	0:11:34.650	0:11:34.650	0:11:34.650	0:19:09.371	0:19:09.371	0:19:09.371	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201306031819_1359	285	20	0:00:21.985	0:00:09.645	0:00:18.005	0:40:38.973	0:00:21.901	0:04:24.691	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1360	1	1	0:00:03.616	0:00:03.616	0:00:03.616	0:00:09.644	0:00:09.644	0:00:09.644	propertyCoocSorted	SAMPLER	
+job_201306031819_1361	1	1	0:00:24.857	0:00:24.857	0:00:24.857	0:00:13.814	0:00:13.814	0:00:13.814	propertyCoocSorted	ORDER_BY	results-property_cooc_by_entities,
+
+Statistics for PROPERTIES_BY_ENTITY
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:09:44.245
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1362	1	1	0:05:38.573	0:05:38.573	0:05:38.573	0:01:20.441	0:01:20.441	0:01:20.441	quads,subjPredAll	DISTINCT	
+job_201306031819_1363	10	1	0:00:18.204	0:00:12.054	0:00:14.822	0:01:03.116	0:01:03.116	0:01:03.116	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1364	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.740	0:00:08.740	0:00:08.740	propSorted	SAMPLER	
+job_201306031819_1365	1	1	0:00:02.713	0:00:02.713	0:00:02.713	0:00:09.348	0:00:09.348	0:00:09.348	propSorted	ORDER_BY	results-properties_by_entity,
+
+Statistics for VOCABULARIES_BY_PLD
+Input: 	9999702 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:10:00.881
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1366	2	1	0:08:20.795	0:05:57.019	0:07:08.907	0:02:29.803	0:02:29.803	0:02:29.803	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1367	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.742	0:00:08.742	0:00:08.742	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1368	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:09.043	0:00:09.043	0:00:09.043	topVocabsPlds	SAMPLER	
+job_201306031819_1369	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:09.042	0:00:09.042	0:00:09.042	topVocabsPlds	ORDER_BY	results-vocabularies_by_pld,
+
+Statistics for VOCABULARIES_BY_URL
+Input: 	9999702 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:09:17.379
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1370	2	1	0:07:11.983	0:05:44.789	0:06:28.386	0:01:45.722	0:01:45.722	0:01:45.722	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1371	3	1	0:00:15.068	0:00:06.030	0:00:11.753	0:00:10.553	0:00:10.553	0:00:10.553	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1372	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.738	0:00:08.738	0:00:08.738	topVocabsEntities	SAMPLER	
+job_201306031819_1373	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.738	0:00:08.738	0:00:08.738	topVocabsEntities	ORDER_BY	results-vocabularies_by_url,
+
+Statistics for CLASSES_BY_URL
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:06:11.392
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1374	1	1	0:04:12.340	0:04:12.340	0:04:12.340	0:00:16.276	0:00:16.276	0:00:16.276	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1375	2	1	0:00:13.862	0:00:07.833	0:00:10.847	0:00:11.454	0:00:11.454	0:00:11.454	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1376	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:09.051	0:00:09.051	0:00:09.051	topClassesByUrls	SAMPLER	
+job_201306031819_1377	1	1	0:00:03.018	0:00:03.018	0:00:03.018	0:00:09.647	0:00:09.647	0:00:09.647	topClassesByUrls	ORDER_BY	results-classes_by_url,
+
+Statistics for PROPERTIES_BY_TLD
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:08:00.999
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1378	1	1	0:06:16.473	0:06:16.473	0:06:16.473	0:00:09.342	0:00:09.342	0:00:09.342	quads,tldPredAll	DISTINCT	
+job_201306031819_1379	1	1	0:00:03.918	0:00:03.918	0:00:03.918	0:00:09.642	0:00:09.642	0:00:09.642	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1380	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.739	0:00:08.739	0:00:08.739	topPredicatesTld	SAMPLER	
+job_201306031819_1381	1	1	0:00:02.717	0:00:02.717	0:00:02.717	0:00:09.340	0:00:09.340	0:00:09.340	topPredicatesTld	ORDER_BY	results-properties_by_tld,
+
+Statistics for NUMBER_OF_TRIPLES
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:04:55.589
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1382	1	1	0:04:32.182	0:04:32.182	0:04:32.182	0:00:08.738	0:00:08.738	0:00:08.738	B,C,quads	GROUP_BY,COMBINER	results-number_of_triples,
+
+Statistics for PROPERTIES_BY_URL
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:08:24.340
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1383	1	1	0:04:50.621	0:04:50.621	0:04:50.621	0:01:02.846	0:01:02.846	0:01:02.846	quads,urlPredAll	DISTINCT	
+job_201306031819_1384	9	1	0:00:16.922	0:00:04.831	0:00:14.246	0:00:56.733	0:00:56.733	0:00:56.733	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306031819_1385	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:09.043	0:00:09.043	0:00:09.043	propSorted	SAMPLER	
+job_201306031819_1386	1	1	0:00:02.713	0:00:02.713	0:00:02.713	0:00:09.943	0:00:09.943	0:00:09.943	propSorted	ORDER_BY	results-properties_by_url,
+
+Statistics for VOCABULARIES_BY_TLD
+Input: 	9999702 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:10:00.433
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1387	2	1	0:08:22.243	0:05:54.542	0:07:08.392	0:02:34.030	0:02:34.030	0:02:34.030	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1388	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:09.041	0:00:09.041	0:00:09.041	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1389	1	1	0:00:01.809	0:00:01.809	0:00:01.809	0:00:08.738	0:00:08.738	0:00:08.738	topClassesTld	SAMPLER	
+job_201306031819_1390	1	1	0:00:02.111	0:00:02.111	0:00:02.111	0:00:08.743	0:00:08.743	0:00:08.743	topClassesTld	ORDER_BY	results-vocabularies_by_tld,
+
+Statistics for VOCABULARIES_BY_ENTITY
+Input: 	9999702 records (-1 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:09:47.152
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1391	2	1	0:07:19.034	0:05:40.637	0:06:29.835	0:02:06.548	0:02:06.548	0:02:06.548	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306031819_1392	4	1	0:00:16.277	0:00:12.975	0:00:14.395	0:00:22.015	0:00:22.015	0:00:22.015	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306031819_1393	1	1	0:00:01.808	0:00:01.808	0:00:01.808	0:00:08.739	0:00:08.739	0:00:08.739	topVocabsEntities	SAMPLER	
+job_201306031819_1394	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.744	0:00:08.744	0:00:08.744	topVocabsEntities	ORDER_BY	results-vocabularies_by_entity,
+
+Statistics for CLASSES_BY_ENTITY
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:04:50.308
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1396	1	1	0:03:33.416	0:03:33.416	0:03:33.416	0:00:10.248	0:00:10.248	0:00:10.248	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201306031819_1397	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.737	0:00:08.737	0:00:08.737	topClassesByEntities	SAMPLER	
+job_201306031819_1398	1	1	0:00:03.013	0:00:03.013	0:00:03.013	0:00:09.642	0:00:09.642	0:00:09.642	topClassesByEntities	ORDER_BY	results-classes_by_entity,
+
+Statistics for INCOMING_PROPERTY_COOC
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	2:48:05.622
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1399	1	1	0:04:53.100	0:04:53.100	0:04:53.100	1:00:40.772	1:00:40.772	1:00:40.772	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	
+job_201306031819_1400	654	44	0:00:19.882	0:00:08.145	0:00:17.415	1:30:16.208	0:00:15.711	0:04:22.943	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306031819_1401	1	1	0:00:03.013	0:00:03.013	0:00:03.013	0:00:09.040	0:00:09.040	0:00:09.040	propertyCoocSorted	SAMPLER	
+job_201306031819_1402	1	1	0:00:06.332	0:00:06.332	0:00:06.332	0:00:12.070	0:00:12.070	0:00:12.070	propertyCoocSorted	ORDER_BY	results-incoming_property_cooc,
+
+Statistics for CLASSES_BY_PLD
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:06:12.027
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1403	1	1	0:04:23.788	0:04:23.788	0:04:23.788	0:00:09.943	0:00:09.943	0:00:09.943	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1404	1	1	0:00:05.123	0:00:05.123	0:00:05.123	0:00:09.946	0:00:09.946	0:00:09.946	classCounts,classes	GROUP_BY,COMBINER	
+job_201306031819_1405	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:09.039	0:00:09.039	0:00:09.039	topClasses	SAMPLER	
+job_201306031819_1406	1	1	0:00:03.015	0:00:03.015	0:00:03.015	0:00:09.643	0:00:09.643	0:00:09.643	topClasses	ORDER_BY	results-classes_by_pld,
+
+Statistics for PROPERTIES_BY_STATEMENT
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:05:43.856
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1407	1	1	0:04:26.439	0:04:26.439	0:04:26.439	0:00:09.642	0:00:09.642	0:00:09.642	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201306031819_1408	1	1	0:00:02.109	0:00:02.109	0:00:02.109	0:00:09.042	0:00:09.042	0:00:09.042	propSorted	SAMPLER	
+job_201306031819_1409	1	1	0:00:02.711	0:00:02.711	0:00:02.711	0:00:09.343	0:00:09.343	0:00:09.343	propSorted	ORDER_BY	results-properties_by_statement,
+
+Statistics for CLASSES_BY_TLD
+Input: 	9999702 records (251502541 Bytes) from DataSet BTC2012/DBPedia, filename = data/dbpedia-10000000.nq.gz
+Total time: 	0:05:26.473
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201306031819_1410	1	1	0:03:38.535	0:03:38.535	0:03:38.535	0:00:09.943	0:00:09.943	0:00:09.943	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306031819_1411	1	1	0:00:05.424	0:00:05.424	0:00:05.424	0:00:09.945	0:00:09.945	0:00:09.945	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306031819_1412	1	1	0:00:02.110	0:00:02.110	0:00:02.110	0:00:08.739	0:00:08.739	0:00:08.739	topClassesTld	SAMPLER	
+job_201306031819_1413	1	1	0:00:03.316	0:00:03.316	0:00:03.316	0:00:09.947	0:00:09.947	0:00:09.947	topClassesTld	ORDER_BY	results-classes_by_tld,
+
+Scalability (Execution time):
+Script name	1E1	1E2	1E3	1E4	1E5	1E6	1E7
+classes_by_entity	0:01:19.005	0:01:19.266	0:01:19.015	0:01:19.187	0:01:19.458	0:01:49.685	0:04:50.308
+classes_by_pld	0:01:40.345	0:01:36.350	0:01:46.272	0:01:46.222	0:01:50.162	0:02:11.824	0:06:12.027
+classes_by_tld	0:01:45.445	0:01:46.681	0:01:40.170	0:01:41.159	0:01:50.467	0:02:11.564	0:05:26.473
+classes_by_url	0:01:45.548	0:01:40.980	0:01:45.928	0:01:45.848	0:01:50.873	0:02:06.165	0:06:11.392
+incoming_property_cooc	0:01:44.984	0:01:41.009	0:01:46.322	0:01:45.732	0:03:26.062	0:08:27.493	2:48:05.622
+number_of_triples	0:00:26.229	0:00:26.252	0:00:26.918	0:00:26.466	0:00:32.207	0:01:01.333	0:04:55.589
+properties_by_entity	0:01:41.002	0:01:46.060	0:01:45.097	0:01:46.016	0:01:50.821	0:02:29.035	0:09:44.245
+properties_by_statement	0:01:14.273	0:01:09.503	0:01:19.665	0:01:19.718	0:01:19.453	0:01:48.577	0:05:43.856
+properties_by_tld	0:01:45.503	0:01:40.888	0:01:46.102	0:01:46.016	0:01:50.568	0:02:16.950	0:08:00.999
+properties_by_url	0:01:40.589	0:01:40.660	0:01:40.705	0:01:45.527	0:01:50.529	0:02:25.577	0:08:24.340
+property_cooc_by_entities	0:01:43.406	0:01:45.474	0:01:46.580	0:01:51.050	0:02:25.757	0:08:12.683	1:18:54.087
+property_cooc_by_urls	0:01:45.566	0:01:45.693	0:01:46.460	0:01:55.931	0:04:56.513	0:18:18.480	
+vocabularies_by_entity	0:01:45.448	0:01:35.692	0:01:41.526	0:01:51.311	0:01:56.628	0:02:31.439	0:09:47.152
+vocabularies_by_pld	0:01:45.164	0:01:41.059	0:01:46.046	0:01:46.192	0:01:52.097	0:02:36.193	0:10:00.881
+vocabularies_by_tld	0:01:45.722	0:01:40.442	0:01:46.211	0:01:45.764	0:01:55.895	0:02:36.079	0:10:00.433
+vocabularies_by_url	0:01:40.267	0:01:40.951	0:01:45.226	0:01:51.078	0:01:55.996	0:02:30.932	0:09:17.379
+
+Scalability (Number of output records):
+Script name	1E1	1E2	1E3	1E4	1E5	1E6	1E7
+classes_by_entity	0	9	67	466	2916	19585	90807
+classes_by_pld	0	9	67	466	2916	19585	90807
+classes_by_tld	0	9	67	466	2916	19585	90807
+classes_by_url	0	9	67	466	2916	19585	90807
+incoming_property_cooc	0	1	50	641	11519	30957	121322
+number_of_triples	1	1	1	1	1	1	1
+properties_by_entity	0	16	72	364	1698	5067	11639
+properties_by_statement	0	16	99	418	1811	5301	12099
+properties_by_tld	10	51	258	829	3124	7844	16336
+properties_by_url	0	16	69	346	1623	4969	11588
+property_cooc_by_entities	0	168	3556	13925	74446	247465	716216
+property_cooc_by_urls	0	241	4580	20314	128893	387707	
+vocabularies_by_entity	3	13	16	16	17	17	17
+vocabularies_by_pld	3	13	16	16	17	17	17
+vocabularies_by_tld	3	13	16	16	17	17	17
+vocabularies_by_url	3	13	16	16	17	17	17
+
+Comparison of script counters (1E7 records)
+Script name	Time (total)	Number of jobs	Number of maps	Average map time	Number of reduces	Average reduce time
+property_cooc_by_entities	1:18:54.087	4	288	0:00:20.328	23	0:04:41.158
+properties_by_url	0:08:24.340	4	12	0:00:35.279	4	0:00:34.641
+properties_by_entity	0:09:44.245	4	13	0:00:37.816	4	0:00:40.411
+vocabularies_by_pld	0:10:00.881	4	5	0:02:52.647	4	0:00:44.157
+classes_by_entity	0:04:50.308	3	3	0:01:12.846	3	0:00:09.542
+number_of_triples	0:04:55.589	1	1	0:04:32.182	1	0:00:08.738
+incoming_property_cooc	2:48:05.622	4	657	0:00:17.795	47	0:05:24.071
+properties_by_tld	0:08:00.999	4	4	0:01:36.304	4	0:00:09.265
+classes_by_tld	0:05:26.473	4	4	0:00:57.346	4	0:00:09.643
+vocabularies_by_tld	0:10:00.433	4	5	0:02:52.502	4	0:00:45.138
+properties_by_statement	0:05:43.856	3	3	0:01:30.419	3	0:00:09.342
+classes_by_url	0:06:11.392	4	5	0:00:55.832	4	0:00:11.607
+vocabularies_by_entity	0:09:47.152	4	8	0:01:45.146	4	0:00:41.511
+classes_by_pld	0:06:12.027	4	4	0:01:08.509	4	0:00:09.642
+vocabularies_by_url	0:09:17.379	4	7	0:01:56.564	4	0:00:33.437
+
+Comparison of PIG features.
+Feature	Usage count	mapMaxTime MEAN	mapMaxTime STD	mapMinTime MEAN	mapMinTime STD	mapNumber MEAN	mapNumber STD	mapInputNumber MEAN	mapInputNumber STD	mapOutputNumber MEAN	mapOutputNumber STD	reduceMaxTime MEAN	reduceMaxTime STD	reduceMinTime MEAN	reduceMinTime STD	reduceNumber MEAN	reduceNumber STD	reduceInputNumber MEAN	reduceInputNumber STD	reduceOutputNumber MEAN	reduceOutputNumber STD
+DISTINCT	10	0:06:01.439	104.3s	0:05:13.732	53.4s	0:00:00.001	0s	3:53:19.583	5163.8s	2:06:51.467	4665s	0:01:12.489	59.4s	0:01:12.489	59.4s	0:00:00.001	0s	0:31:40.141	2595.6s	0:31:00.077	2585s
+GROUP_BY	2	0:08:13.875	283.9s	0:08:13.875	283.9s	0:00:00.001	0s	2:46:39.702	0s	1:58:48.698	4060.2s	0:39:55.072	1761.7s	0:39:55.072	1761.7s	0:00:00.001	0s	1:58:48.698	4060.2s	103:23:01.796	214863.1s
+GROUP_BY,COMBINER	15	0:00:59.488	99.9s	0:00:55.442	101.8s	0:00:00.065	0.2s	14:41:04.231	141845s	14:30:55.839	142061.4s	0:08:59.666	1486.2s	0:00:18.495	17.4s	0:00:00.005	0s	0:17:50.018	3588.6s	0:01:23.500	180.6s
+ORDER_BY	14	0:00:04.467	6s	0:00:04.467	6s	0:00:00.001	0s	0:01:29.464	185.9s	0:01:29.464	185.9s	0:00:09.857	1.4s	0:00:09.857	1.4s	0:00:00.001	0s	0:01:29.464	185.9s	0:01:29.464	185.9s
+SAMPLER	14	0:00:02.174	0.5s	0:00:02.174	0.5s	0:00:00.001	0s	0:00:00.519	1.2s	0:00:00.519	1.2s	0:00:08.934	0.3s	0:00:08.934	0.3s	0:00:00.001	0s	0:00:00.519	1.2s	0:00:00.001	0s
+
