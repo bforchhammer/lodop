@@ -1,6 +1,7 @@
 package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFileSet;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
@@ -225,7 +226,10 @@ public class ReportGenerator {
 
         final String[] counterTypes = new String[] {
             "mapMaxTime", "mapMinTime", "mapNumber", "mapInputNumber", "mapOutputNumber",
-            "reduceMaxTime", "reduceMinTime", "reduceNumber", "reduceInputNumber", "reduceOutputNumber"
+            "reduceMaxTime", "reduceMinTime", "reduceNumber", "reduceInputNumber", "reduceOutputNumber",
+        };
+        final String[] timeCounterTypes = new String[] {
+            "mapMaxTime", "mapMinTime", "reduceMaxTime", "reduceMinTime",
         };
 
         for (ExecutionStats stats : statsByName.values()) {
@@ -270,8 +274,14 @@ public class ReportGenerator {
             sb.append("\t").append(statsByFeatures.get(feature).get("mapMaxTime").getN());
             for (String counterType : counterTypes) {
                 SummaryStatistics s = statsByFeatures.get(feature).get(counterType);
-                sb.append("\t").append(DurationFormatUtils.formatDurationHMS(Math.round(s.getMean())));
-                sb.append("\t").append(DECIMAL_FLOAT.format(s.getStandardDeviation() / 1000)).append("s");
+                if (ArrayUtils.contains(timeCounterTypes, counterType)) {
+                    sb.append("\t").append(DurationFormatUtils.formatDurationHMS(Math.round(s.getMean())));
+                    sb.append("\t").append(DECIMAL_FLOAT.format(s.getStandardDeviation() / 1000)).append("s");
+                }
+                else {
+                    sb.append("\t").append(DECIMAL_FLOAT.format(s.getMean()));
+                    sb.append("\t").append(DECIMAL_FLOAT.format(s.getStandardDeviation())).append("s");
+                }
             }
             sb.append("\n");
         }
