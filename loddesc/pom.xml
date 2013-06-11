@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>loddesc</groupId>
+    <artifactId>loddesc</artifactId>
+    <version>0.1</version>
+
+    <properties>
+        <scala.version>2.9.1</scala.version>
+        <scalatest.version>1.6.1</scalatest.version>
+        <scala.plugin.version>2.15.2</scala.plugin.version>
+    </properties>
+
+    <packaging>pom</packaging>
+    <name>LodDesc</name>
+
+    <description>...</description>
+    <url></url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>anjeve</id>
+            <name>Anja Jentzsch</name>
+            <email>anja@anjeve.de</email>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>core</module>
+        <module>flow</module>
+    </modules>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>${scala.plugin.version}</version>
+                <configuration>
+                    <args>
+                        <arg>-optimise</arg>
+                    </args>
+                    <jvmArgs>
+                        <jvmArg>-Xmx1024m</jvmArg>
+                    </jvmArgs>
+                    <displayCmd>true</displayCmd>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <phase>test-compile</phase>
+                    </execution>
+                    <execution>
+                        <id>process-resources</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <!--<skipTests>true</skipTests>-->
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>${scala.plugin.version}</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scala.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.9.1</artifactId>
+            <version>${scalatest.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>scala-tools.org</id>
+            <url>
+                http://nexus.scala-tools.org/content/repositories/releases/
+            </url>
+        </repository>
+
+        <snapshotRepository>
+            <id>scala-tools.org</id>
+            <url>
+                http://nexus.scala-tools.org/content/repositories/snapshots/
+            </url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
