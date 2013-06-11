@@ -4,15 +4,15 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
+import java.net.JarURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.jar.JarEntry;
 
 /**
  * Various helper functions for loading and parsing pig scripts.
@@ -44,21 +44,70 @@ public class PigScriptHelper {
             Enumeration<URL> urls = ClassLoader.getSystemClassLoader().getResources(PIG_SCRIPTS_DIRECTORY);
 
             while (urls.hasMoreElements()) {
-                File file = new File(urls.nextElement().toURI());
-                if (!file.isDirectory()) continue;
-                File[] files = file.listFiles(PIG_EXTENSION_FILTER);
-                log.info("Found pig scripts in: " + file);
-                scripts.addAll(PigScript.fromFiles(files));
+                URL url = urls.nextElement();
+
+                // Load pig scripts from a JAR File (Hm, is there a better way to do this..?)
+                URLConnection urlConnection = url.openConnection();
+                if (urlConnection instanceof JarURLConnection) {
+                    log.debug("Looking at: " + url);
+                    findPigScripts((JarURLConnection) urlConnection, scripts);
+                }
+
+                // Try loading pig scripts via File object from local FS path.
+                else {
+                    findPigScripts(url, scripts);
+                }
             }
         } catch (IOException e) {
             // Something wrong with the class loader
             log.error("Failed to load pig scripts", e);
-        } catch (URISyntaxException e) {
-            // Error in URI-to-File conversion
-            log.error("Failed to load pig scripts", e);
         }
         log.info(String.format("Loaded %d pig scripts.", scripts.size()));
         return scripts;
+    }
+
+    private static void findPigScripts(JarURLConnection jarConnection, Set<PigScript> scripts) {
+        Enumeration<JarEntry> entries;
+        try {
+            entries = jarConnection.getJarFile().entries();
+        } catch (IOException e) {
+            log.error("Cannot get entries from jar file.", e);
+            return;
+        }
+
+        while (entries.hasMoreElements()) {
+            JarEntry entry = entries.nextElement();
+            if (!entry.isDirectory() && entry.getName().startsWith(PIG_SCRIPTS_DIRECTORY)) {
+                log.info("Found pig script: " + entry.getName());
+                try {
+                    PigScript script = JarPigScript.fromJarConnection(jarConnection, entry);
+                    scripts.add(script);
+                } catch (Exception e) {
+                    log.error("Cannot create pig script for: " + entry.getName(), e);
+                }
+            }
+        }
+    }
+
+    private static void findPigScripts(URL fileURL, Set<PigScript> scripts) {
+        File file;
+        try {
+            file = new File(fileURL.toURI());
+        } catch (URISyntaxException e) {
+            log.error("Failed to load pig scripts from " + fileURL, e);
+            return;
+        } catch (IllegalArgumentException e) {
+            log.error("Failed to load pig scripts from " + fileURL, e);
+            return;
+        }
+
+        if (!file.isDirectory()) {
+            return;
+        }
+
+        File[] files = file.listFiles(PIG_EXTENSION_FILTER);
+        log.info("Found pig scripts in: " + file);
+        scripts.addAll(FilePigScript.fromFiles(files));
     }
 
     /**
@@ -124,6 +173,17 @@ public class PigScriptHelper {
         return line;
     }
 
+    private static String readLastLine(InputStream is) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(is));
+        String line = null;
+        while (in.ready()) {
+            String line_tmp = in.readLine();
+            // ignore empty lines
+            if (!line_tmp.isEmpty()) line = line_tmp;
+        }
+        return line;
+    }
+
     /**
      * Tries to determine the result alias for a given pig script.
      *
@@ -143,12 +203,53 @@ public class PigScriptHelper {
      */
     public static String guessResultAlias(File file) throws IOException {
         String lastStatement = readLastLine(file);
+        return guessResultAlias(lastStatement);
+    }
+
+    /**
+     * Tries to determine the result alias for a given pig script.
+     *
+     * Assumes that the alias for the expected result resides on the last non-empty line of the script. Also assumes,
+     * that the last line contains a pig-latin statement, which assigns something to an alias (e.g.
+     * <code>topClassesByEntities = ORDER classCounts BY cnt DESC;</code>.
+     *
+     * Therefore, the alias is determined by parsing the last line of the given file, and returning the left-hand side
+     * of the pig-latin assignment. If the last line cannot be determined, or it does not contain an assignment, the
+     * method throws an Exception.
+     *
+     * @param is An input stream to read the script from.
+     *
+     * @return Result alias for given pig script.
+     *
+     * @throws IOException
+     */
+    public static String guessResultAlias(InputStream is) throws IOException {
+        String lastStatement = readLastLine(is);
+        return guessResultAlias(lastStatement);
+    }
+
+    /**
+     * Tries to determine the result alias for the given pig latin statement.
+     *
+     * Assumes that the given string represent a pig latin statement which assigns something to an alias, (e.g.
+     * <code>topClassesByEntities = ORDER classCounts BY cnt DESC;</code>. This method returns the left-hand side of the
+     * given pig latin assignment.
+     *
+     * If the statement does not contain an assignment, the method throws an Exception.
+     *
+     * @param lastStatement A pig latin statement.
+     *
+     * @return Result alias for given pig script.
+     *
+     * @throws IOException
+     */
+    private static String guessResultAlias(String lastStatement) throws IOException {
         String[] pieces = lastStatement.split("=");
         if (pieces.length < 2) {
-            throw new IOException(String.format("Last line of %s is not a valid assignment: %s", file.getName(),
-                lastStatement));
+            throw new IOException(String.format("Statement is not a valid assignment: %s", lastStatement));
         }
-        String alias = pieces[0].trim();
-        return alias;
+        return pieces[0].trim();
     }
+
+
 }
