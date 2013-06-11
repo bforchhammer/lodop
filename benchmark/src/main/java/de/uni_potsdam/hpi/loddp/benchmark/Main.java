@@ -72,12 +72,15 @@ public class Main {
         boolean reuseServer = false;
         ScriptRunner runner = new ScriptRunner(reuseServer);
 
-        InputFileSet dbpedia = new InputFileSet("BTC2012/DBPedia", "data/dbpedia-", 10, 10000000);
-        InputFileSet freebase = new InputFileSet("BTC2012/Freebase", "data/freebase-", 10, 10000000);
+        //InputFileSet dbpedia = new InputFileSet("BTC2012/DBPedia", "data/dbpedia-", 10, 10000000);
+        //InputFileSet freebase = new InputFileSet("BTC2012/Freebase", "data/freebase-", 10, 10000000);
 
+        InputFile dbpediaData0 = new InputFile("data/freebase-data-0.nq.gz");
+
+        runSequential(runner, scripts, dbpediaData0, blacklist);
         //runSequential(runner, scripts, freebase.getBySize(10000000), blacklist);
         //runSequential(runner, scripts, dbpedia.getBySize(10000000), blacklist);
-        runSequential(runner, scripts, dbpedia, blacklist);
+        //runSequential(runner, scripts, dbpedia, blacklist);
 
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
         rg.scalabilityReport();

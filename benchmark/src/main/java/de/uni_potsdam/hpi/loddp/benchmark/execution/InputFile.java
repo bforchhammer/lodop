@@ -31,6 +31,15 @@ public class InputFile {
         this(filename, tupleCount, null);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param filename
+     */
+    public InputFile(String filename) {
+        this(filename, 0);
+    }
+
     public long getTupleCount() {
         return tupleCount;
     }

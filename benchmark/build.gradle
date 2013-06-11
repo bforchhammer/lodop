@@ -1,5 +1,5 @@
 dependencies {
-	compile ('org.apache.pig:pig:0.11.1') {
+    compile('org.apache.pig:pig:0.11.1') {
         exclude group: 'org.slf4j', module: 'slf4j-api'
     }
     compile 'org.slf4j:slf4j-api:1.4.3'
@@ -15,15 +15,20 @@ dependencies {
     runtime 'dk.brics.automaton:automaton:1.11-8'
 }
 
-jar {
-    dependsOn configurations.runtime
+task packageJar(type: Jar, dependsOn: jar) {
+    destinationDir = file(".")
     from {
-        configurations.runtime.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
+        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    from {
+        zipTree(project.jar.archivePath)
+    }
+    from {
+        fileTree(dir: './lib', includes: ['**/*.jar'])
     }
     manifest {
         attributes('Main-Class': 'de.uni_potsdam.hpi.loddp.benchmark.Main')
+        //attributes('Class-Path': 'loddesc-core-0.1.jar ldif-single-0.5.1-jar-with-dependencies.jar')
     }
 }
 

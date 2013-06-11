@@ -42,6 +42,7 @@ public class JarPigScript extends PigScript {
 
     @Override
     public String getScriptName() {
+        // @todo remove folder name.
         return org.apache.commons.io.FilenameUtils.removeExtension(entry.getName());
     }
 }
