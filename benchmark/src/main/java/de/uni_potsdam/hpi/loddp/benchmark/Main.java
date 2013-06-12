@@ -69,18 +69,15 @@ public class Main {
         blacklist.add("vocabularies_by_tld");
         blacklist.add("vocabularies_by_url");//*/
 
-        boolean reuseServer = false;
-        ScriptRunner runner = new ScriptRunner(reuseServer);
+        ScriptRunner runner = new ScriptRunner(ScriptRunner.HADOOP_LOCATION.LOCALHOST);
 
-        //InputFileSet dbpedia = new InputFileSet("BTC2012/DBPedia", "data/dbpedia-", 10, 10000000);
-        //InputFileSet freebase = new InputFileSet("BTC2012/Freebase", "data/freebase-", 10, 10000000);
+        InputFileSet dbpedia = new InputFileSet("BTC2012/DBPedia", "data/dbpedia-", 10, 10000000);
+        InputFileSet freebase = new InputFileSet("BTC2012/Freebase", "data/freebase-", 10, 10000000);
 
-        InputFile dbpediaData0 = new InputFile("data/freebase-data-0.nq.gz");
+        //InputFile dbpediaData0 = new InputFile("data/freebase-data-0.nq.gz");
+        //runSequential(runner, scripts, dbpediaData0, blacklist);
 
-        runSequential(runner, scripts, dbpediaData0, blacklist);
-        //runSequential(runner, scripts, freebase.getBySize(10000000), blacklist);
-        //runSequential(runner, scripts, dbpedia.getBySize(10000000), blacklist);
-        //runSequential(runner, scripts, dbpedia, blacklist);
+        runSequential(runner, scripts, freebase.getBySize(10000000), blacklist);
 
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
         rg.scalabilityReport();

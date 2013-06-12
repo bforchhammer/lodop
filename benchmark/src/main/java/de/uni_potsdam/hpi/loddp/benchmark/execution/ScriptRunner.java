@@ -16,21 +16,18 @@ import java.util.Properties;
 public class ScriptRunner {
 
     protected static final Log log = LogFactory.getLog(ScriptRunner.class);
-    protected static final Properties serverProperties;
-
-    static {
-        serverProperties = new Properties();
-        // Cluster config
-        serverProperties.setProperty("fs.default.name", "hdfs://tenemhead2");
-        serverProperties.setProperty("mapred.job.tracker", "tenemhead2:9001");
-
-        // Local config
-        //serverProperties.setProperty("fs.default.name", "hdfs://localhost:9000");
-        //serverProperties.setProperty("mapred.job.tracker", "localhost:9001");
-    }
-
+    private final Properties serverProperties;
+    private final boolean reuseServer;
     private PigServer pig;
-    private boolean reuseServer;
+
+    /**
+     * Constructor.
+     *
+     * @param location The hadoop server location.
+     */
+    public ScriptRunner(HADOOP_LOCATION location) {
+        this(location, false);
+    }
 
     /**
      * Constructor.
@@ -42,11 +39,35 @@ public class ScriptRunner {
      *
      * @throws IOException
      */
-    public ScriptRunner(boolean reuseServer) {
+    public ScriptRunner(HADOOP_LOCATION location, boolean reuseServer) {
         this.reuseServer = reuseServer;
+        this.serverProperties = generateProperties(location);
 
         log.info(String.format("ScriptRunner is using %s PigServer(s) for executing scripts.",
             reuseServer ? "ONE" : "SEPARATE"));
+    }
+
+    /**
+     * Creates a properties instance with hadoop cluster configuration settings depending on the given Hadoop location.
+     *
+     * @param type The server address (cluster or local).
+     *
+     * @return A properties object with at least the following two properties filled in: "fs.default.name",
+     *         "mapred.job.tracker".
+     */
+    private static Properties generateProperties(HADOOP_LOCATION type) {
+        Properties properties = new Properties();
+        switch (type) {
+            case HPI_CLUSTER:
+                properties.setProperty("fs.default.name", "hdfs://tenemhead2.hpi.uni-potsdam.de");
+                properties.setProperty("mapred.job.tracker", "tenemhead2.hpi.uni-potsdam.de:9001");
+                break;
+            case LOCALHOST:
+                properties.setProperty("fs.default.name", "hdfs://localhost:9000");
+                properties.setProperty("mapred.job.tracker", "localhost:9001");
+                break;
+        }
+        return properties;
     }
 
     /**
@@ -198,4 +219,6 @@ public class ScriptRunner {
             this.pig = null;
         }
     }
+
+    public enum HADOOP_LOCATION {HPI_CLUSTER, LOCALHOST}
 }
