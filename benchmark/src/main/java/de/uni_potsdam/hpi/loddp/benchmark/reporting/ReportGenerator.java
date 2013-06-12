@@ -280,7 +280,7 @@ public class ReportGenerator {
                 }
                 else {
                     sb.append("\t").append(DECIMAL_FLOAT.format(s.getMean()));
-                    sb.append("\t").append(DECIMAL_FLOAT.format(s.getStandardDeviation())).append("s");
+                    sb.append("\t").append(DECIMAL_FLOAT.format(s.getStandardDeviation()));
                 }
             }
             sb.append("\n");
