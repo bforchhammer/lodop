@@ -1,0 +1,2038 @@
+17:13:01 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+17:13:02 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+17:13:02 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+17:13:02 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+17:13:02 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+17:13:02 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+17:13:02 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,FILTER
+17:13:03 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+17:13:03 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+17:13:03 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 4
+17:13:03 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+17:13:03 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:13:03 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:13:03 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:13:03 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+17:13:03 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:13:04 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job3014922014538943143.jar
+17:13:09 INFO  mapReduceLayer.JobControlCompiler  - jar file Job3014922014538943143.jar created
+17:13:09 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:13:09 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:13:09 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:13:09 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:13:09 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:13:09 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:13:09 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:13:09 WARN  util.NativeCodeLoader  - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+17:13:09 WARN  snappy.LoadSnappy  - Snappy native library not loaded
+17:13:09 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:13:09 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+17:13:10 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0024
+17:13:10 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propertyCooc,quads,subjGroups,subjGroupsCopy
+17:13:10 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],subjGroups[2,13] C:  R: subjGroupsCopy[3,17],propertyCooc[4,15]
+17:13:10 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0024
+17:20:28 INFO  mapReduceLayer.MapReduceLauncher  - 20% complete
+17:28:51 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:28:51 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:28:51 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:28:51 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=9146736544
+17:28:51 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 10
+17:28:51 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job6256486602144792018.jar
+17:28:56 INFO  mapReduceLayer.JobControlCompiler  - jar file Job6256486602144792018.jar created
+17:28:56 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:28:56 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:28:56 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:28:56 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:28:56 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:28:56 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:28:56 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:28:56 INFO  util.MapRedUtil  - Total input paths to process : 1
+17:28:56 INFO  util.MapRedUtil  - Total input paths (combined) to process : 137
+17:28:57 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0025
+17:28:57 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop
+17:28:57 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propertyCoocCounts[6,21],propertyCoocGroup[5,20] C: propertyCoocCounts[6,21],propertyCoocGroup[5,20] R: propertyCoocCounts[6,21],propertyCoocSortedTop[8,24]
+17:28:57 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0025
+17:39:16 INFO  mapReduceLayer.MapReduceLauncher  - 45% complete
+17:39:18 INFO  mapReduceLayer.MapReduceLauncher  - 48% complete
+17:39:22 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:39:22 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:39:22 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:39:22 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=11346920
+17:39:22 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:39:22 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job5715385135867352161.jar
+17:39:27 INFO  mapReduceLayer.JobControlCompiler  - jar file Job5715385135867352161.jar created
+17:39:27 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:39:27 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:39:27 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:39:27 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:39:27 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:39:27 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:39:27 INFO  input.FileInputFormat  - Total input paths to process : 10
+17:39:27 INFO  util.MapRedUtil  - Total input paths to process : 10
+17:39:27 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:39:27 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0026
+17:39:27 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propertyCoocSorted
+17:39:27 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propertyCoocSorted[7,21] C:  R: 
+17:39:27 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0026
+17:39:35 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+17:39:43 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+17:39:46 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+17:39:47 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:39:47 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:39:47 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:39:48 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job4987721536803309442.jar
+17:39:53 INFO  mapReduceLayer.JobControlCompiler  - jar file Job4987721536803309442.jar created
+17:39:53 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:39:53 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:39:53 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:39:53 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:39:53 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:39:53 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:39:53 INFO  input.FileInputFormat  - Total input paths to process : 10
+17:39:53 INFO  util.MapRedUtil  - Total input paths to process : 10
+17:39:53 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:39:54 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0027
+17:39:54 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propertyCoocSorted
+17:39:54 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propertyCoocSorted[7,21] C:  R: 
+17:39:54 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0027
+17:40:08 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+17:40:17 INFO  mapReduceLayer.MapReduceLauncher  - 91% complete
+17:40:24 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+17:40:24 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 17:13:03	2013-06-11 17:40:24	GROUP_BY,ORDER_BY,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0024	1	1	376	376	376	376	550	550	550	550	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201306111200_0025	137	10	114	10	86	94	526	521	524	524	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306111200_0026	1	1	3	3	3	3	10	10	10	10	propertyCoocSorted	SAMPLER	
+job_201306111200_0027	1	1	9	9	9	9	11	11	11	11	propertyCoocSorted	ORDER_BY	results-property_cooc_by_entities,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 82180 records (10212554 bytes) in: "results-property_cooc_by_entities"
+
+Counters:
+Total records written : 82180
+Total bytes written : 10212554
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0024	->	job_201306111200_0025,
+job_201306111200_0025	->	job_201306111200_0026,
+job_201306111200_0026	->	job_201306111200_0027,
+job_201306111200_0027
+
+
+17:40:24 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+17:40:24 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+17:40:24 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+17:40:24 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+17:40:24 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+17:40:24 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+17:40:24 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+17:40:24 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,DISTINCT,FILTER
+17:40:24 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $2, $3
+17:40:24 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+17:40:24 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+17:40:24 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 4
+17:40:24 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+17:40:24 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:40:24 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:40:24 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:40:24 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+17:40:24 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:40:25 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job2788992665254228204.jar
+17:40:30 INFO  mapReduceLayer.JobControlCompiler  - jar file Job2788992665254228204.jar created
+17:40:30 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:40:30 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:40:30 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:40:30 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:40:30 INFO  mapReduceLayer.JobControlCompiler  - Setting identity combiner class.
+17:40:30 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:40:30 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:40:30 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:40:30 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:40:30 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+17:40:31 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0028
+17:40:31 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases quads,subjPredAll
+17:40:31 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],subjPredAll[-1,-1] C:  R: 
+17:40:31 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0028
+17:45:27 INFO  mapReduceLayer.MapReduceLauncher  - 16% complete
+17:45:29 INFO  mapReduceLayer.MapReduceLauncher  - 20% complete
+17:46:31 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:46:31 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:46:31 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:46:31 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=833612315
+17:46:31 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:46:31 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job5594543478975001764.jar
+17:46:36 INFO  mapReduceLayer.JobControlCompiler  - jar file Job5594543478975001764.jar created
+17:46:36 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:46:36 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:46:36 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:46:36 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:46:36 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:46:36 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:46:36 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:46:36 INFO  util.MapRedUtil  - Total input paths to process : 1
+17:46:36 INFO  util.MapRedUtil  - Total input paths (combined) to process : 13
+17:46:36 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0029
+17:46:36 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propGroups,propSortedTop,propStatements
+17:46:36 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propStatements[5,17],propGroups[4,13] C: propStatements[5,17],propGroups[4,13] R: propStatements[5,17],propSortedTop[7,16]
+17:46:36 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0029
+17:46:50 INFO  mapReduceLayer.MapReduceLauncher  - 28% complete
+17:46:51 INFO  mapReduceLayer.MapReduceLauncher  - 29% complete
+17:46:53 INFO  mapReduceLayer.MapReduceLauncher  - 32% complete
+17:46:58 INFO  mapReduceLayer.MapReduceLauncher  - 40% complete
+17:47:05 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+17:47:11 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:47:11 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:47:11 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:47:11 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=456302
+17:47:11 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:47:12 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job1029237019102591682.jar
+17:47:17 INFO  mapReduceLayer.JobControlCompiler  - jar file Job1029237019102591682.jar created
+17:47:17 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:47:17 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:47:17 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:47:17 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:47:17 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:47:17 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:47:17 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:47:17 INFO  util.MapRedUtil  - Total input paths to process : 1
+17:47:17 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:47:17 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0030
+17:47:17 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propSorted
+17:47:17 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propSorted[6,13] C:  R: 
+17:47:17 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0030
+17:47:25 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+17:47:34 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+17:47:35 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+17:47:37 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:47:37 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:47:37 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:47:38 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job7495141570872857619.jar
+17:47:43 INFO  mapReduceLayer.JobControlCompiler  - jar file Job7495141570872857619.jar created
+17:47:43 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:47:43 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:47:43 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:47:43 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:47:43 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:47:43 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:47:43 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:47:43 INFO  util.MapRedUtil  - Total input paths to process : 1
+17:47:43 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:47:44 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0031
+17:47:44 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propSorted
+17:47:44 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propSorted[6,13] C:  R: 
+17:47:44 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0031
+17:47:51 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+17:47:59 INFO  mapReduceLayer.MapReduceLauncher  - 91% complete
+17:48:03 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+17:48:03 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 17:40:24	2013-06-11 17:48:03	GROUP_BY,ORDER_BY,DISTINCT,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0028	1	1	271	271	271	271	80	80	80	80	quads,subjPredAll	DISTINCT	
+job_201306111200_0029	13	1	18	7	15	15	16	16	16	16	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306111200_0030	1	1	3	3	3	3	10	10	10	10	propSorted	SAMPLER	
+job_201306111200_0031	1	1	3	3	3	3	9	9	9	9	propSorted	ORDER_BY	results-properties_by_entity,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 4247 records (299793 bytes) in: "results-properties_by_entity"
+
+Counters:
+Total records written : 4247
+Total bytes written : 299793
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0028	->	job_201306111200_0029,
+job_201306111200_0029	->	job_201306111200_0030,
+job_201306111200_0030	->	job_201306111200_0031,
+job_201306111200_0031
+
+
+17:48:03 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+17:48:03 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+17:48:03 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+17:48:04 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+17:48:04 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+17:48:04 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,DISTINCT,FILTER,UNION
+17:48:04 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $0
+17:48:04 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+17:48:04 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+17:48:04 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 5
+17:48:04 INFO  mapReduceLayer.MultiQueryOptimizer  - Merged 1 diamond splitter.
+17:48:04 INFO  mapReduceLayer.MultiQueryOptimizer  - Merged 1 out of total 2 MR operators.
+17:48:04 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+17:48:04 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:48:04 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:48:04 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:48:04 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=202903450
+17:48:04 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:48:05 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job6630573858439755883.jar
+17:48:09 INFO  mapReduceLayer.JobControlCompiler  - jar file Job6630573858439755883.jar created
+17:48:09 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:48:09 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:48:09 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:48:09 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:48:09 INFO  mapReduceLayer.JobControlCompiler  - Setting identity combiner class.
+17:48:09 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:48:09 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:48:10 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:48:10 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:48:10 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:48:10 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:48:10 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0032
+17:48:10 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff
+17:48:10 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],null[-1,-1],predicateVocabs[2,18],allVocabsPlds[5,16],quads[1,8],quads[-1,-1],null[-1,-1],typedstuff[3,13],objectVocabs[4,15] C:  R: 
+17:48:10 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0032
+17:48:10 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+17:51:42 INFO  mapReduceLayer.MapReduceLauncher  - 12% complete
+17:53:58 INFO  mapReduceLayer.MapReduceLauncher  - 16% complete
+17:53:59 INFO  mapReduceLayer.MapReduceLauncher  - 25% complete
+17:54:05 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:54:05 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:54:05 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:54:05 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=99196
+17:54:05 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:54:06 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job6845656313940686164.jar
+17:54:11 INFO  mapReduceLayer.JobControlCompiler  - jar file Job6845656313940686164.jar created
+17:54:11 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:54:11 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:54:11 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:54:11 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:54:11 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:54:11 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:54:11 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:54:11 INFO  util.MapRedUtil  - Total input paths to process : 1
+17:54:11 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:54:12 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0033
+17:54:12 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases vocabCounts,vocabs
+17:54:12 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: vocabCounts[8,14],vocabs[7,9] C: vocabCounts[8,14],vocabs[7,9] R: vocabCounts[8,14]
+17:54:12 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0033
+17:54:18 INFO  mapReduceLayer.MapReduceLauncher  - 37% complete
+17:54:26 INFO  mapReduceLayer.MapReduceLauncher  - 41% complete
+17:54:27 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+17:54:31 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:54:31 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:54:31 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:54:31 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=97217
+17:54:31 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:54:33 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job7926489702231757182.jar
+17:54:38 INFO  mapReduceLayer.JobControlCompiler  - jar file Job7926489702231757182.jar created
+17:54:38 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:54:38 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:54:38 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:54:38 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:54:38 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:54:38 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:54:38 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:54:38 INFO  util.MapRedUtil  - Total input paths to process : 1
+17:54:38 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:54:39 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0034
+17:54:39 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topVocabsPlds
+17:54:39 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topVocabsPlds[9,16] C:  R: 
+17:54:39 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0034
+17:54:45 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+17:54:54 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+17:54:56 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+17:54:58 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:54:58 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:54:58 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:54:59 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job1446230322322726762.jar
+17:55:04 INFO  mapReduceLayer.JobControlCompiler  - jar file Job1446230322322726762.jar created
+17:55:04 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:55:04 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:55:04 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:55:04 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:55:04 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:55:04 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:55:04 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:55:04 INFO  util.MapRedUtil  - Total input paths to process : 1
+17:55:04 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:55:04 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0035
+17:55:04 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topVocabsPlds
+17:55:04 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topVocabsPlds[9,16] C:  R: 
+17:55:04 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0035
+17:55:11 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+17:55:24 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+17:55:24 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 17:48:04	2013-06-11 17:55:24	GROUP_BY,ORDER_BY,DISTINCT,FILTER,UNION
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0032	2	1	342	200	271	271	145	145	145	145	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306111200_0033	1	1	3	3	3	3	9	9	9	9	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306111200_0034	1	1	3	3	3	3	10	10	10	10	topVocabsPlds	SAMPLER	
+job_201306111200_0035	1	1	3	3	3	3	9	9	9	9	topVocabsPlds	ORDER_BY	results-vocabularies_by_pld,
+
+Input(s):
+Successfully read 10000000 records from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+Successfully read 10000000 records from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 8 records (279 bytes) in: "results-vocabularies_by_pld"
+
+Counters:
+Total records written : 8
+Total bytes written : 279
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0032	->	job_201306111200_0033,
+job_201306111200_0033	->	job_201306111200_0034,
+job_201306111200_0034	->	job_201306111200_0035,
+job_201306111200_0035
+
+
+17:55:24 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+17:55:25 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+17:55:25 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+17:55:25 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+17:55:25 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+17:55:25 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,DISTINCT,FILTER,UNION
+17:55:25 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $0
+17:55:25 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+17:55:25 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+17:55:25 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 5
+17:55:25 INFO  mapReduceLayer.MultiQueryOptimizer  - Merged 1 diamond splitter.
+17:55:25 INFO  mapReduceLayer.MultiQueryOptimizer  - Merged 1 out of total 2 MR operators.
+17:55:25 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+17:55:25 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:55:25 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:55:25 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:55:25 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=202903450
+17:55:25 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:55:26 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job3537680318111812819.jar
+17:55:30 INFO  mapReduceLayer.JobControlCompiler  - jar file Job3537680318111812819.jar created
+17:55:30 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:55:30 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:55:30 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:55:30 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:55:30 INFO  mapReduceLayer.JobControlCompiler  - Setting identity combiner class.
+17:55:30 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:55:30 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:55:30 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:55:30 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:55:30 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:55:30 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+17:55:31 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0036
+17:55:31 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff
+17:55:31 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],null[-1,-1],predicateVocabs[2,18],allVocabsUrls[5,16],quads[1,8],quads[-1,-1],null[-1,-1],typedstuff[3,13],objectVocabs[4,15] C:  R: 
+17:55:31 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0036
+17:55:31 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+17:58:47 INFO  mapReduceLayer.MapReduceLauncher  - 13% complete
+17:59:36 INFO  mapReduceLayer.MapReduceLauncher  - 21% complete
+17:59:39 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+17:59:42 INFO  mapReduceLayer.MapReduceLauncher  - 24% complete
+17:59:46 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+17:59:46 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+17:59:46 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+17:59:46 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=102180650
+17:59:46 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+17:59:47 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job1081265752792073310.jar
+17:59:51 INFO  mapReduceLayer.JobControlCompiler  - jar file Job1081265752792073310.jar created
+17:59:51 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+17:59:51 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+17:59:51 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+17:59:51 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+17:59:51 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+17:59:51 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+17:59:52 INFO  input.FileInputFormat  - Total input paths to process : 1
+17:59:52 INFO  util.MapRedUtil  - Total input paths to process : 1
+17:59:52 INFO  util.MapRedUtil  - Total input paths (combined) to process : 2
+17:59:52 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0037
+17:59:52 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases vocabCounts,vocabs
+17:59:52 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: vocabCounts[8,14],vocabs[7,9] C: vocabCounts[8,14],vocabs[7,9] R: vocabCounts[8,14]
+17:59:52 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0037
+18:00:04 INFO  mapReduceLayer.MapReduceLauncher  - 34% complete
+18:00:07 INFO  mapReduceLayer.MapReduceLauncher  - 37% complete
+18:00:13 INFO  mapReduceLayer.MapReduceLauncher  - 41% complete
+18:00:15 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+18:00:17 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:00:17 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:00:17 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:00:17 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=100376
+18:00:17 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:00:18 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job7781906961617660156.jar
+18:00:23 INFO  mapReduceLayer.JobControlCompiler  - jar file Job7781906961617660156.jar created
+18:00:23 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:00:23 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:00:23 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:00:23 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:00:23 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:00:23 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:00:23 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:00:23 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:00:23 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:00:24 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0038
+18:00:24 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topVocabsEntities
+18:00:24 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topVocabsEntities[9,20] C:  R: 
+18:00:24 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0038
+18:00:30 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+18:00:38 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+18:00:39 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+18:00:43 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:00:43 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:00:43 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:00:44 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job4760839849365568591.jar
+18:00:48 INFO  mapReduceLayer.JobControlCompiler  - jar file Job4760839849365568591.jar created
+18:00:48 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:00:48 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:00:48 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:00:48 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:00:48 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:00:48 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:00:48 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:00:48 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:00:48 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:00:49 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0039
+18:00:49 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topVocabsEntities
+18:00:49 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topVocabsEntities[9,20] C:  R: 
+18:00:49 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0039
+18:00:56 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+18:01:14 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+18:01:14 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 17:55:25	2013-06-11 18:01:14	GROUP_BY,ORDER_BY,DISTINCT,FILTER,UNION
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0036	2	1	232	183	208	208	64	64	64	64	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306111200_0037	2	1	12	8	10	10	10	10	10	10	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306111200_0038	1	1	3	3	3	3	9	9	9	9	topVocabsEntities	SAMPLER	
+job_201306111200_0039	1	1	3	3	3	3	10	10	10	10	topVocabsEntities	ORDER_BY	results-vocabularies_by_url,
+
+Input(s):
+Successfully read 10000000 records from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+Successfully read 10000000 records from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 8 records (317 bytes) in: "results-vocabularies_by_url"
+
+Counters:
+Total records written : 8
+Total bytes written : 317
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0036	->	job_201306111200_0037,
+job_201306111200_0037	->	job_201306111200_0038,
+job_201306111200_0038	->	job_201306111200_0039,
+job_201306111200_0039
+
+
+18:01:14 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+18:01:14 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+18:01:14 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+18:01:14 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,DISTINCT,FILTER
+18:01:14 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $0
+18:01:14 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+18:01:14 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+18:01:14 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 4
+18:01:14 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+18:01:14 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:01:14 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:01:14 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:01:14 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+18:01:14 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:01:15 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job3285436393169518389.jar
+18:01:20 INFO  mapReduceLayer.JobControlCompiler  - jar file Job3285436393169518389.jar created
+18:01:20 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:01:20 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:01:20 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:01:20 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:01:20 INFO  mapReduceLayer.JobControlCompiler  - Setting identity combiner class.
+18:01:20 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:01:20 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:01:20 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:01:20 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:01:20 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0040
+18:01:20 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases classesAndDomainsA,quads,typedstuff
+18:01:20 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],typedstuff[2,13],classesAndDomainsA[3,21] C:  R: 
+18:01:20 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0040
+18:01:20 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+18:04:22 INFO  mapReduceLayer.MapReduceLauncher  - 21% complete
+18:04:25 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+18:04:28 INFO  mapReduceLayer.MapReduceLauncher  - 25% complete
+18:04:30 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:04:30 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:04:30 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:04:30 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=65461137
+18:04:30 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:04:31 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job6135528692719544023.jar
+18:04:35 INFO  mapReduceLayer.JobControlCompiler  - jar file Job6135528692719544023.jar created
+18:04:35 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:04:35 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:04:35 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:04:35 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:04:35 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:04:35 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:04:35 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:04:35 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:04:35 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:04:35 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0041
+18:04:35 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases classCounts,classes
+18:04:35 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: classCounts[6,14],classes[5,10] C: classCounts[6,14],classes[5,10] R: classCounts[6,14]
+18:04:35 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0041
+18:04:35 INFO  mapReduceLayer.MapReduceLauncher  - 25% complete
+18:04:48 INFO  mapReduceLayer.MapReduceLauncher  - 33% complete
+18:04:50 INFO  mapReduceLayer.MapReduceLauncher  - 37% complete
+18:04:58 INFO  mapReduceLayer.MapReduceLauncher  - 41% complete
+18:05:00 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+18:05:06 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:05:06 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:05:06 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:05:06 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=399364
+18:05:06 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:05:07 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job3426347202077990426.jar
+18:05:11 INFO  mapReduceLayer.JobControlCompiler  - jar file Job3426347202077990426.jar created
+18:05:11 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:05:11 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:05:11 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:05:11 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:05:11 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:05:11 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:05:11 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:05:11 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:05:11 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:05:11 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0042
+18:05:11 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topClassesByUrls
+18:05:11 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topClassesByUrls[7,19] C:  R: 
+18:05:11 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0042
+18:05:19 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+18:05:29 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+18:05:30 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+18:05:37 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:05:37 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:05:37 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:05:38 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job650649658219261407.jar
+18:05:42 INFO  mapReduceLayer.JobControlCompiler  - jar file Job650649658219261407.jar created
+18:05:42 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:05:42 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:05:42 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:05:42 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:05:42 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:05:42 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:05:42 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:05:42 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:05:42 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:05:43 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0043
+18:05:43 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topClassesByUrls
+18:05:43 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topClassesByUrls[7,19] C:  R: 
+18:05:43 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0043
+18:05:50 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+18:06:00 INFO  mapReduceLayer.MapReduceLauncher  - 91% complete
+18:06:08 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+18:06:08 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 18:01:14	2013-06-11 18:06:08	GROUP_BY,ORDER_BY,DISTINCT,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0040	1	1	165	165	165	165	17	17	17	17	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306111200_0041	1	1	10	10	10	10	9	9	9	9	classCounts,classes	GROUP_BY,COMBINER	
+job_201306111200_0042	1	1	3	3	3	3	10	10	10	10	topClassesByUrls	SAMPLER	
+job_201306111200_0043	1	1	3	3	3	3	11	11	11	11	topClassesByUrls	ORDER_BY	results-classes_by_url,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 4695 records (277285 bytes) in: "results-classes_by_url"
+
+Counters:
+Total records written : 4695
+Total bytes written : 277285
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0040	->	job_201306111200_0041,
+job_201306111200_0041	->	job_201306111200_0042,
+job_201306111200_0042	->	job_201306111200_0043,
+job_201306111200_0043
+
+
+18:06:08 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+18:06:08 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+18:06:08 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+18:06:08 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,DISTINCT
+18:06:08 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $0, $2
+18:06:08 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+18:06:08 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+18:06:08 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 4
+18:06:08 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+18:06:08 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:06:08 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:06:08 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:06:08 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+18:06:08 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:06:09 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job359401682485930069.jar
+18:06:14 INFO  mapReduceLayer.JobControlCompiler  - jar file Job359401682485930069.jar created
+18:06:14 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:06:14 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:06:14 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:06:14 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:06:14 INFO  mapReduceLayer.JobControlCompiler  - Setting identity combiner class.
+18:06:14 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:06:14 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:06:14 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:06:14 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:06:14 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0044
+18:06:14 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases quads,tldPredAll
+18:06:14 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],tldPredAll[-1,-1] C:  R: 
+18:06:14 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0044
+18:06:14 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+18:11:27 INFO  mapReduceLayer.MapReduceLauncher  - 16% complete
+18:11:29 INFO  mapReduceLayer.MapReduceLauncher  - 25% complete
+18:11:34 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:11:34 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:11:34 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:11:34 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=635359
+18:11:34 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:11:36 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job6527760773166838100.jar
+18:11:40 INFO  mapReduceLayer.JobControlCompiler  - jar file Job6527760773166838100.jar created
+18:11:40 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:11:40 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:11:40 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:11:40 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:11:40 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:11:40 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:11:40 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:11:40 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:11:40 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:11:41 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0045
+18:11:41 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases tldPredCounts,tlds
+18:11:41 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: tldPredCounts[5,16],tlds[4,7] C: tldPredCounts[5,16],tlds[4,7] R: tldPredCounts[5,16]
+18:11:41 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0045
+18:11:49 INFO  mapReduceLayer.MapReduceLauncher  - 37% complete
+18:12:02 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+18:12:06 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:12:06 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:12:06 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:12:06 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=592795
+18:12:06 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:12:07 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job8707040584496559206.jar
+18:12:11 INFO  mapReduceLayer.JobControlCompiler  - jar file Job8707040584496559206.jar created
+18:12:11 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:12:11 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:12:11 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:12:11 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:12:11 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:12:11 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:12:12 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:12:12 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:12:12 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:12:12 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0046
+18:12:12 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topPredicatesTld
+18:12:12 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topPredicatesTld[6,19] C:  R: 
+18:12:12 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0046
+18:12:18 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+18:12:26 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+18:12:28 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+18:12:32 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:12:32 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:12:32 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:12:32 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job2791803238261120503.jar
+18:12:37 INFO  mapReduceLayer.JobControlCompiler  - jar file Job2791803238261120503.jar created
+18:12:37 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:12:37 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:12:37 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:12:37 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:12:37 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:12:37 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:12:37 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:12:37 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:12:37 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:12:38 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0047
+18:12:38 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topPredicatesTld
+18:12:38 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topPredicatesTld[6,19] C:  R: 
+18:12:38 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0047
+18:12:46 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+18:12:55 INFO  mapReduceLayer.MapReduceLauncher  - 91% complete
+18:13:03 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+18:13:03 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 18:06:08	2013-06-11 18:13:03	GROUP_BY,ORDER_BY,DISTINCT
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0044	1	1	300	300	300	300	10	10	10	10	quads,tldPredAll	DISTINCT	
+job_201306111200_0045	1	1	4	4	4	4	12	12	12	12	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201306111200_0046	1	1	2	2	2	2	10	10	10	10	topPredicatesTld	SAMPLER	
+job_201306111200_0047	1	1	4	4	4	4	10	10	10	10	topPredicatesTld	ORDER_BY	results-properties_by_tld,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 6034 records (453350 bytes) in: "results-properties_by_tld"
+
+Counters:
+Total records written : 6034
+Total bytes written : 453350
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0044	->	job_201306111200_0045,
+job_201306111200_0045	->	job_201306111200_0046,
+job_201306111200_0046	->	job_201306111200_0047,
+job_201306111200_0047
+
+
+18:13:03 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+18:13:03 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+18:13:03 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+18:13:03 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY
+18:13:03 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+18:13:03 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+18:13:03 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 1
+18:13:03 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 1
+18:13:03 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:13:03 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:13:03 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:13:03 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job8904578168970345231.jar
+18:13:08 INFO  mapReduceLayer.JobControlCompiler  - jar file Job8904578168970345231.jar created
+18:13:08 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:13:08 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:13:08 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:13:08 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:13:08 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:13:08 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:13:08 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:13:08 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:13:08 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0048
+18:13:08 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases B,C,quads
+18:13:08 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],C[3,4],B[2,4] C: C[3,4],B[2,4] R: C[3,4]
+18:13:08 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0048
+18:13:08 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+18:16:48 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+18:16:53 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+18:16:53 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 18:13:03	2013-06-11 18:16:53	GROUP_BY
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0048	1	1	207	207	207	207	10	10	10	10	B,C,quads	GROUP_BY,COMBINER	results-number_of_triples,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 1 records (9 bytes) in: "results-number_of_triples"
+
+Counters:
+Total records written : 1
+Total bytes written : 9
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0048
+
+
+18:16:53 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+18:16:53 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+18:16:53 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+18:16:54 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+18:16:54 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+18:16:54 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+18:16:54 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+18:16:54 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,DISTINCT,FILTER
+18:16:54 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $0, $2
+18:16:54 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+18:16:54 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+18:16:54 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 4
+18:16:54 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+18:16:54 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:16:54 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:16:54 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:16:54 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+18:16:54 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:16:54 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job8950429822709117949.jar
+18:16:58 INFO  mapReduceLayer.JobControlCompiler  - jar file Job8950429822709117949.jar created
+18:16:58 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:16:58 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:16:58 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:16:58 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:16:58 INFO  mapReduceLayer.JobControlCompiler  - Setting identity combiner class.
+18:16:58 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:16:58 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:16:59 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:16:59 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:16:59 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0049
+18:16:59 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases quads,urlPredAll
+18:16:59 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],urlPredAll[-1,-1] C:  R: 
+18:16:59 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0049
+18:16:59 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+18:20:44 INFO  mapReduceLayer.MapReduceLauncher  - 20% complete
+18:21:19 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:21:19 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:21:19 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:21:19 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=383022269
+18:21:19 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:21:20 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job2318401691417131972.jar
+18:21:24 INFO  mapReduceLayer.JobControlCompiler  - jar file Job2318401691417131972.jar created
+18:21:24 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:21:24 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:21:24 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:21:24 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:21:24 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:21:24 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:21:24 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:21:24 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:21:24 INFO  util.MapRedUtil  - Total input paths (combined) to process : 6
+18:21:25 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0050
+18:21:25 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propGroups,propSortedTop,propStatements
+18:21:25 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propStatements[5,17],propGroups[4,13] C: propStatements[5,17],propGroups[4,13] R: propStatements[5,17],propSortedTop[7,16]
+18:21:25 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0050
+18:21:37 INFO  mapReduceLayer.MapReduceLauncher  - 26% complete
+18:21:39 INFO  mapReduceLayer.MapReduceLauncher  - 32% complete
+18:21:40 INFO  mapReduceLayer.MapReduceLauncher  - 33% complete
+18:21:41 INFO  mapReduceLayer.MapReduceLauncher  - 36% complete
+18:21:48 INFO  mapReduceLayer.MapReduceLauncher  - 41% complete
+18:21:50 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+18:21:55 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:21:55 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:21:55 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:21:55 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=428028
+18:21:55 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:21:55 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job5160949553365429311.jar
+18:22:00 INFO  mapReduceLayer.JobControlCompiler  - jar file Job5160949553365429311.jar created
+18:22:00 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:22:00 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:22:00 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:22:00 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:22:00 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:22:00 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:22:00 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:22:00 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:22:00 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:22:01 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0051
+18:22:01 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propSorted
+18:22:01 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propSorted[6,13] C:  R: 
+18:22:01 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0051
+18:22:07 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+18:22:16 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+18:22:18 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+18:22:20 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:22:20 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:22:20 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:22:21 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job8995092152990163129.jar
+18:22:26 INFO  mapReduceLayer.JobControlCompiler  - jar file Job8995092152990163129.jar created
+18:22:26 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:22:26 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:22:26 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:22:26 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:22:26 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:22:26 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:22:26 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:22:26 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:22:26 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:22:27 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0052
+18:22:27 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propSorted
+18:22:27 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propSorted[6,13] C:  R: 
+18:22:27 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0052
+18:22:32 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+18:22:42 INFO  mapReduceLayer.MapReduceLauncher  - 91% complete
+18:22:46 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+18:22:46 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 18:16:54	2013-06-11 18:22:46	GROUP_BY,ORDER_BY,DISTINCT,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0049	1	1	206	206	206	206	42	42	42	42	quads,urlPredAll	DISTINCT	
+job_201306111200_0050	6	1	14	10	12	12	10	10	10	10	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201306111200_0051	1	1	3	3	3	3	10	10	10	10	propSorted	SAMPLER	
+job_201306111200_0052	1	1	2	2	2	2	10	10	10	10	propSorted	ORDER_BY	results-properties_by_url,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 4145 records (292053 bytes) in: "results-properties_by_url"
+
+Counters:
+Total records written : 4145
+Total bytes written : 292053
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0049	->	job_201306111200_0050,
+job_201306111200_0050	->	job_201306111200_0051,
+job_201306111200_0051	->	job_201306111200_0052,
+job_201306111200_0052
+
+
+18:22:46 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+18:22:46 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+18:22:46 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+18:22:47 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,DISTINCT,FILTER,UNION
+18:22:47 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $0
+18:22:47 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+18:22:47 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+18:22:47 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 5
+18:22:47 INFO  mapReduceLayer.MultiQueryOptimizer  - Merged 1 diamond splitter.
+18:22:47 INFO  mapReduceLayer.MultiQueryOptimizer  - Merged 1 out of total 2 MR operators.
+18:22:47 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+18:22:47 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:22:47 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:22:47 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:22:47 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=202903450
+18:22:47 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:22:47 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job7541439872081834537.jar
+18:22:52 INFO  mapReduceLayer.JobControlCompiler  - jar file Job7541439872081834537.jar created
+18:22:52 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:22:52 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:22:52 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:22:52 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:22:52 INFO  mapReduceLayer.JobControlCompiler  - Setting identity combiner class.
+18:22:52 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:22:52 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:22:52 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:22:52 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:22:52 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:22:52 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:22:52 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+18:22:53 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0053
+18:22:53 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff
+18:22:53 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],null[-1,-1],typedstuff[3,13],objectVocabs[4,15],allVocabsTlds[5,16],quads[1,8],quads[-1,-1],null[-1,-1],predicateVocabs[2,18] C:  R: 
+18:22:53 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0053
+18:26:08 INFO  mapReduceLayer.MapReduceLauncher  - 11% complete
+18:29:09 INFO  mapReduceLayer.MapReduceLauncher  - 16% complete
+18:29:10 INFO  mapReduceLayer.MapReduceLauncher  - 25% complete
+18:29:13 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:29:13 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:29:13 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:29:13 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=99264
+18:29:13 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:29:13 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job9094105815193016948.jar
+18:29:18 INFO  mapReduceLayer.JobControlCompiler  - jar file Job9094105815193016948.jar created
+18:29:18 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:29:18 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:29:18 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:29:18 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:29:18 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:29:18 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:29:18 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:29:18 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:29:18 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:29:18 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0054
+18:29:18 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases tldTypeCounts,tlds
+18:29:18 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: tldTypeCounts[8,16],tlds[7,7] C: tldTypeCounts[8,16],tlds[7,7] R: tldTypeCounts[8,16]
+18:29:18 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0054
+18:29:25 INFO  mapReduceLayer.MapReduceLauncher  - 37% complete
+18:29:34 INFO  mapReduceLayer.MapReduceLauncher  - 41% complete
+18:29:35 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+18:29:38 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:29:38 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:29:38 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:29:38 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=97555
+18:29:38 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:29:39 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job7338594568244328424.jar
+18:29:43 INFO  mapReduceLayer.JobControlCompiler  - jar file Job7338594568244328424.jar created
+18:29:43 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:29:43 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:29:43 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:29:43 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:29:43 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:29:43 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:29:43 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:29:43 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:29:43 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:29:44 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0055
+18:29:44 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topClassesTld
+18:29:44 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topClassesTld[9,16] C:  R: 
+18:29:44 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0055
+18:29:50 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+18:30:01 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+18:30:04 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:30:04 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:30:04 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:30:04 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job2827356549247621897.jar
+18:30:09 INFO  mapReduceLayer.JobControlCompiler  - jar file Job2827356549247621897.jar created
+18:30:09 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:30:09 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:30:09 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:30:09 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:30:09 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:30:09 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:30:09 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:30:09 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:30:09 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:30:10 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0056
+18:30:10 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topClassesTld
+18:30:10 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topClassesTld[9,16] C:  R: 
+18:30:10 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0056
+18:30:17 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+18:30:26 INFO  mapReduceLayer.MapReduceLauncher  - 91% complete
+18:30:34 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+18:30:34 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 18:22:47	2013-06-11 18:30:34	GROUP_BY,ORDER_BY,DISTINCT,FILTER,UNION
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0053	2	1	368	182	275	275	191	191	191	191	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306111200_0054	1	1	3	3	3	3	10	10	10	10	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306111200_0055	1	1	3	3	3	3	10	10	10	10	topClassesTld	SAMPLER	
+job_201306111200_0056	1	1	3	3	3	3	10	10	10	10	topClassesTld	ORDER_BY	results-vocabularies_by_tld,
+
+Input(s):
+Successfully read 10000000 records from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+Successfully read 10000000 records from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 8 records (311 bytes) in: "results-vocabularies_by_tld"
+
+Counters:
+Total records written : 8
+Total bytes written : 311
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0053	->	job_201306111200_0054,
+job_201306111200_0054	->	job_201306111200_0055,
+job_201306111200_0055	->	job_201306111200_0056,
+job_201306111200_0056
+
+
+18:30:34 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+18:30:34 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+18:30:34 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+18:30:35 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,DISTINCT,FILTER,UNION
+18:30:35 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $3
+18:30:35 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+18:30:35 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+18:30:35 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 5
+18:30:35 INFO  mapReduceLayer.MultiQueryOptimizer  - Merged 1 diamond splitter.
+18:30:35 INFO  mapReduceLayer.MultiQueryOptimizer  - Merged 1 out of total 2 MR operators.
+18:30:35 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+18:30:35 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:30:35 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:30:35 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:30:35 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=202903450
+18:30:35 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:30:35 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job837104289465488221.jar
+18:30:40 INFO  mapReduceLayer.JobControlCompiler  - jar file Job837104289465488221.jar created
+18:30:40 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:30:40 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:30:40 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:30:40 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:30:40 INFO  mapReduceLayer.JobControlCompiler  - Setting identity combiner class.
+18:30:40 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:30:40 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:30:40 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:30:40 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:30:40 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:30:40 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:30:40 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+18:30:41 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0057
+18:30:41 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff
+18:30:41 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],null[-1,-1],predicateVocabs[2,18],allVocabsEntities[5,20],quads[1,8],quads[-1,-1],null[-1,-1],typedstuff[3,13],objectVocabs[4,15] C:  R: 
+18:30:41 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0057
+18:34:01 INFO  mapReduceLayer.MapReduceLauncher  - 13% complete
+18:34:58 INFO  mapReduceLayer.MapReduceLauncher  - 20% complete
+18:35:30 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:35:30 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:35:30 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:35:30 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=321604196
+18:35:30 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:35:31 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job1056970438685155917.jar
+18:35:35 INFO  mapReduceLayer.JobControlCompiler  - jar file Job1056970438685155917.jar created
+18:35:35 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:35:35 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:35:35 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:35:35 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:35:35 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:35:35 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:35:36 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:35:36 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:35:36 INFO  util.MapRedUtil  - Total input paths (combined) to process : 5
+18:35:36 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0058
+18:35:36 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases vocabCounts,vocabs
+18:35:36 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: vocabCounts[8,14],vocabs[7,9] C: vocabCounts[8,14],vocabs[7,9] R: vocabCounts[8,14]
+18:35:36 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0058
+18:35:48 INFO  mapReduceLayer.MapReduceLauncher  - 26% complete
+18:35:49 INFO  mapReduceLayer.MapReduceLauncher  - 28% complete
+18:35:50 INFO  mapReduceLayer.MapReduceLauncher  - 34% complete
+18:35:50 INFO  mapReduceLayer.MapReduceLauncher  - 35% complete
+18:35:51 INFO  mapReduceLayer.MapReduceLauncher  - 36% complete
+18:35:59 INFO  mapReduceLayer.MapReduceLauncher  - 41% complete
+18:36:01 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+18:36:06 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:36:06 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:36:06 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:36:06 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=109106
+18:36:06 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:36:07 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job3190733417468647819.jar
+18:36:11 INFO  mapReduceLayer.JobControlCompiler  - jar file Job3190733417468647819.jar created
+18:36:11 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:36:11 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:36:11 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:36:11 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:36:11 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:36:11 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:36:11 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:36:11 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:36:11 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:36:11 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0059
+18:36:11 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topVocabsEntities
+18:36:11 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topVocabsEntities[9,20] C:  R: 
+18:36:11 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0059
+18:36:18 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+18:36:27 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+18:36:29 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+18:36:32 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:36:32 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:36:32 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:36:32 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job693315432401524670.jar
+18:36:36 INFO  mapReduceLayer.JobControlCompiler  - jar file Job693315432401524670.jar created
+18:36:36 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:36:36 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:36:36 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:36:36 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:36:36 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:36:36 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:36:37 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:36:37 INFO  util.MapRedUtil  - Total input paths to process : 1
+18:36:37 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:36:37 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0060
+18:36:37 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topVocabsEntities
+18:36:37 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topVocabsEntities[9,20] C:  R: 
+18:36:37 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0060
+18:36:46 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+18:37:02 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+18:37:02 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 18:30:35	2013-06-11 18:37:02	GROUP_BY,ORDER_BY,DISTINCT,FILTER,UNION
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0057	2	1	246	184	215	215	99	99	99	99	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201306111200_0058	5	1	11	10	10	10	10	10	10	10	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201306111200_0059	1	1	3	3	3	3	10	10	10	10	topVocabsEntities	SAMPLER	
+job_201306111200_0060	1	1	4	4	4	4	11	11	11	11	topVocabsEntities	ORDER_BY	results-vocabularies_by_entity,
+
+Input(s):
+Successfully read 10000000 records from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+Successfully read 10000000 records from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 8 records (318 bytes) in: "results-vocabularies_by_entity"
+
+Counters:
+Total records written : 8
+Total bytes written : 318
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0057	->	job_201306111200_0058,
+job_201306111200_0058	->	job_201306111200_0059,
+job_201306111200_0059	->	job_201306111200_0060,
+job_201306111200_0060
+
+
+18:37:02 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+18:37:02 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+18:37:02 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+18:37:02 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+18:37:02 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+18:37:02 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+18:37:02 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+18:37:02 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,FILTER
+18:37:02 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+18:37:02 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+18:37:02 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 4
+18:37:02 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+18:37:02 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+18:37:02 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+18:37:02 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+18:37:02 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+18:37:02 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+18:37:03 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job6021169966575770824.jar
+18:37:07 INFO  mapReduceLayer.JobControlCompiler  - jar file Job6021169966575770824.jar created
+18:37:07 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+18:37:07 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+18:37:07 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+18:37:07 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+18:37:07 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+18:37:07 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+18:37:08 INFO  input.FileInputFormat  - Total input paths to process : 1
+18:37:08 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+18:37:08 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0061
+18:37:08 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases groups,groupsCopy,propertyCooc,quads
+18:37:08 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],groups[2,9] C:  R: groupsCopy[3,13],propertyCooc[4,15]
+18:37:08 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0061
+18:37:08 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+18:44:18 INFO  mapReduceLayer.MapReduceLauncher  - 12% complete
+18:45:48 INFO  mapReduceLayer.MapReduceLauncher  - 20% complete
+18:59:59 INFO  mapReduceLayer.MapReduceLauncher  - 21% complete
+19:21:04 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+19:21:04 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+19:21:04 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+19:21:04 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=42255290750
+19:21:04 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 43
+19:21:04 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job6848111905160582448.jar
+19:21:09 INFO  mapReduceLayer.JobControlCompiler  - jar file Job6848111905160582448.jar created
+19:21:09 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+19:21:09 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+19:21:09 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+19:21:09 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+19:21:09 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+19:21:09 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+19:21:09 INFO  input.FileInputFormat  - Total input paths to process : 1
+19:21:09 INFO  util.MapRedUtil  - Total input paths to process : 1
+19:21:09 INFO  util.MapRedUtil  - Total input paths (combined) to process : 630
+19:21:10 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0062
+19:21:10 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop
+19:21:10 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propertyCoocCounts[6,21],propertyCoocGroup[5,20] C: propertyCoocCounts[6,21],propertyCoocGroup[5,20] R: propertyCoocCounts[6,21],propertyCoocSortedTop[8,24]
+19:21:10 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0062
+20:00:01 INFO  mapReduceLayer.MapReduceLauncher  - 35% complete
+20:03:56 INFO  mapReduceLayer.MapReduceLauncher  - 36% complete
+20:11:56 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+20:11:56 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+20:11:56 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+20:11:56 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=35404618
+20:11:56 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+20:11:56 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job4270810408504083717.jar
+20:12:01 INFO  mapReduceLayer.JobControlCompiler  - jar file Job4270810408504083717.jar created
+20:12:01 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+20:12:01 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+20:12:01 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+20:12:01 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+20:12:01 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+20:12:01 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+20:12:01 INFO  input.FileInputFormat  - Total input paths to process : 43
+20:12:01 INFO  util.MapRedUtil  - Total input paths to process : 43
+20:12:01 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+20:12:01 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0063
+20:12:01 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propertyCoocSorted
+20:12:01 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propertyCoocSorted[7,21] C:  R: 
+20:12:01 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0063
+20:12:10 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+20:12:23 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+20:12:26 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+20:12:26 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+20:12:26 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+20:12:27 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job5441565549773683340.jar
+20:12:31 INFO  mapReduceLayer.JobControlCompiler  - jar file Job5441565549773683340.jar created
+20:12:31 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+20:12:31 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+20:12:31 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+20:12:31 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+20:12:31 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+20:12:31 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+20:12:31 INFO  input.FileInputFormat  - Total input paths to process : 43
+20:12:31 INFO  util.MapRedUtil  - Total input paths to process : 43
+20:12:31 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+20:12:32 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0064
+20:12:32 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propertyCoocSorted
+20:12:32 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propertyCoocSorted[7,21] C:  R: 
+20:12:32 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0064
+20:12:44 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+20:13:03 INFO  mapReduceLayer.MapReduceLauncher  - 99% complete
+20:13:07 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+20:13:07 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 18:37:02	2013-06-11 20:13:07	GROUP_BY,ORDER_BY,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0061	1	1	458	458	458	458	2164	2164	2164	2164	groups,groupsCopy,propertyCooc,quads	GROUP_BY	
+job_201306111200_0062	630	43	126	11	92	98	2773	19	660	22	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201306111200_0063	1	1	5	5	5	5	12	12	12	12	propertyCoocSorted	SAMPLER	
+job_201306111200_0064	1	1	12	12	12	12	16	16	16	16	propertyCoocSorted	ORDER_BY	results-property_cooc_by_urls,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 251198 records (31482798 bytes) in: "results-property_cooc_by_urls"
+
+Counters:
+Total records written : 251198
+Total bytes written : 31482798
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0061	->	job_201306111200_0062,
+job_201306111200_0062	->	job_201306111200_0063,
+job_201306111200_0063	->	job_201306111200_0064,
+job_201306111200_0064
+
+
+20:13:07 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+20:13:07 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+20:13:07 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+20:13:07 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,FILTER
+20:13:07 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+20:13:07 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+20:13:07 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 3
+20:13:07 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 3
+20:13:07 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+20:13:07 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+20:13:07 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+20:13:07 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+20:13:07 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+20:13:08 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job2972700341851409030.jar
+20:13:12 INFO  mapReduceLayer.JobControlCompiler  - jar file Job2972700341851409030.jar created
+20:13:12 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+20:13:12 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+20:13:12 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+20:13:12 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+20:13:12 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+20:13:12 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+20:13:12 INFO  input.FileInputFormat  - Total input paths to process : 1
+20:13:12 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+20:13:13 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0065
+20:13:13 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases classCounts,classes,quads,typedstuff
+20:13:13 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],typedstuff[2,13],classCounts[4,14],classes[3,10] C: classCounts[4,14],classes[3,10] R: classCounts[4,14]
+20:13:13 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0065
+20:13:13 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+20:16:05 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+20:16:07 INFO  mapReduceLayer.MapReduceLauncher  - 33% complete
+20:16:13 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+20:16:13 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+20:16:13 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+20:16:13 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=401371
+20:16:13 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+20:16:13 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job5978969230803732522.jar
+20:16:18 INFO  mapReduceLayer.JobControlCompiler  - jar file Job5978969230803732522.jar created
+20:16:18 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+20:16:18 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+20:16:18 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+20:16:18 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+20:16:18 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+20:16:18 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+20:16:18 INFO  input.FileInputFormat  - Total input paths to process : 1
+20:16:18 INFO  util.MapRedUtil  - Total input paths to process : 1
+20:16:18 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+20:16:19 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0066
+20:16:19 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topClassesByEntities
+20:16:19 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topClassesByEntities[5,23] C:  R: 
+20:16:19 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0066
+20:16:25 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+20:16:34 INFO  mapReduceLayer.MapReduceLauncher  - 55% complete
+20:16:36 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+20:16:38 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+20:16:38 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+20:16:38 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+20:16:39 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job2785780911645713632.jar
+20:16:43 INFO  mapReduceLayer.JobControlCompiler  - jar file Job2785780911645713632.jar created
+20:16:43 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+20:16:43 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+20:16:43 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+20:16:43 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+20:16:43 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+20:16:43 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+20:16:44 INFO  input.FileInputFormat  - Total input paths to process : 1
+20:16:44 INFO  util.MapRedUtil  - Total input paths to process : 1
+20:16:44 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+20:16:44 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0067
+20:16:44 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topClassesByEntities
+20:16:44 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topClassesByEntities[5,23] C:  R: 
+20:16:44 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0067
+20:16:51 INFO  mapReduceLayer.MapReduceLauncher  - 83% complete
+20:17:01 INFO  mapReduceLayer.MapReduceLauncher  - 88% complete
+20:17:09 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+20:17:09 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 20:13:07	2013-06-11 20:17:09	GROUP_BY,ORDER_BY,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0065	1	1	159	159	159	159	10	10	10	10	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201306111200_0066	1	1	3	3	3	3	10	10	10	10	topClassesByEntities	SAMPLER	
+job_201306111200_0067	1	1	3	3	3	3	10	10	10	10	topClassesByEntities	ORDER_BY	results-classes_by_entity,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 4695 records (277393 bytes) in: "results-classes_by_entity"
+
+Counters:
+Total records written : 4695
+Total bytes written : 277393
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0065	->	job_201306111200_0066,
+job_201306111200_0066	->	job_201306111200_0067,
+job_201306111200_0067
+
+
+20:17:09 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+20:17:09 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+20:17:09 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+20:17:09 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+20:17:09 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+20:17:09 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+20:17:09 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+20:17:09 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,FILTER
+20:17:09 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $0, $3
+20:17:09 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+20:17:09 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+20:17:09 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 4
+20:17:09 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+20:17:09 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+20:17:09 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+20:17:09 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+20:17:09 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+20:17:09 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+20:17:10 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job1545557572183375881.jar
+20:17:15 INFO  mapReduceLayer.JobControlCompiler  - jar file Job1545557572183375881.jar created
+20:17:15 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+20:17:15 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+20:17:15 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+20:17:15 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+20:17:15 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+20:17:15 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+20:17:15 INFO  input.FileInputFormat  - Total input paths to process : 1
+20:17:15 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+20:17:15 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0068
+20:17:15 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat
+20:17:15 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],resourceObjects[2,18],resourceObjectsFlat[3,22],groups[4,9] C:  R: groupsCopy[-1,-1],propertyCooc[6,15]
+20:17:15 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0068
+20:17:15 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+20:21:10 INFO  mapReduceLayer.MapReduceLauncher  - 20% complete
+21:07:47 INFO  mapReduceLayer.MapReduceLauncher  - 20% complete
+23:04:49 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+23:12:39 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+23:40:05 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+01:16:52 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+01:32:27 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+01:44:07 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+01:59:43 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+02:44:48 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+03:08:24 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+04:36:51 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+04:44:46 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+04:52:46 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+05:08:16 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+06:04:02 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+06:15:58 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+06:50:38 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+08:08:30 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+08:35:25 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+08:57:55 INFO  mapReduceLayer.MapReduceLauncher  - 25% complete
+08:57:56 WARN  mapReduceLayer.MapReduceLauncher  - Ooops! Some job has failed! Specify -stop_on_failure if you want Pig to stop immediately on failure.
+08:57:56 INFO  mapReduceLayer.MapReduceLauncher  - job job_201306111200_0068 has failed! Stop running all dependent jobs
+08:57:56 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+08:57:56 ERROR pigstats.PigStatsUtil  - 1 map reduce job(s) failed!
+08:57:56 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-11 20:17:09	2013-06-12 08:57:56	GROUP_BY,ORDER_BY,FILTER
+
+Failed!
+
+Failed Jobs:
+JobId	Alias	Feature	Message	Outputs
+job_201306111200_0068	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	Message: Job failed! Error - NA	
+
+Input(s):
+Failed to read data from "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+
+Counters:
+Total records written : 0
+Total bytes written : 0
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0068	->	null,
+null	->	null,
+null	->	null,
+null
+
+
+08:57:56 INFO  mapReduceLayer.MapReduceLauncher  - Failed!
+08:57:56 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+08:57:56 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+08:57:56 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,DISTINCT,FILTER
+08:57:56 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $0
+08:57:56 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+08:57:56 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+08:57:56 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 4
+08:57:56 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+08:57:56 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+08:57:56 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+08:57:56 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+08:57:56 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+08:57:56 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+08:57:57 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job8924312183320304521.jar
+08:58:01 INFO  mapReduceLayer.JobControlCompiler  - jar file Job8924312183320304521.jar created
+08:58:01 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+08:58:01 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+08:58:01 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+08:58:01 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+08:58:01 INFO  mapReduceLayer.JobControlCompiler  - Setting identity combiner class.
+08:58:01 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+08:58:01 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+08:58:02 INFO  input.FileInputFormat  - Total input paths to process : 1
+08:58:02 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+08:58:02 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+08:58:02 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0069
+08:58:02 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases classesAndDomainsA,quads,typedstuff
+08:58:02 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],typedstuff[2,13],classesAndDomainsA[3,21] C:  R: 
+08:58:02 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0069
+09:01:02 INFO  mapReduceLayer.MapReduceLauncher  - 16% complete
+09:01:04 INFO  mapReduceLayer.MapReduceLauncher  - 25% complete
+09:01:07 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:01:07 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:01:07 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+09:01:07 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=457369
+09:01:07 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:01:08 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job2090060786425392484.jar
+09:01:13 INFO  mapReduceLayer.JobControlCompiler  - jar file Job2090060786425392484.jar created
+09:01:13 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:01:13 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:01:13 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:01:13 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:01:13 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:01:13 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:01:13 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:01:13 INFO  util.MapRedUtil  - Total input paths to process : 1
+09:01:13 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:01:14 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0070
+09:01:14 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases classCounts,classes
+09:01:14 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: classCounts[6,14],classes[5,10] C: classCounts[6,14],classes[5,10] R: classCounts[6,14]
+09:01:14 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0070
+09:01:21 INFO  mapReduceLayer.MapReduceLauncher  - 37% complete
+09:01:29 INFO  mapReduceLayer.MapReduceLauncher  - 41% complete
+09:01:31 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+09:01:34 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:01:34 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:01:34 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+09:01:34 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=395916
+09:01:34 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:01:34 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job3009317494034791113.jar
+09:01:38 INFO  mapReduceLayer.JobControlCompiler  - jar file Job3009317494034791113.jar created
+09:01:38 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:01:38 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:01:38 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:01:38 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:01:38 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:01:38 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:01:39 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:01:39 INFO  util.MapRedUtil  - Total input paths to process : 1
+09:01:39 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:01:39 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0071
+09:01:39 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topClasses
+09:01:39 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topClasses[7,13] C:  R: 
+09:01:39 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0071
+09:01:47 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+09:01:55 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+09:01:56 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+09:01:59 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:01:59 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:01:59 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:01:59 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job5265738116357821878.jar
+09:02:04 INFO  mapReduceLayer.JobControlCompiler  - jar file Job5265738116357821878.jar created
+09:02:04 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:02:04 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:02:04 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:02:04 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:02:04 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:02:04 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:02:04 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:02:04 INFO  util.MapRedUtil  - Total input paths to process : 1
+09:02:04 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:02:04 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0072
+09:02:04 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topClasses
+09:02:04 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topClasses[7,13] C:  R: 
+09:02:04 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0072
+09:02:11 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+09:02:20 INFO  mapReduceLayer.MapReduceLauncher  - 91% complete
+09:02:24 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+09:02:24 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-12 08:57:56	2013-06-12 09:02:24	GROUP_BY,ORDER_BY,DISTINCT,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0069	1	1	167	167	167	167	10	10	10	10	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306111200_0070	1	1	4	4	4	4	9	9	9	9	classCounts,classes	GROUP_BY,COMBINER	
+job_201306111200_0071	1	1	4	4	4	4	9	9	9	9	topClasses	SAMPLER	
+job_201306111200_0072	1	1	2	2	2	2	10	10	10	10	topClasses	ORDER_BY	results-classes_by_pld,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 4695 records (275521 bytes) in: "results-classes_by_pld"
+
+Counters:
+Total records written : 4695
+Total bytes written : 275521
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0069	->	job_201306111200_0070,
+job_201306111200_0070	->	job_201306111200_0071,
+job_201306111200_0071	->	job_201306111200_0072,
+job_201306111200_0072
+
+
+09:02:24 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+09:02:25 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+09:02:25 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+09:02:25 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+09:02:25 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+09:02:25 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+09:02:25 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+09:02:25 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,FILTER
+09:02:25 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+09:02:25 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+09:02:25 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 3
+09:02:25 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 3
+09:02:25 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:02:25 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:02:25 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+09:02:25 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+09:02:25 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:02:25 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job375616890442238833.jar
+09:02:30 INFO  mapReduceLayer.JobControlCompiler  - jar file Job375616890442238833.jar created
+09:02:30 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:02:30 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:02:30 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:02:30 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:02:30 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:02:30 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:02:30 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:02:30 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:02:30 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0073
+09:02:30 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propGroups,propSortedTop,propStatements,quads
+09:02:30 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],propStatements[3,17],propGroups[2,13] C: propStatements[3,17],propGroups[2,13] R: propStatements[3,17],propSortedTop[5,16]
+09:02:30 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0073
+09:02:30 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+09:05:31 INFO  mapReduceLayer.MapReduceLauncher  - 13% complete
+09:06:15 INFO  mapReduceLayer.MapReduceLauncher  - 22% complete
+09:06:17 INFO  mapReduceLayer.MapReduceLauncher  - 33% complete
+09:06:20 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:06:20 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:06:20 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+09:06:20 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=449802
+09:06:20 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:06:21 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job5939685959071361393.jar
+09:06:25 INFO  mapReduceLayer.JobControlCompiler  - jar file Job5939685959071361393.jar created
+09:06:25 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:06:25 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:06:25 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:06:25 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:06:25 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:06:25 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:06:25 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:06:25 INFO  util.MapRedUtil  - Total input paths to process : 1
+09:06:25 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:06:26 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0074
+09:06:26 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propSorted
+09:06:26 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propSorted[4,13] C:  R: 
+09:06:26 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0074
+09:06:33 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+09:06:40 INFO  mapReduceLayer.MapReduceLauncher  - 55% complete
+09:06:42 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+09:06:46 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:06:46 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:06:46 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:06:46 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job6259022877581975549.jar
+09:06:51 INFO  mapReduceLayer.JobControlCompiler  - jar file Job6259022877581975549.jar created
+09:06:51 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:06:51 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:06:51 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:06:51 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:06:51 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:06:51 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:06:51 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:06:51 INFO  util.MapRedUtil  - Total input paths to process : 1
+09:06:51 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:06:52 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0075
+09:06:52 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propSorted
+09:06:52 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: propSorted[4,13] C:  R: 
+09:06:52 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0075
+09:06:59 INFO  mapReduceLayer.MapReduceLauncher  - 83% complete
+09:07:09 INFO  mapReduceLayer.MapReduceLauncher  - 88% complete
+09:07:16 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+09:07:16 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-12 09:02:25	2013-06-12 09:07:16	GROUP_BY,ORDER_BY,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0073	1	1	206	206	206	206	10	10	10	10	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201306111200_0074	1	1	3	3	3	3	9	9	9	9	propSorted	SAMPLER	
+job_201306111200_0075	1	1	3	3	3	3	11	11	11	11	propSorted	ORDER_BY	results-properties_by_statement,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 4581 records (325241 bytes) in: "results-properties_by_statement"
+
+Counters:
+Total records written : 4581
+Total bytes written : 325241
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0073	->	job_201306111200_0074,
+job_201306111200_0074	->	job_201306111200_0075,
+job_201306111200_0075
+
+
+09:07:16 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+09:07:17 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+09:07:17 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+09:07:17 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,DISTINCT,FILTER
+09:07:17 INFO  rules.ColumnPruneVisitor  - Columns pruned for quads: $0
+09:07:17 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+09:07:17 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+09:07:17 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 4
+09:07:17 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+09:07:17 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:07:17 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:07:17 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+09:07:17 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=101451725
+09:07:17 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:07:18 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job1758072772860329253.jar
+09:07:22 INFO  mapReduceLayer.JobControlCompiler  - jar file Job1758072772860329253.jar created
+09:07:22 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:07:22 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:07:22 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:07:22 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:07:22 INFO  mapReduceLayer.JobControlCompiler  - Setting identity combiner class.
+09:07:22 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:07:22 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:07:22 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:07:22 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:07:23 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0076
+09:07:23 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases classesAndDomainsA,quads,typedstuff
+09:07:23 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],typedstuff[2,13],classesAndDomainsA[3,21] C:  R: 
+09:07:23 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0076
+09:07:23 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+09:10:22 INFO  mapReduceLayer.MapReduceLauncher  - 16% complete
+09:10:23 INFO  mapReduceLayer.MapReduceLauncher  - 16% complete
+09:10:24 INFO  mapReduceLayer.MapReduceLauncher  - 25% complete
+09:10:28 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:10:28 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:10:28 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+09:10:28 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=457413
+09:10:28 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:10:28 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job7709904798050676685.jar
+09:10:33 INFO  mapReduceLayer.JobControlCompiler  - jar file Job7709904798050676685.jar created
+09:10:33 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:10:33 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:10:33 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:10:33 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:10:33 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:10:33 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:10:33 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:10:33 INFO  util.MapRedUtil  - Total input paths to process : 1
+09:10:33 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:10:33 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0077
+09:10:33 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases tldTypeCounts,tlds
+09:10:33 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: tldTypeCounts[6,16],tlds[5,7] C: tldTypeCounts[6,16],tlds[5,7] R: tldTypeCounts[6,16]
+09:10:33 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0077
+09:10:43 INFO  mapReduceLayer.MapReduceLauncher  - 37% complete
+09:10:52 INFO  mapReduceLayer.MapReduceLauncher  - 41% complete
+09:10:54 INFO  mapReduceLayer.MapReduceLauncher  - 50% complete
+09:10:58 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:10:58 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:10:58 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+09:10:58 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=424357
+09:10:58 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:10:59 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job2955118207731336565.jar
+09:11:03 INFO  mapReduceLayer.JobControlCompiler  - jar file Job2955118207731336565.jar created
+09:11:03 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:11:03 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:11:03 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:11:03 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:11:03 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:11:03 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:11:03 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:11:03 INFO  util.MapRedUtil  - Total input paths to process : 1
+09:11:03 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:11:04 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0078
+09:11:04 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topClassesTld
+09:11:04 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topClassesTld[7,16] C:  R: 
+09:11:04 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0078
+09:11:11 INFO  mapReduceLayer.MapReduceLauncher  - 62% complete
+09:11:19 INFO  mapReduceLayer.MapReduceLauncher  - 66% complete
+09:11:20 INFO  mapReduceLayer.MapReduceLauncher  - 75% complete
+09:11:24 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:11:24 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:11:24 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:11:24 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job1909219858039057151.jar
+09:11:29 INFO  mapReduceLayer.JobControlCompiler  - jar file Job1909219858039057151.jar created
+09:11:29 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:11:29 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:11:29 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:11:29 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:11:29 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:11:29 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:11:29 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:11:29 INFO  util.MapRedUtil  - Total input paths to process : 1
+09:11:29 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:11:29 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0079
+09:11:29 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases topClassesTld
+09:11:29 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: topClassesTld[7,16] C:  R: 
+09:11:29 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0079
+09:11:38 INFO  mapReduceLayer.MapReduceLauncher  - 87% complete
+09:11:46 INFO  mapReduceLayer.MapReduceLauncher  - 91% complete
+09:11:54 INFO  mapReduceLayer.MapReduceLauncher  - 100% complete
+09:11:54 INFO  pigstats.SimplePigStats  - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.1.2	0.11.1	bforchhammer	2013-06-12 09:07:17	2013-06-12 09:11:54	GROUP_BY,ORDER_BY,DISTINCT,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201306111200_0076	1	1	166	166	166	166	10	10	10	10	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201306111200_0077	1	1	5	5	5	5	10	10	10	10	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201306111200_0078	1	1	3	3	3	3	9	9	9	9	topClassesTld	SAMPLER	
+job_201306111200_0079	1	1	3	3	3	3	9	9	9	9	topClassesTld	ORDER_BY	results-classes_by_tld,
+
+Input(s):
+Successfully read 10000000 records (101452108 bytes) from: "hdfs://tenemhead2/user/bforchhammer/data/freebase-10000000.nq.gz"
+
+Output(s):
+Successfully stored 4695 records (294301 bytes) in: "results-classes_by_tld"
+
+Counters:
+Total records written : 4695
+Total bytes written : 294301
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201306111200_0076	->	job_201306111200_0077,
+job_201306111200_0077	->	job_201306111200_0078,
+job_201306111200_0078	->	job_201306111200_0079,
+job_201306111200_0079
+
+
+09:11:54 INFO  mapReduceLayer.MapReduceLauncher  - Success!
+09:11:54 INFO  executionengine.HExecutionEngine  - Connecting to hadoop file system at: hdfs://tenemhead2
+09:11:54 INFO  executionengine.HExecutionEngine  - Connecting to map-reduce job tracker at: tenemhead2:9001
+09:11:55 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+09:11:55 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+09:11:55 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+09:11:55 WARN  pig.PigServer  - int is implicitly cast to long under GreaterThanExpression Operator
+09:11:55 INFO  pigstats.ScriptState  - Pig features used in the script: GROUP_BY,ORDER_BY,FILTER
+09:11:55 INFO  mapReduceLayer.MRCompiler  - File concatenation threshold: 100 optimistic? false
+09:11:55 INFO  mapReduceLayer.CombinerOptimizer  - Choosing to move algebraic foreach to combiner
+09:11:55 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size before optimization: 4
+09:11:55 INFO  mapReduceLayer.MultiQueryOptimizer  - MR plan size after optimization: 4
+09:11:55 INFO  pigstats.ScriptState  - Pig script settings are added to the job
+09:11:55 INFO  mapReduceLayer.JobControlCompiler  - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+09:11:55 INFO  mapReduceLayer.JobControlCompiler  - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+09:11:55 INFO  mapReduceLayer.InputSizeReducerEstimator  - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=251502155
+09:11:55 INFO  mapReduceLayer.JobControlCompiler  - Setting Parallelism to 1
+09:11:55 INFO  mapReduceLayer.JobControlCompiler  - creating jar file Job5570559036648325449.jar
+09:11:59 INFO  mapReduceLayer.JobControlCompiler  - jar file Job5570559036648325449.jar created
+09:11:59 INFO  mapReduceLayer.JobControlCompiler  - Setting up single store job
+09:11:59 INFO  data.SchemaTupleFrontend  - Key [pig.schematuple] is false, will not generate code.
+09:11:59 INFO  data.SchemaTupleFrontend  - Starting process to move generated code to distributed cacche
+09:11:59 INFO  data.SchemaTupleFrontend  - Setting key [pig.schematuple.classes] with classes to deserialize []
+09:11:59 INFO  mapReduceLayer.MapReduceLauncher  - 1 map-reduce job(s) waiting for submission.
+09:11:59 WARN  mapred.JobClient  - Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+09:12:00 INFO  input.FileInputFormat  - Total input paths to process : 1
+09:12:00 INFO  util.MapRedUtil  - Total input paths (combined) to process : 1
+09:12:00 INFO  mapReduceLayer.MapReduceLauncher  - HadoopJobId: job_201306111200_0080
+09:12:00 INFO  mapReduceLayer.MapReduceLauncher  - Processing aliases propertyCooc,quads,subjGroups,subjGroupsCopy
+09:12:00 INFO  mapReduceLayer.MapReduceLauncher  - detailed locations: M: quads[1,8],quads[-1,-1],subjGroups[2,13] C:  R: subjGroupsCopy[3,17],propertyCooc[4,15]
+09:12:00 INFO  mapReduceLayer.MapReduceLauncher  - More information at: http://tenemhead2:50030/jobdetails.jsp?jobid=job_201306111200_0080
+09:12:00 INFO  mapReduceLayer.MapReduceLauncher  - 0% complete
+09:19:01 INFO  mapReduceLayer.MapReduceLauncher  - 12% complete
+09:22:54 INFO  mapReduceLayer.MapReduceLauncher  - 16% complete
+09:22:57 INFO  mapReduceLayer.MapReduceLauncher  - 20% complete
