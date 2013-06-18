@@ -181,7 +181,8 @@ public class ScriptRunner {
         ExecJob job = null;
         try {
             log.debug("Starting execution of pig script.");
-            job = getPig().store(script.getResultAlias(), resultsFile);
+            String lastAlias = getPig().getPigContext().getLastAlias();
+            job = getPig().store(lastAlias, resultsFile);
             log.debug("Finished execution of pig script.");
         } catch (IOException e) {
             log.error("Error while trying to execute pig script.", e);

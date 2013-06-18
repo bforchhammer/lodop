@@ -13,11 +13,9 @@ public class FilePigScript extends PigScript {
     /**
      * Constructor.
      *
-     * @param resultAlias
      * @param script
      */
-    public FilePigScript(String resultAlias, File script) {
-        super(resultAlias);
+    public FilePigScript(File script) {
         this.script = script;
     }
 
@@ -35,8 +33,9 @@ public class FilePigScript extends PigScript {
      */
     public static PigScript fromFile(File file) throws PigScriptException {
         try {
-            String alias = PigScriptHelper.guessResultAlias(file);
-            return new FilePigScript(alias, file);
+            // Check that we can create a valid input stream.
+            InputStream is = new FileInputStream(file);
+            return new FilePigScript(file);
         } catch (IOException e) {
             throw new PigScriptException("Cannot create PigScript from file", e);
         }

@@ -6,25 +6,6 @@ import java.io.InputStream;
  * A pig script.
  */
 public abstract class PigScript {
-    private String resultAlias;
-
-    /**
-     * Constructor.
-     *
-     * @param resultAlias
-     */
-    public PigScript(String resultAlias) {
-        this.resultAlias = resultAlias;
-    }
-
-    /**
-     * Get the result alias for this pig script.
-     *
-     * @return The result alias.
-     */
-    public String getResultAlias() {
-        return resultAlias;
-    }
 
     /**
      * Returns a new InputStream for wrapped pig script file.

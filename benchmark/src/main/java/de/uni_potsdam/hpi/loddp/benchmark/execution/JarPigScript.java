@@ -13,17 +13,16 @@ public class JarPigScript extends PigScript {
     private final JarURLConnection jarConnection;
     private final JarEntry entry;
 
-    protected JarPigScript(String resultAlias, JarURLConnection jarConnection, JarEntry entry) {
-        super(resultAlias);
+    protected JarPigScript(JarURLConnection jarConnection, JarEntry entry) {
         this.jarConnection = jarConnection;
         this.entry = entry;
     }
 
     public static JarPigScript fromJarConnection(JarURLConnection jarConnection, JarEntry entry) throws PigScriptException {
         try {
+            // Check that jar file can be read by opening an input stream:
             InputStream is = jarConnection.getJarFile().getInputStream(entry);
-            String alias = PigScriptHelper.guessResultAlias(is);
-            return new JarPigScript(alias, jarConnection, entry);
+            return new JarPigScript(jarConnection, entry);
         } catch (IOException e) {
             throw new PigScriptException("Cannot create PigScript from jar connection.", e);
         }
