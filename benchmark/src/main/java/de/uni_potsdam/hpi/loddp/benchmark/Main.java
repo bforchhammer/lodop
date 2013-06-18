@@ -61,7 +61,7 @@ public class Main {
             "classes_by_url"});
 
         // Use DBpedia 1M.
-        InputFile inputFile = new InputFile("data/dbpedia-1000000.nq.gz");
+        InputFile inputFile = new InputFile("data/dbpedia-1M.nq.gz");
 
         // Execute script.
         runSequential(runner, scripts, inputFile, blacklist);
