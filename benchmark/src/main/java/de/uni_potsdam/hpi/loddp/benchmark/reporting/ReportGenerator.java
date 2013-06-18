@@ -21,6 +21,7 @@ public class ReportGenerator {
         Map<Long, ExecutionStats>>>();
     private Map<String, Map<Long, Map<String, ExecutionStats>>> statsBySizeAndName = new TreeMap<String, Map<Long,
         Map<String, ExecutionStats>>>();
+    private Set<ExecutionStats> stats;
 
     /**
      * Constructor.
@@ -28,16 +29,18 @@ public class ReportGenerator {
      * @param stats
      */
     public ReportGenerator(Set<ExecutionStats> stats) {
-        init(stats);
+        this.stats = stats;
+        initialise();
     }
 
     /**
-     * Parses the set of given execution stats and stores them in grouped maps.
-     *
-     * @param stats A set of execution stats.
+     * Parses the set of execution stats and stores them in grouped maps.
      */
-    private void init(Set<ExecutionStats> stats) {
-        for (ExecutionStats stat : stats) {
+    public void initialise() {
+        this.statsByNameAndSize = new TreeMap<String, Map<String, Map<Long, ExecutionStats>>>();
+        this.statsBySizeAndName = new TreeMap<String, Map<Long, Map<String, ExecutionStats>>>();
+
+        for (ExecutionStats stat : this.stats) {
             String dataset = stat.getDatasetIdentifier();
             if (!statsBySizeAndName.containsKey(dataset)) {
                 statsBySizeAndName.put(dataset, new TreeMap<Long, Map<String, ExecutionStats>>());
@@ -277,8 +280,7 @@ public class ReportGenerator {
                 if (ArrayUtils.contains(timeCounterTypes, counterType)) {
                     sb.append("\t").append(DurationFormatUtils.formatDurationHMS(Math.round(s.getMean())));
                     sb.append("\t").append(DECIMAL_FLOAT.format(s.getStandardDeviation() / 1000)).append("s");
-                }
-                else {
+                } else {
                     sb.append("\t").append(DECIMAL_FLOAT.format(s.getMean()));
                     sb.append("\t").append(DECIMAL_FLOAT.format(s.getStandardDeviation()));
                 }
