@@ -40,6 +40,72 @@ public class Main {
     }
 
     private static Set<ExecutionStats> statisticsCollection = new HashSet<ExecutionStats>();
+    private static Set<PigScript> scripts;
+
+    private static Set<String> getBlackList(String[] scriptNames) {
+        Set<String> blacklist = getBlackList(SCRIPT_LIST.NONE);
+        for (String s : scriptNames)
+            blacklist.remove(s);
+        return blacklist;
+    }
+
+    private static Set<String> getBlackList(String scriptName) {
+        Set<String> blacklist = getBlackList(SCRIPT_LIST.NONE);
+        blacklist.remove(scriptName);
+        return blacklist;
+    }
+
+    private static Set<String> getBlackList(SCRIPT_LIST type) {
+        Set<String> blacklist = new HashSet<String>();
+        switch (type) {
+            case NO_COOC:
+                blacklist.add("incoming_property_cooc");
+                blacklist.add("property_cooc_by_entities");
+                blacklist.add("property_cooc_by_urls");
+                break;
+            case ONLY_COOC:
+                blacklist.add("classes_by_entity");
+                blacklist.add("classes_by_url");
+                blacklist.add("classes_by_tld");
+                blacklist.add("classes_by_pld");
+                //blacklist.add("incoming_property_cooc");
+                blacklist.add("number_of_triples");
+                blacklist.add("number_of_instances");
+                //blacklist.add("property_cooc_by_entities");
+                //blacklist.add("property_cooc_by_urls");
+                blacklist.add("properties_by_entity");
+                blacklist.add("properties_by_pld");
+                blacklist.add("properties_by_statement");
+                blacklist.add("properties_by_tld");
+                blacklist.add("properties_by_url");
+                blacklist.add("vocabularies_by_entity");
+                blacklist.add("vocabularies_by_pld");
+                blacklist.add("vocabularies_by_tld");
+                blacklist.add("vocabularies_by_url");
+                break;
+            case NONE:
+                blacklist.add("classes_by_entity");
+                blacklist.add("classes_by_url");
+                blacklist.add("classes_by_tld");
+                blacklist.add("classes_by_pld");
+                blacklist.add("incoming_property_cooc");
+                blacklist.add("number_of_triples");
+                blacklist.add("number_of_instances");
+                blacklist.add("property_cooc_by_entities");
+                blacklist.add("property_cooc_by_urls");
+                blacklist.add("properties_by_entity");
+                blacklist.add("properties_by_pld");
+                blacklist.add("properties_by_statement");
+                blacklist.add("properties_by_tld");
+                blacklist.add("properties_by_url");
+                blacklist.add("vocabularies_by_entity");
+                blacklist.add("vocabularies_by_pld");
+                blacklist.add("vocabularies_by_tld");
+                blacklist.add("vocabularies_by_url");
+                break;
+        }
+        return blacklist;
+    }
 
     /**
      * Looks for scripts, and runs complete benchmark.
@@ -47,39 +113,50 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        Set<PigScript> scripts = PigScriptHelper.findPigScripts();
-
-        Set<String> blacklist = new HashSet<String>();
-        /*blacklist.add("classes_by_entity");
-        blacklist.add("classes_by_url");
-        blacklist.add("classes_by_tld");
-        blacklist.add("classes_by_pld");
-        blacklist.add("incoming_property_cooc");
-        blacklist.add("number_of_triples");
-        blacklist.add("number_of_instances");
-        blacklist.add("property_cooc_by_entities");
-        blacklist.add("property_cooc_by_urls");
-        blacklist.add("properties_by_entity");
-        blacklist.add("properties_by_pld");
-        blacklist.add("properties_by_statement");
-        blacklist.add("properties_by_tld");
-        blacklist.add("properties_by_url");
-        blacklist.add("vocabularies_by_entity");
-        blacklist.add("vocabularies_by_pld");
-        blacklist.add("vocabularies_by_tld");
-        blacklist.add("vocabularies_by_url");//*/
-
+        scripts = PigScriptHelper.findPigScripts();
         ScriptRunner runner = new ScriptRunner(ScriptRunner.HADOOP_LOCATION.LOCALHOST);
 
-        InputFileSet dbpedia = new InputFileSet("BTC2012/DBPedia", "data/dbpedia-", 10, 10000000);
+        run_smallTest(runner);
+    }
+
+    private static void run_smallTest(ScriptRunner runner) {
+        Set<String> blacklist = getBlackList(new String[] {"number_of_instances", "classes_by_entity", "classes_by_url"});
         InputFileSet freebase = new InputFileSet("BTC2012/Freebase", "data/freebase-", 10, 10000000);
+        runSequential(runner, scripts, freebase.getBySize(10000), blacklist);
+        ReportGenerator rg = new ReportGenerator(statisticsCollection);
+        rg.scalabilityReport();
+        rg.scriptComparison();
+        rg.featureRuntimeAnalysis();
+    }
 
-        //InputFile dbpediaData0 = new InputFile("data/freebase-data-0.nq.gz");
-        //runSequential(runner, scripts, dbpediaData0, blacklist);
+    private static void run_scalabilityDBPedia(ScriptRunner runner) {
+        Set<String> blacklist = getBlackList(SCRIPT_LIST.NO_COOC);
 
-        runSequential(runner, scripts, freebase.getBySize(10000000), blacklist);
+        InputFileSet dbpedia = new InputFileSet("BTC2012/DBPedia", "data/dbpedia-", 1000000, 100000000);
+        InputFile dbpediaAll = new InputFile("data/dbpedia-full.nq.gz");
 
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
+
+        runSequential(runner, scripts, dbpedia.getBySize(1000000), blacklist);
+        rg.initialise();
+        //rg.scalabilityReport();
+        rg.scriptComparison();
+        rg.featureRuntimeAnalysis();
+
+        runSequential(runner, scripts, dbpedia.getBySize(10000000), blacklist);
+        rg.initialise();
+        //rg.scalabilityReport();
+        rg.scriptComparison();
+        rg.featureRuntimeAnalysis();
+
+        runSequential(runner, scripts, dbpedia.getBySize(100000000), blacklist);
+        rg.initialise();
+        //rg.scalabilityReport();
+        rg.scriptComparison();
+        rg.featureRuntimeAnalysis();
+
+        runSequential(runner, scripts, dbpediaAll, blacklist);
+        rg.initialise();
         rg.scalabilityReport();
         rg.scriptComparison();
         rg.featureRuntimeAnalysis();
@@ -137,5 +214,9 @@ public class Main {
             statisticsCollection.add(s);
             s.printStats();
         }
+    }
+
+    private static enum SCRIPT_LIST {
+        ALL, NONE, ONLY_COOC, NO_COOC
     }
 }
