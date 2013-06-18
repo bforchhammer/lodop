@@ -251,5 +251,94 @@ public class PigScriptHelper {
         return pieces[0].trim();
     }
 
+    /**
+     * Blacklist for executing only scripts matching any of the given set of script names.
+     *
+     * @param scriptNames
+     *
+     * @return
+     */
+    public static Set<String> getBlackList(String[] scriptNames) {
+        Set<String> blacklist = getBlackList(SCRIPT_LIST.NONE);
+        for (String s : scriptNames)
+            blacklist.remove(s);
+        return blacklist;
+    }
+
+    /**
+     * Blacklist for executing only scripts matching the given script name.
+     *
+     * @param scriptName
+     *
+     * @return
+     */
+    public static Set<String> getBlackList(String scriptName) {
+        Set<String> blacklist = getBlackList(SCRIPT_LIST.NONE);
+        blacklist.remove(scriptName);
+        return blacklist;
+    }
+
+    /**
+     * Blacklist for executing certain groups of scripts, depending on type.
+     *
+     * @param type
+     *
+     * @return
+     */
+    public static Set<String> getBlackList(SCRIPT_LIST type) {
+        Set<String> blacklist = new HashSet<String>();
+        switch (type) {
+            case NO_COOC:
+                blacklist.add("incoming_property_cooc");
+                blacklist.add("property_cooc_by_entities");
+                blacklist.add("property_cooc_by_urls");
+                break;
+            case ONLY_COOC:
+                blacklist.add("classes_by_entity");
+                blacklist.add("classes_by_url");
+                blacklist.add("classes_by_tld");
+                blacklist.add("classes_by_pld");
+                //blacklist.add("incoming_property_cooc");
+                blacklist.add("number_of_triples");
+                blacklist.add("number_of_instances");
+                //blacklist.add("property_cooc_by_entities");
+                //blacklist.add("property_cooc_by_urls");
+                blacklist.add("properties_by_entity");
+                blacklist.add("properties_by_pld");
+                blacklist.add("properties_by_statement");
+                blacklist.add("properties_by_tld");
+                blacklist.add("properties_by_url");
+                blacklist.add("vocabularies_by_entity");
+                blacklist.add("vocabularies_by_pld");
+                blacklist.add("vocabularies_by_tld");
+                blacklist.add("vocabularies_by_url");
+                break;
+            case NONE:
+                blacklist.add("classes_by_entity");
+                blacklist.add("classes_by_url");
+                blacklist.add("classes_by_tld");
+                blacklist.add("classes_by_pld");
+                blacklist.add("incoming_property_cooc");
+                blacklist.add("number_of_triples");
+                blacklist.add("number_of_instances");
+                blacklist.add("property_cooc_by_entities");
+                blacklist.add("property_cooc_by_urls");
+                blacklist.add("properties_by_entity");
+                blacklist.add("properties_by_pld");
+                blacklist.add("properties_by_statement");
+                blacklist.add("properties_by_tld");
+                blacklist.add("properties_by_url");
+                blacklist.add("vocabularies_by_entity");
+                blacklist.add("vocabularies_by_pld");
+                blacklist.add("vocabularies_by_tld");
+                blacklist.add("vocabularies_by_url");
+                break;
+        }
+        return blacklist;
+    }
+
+    public static enum SCRIPT_LIST {
+        ALL, NONE, ONLY_COOC, NO_COOC
+    }
 
 }

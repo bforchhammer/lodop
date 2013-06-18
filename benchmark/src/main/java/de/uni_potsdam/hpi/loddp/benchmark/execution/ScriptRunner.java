@@ -16,6 +16,7 @@ import java.util.Properties;
 public class ScriptRunner {
 
     protected static final Log log = LogFactory.getLog(ScriptRunner.class);
+    private final String hdfsWorkingDirectory;
     private final Properties serverProperties;
     private final boolean reuseServer;
     private PigServer pig;
@@ -25,8 +26,8 @@ public class ScriptRunner {
      *
      * @param location The hadoop server location.
      */
-    public ScriptRunner(HADOOP_LOCATION location) {
-        this(location, false);
+    public ScriptRunner(HADOOP_LOCATION location, String hdfsWorkingDirectory) {
+        this(location, false, hdfsWorkingDirectory);
     }
 
     /**
@@ -39,9 +40,14 @@ public class ScriptRunner {
      *
      * @throws IOException
      */
-    public ScriptRunner(HADOOP_LOCATION location, boolean reuseServer) {
+    public ScriptRunner(HADOOP_LOCATION location, boolean reuseServer, String hdfsWorkingDirectory) {
         this.reuseServer = reuseServer;
         this.serverProperties = generateProperties(location);
+
+        // Make sure hdfs directory ends with a slash.
+        if (hdfsWorkingDirectory.isEmpty()) hdfsWorkingDirectory = "./";
+        else if (!hdfsWorkingDirectory.endsWith("/")) hdfsWorkingDirectory += '/';
+        this.hdfsWorkingDirectory = hdfsWorkingDirectory;
 
         log.info(String.format("ScriptRunner is using %s PigServer(s) for executing scripts.",
             reuseServer ? "ONE" : "SEPARATE"));
@@ -93,7 +99,7 @@ public class ScriptRunner {
      * @throws IOException
      */
     private void loadQuads(InputFile inputFile) throws IOException {
-        String filename = inputFile.getFilename();
+        String filename = hdfsWorkingDirectory + inputFile.getFilename();
         if (!getPig().existsFile(filename)) {
             throw new IOException("File not found on HDFS: " + filename);
         }
@@ -145,7 +151,7 @@ public class ScriptRunner {
 
         // Handle existing results.
         String scriptName = script.getScriptName();
-        String resultsFile = "results-" + scriptName;
+        String resultsFile = hdfsWorkingDirectory + "results-" + scriptName;
         try {
             if (getPig().existsFile(resultsFile)) {
                 if (replaceExisting) {
@@ -169,8 +175,12 @@ public class ScriptRunner {
 
         // Register script.
         try {
-            getPig().setJobName(scriptName); // doesn't seem to do anything.
-            getPig().getPigContext().getProperties().setProperty(PigContext.JOB_NAME, scriptName);
+            StringBuilder jobName = new StringBuilder();
+            jobName.append(scriptName).append(" / ")
+                .append(inputFile.getFileSetIdentifier()).append(" / ")
+                .append(inputFile.getTupleCount());
+            getPig().setJobName(jobName.toString()); // doesn't seem to do anything.
+            getPig().getPigContext().getProperties().setProperty(PigContext.JOB_NAME, jobName.toString());
             getPig().registerScript(script.getNewInputStream());
         } catch (IOException e) {
             log.error("Error while trying to load pig script.", e);

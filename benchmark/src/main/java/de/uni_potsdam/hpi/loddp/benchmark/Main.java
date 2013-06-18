@@ -22,6 +22,7 @@ public class Main {
     protected static final String LOG_FILENAME_APACHE = "apache.log";
     protected static final String LOG_FILENAME_BENCHMARK = "benchmark.log";
     protected static final String LOG_FILENAME_REPORTING = "report.log";
+    protected static final String HDFS_WORKING_DIRECTORY = "/user/bforchhammer";
 
     static {
         // Setup directory for log files (this will only work, if executed before any logger is initialised.
@@ -42,71 +43,6 @@ public class Main {
     private static Set<ExecutionStats> statisticsCollection = new HashSet<ExecutionStats>();
     private static Set<PigScript> scripts;
 
-    private static Set<String> getBlackList(String[] scriptNames) {
-        Set<String> blacklist = getBlackList(SCRIPT_LIST.NONE);
-        for (String s : scriptNames)
-            blacklist.remove(s);
-        return blacklist;
-    }
-
-    private static Set<String> getBlackList(String scriptName) {
-        Set<String> blacklist = getBlackList(SCRIPT_LIST.NONE);
-        blacklist.remove(scriptName);
-        return blacklist;
-    }
-
-    private static Set<String> getBlackList(SCRIPT_LIST type) {
-        Set<String> blacklist = new HashSet<String>();
-        switch (type) {
-            case NO_COOC:
-                blacklist.add("incoming_property_cooc");
-                blacklist.add("property_cooc_by_entities");
-                blacklist.add("property_cooc_by_urls");
-                break;
-            case ONLY_COOC:
-                blacklist.add("classes_by_entity");
-                blacklist.add("classes_by_url");
-                blacklist.add("classes_by_tld");
-                blacklist.add("classes_by_pld");
-                //blacklist.add("incoming_property_cooc");
-                blacklist.add("number_of_triples");
-                blacklist.add("number_of_instances");
-                //blacklist.add("property_cooc_by_entities");
-                //blacklist.add("property_cooc_by_urls");
-                blacklist.add("properties_by_entity");
-                blacklist.add("properties_by_pld");
-                blacklist.add("properties_by_statement");
-                blacklist.add("properties_by_tld");
-                blacklist.add("properties_by_url");
-                blacklist.add("vocabularies_by_entity");
-                blacklist.add("vocabularies_by_pld");
-                blacklist.add("vocabularies_by_tld");
-                blacklist.add("vocabularies_by_url");
-                break;
-            case NONE:
-                blacklist.add("classes_by_entity");
-                blacklist.add("classes_by_url");
-                blacklist.add("classes_by_tld");
-                blacklist.add("classes_by_pld");
-                blacklist.add("incoming_property_cooc");
-                blacklist.add("number_of_triples");
-                blacklist.add("number_of_instances");
-                blacklist.add("property_cooc_by_entities");
-                blacklist.add("property_cooc_by_urls");
-                blacklist.add("properties_by_entity");
-                blacklist.add("properties_by_pld");
-                blacklist.add("properties_by_statement");
-                blacklist.add("properties_by_tld");
-                blacklist.add("properties_by_url");
-                blacklist.add("vocabularies_by_entity");
-                blacklist.add("vocabularies_by_pld");
-                blacklist.add("vocabularies_by_tld");
-                blacklist.add("vocabularies_by_url");
-                break;
-        }
-        return blacklist;
-    }
-
     /**
      * Looks for scripts, and runs complete benchmark.
      *
@@ -114,15 +50,23 @@ public class Main {
      */
     public static void main(String[] args) {
         scripts = PigScriptHelper.findPigScripts();
-        ScriptRunner runner = new ScriptRunner(ScriptRunner.HADOOP_LOCATION.LOCALHOST);
+        ScriptRunner runner = new ScriptRunner(ScriptRunner.HADOOP_LOCATION.LOCALHOST, HDFS_WORKING_DIRECTORY);
 
         run_smallTest(runner);
     }
 
     private static void run_smallTest(ScriptRunner runner) {
-        Set<String> blacklist = getBlackList(new String[] {"number_of_instances", "classes_by_entity", "classes_by_url"});
-        InputFileSet freebase = new InputFileSet("BTC2012/Freebase", "data/freebase-", 10, 10000000);
-        runSequential(runner, scripts, freebase.getBySize(10000), blacklist);
+        // Execute only three scripts:
+        Set<String> blacklist = PigScriptHelper.getBlackList(new String[] {"number_of_instances", "classes_by_entity",
+            "classes_by_url"});
+
+        // Use DBpedia 1M.
+        InputFile inputFile = new InputFile("data/dbpedia-1000000.nq.gz");
+
+        // Execute script.
+        runSequential(runner, scripts, inputFile, blacklist);
+
+        // Generate a bunch of numbers and tables and stuff.
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
         rg.scalabilityReport();
         rg.scriptComparison();
@@ -130,9 +74,11 @@ public class Main {
     }
 
     private static void run_scalabilityDBPedia(ScriptRunner runner) {
-        Set<String> blacklist = getBlackList(SCRIPT_LIST.NO_COOC);
+        // No cooc-scripts
+        Set<String> blacklist = PigScriptHelper.getBlackList(PigScriptHelper.SCRIPT_LIST.NO_COOC);
 
-        InputFileSet dbpedia = new InputFileSet("BTC2012/DBPedia", "data/dbpedia-", 1000000, 100000000);
+        // First, dbpedia 10M to 1000M, then full dbpedia.
+        InputFileSet dbpedia = InputFileSet.createLogarithmic("BTC2012/DBPedia", "data/dbpedia-", 1000000, 100000000);
         InputFile dbpediaAll = new InputFile("data/dbpedia-full.nq.gz");
 
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
@@ -163,6 +109,24 @@ public class Main {
         //rg.datasetComparison(freebase, dbpedia, 10000000);
     }
 
+    private static void run_scalabilityDBPedia2(ScriptRunner runner) {
+        // No cooc-scripts
+        Set<String> blacklist = PigScriptHelper.getBlackList(PigScriptHelper.SCRIPT_LIST.NO_COOC);
+
+        // data/dbpedia-1M.nq.gz ... data/dbpedia-20M.nq.gz
+        InputFileSet dbpedia = InputFileSet.createLinear("BTC2012/DBPedia", "data/dbpedia-", 1, 20, "M.nq.gz",
+            1000000);
+
+        ReportGenerator rg = new ReportGenerator(statisticsCollection);
+        for (InputFile file : dbpedia.getAll()) {
+            runSequential(runner, scripts, file, blacklist);
+            rg.initialise();
+            rg.scalabilityReport();
+            rg.scriptComparison();
+            rg.featureRuntimeAnalysis();
+        }
+    }
+
     /**
      * Benchmark the given set of pig scripts.
      *
@@ -187,20 +151,6 @@ public class Main {
     }
 
     /**
-     * Benchmark the given set of pig scripts, for multiple different input files.
-     *
-     * @param runner    A script runner.
-     * @param scripts   A set of pig scripts.
-     * @param inputs    The set of quad input files.
-     * @param blacklist A list of script names to skip and not execute.
-     */
-    public static void runSequential(ScriptRunner runner, Set<PigScript> scripts, InputFileSet inputs, Set<String> blacklist) {
-        for (InputFile file : inputs.getAll()) {
-            runSequential(runner, scripts, file, blacklist);
-        }
-    }
-
-    /**
      * Execute the given pig script.
      *
      * @param runner A script runner.
@@ -214,9 +164,5 @@ public class Main {
             statisticsCollection.add(s);
             s.printStats();
         }
-    }
-
-    private static enum SCRIPT_LIST {
-        ALL, NONE, ONLY_COOC, NO_COOC
     }
 }
