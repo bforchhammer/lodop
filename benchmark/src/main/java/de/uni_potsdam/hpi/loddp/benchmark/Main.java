@@ -22,7 +22,7 @@ public class Main {
     protected static final String LOG_FILENAME_APACHE = "apache.log";
     protected static final String LOG_FILENAME_BENCHMARK = "benchmark.log";
     protected static final String LOG_FILENAME_REPORTING = "report.log";
-    protected static final String HDFS_WORKING_DIRECTORY = "/user/bforchhammer";
+    protected static final String HDFS_WORKING_DIRECTORY = "";
 
     static {
         // Setup directory for log files (this will only work, if executed before any logger is initialised.
