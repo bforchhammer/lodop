@@ -43,7 +43,8 @@ public class InputFileSet {
         InputFileSet fileSet = new InputFileSet(identifier);
         for (int i = start; i <= end; i += addend) {
             String filename = prefix + i + suffix;
-            fileSet.addFile((long) i * sizeFactor, new InputFile(filename, i, fileSet));
+            long inputSize = i * sizeFactor;
+            fileSet.addFile(inputSize, new InputFile(filename, inputSize, fileSet));
         }
         return fileSet;
     }
