@@ -96,9 +96,9 @@ public class ReportGenerator {
     public void scalabilityReport(String dataset, ReportType type) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Scalability (");
-        sb.append(type);
-        sb.append("):\n");
+        sb.append("Scalability")
+            .append(" (").append(type).append(")")
+            .append(" for ").append(dataset).append(":\n");
 
         // Build table header:
         sb.append("Script name");
@@ -151,10 +151,9 @@ public class ReportGenerator {
 
     public void scriptComparison(String dataset, Long inputSize) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Comparison of script counters (");
-        sb.append(DECIMAL_SCIENTIFIC.format(inputSize));
-        sb.append(" records)");
-        sb.append("\n");
+        sb.append("Comparison of script counters")
+            .append(" (").append(DECIMAL_SCIENTIFIC.format(inputSize)).append(" records)")
+            .append(" for ").append(dataset).append(":\n");
 
         sb.append("Script name");
         sb.append("\t").append("Time (total)");
@@ -263,7 +262,10 @@ public class ReportGenerator {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Comparison of PIG features.\n");
+        sb.append("Comparison of PIG features ")
+            .append(" (").append(DECIMAL_SCIENTIFIC.format(inputSize)).append(" records)")
+            .append(" for ").append(dataset).append(":\n");
+
         sb.append("Feature");
         sb.append("\t").append("Usage count");
         for (String counterType : counterTypes) {

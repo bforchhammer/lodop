@@ -61,6 +61,7 @@ public class DotPlanDumper extends org.apache.pig.newplan.DotPlanDumper {
                 "-o", imageOutputFile.getAbsolutePath()};
             Process p = rt.exec(args);
             p.waitFor();
+            dotOutputFile.delete();
         } catch (InterruptedException e) {
             log.error("Cannot output job graph as png graph.", e);
         } catch (IOException e) {
