@@ -50,7 +50,7 @@ public class DotPlanDumper extends org.apache.pig.newplan.DotPlanDumper {
         return new DotPlanDumper(plan, imageOutputFile, dotOutputFile, imageType);
     }
 
-    public void dumpAsImage() throws IOException {
+    public void dumpAsImage() {
         dump();
 
         try {
@@ -62,6 +62,8 @@ public class DotPlanDumper extends org.apache.pig.newplan.DotPlanDumper {
             Process p = rt.exec(args);
             p.waitFor();
         } catch (InterruptedException e) {
+            log.error("Cannot output job graph as png graph.", e);
+        } catch (IOException e) {
             log.error("Cannot output job graph as png graph.", e);
         }
     }

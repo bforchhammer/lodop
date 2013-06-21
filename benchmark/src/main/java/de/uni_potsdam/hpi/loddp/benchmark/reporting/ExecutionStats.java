@@ -191,9 +191,6 @@ public class ExecutionStats {
         try {
             DotPlanDumper dumper = DotPlanDumper.createInstance(pigStats.getJobGraph(), outputFilename);
             dumper.dumpAsImage();
-            /*MROperPlan plan = null;
-            new DotMRPrinter(plan, new PrintStream(outputFile)).dump();*/
-            //outputFile.delete();
         } catch (IOException e) {
             log.error("Cannot output job graph as dot graph.", e);
         }
