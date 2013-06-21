@@ -1,5 +1,6 @@
 package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
+import de.uni_potsdam.hpi.loddp.benchmark.Main;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScript;
 import org.apache.commons.lang.time.DurationFormatUtils;
@@ -10,6 +11,7 @@ import org.apache.pig.tools.pigstats.JobStats;
 import org.apache.pig.tools.pigstats.OutputStats;
 import org.apache.pig.tools.pigstats.PigStats;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -176,6 +178,24 @@ public class ExecutionStats {
         }
 
         log.info(sb.toString());
+
+        dumpDotPlan();
     }
 
+    public void dumpDotPlan() {
+        String outputFilename = new StringBuilder()
+            .append(Main.getJobGraphDirectory())
+            .append(getDatasetIdentifier().replace('/', '-')).append('-')
+            .append(getInputSize()).append('-')
+            .append(getScriptName()).append(".png").toString();
+        try {
+            DotPlanDumper dumper = DotPlanDumper.createInstance(pigStats.getJobGraph(), outputFilename);
+            dumper.dumpAsImage();
+            /*MROperPlan plan = null;
+            new DotMRPrinter(plan, new PrintStream(outputFile)).dump();*/
+            //outputFile.delete();
+        } catch (IOException e) {
+            log.error("Cannot output job graph as dot graph.", e);
+        }
+    }
 }

@@ -22,6 +22,7 @@ public class Main {
     protected static final String LOG_FILENAME_APACHE = "apache.log";
     protected static final String LOG_FILENAME_BENCHMARK = "benchmark.log";
     protected static final String LOG_FILENAME_REPORTING = "report.log";
+    protected static final String JOB_GRAPH_DIRECTORY = "jobs";
     protected static final String HDFS_WORKING_DIRECTORY = "";
 
     static {
@@ -42,6 +43,10 @@ public class Main {
 
     private static Set<ExecutionStats> statisticsCollection = new HashSet<ExecutionStats>();
     private static Set<PigScript> scripts;
+
+    public static String getJobGraphDirectory() {
+        return LOG_DIRECTORY + '/' + JOB_GRAPH_DIRECTORY + '/';
+    }
 
     /**
      * Looks for scripts, and runs complete benchmark.
