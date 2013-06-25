@@ -1,8 +1,12 @@
 package de.uni_potsdam.hpi.loddp.benchmark;
 
-import de.uni_potsdam.hpi.loddp.benchmark.execution.*;
+import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
+import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScript;
+import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScriptHelper;
+import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ExecutionStats;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ReportGenerator;
+import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.tools.pigstats.PigStats;
@@ -48,28 +52,65 @@ public class Main {
         return LOG_DIRECTORY + '/' + JOB_GRAPH_DIRECTORY + '/';
     }
 
+    private static Options getCliOptions() {
+        Options options = new Options();
+        options.addOption("h", "help", false, "Print this help message.");
+        options.addOption(OptionBuilder
+            .withLongOpt("scripts")
+            .withDescription("Comma-separated list of pig script names to execute.")
+            .hasArgs()
+            .withArgName("number_of_instances")
+            .withValueSeparator(',')
+            .create('s'));
+        options.addOption(OptionBuilder
+            .withLongOpt("cluster")
+            .withDescription("Use tenemhead2 cluster for computation.")
+            .hasArg(false)
+            .create('c'));
+
+        return options;
+    }
+
     /**
      * Looks for scripts, and runs complete benchmark.
      *
      * @param args
      */
     public static void main(String[] args) {
-        scripts = PigScriptHelper.findPigScripts();
-        ScriptRunner runner = new ScriptRunner(ScriptRunner.HADOOP_LOCATION.LOCALHOST, HDFS_WORKING_DIRECTORY);
+        Options options = getCliOptions();
+        CommandLineParser parser = new BasicParser();
+        CommandLine cmd = null;
+        try {
+            cmd = parser.parse(options, args);
+        } catch (ParseException e) {
+            log.error(e.getMessage(), e);
+            new HelpFormatter().printHelp("./gradlew run", options);
+            return;
+        }
 
-        run_smallTest(runner);
-    }
+        if (cmd.hasOption("help")) {
+            new HelpFormatter().printHelp("./gradlew run", options);
+            return;
+        }
 
-    private static void run_smallTest(ScriptRunner runner) {
-        // Execute only three scripts:
-        Set<String> blacklist = PigScriptHelper.getBlackList(new String[] {"number_of_instances", "classes_by_entity",
-            "classes_by_url"});
+        // Determine hadoop location, by default use localhost.
+        ScriptRunner.HADOOP_LOCATION hadoopLocation = ScriptRunner.HADOOP_LOCATION.LOCALHOST;
+        if (cmd.hasOption("cluster")) {
+            hadoopLocation = ScriptRunner.HADOOP_LOCATION.HPI_CLUSTER;
+        }
+
+        // By default execute all scripts.
+        Set<PigScript> scripts = null;
+        if (cmd.hasOption("scripts")) {
+            scripts = PigScriptHelper.findPigScripts(cmd.getOptionValues('s'));
+        } else {
+            scripts = PigScriptHelper.findPigScripts();
+        }
 
         // Use DBpedia 1M.
         InputFile inputFile = new InputFile("data/dbpedia-1M.nq.gz");
-
-        // Execute script.
-        runSequential(runner, scripts, inputFile, blacklist);
+        ScriptRunner runner = new ScriptRunner(hadoopLocation, HDFS_WORKING_DIRECTORY);
+        runScripts(runner, scripts, inputFile);
 
         // Generate a bunch of numbers and tables and stuff.
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
@@ -78,80 +119,20 @@ public class Main {
         rg.featureRuntimeAnalysis();
     }
 
-    private static void run_scalabilityDBPedia(ScriptRunner runner) {
-        // No cooc-scripts
-        Set<String> blacklist = PigScriptHelper.getBlackList(PigScriptHelper.SCRIPT_LIST.NO_COOC);
-
-        // First, dbpedia 10M to 1000M, then full dbpedia.
-        InputFileSet dbpedia = InputFileSet.createLogarithmic("BTC2012/DBPedia", "data/dbpedia-", 1000000, 100000000);
-        InputFile dbpediaAll = new InputFile("data/dbpedia-full.nq.gz");
-
-        ReportGenerator rg = new ReportGenerator(statisticsCollection);
-
-        runSequential(runner, scripts, dbpedia.getBySize(1000000), blacklist);
-        rg.initialise();
-        //rg.scalabilityReport();
-        rg.scriptComparison();
-        rg.featureRuntimeAnalysis();
-
-        runSequential(runner, scripts, dbpedia.getBySize(10000000), blacklist);
-        rg.initialise();
-        //rg.scalabilityReport();
-        rg.scriptComparison();
-        rg.featureRuntimeAnalysis();
-
-        runSequential(runner, scripts, dbpedia.getBySize(100000000), blacklist);
-        rg.initialise();
-        //rg.scalabilityReport();
-        rg.scriptComparison();
-        rg.featureRuntimeAnalysis();
-
-        runSequential(runner, scripts, dbpediaAll, blacklist);
-        rg.initialise();
-        rg.scalabilityReport();
-        rg.scriptComparison();
-        rg.featureRuntimeAnalysis();
-        //rg.datasetComparison(freebase, dbpedia, 10000000);
-    }
-
-    private static void run_scalabilityDBPedia2(ScriptRunner runner) {
-        // No cooc-scripts
-        Set<String> blacklist = PigScriptHelper.getBlackList(PigScriptHelper.SCRIPT_LIST.NO_COOC);
-
-        // data/dbpedia-1M.nq.gz ... data/dbpedia-20M.nq.gz
-        InputFileSet dbpedia = InputFileSet.createLinear("BTC2012/DBPedia", "data/dbpedia-", 1, 20, "M.nq.gz",
-            1000000);
-
-        ReportGenerator rg = new ReportGenerator(statisticsCollection);
-        for (InputFile file : dbpedia.getAll()) {
-            runSequential(runner, scripts, file, blacklist);
-            rg.initialise();
-            rg.scalabilityReport();
-            rg.scriptComparison();
-            rg.featureRuntimeAnalysis();
-        }
-    }
-
     /**
      * Benchmark the given set of pig scripts.
      *
-     * @param runner    A script runner.
-     * @param scripts   A set of pig scripts.
-     * @param input     The quads input file.
-     * @param blacklist A list of script names to skip and not execute.
+     * @param runner  A script runner.
+     * @param scripts A set of pig scripts.
+     * @param input   The quads input file.
      */
-    public static void runSequential(ScriptRunner runner, Set<PigScript> scripts, InputFile input, Set<String> blacklist) {
+    public static void runScripts(ScriptRunner runner, Set<PigScript> scripts, InputFile input) {
         for (PigScript script : scripts) {
             StringBuilder sb = new StringBuilder();
             sb.append(script);
-            if (blacklist.contains(script.getScriptName())) {
-                sb.append(" - SKIPPED");
-                log.info(sb.toString());
-            } else {
-                sb.append(" - RUNNING");
-                log.info(sb.toString());
-                runScript(runner, script, input);
-            }
+            sb.append(" - RUNNING");
+            log.info(sb.toString());
+            runScript(runner, script, input);
         }
     }
 
@@ -162,7 +143,7 @@ public class Main {
      * @param script A pig script.
      * @param input  The quads input file.
      */
-    private static void runScript(ScriptRunner runner, PigScript script, InputFile input) {
+    public static void runScript(ScriptRunner runner, PigScript script, InputFile input) {
         PigStats stats = runner.runScript(script, input);
         if (stats != null) {
             ExecutionStats s = new ExecutionStats(input, stats, script);

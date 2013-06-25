@@ -32,6 +32,20 @@ public class PigScriptHelper {
     public static final String PIG_SCRIPTS_DIRECTORY = "pig-queries";
     protected static final Log log = LogFactory.getLog(PigScriptHelper.class);
 
+    public static Set<PigScript> findPigScripts(String[] whitelist) {
+        Set<PigScript> scripts = findPigScripts();
+        Set<PigScript> blacklist = new HashSet<PigScript>();
+        for (PigScript s : scripts) {
+            for (String name : whitelist) {
+                if (!s.getScriptName().equalsIgnoreCase(name)) {
+                    blacklist.add(s);
+                }
+            }
+        }
+        scripts.removeAll(blacklist);
+        return scripts;
+    }
+
     /**
      * Loads pig scripts from the resources folder.
      *
@@ -62,7 +76,7 @@ public class PigScriptHelper {
             // Something wrong with the class loader
             log.error("Failed to load pig scripts", e);
         }
-        log.info(String.format("Loaded %d pig scripts.", scripts.size()));
+        log.debug(String.format("Found %d pig scripts.", scripts.size()));
         return scripts;
     }
 
