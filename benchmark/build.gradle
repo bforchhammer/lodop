@@ -43,7 +43,9 @@ task(run, dependsOn: 'classes', type: JavaExec) {
             sourceSets.main.runtimeClasspath,
             "lib",
     )
-    //args "-s", "classes_by_entity"
+    if(project.hasProperty("appArgs")){
+        args appArgs.tokenize()
+    }
 }
 
 task(debug, dependsOn: 'classes', type: JavaExec) {

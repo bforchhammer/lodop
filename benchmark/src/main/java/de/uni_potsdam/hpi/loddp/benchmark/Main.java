@@ -80,16 +80,17 @@ public class Main {
         Options options = getCliOptions();
         CommandLineParser parser = new BasicParser();
         CommandLine cmd = null;
+        String cmdLineSyntax = "./gradlew run -PappArgs=\"[args]\"";
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
             log.error(e.getMessage(), e);
-            new HelpFormatter().printHelp("./gradlew run", options);
+            new HelpFormatter().printHelp(cmdLineSyntax, options);
             return;
         }
 
         if (cmd.hasOption("help")) {
-            new HelpFormatter().printHelp("./gradlew run", options);
+            new HelpFormatter().printHelp(cmdLineSyntax, options);
             return;
         }
 
