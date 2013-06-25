@@ -55,4 +55,7 @@ task(debug, dependsOn: 'classes', type: JavaExec) {
             "lib",
     )
     debug = true
+    if(project.hasProperty("appArgs")){
+        args appArgs.tokenize()
+    }
 }
