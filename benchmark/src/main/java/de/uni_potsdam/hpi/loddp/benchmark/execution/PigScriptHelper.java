@@ -11,6 +11,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.jar.JarEntry;
 
@@ -34,16 +35,21 @@ public class PigScriptHelper {
 
     public static Set<PigScript> findPigScripts(String[] whitelist) {
         Set<PigScript> scripts = findPigScripts();
-        Set<PigScript> blacklist = new HashSet<PigScript>();
+        Set<PigScript> scripts_new = new HashSet<PigScript>();
         for (PigScript s : scripts) {
             for (String name : whitelist) {
-                if (!s.getScriptName().equalsIgnoreCase(name)) {
-                    blacklist.add(s);
+                if (s.getScriptName().equalsIgnoreCase(name)) {
+                    scripts_new.add(s);
                 }
             }
         }
-        scripts.removeAll(blacklist);
-        return scripts;
+
+        StringBuilder sb = new StringBuilder();
+        Iterator<PigScript> it = scripts_new.iterator();
+        while(it.hasNext()) sb.append(" ").append(it.next().getScriptName());
+        log.debug(String.format("Executing %d pig scripts: %s", scripts_new.size(), sb.toString()));
+
+        return scripts_new;
     }
 
     /**
