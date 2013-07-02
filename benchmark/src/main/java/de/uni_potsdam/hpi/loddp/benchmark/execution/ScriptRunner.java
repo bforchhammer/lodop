@@ -87,6 +87,7 @@ public class ScriptRunner {
         // Register UDF + required libraries.
         this.pig.registerJar("ldif-single-0.5.1-jar-with-dependencies.jar");
         this.pig.registerJar("loddesc-core-0.1.jar");
+        this.pig.registerJar("piggybank.jar");
 
         this.log.debug("Created new pig server.");
     }
