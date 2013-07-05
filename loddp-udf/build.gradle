@@ -3,6 +3,8 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-api'
     }
     compile 'org.slf4j:slf4j-api:1.4.3'
+    compile 'org.apache.hadoop:hadoop-core:1.1.2'
+    compile 'org.apache.commons:commons-lang3:3.1'
 }
 
 task packageJar(type: Jar, dependsOn: jar) {
