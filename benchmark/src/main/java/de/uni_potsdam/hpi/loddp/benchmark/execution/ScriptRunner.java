@@ -24,7 +24,9 @@ public class ScriptRunner {
     /**
      * Constructor.
      *
-     * @param location The hadoop server location.
+     * @param location             The hadoop server location.
+     * @param hdfsWorkingDirectory The working directory for any HDFS-related commands. Datasets are loaded from, and
+     *                             results written to directories relative to this path.
      */
     public ScriptRunner(HADOOP_LOCATION location, String hdfsWorkingDirectory) {
         this(location, false, hdfsWorkingDirectory);
@@ -33,12 +35,13 @@ public class ScriptRunner {
     /**
      * Constructor.
      *
-     * @param reuseServer Whether to reuse the pig server, or create a new one for each invocation of {@link
-     *                    #runScript}. If the pig server is reused, then calculations from previous scripts can be
-     *                    reused as long as they have the same alias. This can also lead to errors, if two aliases in
-     *                    different scripts represent different data sets.
-     *
-     * @throws IOException
+     * @param location             The hadoop server location.
+     * @param reuseServer          Whether to reuse the pig server, or create a new one for each invocation of {@link
+     *                             #runScript}. If the pig server is reused, then calculations from previous scripts can
+     *                             be reused as long as they have the same alias. This can also lead to errors, if two
+     *                             aliases in different scripts represent different data sets.
+     * @param hdfsWorkingDirectory The working directory for any HDFS-related commands. Datasets are loaded from, and
+     *                             results written to directories relative to this path.
      */
     public ScriptRunner(HADOOP_LOCATION location, boolean reuseServer, String hdfsWorkingDirectory) {
         this.reuseServer = reuseServer;
