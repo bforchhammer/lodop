@@ -4,7 +4,9 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -33,8 +35,11 @@ public class PigScriptHelper {
     public static final String PIG_SCRIPTS_DIRECTORY = "pig-queries";
     protected static final Log log = LogFactory.getLog(PigScriptHelper.class);
 
+    /**
+     * Loads and returns a set of PigScript objects matching the given list of script names.
+     */
     public static Set<PigScript> findPigScripts(String[] whitelist) {
-        Set<PigScript> scripts = findPigScripts();
+        Set<PigScript> scripts = loadPigScripts();
         Set<PigScript> scripts_new = new HashSet<PigScript>();
         for (PigScript s : scripts) {
             for (String name : whitelist) {
@@ -53,12 +58,20 @@ public class PigScriptHelper {
     }
 
     /**
+     * Loads and returns a set of PigScript objects for all scripts found in the resources folder.
+     */
+    public static Set<PigScript> findPigScripts() {
+        log.debug(String.format("Executing ALL pig scripts."));
+        return loadPigScripts();
+    }
+
+    /**
      * Loads pig scripts from the resources folder.
      *
      * The method looks for folders named {@link #PIG_SCRIPTS_DIRECTORY} on the class path, and then loads all files
      * contained within these folders and ending in <code>*.pig</code>.
      */
-    public static Set<PigScript> findPigScripts() {
+    private static Set<PigScript> loadPigScripts() {
         Set<PigScript> scripts = new HashSet<PigScript>();
         try {
             Enumeration<URL> urls = ClassLoader.getSystemClassLoader().getResources(PIG_SCRIPTS_DIRECTORY);
@@ -70,12 +83,12 @@ public class PigScriptHelper {
                 URLConnection urlConnection = url.openConnection();
                 if (urlConnection instanceof JarURLConnection) {
                     log.debug("Looking at: " + url);
-                    findPigScripts((JarURLConnection) urlConnection, scripts);
+                    loadPigScripts((JarURLConnection) urlConnection, scripts);
                 }
 
                 // Try loading pig scripts via File object from local FS path.
                 else {
-                    findPigScripts(url, scripts);
+                    loadPigScripts(url, scripts);
                 }
             }
         } catch (IOException e) {
@@ -86,7 +99,7 @@ public class PigScriptHelper {
         return scripts;
     }
 
-    private static void findPigScripts(JarURLConnection jarConnection, Set<PigScript> scripts) {
+    private static void loadPigScripts(JarURLConnection jarConnection, Set<PigScript> scripts) {
         Enumeration<JarEntry> entries;
         try {
             entries = jarConnection.getJarFile().entries();
@@ -109,7 +122,7 @@ public class PigScriptHelper {
         }
     }
 
-    private static void findPigScripts(URL fileURL, Set<PigScript> scripts) {
+    private static void loadPigScripts(URL fileURL, Set<PigScript> scripts) {
         File file;
         try {
             file = new File(fileURL.toURI());
