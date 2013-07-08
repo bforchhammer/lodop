@@ -51,9 +51,11 @@ public class PigScriptHelper {
         StringBuilder sb = new StringBuilder();
         Iterator<PigScript> it = scripts_new.iterator();
         while (it.hasNext()) {
-            sb.append("\n- ").append(it.next().getScriptName());
+            if (scripts_new.size() < 2) sb.append(" ");
+            else sb.append("\n- ");
+            sb.append(it.next().getScriptName());
         }
-        log.debug(String.format("Executing %d pig scripts: %s", scripts_new.size(), sb.toString()));
+        log.debug(String.format("Executing %d pig script(s): %s", scripts_new.size(), sb.toString()));
 
         return scripts_new;
     }
