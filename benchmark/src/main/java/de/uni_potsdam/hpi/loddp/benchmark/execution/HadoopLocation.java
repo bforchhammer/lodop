@@ -19,11 +19,7 @@ public enum HadoopLocation {
         properties.setProperty("mapred.job.tracker", mapredJobtracker);
     }
 
-    public String getFsDefaultName() {
-        return fsDefaultName;
-    }
-
-    public String getMapredJobtracker() {
+    public String toString() {
         return mapredJobtracker;
     }
 }

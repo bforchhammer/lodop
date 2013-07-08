@@ -46,7 +46,7 @@ public class ScriptRunner {
     public ScriptRunner(HadoopLocation location, boolean reuseServer, String hdfsWorkingDirectory) {
         this.reuseServer = reuseServer;
         this.serverProperties = generateProperties(location);
-        log.info("ScriptRunner is connecting to jobtracker at: " + location.getMapredJobtracker());
+        log.info("ScriptRunner is connecting to: " + location);
 
         // Make sure hdfs directory ends with a slash.
         if (hdfsWorkingDirectory.isEmpty()) hdfsWorkingDirectory = "./";
