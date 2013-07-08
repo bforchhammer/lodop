@@ -28,7 +28,7 @@ public class ScriptRunner {
      * @param hdfsWorkingDirectory The working directory for any HDFS-related commands. Datasets are loaded from, and
      *                             results written to directories relative to this path.
      */
-    public ScriptRunner(HADOOP_LOCATION location, String hdfsWorkingDirectory) {
+    public ScriptRunner(HadoopLocation location, String hdfsWorkingDirectory) {
         this(location, false, hdfsWorkingDirectory);
     }
 
@@ -43,9 +43,10 @@ public class ScriptRunner {
      * @param hdfsWorkingDirectory The working directory for any HDFS-related commands. Datasets are loaded from, and
      *                             results written to directories relative to this path.
      */
-    public ScriptRunner(HADOOP_LOCATION location, boolean reuseServer, String hdfsWorkingDirectory) {
+    public ScriptRunner(HadoopLocation location, boolean reuseServer, String hdfsWorkingDirectory) {
         this.reuseServer = reuseServer;
         this.serverProperties = generateProperties(location);
+        log.info("ScriptRunner is connecting to jobtracker at: " + location.getMapredJobtracker());
 
         // Make sure hdfs directory ends with a slash.
         if (hdfsWorkingDirectory.isEmpty()) hdfsWorkingDirectory = "./";
@@ -64,18 +65,9 @@ public class ScriptRunner {
      * @return A properties object with at least the following two properties filled in: "fs.default.name",
      *         "mapred.job.tracker".
      */
-    private static Properties generateProperties(HADOOP_LOCATION type) {
+    private static Properties generateProperties(HadoopLocation type) {
         Properties properties = new Properties();
-        switch (type) {
-            case HPI_CLUSTER:
-                properties.setProperty("fs.default.name", "hdfs://tenemhead2.hpi.uni-potsdam.de");
-                properties.setProperty("mapred.job.tracker", "tenemhead2.hpi.uni-potsdam.de:9001");
-                break;
-            case LOCALHOST:
-                properties.setProperty("fs.default.name", "hdfs://localhost:9000");
-                properties.setProperty("mapred.job.tracker", "localhost:9001");
-                break;
-        }
+        type.setProperties(properties);
         return properties;
     }
 
@@ -236,5 +228,4 @@ public class ScriptRunner {
         }
     }
 
-    public enum HADOOP_LOCATION {HPI_CLUSTER, LOCALHOST}
 }

@@ -1,9 +1,6 @@
 package de.uni_potsdam.hpi.loddp.benchmark;
 
-import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
-import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScript;
-import de.uni_potsdam.hpi.loddp.benchmark.execution.PigScriptHelper;
-import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner;
+import de.uni_potsdam.hpi.loddp.benchmark.execution.*;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ExecutionStats;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ReportGenerator;
 import org.apache.commons.cli.*;
@@ -103,9 +100,9 @@ public class Main {
         }
 
         // Determine hadoop location, by default use localhost.
-        ScriptRunner.HADOOP_LOCATION hadoopLocation = ScriptRunner.HADOOP_LOCATION.LOCALHOST;
+        HadoopLocation hadoopLocation = HadoopLocation.LOCALHOST;
         if (cmd.hasOption("cluster")) {
-            hadoopLocation = ScriptRunner.HADOOP_LOCATION.HPI_CLUSTER;
+            hadoopLocation = HadoopLocation.HPI_CLUSTER;
         }
 
         // By default execute all scripts.
@@ -129,8 +126,7 @@ public class Main {
                 sb.append(".nq.gz");
             }
             inputFile = new InputFile(sb.toString());
-        }
-        else {
+        } else {
             // Use DBpedia 1M.
             inputFile = new InputFile(HDFS_DATA_DIRECTORY + "/dbpedia-1M.nq.gz");
         }
