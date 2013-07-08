@@ -41,20 +41,34 @@ public class PigScriptHelper {
     public static Set<PigScript> findPigScripts(String[] whitelist) {
         Set<PigScript> scripts = loadPigScripts();
         Set<PigScript> scripts_new = new HashSet<PigScript>();
+        String regex = stringToPattern(whitelist);
         for (PigScript s : scripts) {
-            for (String name : whitelist) {
-                if (s.getScriptName().equalsIgnoreCase(name)) {
-                    scripts_new.add(s);
-                }
+            if (s.getScriptName().matches(regex)) {
+                scripts_new.add(s);
             }
         }
 
         StringBuilder sb = new StringBuilder();
         Iterator<PigScript> it = scripts_new.iterator();
-        while (it.hasNext()) sb.append(" ").append(it.next().getScriptName());
+        while (it.hasNext()) {
+            sb.append("\n- ").append(it.next().getScriptName());
+        }
         log.debug(String.format("Executing %d pig scripts: %s", scripts_new.size(), sb.toString()));
 
         return scripts_new;
+    }
+
+    /**
+     * Converts the given array of strings into a regular expression pattern to match against. Also supports asterisks
+     * (*) as a wildcard.
+     */
+    private static String stringToPattern(String[] whitelist) {
+        StringBuilder pattern = new StringBuilder();
+        for (String s : whitelist) {
+            if (pattern.length() > 0) pattern.append("|");
+            pattern.append(s.replace("*", ".*"));
+        }
+        return pattern.toString();
     }
 
     /**

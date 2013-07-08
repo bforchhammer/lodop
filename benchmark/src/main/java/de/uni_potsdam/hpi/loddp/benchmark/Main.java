@@ -56,7 +56,7 @@ public class Main {
         options.addOption("h", "help", false, "Print this help message.");
         options.addOption(OptionBuilder
             .withLongOpt("scripts")
-            .withDescription("Comma-separated list of pig script names to execute.")
+            .withDescription("Space-separated list of pig script names to execute. Asterisk (*) can be used as a wildcard.")
             .hasArgs()
             .withArgName("number_of_instances")
             .withValueSeparator(',')
