@@ -7,6 +7,7 @@ import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ExecutionStats;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ReportGenerator;
 import org.apache.commons.cli.*;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.tools.pigstats.PigStats;
@@ -28,6 +29,7 @@ public class Main {
     protected static final String LOG_FILENAME_REPORTING = "report.log";
     protected static final String JOB_GRAPH_DIRECTORY = "jobs";
     protected static final String HDFS_WORKING_DIRECTORY = "";
+    protected static final String HDFS_DATA_DIRECTORY = "data";
 
     static {
         // Setup directory for log files (this will only work, if executed before any logger is initialised.
@@ -67,7 +69,13 @@ public class Main {
             .withDescription("Use tenemhead2 cluster for computation.")
             .hasArg(false)
             .create('c'));
-
+        options.addOption(OptionBuilder
+            .withLongOpt("dataset")
+            .withDescription("Filename of the dataset to be loaded. Dataset will be loaded from hdfs://" +
+                HDFS_WORKING_DIRECTORY + HDFS_DATA_DIRECTORY + "/[dataset].nq.gz")
+            .hasArg().withArgName("dbpedia-1M")
+            .create('d')
+        );
         return options;
     }
 
@@ -103,13 +111,30 @@ public class Main {
         // By default execute all scripts.
         Set<PigScript> scripts = null;
         if (cmd.hasOption("scripts")) {
-            scripts = PigScriptHelper.findPigScripts(cmd.getOptionValues('s'));
+            scripts = PigScriptHelper.findPigScripts(cmd.getOptionValues("scripts"));
         } else {
             scripts = PigScriptHelper.findPigScripts();
         }
 
-        // Use DBpedia 1M.
-        InputFile inputFile = new InputFile("data/dbpedia-1M.nq.gz");
+        // Determine dataset to run.
+        InputFile inputFile = null;
+        if (cmd.hasOption("dataset")) {
+            String value = cmd.getOptionValue("dataset");
+            StringBuilder sb = new StringBuilder();
+            if (FilenameUtils.getPrefixLength(value) <= 0) {
+                sb.append(HDFS_DATA_DIRECTORY).append("/");
+            }
+            sb.append(value);
+            if (FilenameUtils.indexOfExtension(value) == -1) {
+                sb.append(".nq.gz");
+            }
+            inputFile = new InputFile(sb.toString());
+        }
+        else {
+            // Use DBpedia 1M.
+            inputFile = new InputFile(HDFS_DATA_DIRECTORY + "/dbpedia-1M.nq.gz");
+        }
+
         ScriptRunner runner = new ScriptRunner(hadoopLocation, HDFS_WORKING_DIRECTORY);
         runScripts(runner, scripts, inputFile);
 

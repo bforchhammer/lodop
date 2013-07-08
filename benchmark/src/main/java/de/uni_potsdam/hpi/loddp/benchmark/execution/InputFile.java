@@ -37,7 +37,7 @@ public class InputFile {
      * @param filename
      */
     public InputFile(String filename) {
-        this(filename, 0);
+        this(filename, InputFileHelper.guessTupleCount(filename));
     }
 
     public long getTupleCount() {
@@ -49,6 +49,6 @@ public class InputFile {
     }
 
     public String getFileSetIdentifier() {
-        return fileSet == null ? "N/A" : fileSet.getIdentifier();
+        return fileSet == null ? InputFileHelper.guessFilesetIdentifier(getFilename()) : fileSet.getIdentifier();
     }
 }
