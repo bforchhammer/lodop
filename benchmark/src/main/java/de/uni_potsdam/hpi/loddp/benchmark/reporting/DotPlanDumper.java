@@ -79,7 +79,10 @@ public class DotPlanDumper extends org.apache.pig.newplan.DotPlanDumper {
             Counters.Counter combineOutputRecords = hadoopStats.getCounterForName("COMBINE_OUTPUT_RECORDS");
             Counters.Counter reduceInputGroups = hadoopStats.getCounterForName("REDUCE_INPUT_GROUPS");
 
-            double recordsPerGroup = stats.getReduceInputRecords() / reduceInputGroups.getCounter();
+            double recordsPerGroup = -1;
+            if (reduceInputGroups.getCounter() != 0) {
+                recordsPerGroup = stats.getReduceInputRecords() / reduceInputGroups.getCounter();
+            }
 
             StringBuilder sb = new StringBuilder();
             sb.append(stats.getJobId());
