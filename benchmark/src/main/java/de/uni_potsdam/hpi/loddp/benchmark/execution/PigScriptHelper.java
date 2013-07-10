@@ -77,8 +77,9 @@ public class PigScriptHelper {
      * Loads and returns a set of PigScript objects for all scripts found in the resources folder.
      */
     public static Set<PigScript> findPigScripts() {
+        Set<PigScript> scripts = loadPigScripts();
         log.debug(String.format("Executing ALL pig scripts."));
-        return loadPigScripts();
+        return scripts;
     }
 
     /**
@@ -155,8 +156,9 @@ public class PigScriptHelper {
         }
 
         File[] files = file.listFiles(PIG_EXTENSION_FILTER);
-        log.info("Found pig scripts in: " + file);
-        scripts.addAll(FilePigScript.fromFiles(files));
+        Set<PigScript> s = FilePigScript.fromFiles(files);
+        log.info(String.format("Found %d pig script(s) in: %s", s.size(), file));
+        scripts.addAll(s);
     }
 
     /**
