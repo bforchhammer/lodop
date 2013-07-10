@@ -2,10 +2,11 @@ package de.uni_potsdam.hpi.loddp.udf.filtering;
 
 import org.apache.pig.FilterFunc;
 import org.apache.pig.data.Tuple;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLRuntimeException;
+import org.semanticweb.owlapi.vocab.OWL2Datatype;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Accepts tuples which match any built-in data type derived from xs:string, as defined in the XMLSchema document.
@@ -14,31 +15,34 @@ import java.util.Set;
  */
 public class StringDataType extends FilterFunc {
 
-    private static final Set<String> stringTypes = new HashSet<String>();
-
-    static {
-        // XMLSchema simple types:
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#string");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#normalizedString");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#token");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#language");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#Name");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#NCName");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#NMTOKEN");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#NMTOKENS");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#ID");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#IDREF");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#ENTITY");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#IDREFS");
-        stringTypes.add("http://www.w3.org/2001/XMLSchema#ENTITIES");
-    }
-
     @Override
     public Boolean exec(Tuple input) throws IOException {
         if (input == null || input.size() == 0) {
             return false;
         }
         String str = (String) input.get(0);
-        return str != null && stringTypes.contains(str);
+
+        // If the given string is empty for some reason, it's definitely not a string. ;-)
+        if (str == null) {
+            return false;
+        }
+
+        // Check if the given string matches a built-in string data-type.
+        try {
+            OWL2Datatype dt = OWL2Datatype.getDatatype(IRI.create(str));
+            switch (dt.getCategory()) {
+                case STRING_WITH_LANGUAGE_TAG:
+                case STRING_WITHOUT_LANGUAGE_TAG:
+                case UNIVERSAL:
+                    return true;
+                default:
+                    return false;
+            }
+        } catch (OWLRuntimeException e) {
+            // Not a built in datatype.
+        }
+
+        // If none of the checks above worked, it's probably not a string.
+        return false;
     }
 }

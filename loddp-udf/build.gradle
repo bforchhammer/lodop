@@ -5,6 +5,8 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.4.3'
     compile 'org.apache.hadoop:hadoop-core:1.1.2'
     compile 'org.apache.commons:commons-lang3:3.1'
+
+    compile 'net.sourceforge.owlapi:owlapi-apibinding:3.4.4'
 }
 
 task packageJar(type: Jar, dependsOn: jar) {
