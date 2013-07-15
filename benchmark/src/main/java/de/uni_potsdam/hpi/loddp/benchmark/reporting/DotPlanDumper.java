@@ -74,6 +74,11 @@ public class DotPlanDumper extends org.apache.pig.newplan.DotPlanDumper {
         if (op instanceof JobStats) {
             JobStats stats = (JobStats) op;
 
+            if (stats.getHadoopCounters() == null) {
+                log.warn("No Hadoop Counters found; did the Job crash?");
+                return super.getName(op);
+            }
+
             Counters.Group hadoopStats = stats.getHadoopCounters().getGroup("org.apache.hadoop.mapred.Task$Counter");
             Counters.Counter combineInputRecords = hadoopStats.getCounterForName("COMBINE_INPUT_RECORDS");
             Counters.Counter combineOutputRecords = hadoopStats.getCounterForName("COMBINE_OUTPUT_RECORDS");
