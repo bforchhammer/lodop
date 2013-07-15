@@ -7,6 +7,7 @@ public class InputFile {
     private String filename;
     private long tupleCount;
     private InputFileSet fileSet;
+    private String fileSetIdentifier = null;
 
     /**
      * Constructor.
@@ -19,6 +20,11 @@ public class InputFile {
         this.filename = filename;
         this.tupleCount = tupleCount;
         this.fileSet = fileSet;
+        if (fileSet != null) {
+            this.fileSetIdentifier = fileSet.getIdentifier();
+        } else {
+            this.fileSetIdentifier = InputFileHelper.guessFilesetIdentifier(filename);
+        }
     }
 
     /**
@@ -49,6 +55,14 @@ public class InputFile {
     }
 
     public String getFileSetIdentifier() {
-        return fileSet == null ? InputFileHelper.guessFilesetIdentifier(getFilename()) : fileSet.getIdentifier();
+        return fileSetIdentifier;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getFileSetIdentifier())
+            .append(" / ").append(getTupleCount())
+            .append(" \t(").append(getFilename()).append(")");
+        return sb.toString();
     }
 }

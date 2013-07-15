@@ -11,8 +11,7 @@ import org.apache.pig.tools.pigstats.PigStats;
 import org.joda.time.DateTime;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Main class.
@@ -67,10 +66,11 @@ public class Main {
             .hasArg(false)
             .create('c'));
         options.addOption(OptionBuilder
-            .withLongOpt("dataset")
+            .withLongOpt("datasets")
             .withDescription("Filename of the dataset to be loaded. Dataset will be loaded from hdfs://" +
-                HDFS_WORKING_DIRECTORY + HDFS_DATA_DIRECTORY + "/[dataset].nq.gz")
-            .hasArg().withArgName("dbpedia-1M")
+                HDFS_WORKING_DIRECTORY + HDFS_DATA_DIRECTORY + "/[dataset].nq.gz." +
+                "Multiple datasets can be specified and are executed in sequence.")
+            .hasArgs().withArgName("dbpedia-1M")
             .create('d')
         );
         return options;
@@ -89,7 +89,7 @@ public class Main {
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
             new HelpFormatter().printHelp(cmdLineSyntax, options);
             return;
         }
@@ -114,31 +114,42 @@ public class Main {
         }
 
         // Determine dataset to run.
-        InputFile inputFile = null;
-        if (cmd.hasOption("dataset")) {
-            String value = cmd.getOptionValue("dataset");
-            StringBuilder sb = new StringBuilder();
-            if (FilenameUtils.getPrefixLength(value) <= 0) {
-                sb.append(HDFS_DATA_DIRECTORY).append("/");
+        List<InputFile> inputFiles = new ArrayList<InputFile>();
+        if (cmd.hasOption("datasets")) {
+            String[] values = cmd.getOptionValues("datasets");
+            for (String value : values) {
+                String filename = normalizeDatasetFilename(value);
+                inputFiles.add(new InputFile(filename));
             }
-            sb.append(value);
-            if (FilenameUtils.indexOfExtension(value) == -1) {
-                sb.append(".nq.gz");
-            }
-            inputFile = new InputFile(sb.toString());
         } else {
             // Use DBpedia 1M.
-            inputFile = new InputFile(HDFS_DATA_DIRECTORY + "/dbpedia-1M.nq.gz");
+            inputFiles.add(new InputFile(HDFS_DATA_DIRECTORY + "/dbpedia-1M.nq.gz"));
         }
+        logInfo(inputFiles);
 
         ScriptRunner runner = new ScriptRunner(hadoopLocation, HDFS_WORKING_DIRECTORY);
-        runScripts(runner, scripts, inputFile);
-
-        // Generate a bunch of numbers and tables and stuff.
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
-        rg.scalabilityReport();
-        rg.scriptComparison();
-        rg.featureRuntimeAnalysis();
+        for (Iterator<InputFile> it = inputFiles.iterator(); it.hasNext(); ) {
+            runScripts(runner, scripts, it.next());
+
+            // Generate a bunch of numbers and tables and stuff.
+            rg.initialise();
+            rg.scalabilityReport();
+            rg.scriptComparison();
+            rg.featureRuntimeAnalysis();
+        }
+    }
+
+    private static String normalizeDatasetFilename(String value) {
+        StringBuilder sb = new StringBuilder();
+        if (FilenameUtils.getPrefixLength(value) <= 0) {
+            sb.append(HDFS_DATA_DIRECTORY).append("/");
+        }
+        sb.append(value);
+        if (FilenameUtils.indexOfExtension(value) == -1) {
+            sb.append(".nq.gz");
+        }
+        return sb.toString();
     }
 
     /**
@@ -148,7 +159,7 @@ public class Main {
      * @param scripts A set of pig scripts.
      * @param input   The quads input file.
      */
-    public static void runScripts(ScriptRunner runner, Set<PigScript> scripts, InputFile input) {
+    protected static void runScripts(ScriptRunner runner, Set<PigScript> scripts, InputFile input) {
         for (PigScript script : scripts) {
             StringBuilder sb = new StringBuilder();
             sb.append(script);
@@ -165,12 +176,22 @@ public class Main {
      * @param script A pig script.
      * @param input  The quads input file.
      */
-    public static void runScript(ScriptRunner runner, PigScript script, InputFile input) {
+    protected static void runScript(ScriptRunner runner, PigScript script, InputFile input) {
         PigStats stats = runner.runScript(script, input);
         if (stats != null) {
             ExecutionStats s = new ExecutionStats(input, stats, script);
             statisticsCollection.add(s);
             s.printStats();
         }
+    }
+
+    private static void logInfo(List<InputFile> inputFiles) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Executing scripts on ").append(inputFiles.size()).append(" data set(s): ");
+        for (Iterator<InputFile> it = inputFiles.iterator(); it.hasNext(); ) {
+            if (inputFiles.size() > 1) sb.append("\n - ");
+            sb.append(it.next().toString());
+        }
+        log.info(sb.toString());
     }
 }
