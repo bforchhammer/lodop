@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Iterator;
 
+/**
+ * @todo convert output string "X - Y" into a tuple with two values (?)
+ */
 public class NumericValueRange extends EvalFunc<String> implements Accumulator<String> {
 
     private BigDecimal intermediateMin = null;
