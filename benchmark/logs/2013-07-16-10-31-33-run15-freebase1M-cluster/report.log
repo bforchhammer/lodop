@@ -1,0 +1,550 @@
+Statistics for NUMBER_OF_INSTANCES_PER_DATATYPE
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:01:59.088
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0306	1	1	0:00:22.549	0:00:22.549	0:00:22.549	0:00:10.976	0:00:10.976	0:00:10.976	1-8,instanceCountPerValueType,quads,typedLiterals,valueTypes	GROUP_BY,COMBINER	
+job_201307100854_0307	1	1	0:00:03.637	0:00:03.637	0:00:03.637	0:00:10.675	0:00:10.675	0:00:10.675	valueTypesTopK	SAMPLER	
+job_201307100854_0308	1	1	0:00:03.942	0:00:03.942	0:00:03.942	0:00:09.415	0:00:09.415	0:00:09.415	valueTypesTopK	ORDER_BY	./results-number_of_instances_per_datatype,
+
+Statistics for NUMBER_OF_INSTANCES_PER_LANGUAGE
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:01:56.719
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0309	1	1	0:00:23.371	0:00:23.371	0:00:23.371	0:00:09.739	0:00:09.739	0:00:09.739	2-8,instanceCountPerLanguage,languageLiterals,languages,quads	GROUP_BY,COMBINER	
+job_201307100854_0310	1	1	0:00:03.641	0:00:03.641	0:00:03.641	0:00:10.329	0:00:10.329	0:00:10.329	languagesTopK	SAMPLER	
+job_201307100854_0311	1	1	0:00:02.426	0:00:02.426	0:00:02.426	0:00:11.853	0:00:11.853	0:00:11.853	languagesTopK	ORDER_BY	./results-number_of_instances_per_language,
+
+Statistics for VOCABULARIES_BY_ENTITY
+Input: 	1000000 records (-1 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:47.674
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0312	2	1	0:00:31.626	0:00:23.436	0:00:27.531	0:00:14.896	0:00:14.896	0:00:14.896	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201307100854_0313	1	1	0:00:09.478	0:00:09.478	0:00:09.478	0:00:11.829	0:00:11.829	0:00:11.829	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201307100854_0314	1	1	0:00:03.639	0:00:03.639	0:00:03.639	0:00:12.167	0:00:12.167	0:00:12.167	topVocabsEntities	SAMPLER	
+job_201307100854_0315	1	1	0:00:03.943	0:00:03.943	0:00:03.943	0:00:10.637	0:00:10.637	0:00:10.637	topVocabsEntities	ORDER_BY	./results-vocabularies_by_entity,
+
+Statistics for PROPERTIES_BY_STATEMENT
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:06.684
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0316	1	1	0:00:28.912	0:00:28.912	0:00:28.912	0:00:11.549	0:00:11.549	0:00:11.549	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201307100854_0317	1	1	0:00:06.989	0:00:06.989	0:00:06.989	0:00:10.638	0:00:10.638	0:00:10.638	propSorted	SAMPLER	
+job_201307100854_0318	1	1	0:00:04.556	0:00:04.556	0:00:04.556	0:00:09.415	0:00:09.415	0:00:09.415	propSorted	ORDER_BY	./results-properties_by_statement,
+
+Statistics for CLASSES_BY_URL
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:36.924
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0319	1	1	0:00:21.551	0:00:21.551	0:00:21.551	0:00:11.894	0:00:11.894	0:00:11.894	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201307100854_0320	1	1	0:00:05.810	0:00:05.810	0:00:05.810	0:00:10.931	0:00:10.931	0:00:10.931	classCounts,classes	GROUP_BY,COMBINER	
+job_201307100854_0321	1	1	0:00:03.648	0:00:03.648	0:00:03.648	0:00:10.941	0:00:10.941	0:00:10.941	topClassesByUrls	SAMPLER	
+job_201307100854_0322	1	1	0:00:04.065	0:00:04.065	0:00:04.065	0:00:10.982	0:00:10.982	0:00:10.982	topClassesByUrls	ORDER_BY	./results-classes_by_url,
+
+Statistics for NUMBER_OF_PROPERTIES_PER_CLASS
+Input: 	1000000 records (-1 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:50.351
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0323	2	1	0:00:32.577	0:00:23.690	0:00:28.133	0:00:29.534	0:00:29.534	0:00:29.534	classMap,joined,quads,quads_sp,typedstuff	HASH_JOIN	
+job_201307100854_0324	6	1	0:00:11.954	0:00:08.222	0:00:10.580	0:00:12.301	0:00:12.301	0:00:12.301	6-11,joinedCount,joinedGrouped	GROUP_BY,COMBINER	
+job_201307100854_0325	1	1	0:00:03.943	0:00:03.943	0:00:03.943	0:00:09.744	0:00:09.744	0:00:09.744	joinedTopK	SAMPLER	
+job_201307100854_0326	1	1	0:00:04.547	0:00:04.547	0:00:04.547	0:00:12.172	0:00:12.172	0:00:12.172	joinedTopK	ORDER_BY	./results-number_of_properties_per_class,
+
+Statistics for CLASSES_BY_TLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:26.185
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0327	1	1	0:00:23.075	0:00:23.075	0:00:23.075	0:00:10.964	0:00:10.964	0:00:10.964	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201307100854_0328	1	1	0:00:06.381	0:00:06.381	0:00:06.381	0:00:10.937	0:00:10.937	0:00:10.937	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201307100854_0329	1	1	0:00:03.948	0:00:03.948	0:00:03.948	0:00:09.111	0:00:09.111	0:00:09.111	topClassesTld	SAMPLER	
+job_201307100854_0330	1	1	0:00:04.255	0:00:04.255	0:00:04.255	0:00:09.428	0:00:09.428	0:00:09.428	topClassesTld	ORDER_BY	./results-classes_by_tld,
+
+Statistics for PROPERTIES_BY_ENTITY
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:50.813
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0331	1	1	0:00:29.514	0:00:29.514	0:00:29.514	0:00:20.980	0:00:20.980	0:00:20.980	quads,subjPredAll	DISTINCT	
+job_201307100854_0332	2	1	0:00:11.853	0:00:06.366	0:00:09.109	0:00:10.928	0:00:10.928	0:00:10.928	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201307100854_0333	1	1	0:00:03.639	0:00:03.639	0:00:03.639	0:00:11.284	0:00:11.284	0:00:11.284	propSorted	SAMPLER	
+job_201307100854_0334	1	1	0:00:04.565	0:00:04.565	0:00:04.565	0:00:10.954	0:00:10.954	0:00:10.954	propSorted	ORDER_BY	./results-properties_by_entity,
+
+Statistics for PROPERTY_COOC_BY_URLS
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:10:57.043
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0335	1	1	0:00:28.873	0:00:28.873	0:00:28.873	0:03:21.483	0:03:21.483	0:03:21.483	groups,groupsCopy,propertyCooc,quads	GROUP_BY	
+job_201307100854_0336	63	5	0:03:56.792	0:00:39.054	0:01:29.607	0:04:02.813	0:03:58.589	0:03:59.992	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201307100854_0337	1	1	0:00:05.773	0:00:05.773	0:00:05.773	0:00:10.625	0:00:10.625	0:00:10.625	propertyCoocSorted	SAMPLER	
+job_201307100854_0338	1	1	0:00:06.819	0:00:06.819	0:00:06.819	0:00:11.549	0:00:11.549	0:00:11.549	propertyCoocSorted	ORDER_BY	./results-property_cooc_by_urls,
+
+Statistics for URI_LITERAL_RATIO_PER_PLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:26.351
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0339	1	1	0:00:36.760	0:00:36.760	0:00:36.760	0:00:24.107	0:00:24.107	0:00:24.107	objectLiterals,objectUris,quads,quadsByGraph,quadsTld,ratio	GROUP_BY	
+job_201307100854_0340	1	1	0:00:03.642	0:00:03.642	0:00:03.642	0:00:12.185	0:00:12.185	0:00:12.185	topK	SAMPLER	
+job_201307100854_0341	1	1	0:00:02.448	0:00:02.448	0:00:02.448	0:00:12.768	0:00:12.768	0:00:12.768	topK	ORDER_BY	./results-uri_literal_ratio_per_pld,
+
+Statistics for NUMBER_OF_TRIPLES
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:00:53.940
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0342	1	1	0:00:27.297	0:00:27.297	0:00:27.297	0:00:09.105	0:00:09.105	0:00:09.105	B,C,quads	GROUP_BY,COMBINER	./results-number_of_triples,
+
+Statistics for CLASSES_BY_PLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:31.216
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0343	1	1	0:00:22.770	0:00:22.770	0:00:22.770	0:00:10.658	0:00:10.658	0:00:10.658	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201307100854_0344	1	1	0:00:04.248	0:00:04.248	0:00:04.248	0:00:11.221	0:00:11.221	0:00:11.221	classCounts,classes	GROUP_BY,COMBINER	
+job_201307100854_0345	1	1	0:00:03.649	0:00:03.649	0:00:03.649	0:00:10.925	0:00:10.925	0:00:10.925	topClasses	SAMPLER	
+job_201307100854_0346	1	1	0:00:04.249	0:00:04.249	0:00:04.249	0:00:10.935	0:00:10.935	0:00:10.935	topClasses	ORDER_BY	./results-classes_by_pld,
+
+Statistics for NUMBER_OF_PROPERTIES_PER_PLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:22.946
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0347	1	1	0:00:44.754	0:00:44.754	0:00:44.754	0:00:12.248	0:00:12.248	0:00:12.248	13-7,predicatesCount,quads,quadsByUrl	GROUP_BY,COMBINER	
+job_201307100854_0348	1	1	0:00:03.642	0:00:03.642	0:00:03.642	0:00:10.930	0:00:10.930	0:00:10.930	predicatesTopK	SAMPLER	
+job_201307100854_0349	1	1	0:00:05.654	0:00:05.654	0:00:05.654	0:00:10.965	0:00:10.965	0:00:10.965	predicatesTopK	ORDER_BY	./results-number_of_properties_per_pld,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_TLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:46.042
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0350	1	1	0:00:41.322	0:00:41.322	0:00:41.322	0:00:09.726	0:00:09.726	0:00:09.726	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0351	1	1	0:00:06.086	0:00:06.086	0:00:06.086	0:00:10.640	0:00:10.640	0:00:10.640	average,valueCountsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0352	1	1	0:00:03.396	0:00:03.396	0:00:03.396	0:00:10.330	0:00:10.330	0:00:10.330	topK	SAMPLER	
+job_201307100854_0353	1	1	0:00:03.942	0:00:03.942	0:00:03.942	0:00:10.632	0:00:10.632	0:00:10.632	topK	ORDER_BY	./results-average_number_of_property_values_per_tld,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_ENTITY
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:03:25.138
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0354	1	1	0:00:40.125	0:00:40.125	0:00:40.125	0:00:20.093	0:00:20.093	0:00:20.093	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0355	1	1	0:00:19.856	0:00:19.856	0:00:19.856	0:00:13.979	0:00:13.979	0:00:13.979	average,valueCountsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0356	1	1	0:00:05.478	0:00:05.478	0:00:05.478	0:00:10.635	0:00:10.635	0:00:10.635	topK	SAMPLER	
+job_201307100854_0357	1	1	0:00:06.981	0:00:06.981	0:00:06.981	0:00:15.189	0:00:15.189	0:00:15.189	topK	ORDER_BY	./results-average_number_of_property_values_per_entity,
+
+Statistics for URI_LITERAL_RATIO_PER_TLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:28.003
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0358	1	1	0:00:34.896	0:00:34.896	0:00:34.896	0:00:24.649	0:00:24.649	0:00:24.649	objectLiterals,objectUris,quads,quadsByGraph,quadsTld,ratio	GROUP_BY	
+job_201307100854_0359	1	1	0:00:04.153	0:00:04.153	0:00:04.153	0:00:10.620	0:00:10.620	0:00:10.620	topK	SAMPLER	
+job_201307100854_0360	1	1	0:00:04.874	0:00:04.874	0:00:04.874	0:00:10.646	0:00:10.646	0:00:10.646	topK	ORDER_BY	./results-uri_literal_ratio_per_tld,
+
+Statistics for VOCABULARIES_BY_TLD
+Input: 	1000000 records (-1 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:40.309
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0361	2	1	0:00:40.973	0:00:25.515	0:00:33.244	0:00:22.303	0:00:22.303	0:00:22.303	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201307100854_0362	1	1	0:00:04.257	0:00:04.257	0:00:04.257	0:00:09.106	0:00:09.106	0:00:09.106	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201307100854_0363	1	1	0:00:03.647	0:00:03.647	0:00:03.647	0:00:09.105	0:00:09.105	0:00:09.105	topClassesTld	SAMPLER	
+job_201307100854_0364	1	1	0:00:03.950	0:00:03.950	0:00:03.950	0:00:14.024	0:00:14.024	0:00:14.024	topClassesTld	ORDER_BY	./results-vocabularies_by_tld,
+
+Statistics for NUMBER_OF_PROPERTIES_PER_TLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:17.156
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0365	1	1	0:00:41.350	0:00:41.350	0:00:41.350	0:00:10.933	0:00:10.933	0:00:10.933	18-7,predicatesCount,quads,quadsByUrl	GROUP_BY,COMBINER	
+job_201307100854_0366	1	1	0:00:03.645	0:00:03.645	0:00:03.645	0:00:10.624	0:00:10.624	0:00:10.624	predicatesTopK	SAMPLER	
+job_201307100854_0367	1	1	0:00:03.941	0:00:03.941	0:00:03.941	0:00:10.628	0:00:10.628	0:00:10.628	predicatesTopK	ORDER_BY	./results-number_of_properties_per_tld,
+
+Statistics for URI_LITERAL_RATIO
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:57.106
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0368	1	1	0:00:30.366	0:00:30.366	0:00:30.366	0:00:59.353	0:00:59.353	0:00:59.353	everything,objectLiterals,objectUris,quads,ratio	GROUP_BY	
+job_201307100854_0369	1	1	0:00:03.643	0:00:03.643	0:00:03.643	0:00:10.932	0:00:10.932	0:00:10.932	topK	SAMPLER	
+job_201307100854_0370	1	1	0:00:03.953	0:00:03.953	0:00:03.953	0:00:10.641	0:00:10.641	0:00:10.641	topK	ORDER_BY	./results-uri_literal_ratio,
+
+Statistics for PROPERTIES_BY_URL
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:36.933
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0371	1	1	0:00:27.027	0:00:27.027	0:00:27.027	0:00:13.380	0:00:13.380	0:00:13.380	quads,urlPredAll	DISTINCT	
+job_201307100854_0372	1	1	0:00:08.813	0:00:08.813	0:00:08.813	0:00:09.725	0:00:09.725	0:00:09.725	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201307100854_0373	1	1	0:00:03.342	0:00:03.342	0:00:03.342	0:00:10.631	0:00:10.631	0:00:10.631	propSorted	SAMPLER	
+job_201307100854_0374	1	1	0:00:06.074	0:00:06.074	0:00:06.074	0:00:10.648	0:00:10.648	0:00:10.648	propSorted	ORDER_BY	./results-properties_by_url,
+
+Statistics for PROPERTY_COOC_BY_ENTITIES
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:04:41.089
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0375	1	1	0:00:30.407	0:00:30.407	0:00:30.407	0:01:01.404	0:01:01.404	0:01:01.404	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201307100854_0376	14	1	0:01:00.450	0:00:31.969	0:00:53.147	0:00:37.754	0:00:37.754	0:00:37.754	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201307100854_0377	1	1	0:00:04.266	0:00:04.266	0:00:04.266	0:00:10.649	0:00:10.649	0:00:10.649	propertyCoocSorted	SAMPLER	
+job_201307100854_0378	1	1	0:00:07.296	0:00:07.296	0:00:07.296	0:00:12.503	0:00:12.503	0:00:12.503	propertyCoocSorted	ORDER_BY	./results-property_cooc_by_entities,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_URL
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:55.746
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0379	1	1	0:00:34.616	0:00:34.616	0:00:34.616	0:00:15.594	0:00:15.594	0:00:15.594	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0380	1	1	0:00:11.266	0:00:11.266	0:00:11.266	0:00:11.836	0:00:11.836	0:00:11.836	average,valueCountsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0381	1	1	0:00:03.642	0:00:03.642	0:00:03.642	0:00:10.935	0:00:10.935	0:00:10.935	topK	SAMPLER	
+job_201307100854_0382	1	1	0:00:05.773	0:00:05.773	0:00:05.773	0:00:10.033	0:00:10.033	0:00:10.033	topK	ORDER_BY	./results-average_number_of_property_values_per_url,
+
+Statistics for PROPERTIES_BY_TLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:51.874
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0383	1	1	0:00:37.361	0:00:37.361	0:00:37.361	0:00:12.799	0:00:12.799	0:00:12.799	quads,tldPredAll	DISTINCT	
+job_201307100854_0384	1	1	0:00:04.558	0:00:04.558	0:00:04.558	0:00:09.720	0:00:09.720	0:00:09.720	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201307100854_0385	1	1	0:00:03.641	0:00:03.641	0:00:03.641	0:00:10.631	0:00:10.631	0:00:10.631	topPredicatesTld	SAMPLER	
+job_201307100854_0386	1	1	0:00:04.247	0:00:04.247	0:00:04.247	0:00:10.928	0:00:10.928	0:00:10.928	topPredicatesTld	ORDER_BY	./results-properties_by_tld,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTIES_PER_TLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:56.970
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0387	1	1	0:00:41.686	0:00:41.686	0:00:41.686	0:00:13.073	0:00:13.073	0:00:13.073	predicatesCount,quads,quadsByUrl	GROUP_BY,COMBINER	
+job_201307100854_0388	1	1	0:00:07.011	0:00:07.011	0:00:07.011	0:00:10.958	0:00:10.958	0:00:10.958	predicatesAvg,predicatesGroup	GROUP_BY,COMBINER	
+job_201307100854_0389	1	1	0:00:02.436	0:00:02.436	0:00:02.436	0:00:10.637	0:00:10.637	0:00:10.637	topK	SAMPLER	
+job_201307100854_0390	1	1	0:00:07.294	0:00:07.294	0:00:07.294	0:00:12.755	0:00:12.755	0:00:12.755	topK	ORDER_BY	./results-average_number_of_properties_per_tld,
+
+Statistics for PROPERTY_VALUE_RANGES_NUMERIC
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:02.135
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0391	1	1	0:00:20.958	0:00:20.958	0:00:20.958	0:00:13.391	0:00:13.391	0:00:13.391	numeric_value_ranges,numeric_values,numeric_values_by_property,numeric_values_clean,quads	GROUP_BY	
+job_201307100854_0392	1	1	0:00:03.342	0:00:03.342	0:00:03.342	0:00:10.635	0:00:10.635	0:00:10.635	topK	SAMPLER	
+job_201307100854_0393	1	1	0:00:04.506	0:00:04.506	0:00:04.506	0:00:11.222	0:00:11.222	0:00:11.222	topK	ORDER_BY	./results-property_value_ranges_numeric,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_CLASS_AND_PROPERTY
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:04:10.946
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0394	1	1	0:00:51.732	0:00:51.732	0:00:51.732	0:00:20.106	0:00:20.106	0:00:20.106	quads,quadsByPredicate,valueCounts	MULTI_QUERY,COMBINER	
+job_201307100854_0395	5	1	0:00:10.025	0:00:07.336	0:00:08.502	0:00:24.129	0:00:24.129	0:00:24.129	classMap,joined,typedstuff	HASH_JOIN	
+job_201307100854_0396	3	1	0:00:11.594	0:00:08.507	0:00:10.558	0:00:12.164	0:00:12.164	0:00:12.164	classAvg,joinedGrouped	GROUP_BY,COMBINER	
+job_201307100854_0397	1	1	0:00:05.176	0:00:05.176	0:00:05.176	0:00:09.420	0:00:09.420	0:00:09.420	topK	SAMPLER	
+job_201307100854_0398	1	1	0:00:06.371	0:00:06.371	0:00:06.371	0:00:13.048	0:00:13.048	0:00:13.048	topK	ORDER_BY	./results-average_number_of_property_values_per_class_and_property,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTIES_PER_CLASS
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:03:24.792
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0399	1	1	0:00:43.892	0:00:43.892	0:00:43.892	0:00:11.571	0:00:11.571	0:00:11.571	predicatesCount,quads,quadsByUrl	MULTI_QUERY,COMBINER	
+job_201307100854_0400	4	1	0:00:08.192	0:00:06.978	0:00:07.599	0:00:15.502	0:00:15.502	0:00:15.502	classMap,joined,typedstuff	HASH_JOIN	
+job_201307100854_0401	1	1	0:00:07.591	0:00:07.591	0:00:07.591	0:00:10.927	0:00:10.927	0:00:10.927	classAvg,joinedGrouped	GROUP_BY,COMBINER	
+job_201307100854_0402	1	1	0:00:03.641	0:00:03.641	0:00:03.641	0:00:09.596	0:00:09.596	0:00:09.596	topK	SAMPLER	
+job_201307100854_0403	1	1	0:00:02.425	0:00:02.425	0:00:02.425	0:00:11.288	0:00:11.288	0:00:11.288	topK	ORDER_BY	./results-average_number_of_properties_per_class,
+
+Statistics for NUMBER_OF_PROPERTIES_PER_DATATYPE
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:01:57.299
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0404	1	1	0:00:21.943	0:00:21.943	0:00:21.943	0:00:10.645	0:00:10.645	0:00:10.645	28-8,predicatesCountPerValueType,quads,typedLiterals,valueTypes	GROUP_BY,COMBINER	
+job_201307100854_0405	1	1	0:00:04.253	0:00:04.253	0:00:04.253	0:00:10.629	0:00:10.629	0:00:10.629	valueTypesTopK	SAMPLER	
+job_201307100854_0406	1	1	0:00:03.361	0:00:03.361	0:00:03.361	0:00:10.619	0:00:10.619	0:00:10.619	valueTypesTopK	ORDER_BY	./results-number_of_properties_per_datatype,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTIES_PER_PLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:03:05.733
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0407	1	1	0:00:44.038	0:00:44.038	0:00:44.038	0:00:15.617	0:00:15.617	0:00:15.617	predicatesCount,quads,quadsByUrl	GROUP_BY,COMBINER	
+job_201307100854_0408	1	1	0:00:08.521	0:00:08.521	0:00:08.521	0:00:12.795	0:00:12.795	0:00:12.795	predicatesAvg,predicatesGroup	GROUP_BY,COMBINER	
+job_201307100854_0409	1	1	0:00:03.339	0:00:03.339	0:00:03.339	0:00:10.658	0:00:10.658	0:00:10.658	topK	SAMPLER	
+job_201307100854_0410	1	1	0:00:03.952	0:00:03.952	0:00:03.952	0:00:09.734	0:00:09.734	0:00:09.734	topK	ORDER_BY	./results-average_number_of_properties_per_pld,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTIES
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:01:44.145
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0411	1	1	0:00:30.415	0:00:30.415	0:00:30.415	0:00:14.594	0:00:14.594	0:00:14.594	predicatesCount,quads,quadsBySubject	GROUP_BY,COMBINER	
+job_201307100854_0412	1	1	0:00:08.508	0:00:08.508	0:00:08.508	0:00:10.929	0:00:10.929	0:00:10.929	predicatesAvg,predicatesGroup	GROUP_BY,COMBINER	./results-average_number_of_properties,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:01:28.160
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0413	1	1	0:00:26.491	0:00:26.491	0:00:26.491	0:00:10.925	0:00:10.925	0:00:10.925	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0414	1	1	0:00:05.163	0:00:05.163	0:00:05.163	0:00:12.486	0:00:12.486	0:00:12.486	average,valueCountsGrouped	GROUP_BY,COMBINER	./results-average_number_of_property_values,
+
+Statistics for NUMBER_OF_INSTANCES_PER_CLASS
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:28.232
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0415	1	1	0:00:21.564	0:00:21.564	0:00:21.564	0:00:11.875	0:00:11.875	0:00:11.875	quads,subjects,typedstuff	DISTINCT	
+job_201307100854_0416	1	1	0:00:06.977	0:00:06.977	0:00:06.977	0:00:09.418	0:00:09.418	0:00:09.418	subjectCountsByClass,subjectsByClass	GROUP_BY,COMBINER	
+job_201307100854_0417	1	1	0:00:02.123	0:00:02.123	0:00:02.123	0:00:10.620	0:00:10.620	0:00:10.620	subjectCountsByClassSorted	SAMPLER	
+job_201307100854_0418	1	1	0:00:06.018	0:00:06.018	0:00:06.018	0:00:10.652	0:00:10.652	0:00:10.652	subjectCountsByClassSorted	ORDER_BY	./results-number_of_instances_per_class,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTIES_PER_URL
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:46.810
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0419	1	1	0:00:32.547	0:00:32.547	0:00:32.547	0:00:13.375	0:00:13.375	0:00:13.375	predicatesCount,quads,quadsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0420	1	1	0:00:06.692	0:00:06.692	0:00:06.692	0:00:11.543	0:00:11.543	0:00:11.543	predicatesAvg,predicatesGroup	GROUP_BY,COMBINER	
+job_201307100854_0421	1	1	0:00:03.948	0:00:03.948	0:00:03.948	0:00:13.048	0:00:13.048	0:00:13.048	topK	SAMPLER	
+job_201307100854_0422	1	1	0:00:04.547	0:00:04.547	0:00:04.547	0:00:11.547	0:00:11.547	0:00:11.547	topK	ORDER_BY	./results-average_number_of_properties_per_url,
+
+Statistics for CLASSES_BY_ENTITY
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:07.287
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0423	1	1	0:00:22.492	0:00:22.492	0:00:22.492	0:00:13.379	0:00:13.379	0:00:13.379	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201307100854_0424	1	1	0:00:05.160	0:00:05.160	0:00:05.160	0:00:14.887	0:00:14.887	0:00:14.887	topClassesByEntities	SAMPLER	
+job_201307100854_0425	1	1	0:00:05.455	0:00:05.455	0:00:05.455	0:00:10.944	0:00:10.944	0:00:10.944	topClassesByEntities	ORDER_BY	./results-classes_by_entity,
+
+Statistics for PROPERTY_VALUE_RANGES_TEMPORAL
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:01:58.384
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0426	1	1	0:00:20.949	0:00:20.949	0:00:20.949	0:00:10.623	0:00:10.623	0:00:10.623	quads,value_ranges,values,values_by_property,values_clean	GROUP_BY	
+job_201307100854_0427	1	1	0:00:05.465	0:00:05.465	0:00:05.465	0:00:09.117	0:00:09.117	0:00:09.117	topK	SAMPLER	
+job_201307100854_0428	1	1	0:00:03.943	0:00:03.943	0:00:03.943	0:00:12.458	0:00:12.458	0:00:12.458	topK	ORDER_BY	./results-property_value_ranges_temporal,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_PLD
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:51.505
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0429	1	1	0:00:42.185	0:00:42.185	0:00:42.185	0:00:10.984	0:00:10.984	0:00:10.984	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0430	1	1	0:00:02.430	0:00:02.430	0:00:02.430	0:00:10.682	0:00:10.682	0:00:10.682	average,valueCountsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0431	1	1	0:00:04.857	0:00:04.857	0:00:04.857	0:00:10.988	0:00:10.988	0:00:10.988	topK	SAMPLER	
+job_201307100854_0432	1	1	0:00:03.944	0:00:03.944	0:00:03.944	0:00:12.479	0:00:12.479	0:00:12.479	topK	ORDER_BY	./results-average_number_of_property_values_per_pld,
+
+Statistics for VOCABULARIES_BY_PLD
+Input: 	1000000 records (-1 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:46.269
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0433	2	1	0:00:41.915	0:00:24.885	0:00:33.400	0:00:20.932	0:00:20.932	0:00:20.932	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201307100854_0434	1	1	0:00:03.638	0:00:03.638	0:00:03.638	0:00:12.762	0:00:12.762	0:00:12.762	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201307100854_0435	1	1	0:00:03.947	0:00:03.947	0:00:03.947	0:00:10.626	0:00:10.626	0:00:10.626	topVocabsPlds	SAMPLER	
+job_201307100854_0436	1	1	0:00:04.261	0:00:04.261	0:00:04.261	0:00:10.618	0:00:10.618	0:00:10.618	topVocabsPlds	ORDER_BY	./results-vocabularies_by_pld,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_CLASS
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:03:56.198
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0437	1	1	0:00:52.630	0:00:52.630	0:00:52.630	0:00:19.838	0:00:19.838	0:00:19.838	quads,quadsByPredicate,valueCounts	MULTI_QUERY,COMBINER	
+job_201307100854_0438	4	1	0:00:11.835	0:00:05.159	0:00:07.515	0:00:18.251	0:00:18.251	0:00:18.251	classMap,joined,typedstuff	HASH_JOIN	
+job_201307100854_0439	2	1	0:00:11.581	0:00:11.100	0:00:11.340	0:00:11.572	0:00:11.572	0:00:11.572	classAvg,joinedGrouped	GROUP_BY,COMBINER	
+job_201307100854_0440	1	1	0:00:04.303	0:00:04.303	0:00:04.303	0:00:10.926	0:00:10.926	0:00:10.926	topK	SAMPLER	
+job_201307100854_0441	1	1	0:00:04.856	0:00:04.856	0:00:04.856	0:00:09.416	0:00:09.416	0:00:09.416	topK	ORDER_BY	./results-average_number_of_property_values_per_class,
+
+Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_PROPERTY
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:03:00.301
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0442	1	1	0:00:38.868	0:00:38.868	0:00:38.868	0:00:20.925	0:00:20.925	0:00:20.925	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0443	1	1	0:00:11.542	0:00:11.542	0:00:11.542	0:00:10.932	0:00:10.932	0:00:10.932	average,valueCountsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0444	1	1	0:00:03.644	0:00:03.644	0:00:03.644	0:00:10.631	0:00:10.631	0:00:10.631	topK	SAMPLER	
+job_201307100854_0445	1	1	0:00:04.255	0:00:04.255	0:00:04.255	0:00:10.936	0:00:10.936	0:00:10.936	topK	ORDER_BY	./results-average_number_of_property_values_per_property,
+
+Statistics for URI_LITERAL_RATIO_PER_CLASS
+Input: 	1000000 records (-1 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:03:30.562
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0446	2	1	0:00:29.206	0:00:23.713	0:00:26.459	0:00:25.883	0:00:25.883	0:00:25.883	classMap,joined,quads,quads_so,typedstuff	HASH_JOIN	
+job_201307100854_0447	4	1	0:00:12.372	0:00:09.769	0:00:11.011	0:00:49.057	0:00:49.057	0:00:49.057	joinedGrouped,objectLiterals,objectUris,ratio	GROUP_BY	
+job_201307100854_0448	1	1	0:00:04.261	0:00:04.261	0:00:04.261	0:00:09.101	0:00:09.101	0:00:09.101	topK	SAMPLER	
+job_201307100854_0449	1	1	0:00:06.113	0:00:06.113	0:00:06.113	0:00:10.699	0:00:10.699	0:00:10.699	topK	ORDER_BY	./results-uri_literal_ratio_per_class,
+
+Statistics for NUMBER_OF_PROPERTIES_PER_URL
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:11.963
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0450	1	1	0:00:31.588	0:00:31.588	0:00:31.588	0:00:13.403	0:00:13.403	0:00:13.403	42-7,predicatesCount,quads,quadsByUrl	GROUP_BY,COMBINER	
+job_201307100854_0451	1	1	0:00:05.769	0:00:05.769	0:00:05.769	0:00:10.648	0:00:10.648	0:00:10.648	predicatesTopK	SAMPLER	
+job_201307100854_0452	1	1	0:00:06.368	0:00:06.368	0:00:06.368	0:00:11.535	0:00:11.535	0:00:11.535	predicatesTopK	ORDER_BY	./results-number_of_properties_per_url,
+
+Statistics for NUMBER_OF_INSTANCES
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:01:29.470
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0453	1	1	0:00:24.628	0:00:24.628	0:00:24.628	0:00:10.644	0:00:10.644	0:00:10.644	quads,subjects	DISTINCT	
+job_201307100854_0454	1	1	0:00:05.513	0:00:05.513	0:00:05.513	0:00:10.625	0:00:10.625	0:00:10.625	distinctSubjectsCount,distinctSubjects_group	GROUP_BY,COMBINER	./results-number_of_instances,
+
+Statistics for URI_LITERAL_RATIO_PER_URL
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:33.018
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0455	1	1	0:00:31.596	0:00:31.596	0:00:31.596	0:00:34.893	0:00:34.893	0:00:34.893	objectLiterals,objectUris,quads,quadsByGraph,ratio	GROUP_BY	
+job_201307100854_0456	1	1	0:00:05.324	0:00:05.324	0:00:05.324	0:00:10.641	0:00:10.641	0:00:10.641	topK	SAMPLER	
+job_201307100854_0457	1	1	0:00:04.855	0:00:04.855	0:00:04.855	0:00:11.532	0:00:11.532	0:00:11.532	topK	ORDER_BY	./results-uri_literal_ratio_per_url,
+
+Statistics for VOCABULARIES_BY_URL
+Input: 	1000000 records (-1 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:45.779
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0458	2	1	0:00:30.078	0:00:25.830	0:00:27.954	0:00:13.685	0:00:13.685	0:00:13.685	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201307100854_0459	1	1	0:00:07.296	0:00:07.296	0:00:07.296	0:00:12.144	0:00:12.144	0:00:12.144	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201307100854_0460	1	1	0:00:03.660	0:00:03.660	0:00:03.660	0:00:10.639	0:00:10.639	0:00:10.639	topVocabsEntities	SAMPLER	
+job_201307100854_0461	1	1	0:00:04.245	0:00:04.245	0:00:04.245	0:00:10.985	0:00:10.985	0:00:10.985	topVocabsEntities	ORDER_BY	./results-vocabularies_by_url,
+
+Statistics for AVERAGE_LENGTH_OF_PROPERTY_VALUES
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:02:01.906
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0462	1	1	0:00:24.886	0:00:24.886	0:00:24.886	0:00:10.630	0:00:10.630	0:00:10.630	avgLengthsByPredicate,lengths,lengthsByPredicate,quads,strings	GROUP_BY,COMBINER	
+job_201307100854_0463	1	1	0:00:03.647	0:00:03.647	0:00:03.647	0:00:10.644	0:00:10.644	0:00:10.644	topK	SAMPLER	
+job_201307100854_0464	1	1	0:00:02.432	0:00:02.432	0:00:02.432	0:00:11.266	0:00:11.266	0:00:11.266	topK	ORDER_BY	./results-average_length_of_property_values,
+
+Statistics for INCOMING_PROPERTY_COOC
+Input: 	1000000 records (10150524 Bytes) from DataSet freebase, filename = data/freebase-1M.nq.gz
+Total time: 	0:28:40.778
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0465	1	1	0:00:26.340	0:00:26.340	0:00:26.340	0:26:09.048	0:26:09.048	0:26:09.048	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	
+job_201307100854_0466	2	1	0:00:11.532	0:00:11.260	0:00:11.396	0:00:11.235	0:00:11.235	0:00:11.235	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201307100854_0467	1	1	0:00:03.687	0:00:03.687	0:00:03.687	0:00:10.623	0:00:10.623	0:00:10.623	propertyCoocSorted	SAMPLER	
+job_201307100854_0468	1	1	0:00:04.549	0:00:04.549	0:00:04.549	0:00:11.235	0:00:11.235	0:00:11.235	propertyCoocSorted	ORDER_BY	./results-incoming_property_cooc,
+
+Scalability (Execution time) for freebase:
+Script name	1E6
+average_length_of_property_values	0:02:01.906
+average_number_of_properties	0:01:44.145
+average_number_of_properties_per_class	0:03:24.792
+average_number_of_properties_per_pld	0:03:05.733
+average_number_of_properties_per_tld	0:02:56.970
+average_number_of_properties_per_url	0:02:46.810
+average_number_of_property_values	0:01:28.160
+average_number_of_property_values_per_class	0:03:56.198
+average_number_of_property_values_per_class_and_property	0:04:10.946
+average_number_of_property_values_per_entity	0:03:25.138
+average_number_of_property_values_per_pld	0:02:51.505
+average_number_of_property_values_per_property	0:03:00.301
+average_number_of_property_values_per_tld	0:02:46.042
+average_number_of_property_values_per_url	0:02:55.746
+classes_by_entity	0:02:07.287
+classes_by_pld	0:02:31.216
+classes_by_tld	0:02:26.185
+classes_by_url	0:02:36.924
+incoming_property_cooc	0:28:40.778
+number_of_instances	0:01:29.470
+number_of_instances_per_class	0:02:28.232
+number_of_instances_per_datatype	0:01:59.088
+number_of_instances_per_language	0:01:56.719
+number_of_properties_per_class	0:02:50.351
+number_of_properties_per_datatype	0:01:57.299
+number_of_properties_per_pld	0:02:22.946
+number_of_properties_per_tld	0:02:17.156
+number_of_properties_per_url	0:02:11.963
+number_of_triples	0:00:53.940
+properties_by_entity	0:02:50.813
+properties_by_statement	0:02:06.684
+properties_by_tld	0:02:51.874
+properties_by_url	0:02:36.933
+property_cooc_by_entities	0:04:41.089
+property_cooc_by_urls	0:10:57.043
+property_value_ranges_numeric	0:02:02.135
+property_value_ranges_temporal	0:01:58.384
+uri_literal_ratio	0:02:57.106
+uri_literal_ratio_per_class	0:03:30.562
+uri_literal_ratio_per_pld	0:02:26.351
+uri_literal_ratio_per_tld	0:02:28.003
+uri_literal_ratio_per_url	0:02:33.018
+vocabularies_by_entity	0:02:47.674
+vocabularies_by_pld	0:02:46.269
+vocabularies_by_tld	0:02:40.309
+vocabularies_by_url	0:02:45.779
+
+Scalability (Number of output records) for freebase:
+Script name	1E6
+average_length_of_property_values	379
+average_number_of_properties	1
+average_number_of_properties_per_class	1928
+average_number_of_properties_per_pld	1
+average_number_of_properties_per_tld	1
+average_number_of_properties_per_url	18352
+average_number_of_property_values	1
+average_number_of_property_values_per_class	1928
+average_number_of_property_values_per_class_and_property	44757
+average_number_of_property_values_per_entity	226834
+average_number_of_property_values_per_pld	1
+average_number_of_property_values_per_property	2748
+average_number_of_property_values_per_tld	1
+average_number_of_property_values_per_url	18352
+classes_by_entity	1928
+classes_by_pld	1928
+classes_by_tld	1928
+classes_by_url	1928
+incoming_property_cooc	2449
+number_of_instances	1
+number_of_instances_per_class	1928
+number_of_instances_per_datatype	4
+number_of_instances_per_language	47
+number_of_properties_per_class	1928
+number_of_properties_per_datatype	4
+number_of_properties_per_pld	1
+number_of_properties_per_tld	1
+number_of_properties_per_url	18352
+number_of_triples	1
+properties_by_entity	1752
+properties_by_statement	1932
+properties_by_tld	2748
+properties_by_url	1685
+property_cooc_by_entities	29545
+property_cooc_by_urls	92636
+property_value_ranges_numeric	274
+property_value_ranges_temporal	0
+uri_literal_ratio	1
+uri_literal_ratio_per_class	1928
+uri_literal_ratio_per_pld	1
+uri_literal_ratio_per_tld	1
+uri_literal_ratio_per_url	18352
+vocabularies_by_entity	8
+vocabularies_by_pld	8
+vocabularies_by_tld	8
+vocabularies_by_url	8
+
+Comparison of script counters (1E6 records) for freebase:
+Script name	Time (total)	Number of jobs	Number of maps	Average map time	Number of reduces	Average reduce time
+number_of_properties_per_class	0:02:50.351	4	10	0:00:12.823	4	0:00:15.937
+average_number_of_properties_per_class	0:03:24.792	5	8	0:00:10.993	5	0:00:11.776
+number_of_instances_per_language	0:01:56.719	3	3	0:00:09.812	3	0:00:10.640
+properties_by_url	0:02:36.933	4	4	0:00:11.314	4	0:00:11.096
+vocabularies_by_pld	0:02:46.269	4	5	0:00:15.729	4	0:00:13.734
+uri_literal_ratio_per_pld	0:02:26.351	3	3	0:00:14.283	3	0:00:16.353
+property_cooc_by_urls	0:10:57.043	4	66	0:01:26.162	8	0:02:57.952
+number_of_instances_per_class	0:02:28.232	4	4	0:00:09.170	4	0:00:10.641
+average_number_of_property_values_per_class_and_property	0:04:10.946	5	11	0:00:12.496	5	0:00:15.773
+average_number_of_properties_per_url	0:02:46.810	4	4	0:00:11.933	4	0:00:12.378
+average_number_of_properties_per_tld	0:02:56.970	4	4	0:00:14.606	4	0:00:11.855
+uri_literal_ratio_per_tld	0:02:28.003	3	3	0:00:14.641	3	0:00:15.305
+uri_literal_ratio_per_url	0:02:33.018	3	3	0:00:13.925	3	0:00:19.022
+number_of_properties_per_url	0:02:11.963	3	3	0:00:14.575	3	0:00:11.862
+vocabularies_by_tld	0:02:40.309	4	5	0:00:15.668	4	0:00:13.634
+properties_by_statement	0:02:06.684	3	3	0:00:13.485	3	0:00:10.534
+property_value_ranges_numeric	0:02:02.135	3	3	0:00:09.602	3	0:00:11.749
+classes_by_url	0:02:36.924	4	4	0:00:08.768	4	0:00:11.187
+average_number_of_properties_per_pld	0:03:05.733	4	4	0:00:14.962	4	0:00:12.201
+vocabularies_by_entity	0:02:47.674	4	5	0:00:14.424	4	0:00:12.382
+vocabularies_by_url	0:02:45.779	4	5	0:00:14.221	4	0:00:11.863
+uri_literal_ratio	0:02:57.106	3	3	0:00:12.654	3	0:00:26.975
+number_of_properties_per_datatype	0:01:57.299	3	3	0:00:09.852	3	0:00:10.631
+number_of_properties_per_pld	0:02:22.946	3	3	0:00:18.016	3	0:00:11.381
+average_number_of_property_values_per_tld	0:02:46.042	4	4	0:00:13.686	4	0:00:10.332
+uri_literal_ratio_per_class	0:03:30.562	4	8	0:00:13.417	4	0:00:23.685
+number_of_instances_per_datatype	0:01:59.088	3	3	0:00:10.042	3	0:00:10.355
+property_cooc_by_entities	0:04:41.089	4	17	0:00:46.236	4	0:00:30.577
+average_number_of_property_values_per_url	0:02:55.746	4	4	0:00:13.824	4	0:00:12.099
+properties_by_entity	0:02:50.813	4	5	0:00:11.187	4	0:00:13.536
+average_length_of_property_values	0:02:01.906	3	3	0:00:10.321	3	0:00:10.846
+average_number_of_properties	0:01:44.145	2	2	0:00:19.461	2	0:00:12.761
+number_of_instances	0:01:29.470	2	2	0:00:15.070	2	0:00:10.634
+classes_by_entity	0:02:07.287	3	3	0:00:11.035	3	0:00:13.070
+number_of_triples	0:00:53.940	1	1	0:00:27.297	1	0:00:09.105
+incoming_property_cooc	0:28:40.778	4	5	0:00:11.473	4	0:06:40.535
+properties_by_tld	0:02:51.874	4	4	0:00:12.451	4	0:00:11.019
+classes_by_tld	0:02:26.185	4	4	0:00:09.414	4	0:00:10.110
+average_number_of_property_values_per_entity	0:03:25.138	4	4	0:00:18.110	4	0:00:14.974
+average_number_of_property_values_per_property	0:03:00.301	4	4	0:00:14.577	4	0:00:13.356
+number_of_properties_per_tld	0:02:17.156	3	3	0:00:16.312	3	0:00:10.728
+average_number_of_property_values_per_class	0:03:56.198	5	9	0:00:12.725	5	0:00:14.000
+classes_by_pld	0:02:31.216	4	4	0:00:08.729	4	0:00:10.934
+property_value_ranges_temporal	0:01:58.384	3	3	0:00:10.119	3	0:00:10.732
+average_number_of_property_values_per_pld	0:02:51.505	4	4	0:00:13.354	4	0:00:11.283
+average_number_of_property_values	0:01:28.160	2	2	0:00:15.827	2	0:00:11.705
+
+Comparison of PIG features  (1E6 records) for freebase:
+Feature	Usage count	mapMaxTime MEAN	mapMaxTime STD	mapMinTime MEAN	mapMinTime STD	mapNumber MEAN	mapNumber STD	mapInputNumber MEAN	mapInputNumber STD	mapOutputNumber MEAN	mapOutputNumber STD	reduceMaxTime MEAN	reduceMaxTime STD	reduceMinTime MEAN	reduceMinTime STD	reduceNumber MEAN	reduceNumber STD	reduceInputNumber MEAN	reduceInputNumber STD	reduceOutputNumber MEAN	reduceOutputNumber STD
+DISTINCT	12	0:00:29.340	7.4s	0:00:25.596	4.4s	1.3	0.5	1333333.3	492366	722222	473186.8	0:00:14.584	4.3s	0:00:14.584	4.3s	1	0	171596.4	231021.7	166488.7	228234.2
+GROUP_BY	10	0:00:27.352	7.4s	0:00:27.091	8s	1.3	0.9	1096821.5	306176.5	856880.1	562286.1	0:03:24.801	482.5s	0:03:24.801	482.5s	1	0	856880.1	562286.1	4990430.1	12619861.1
+GROUP_BY,COMBINER	49	0:00:24.058	34.4s	0:00:19.174	14.1s	2.7	9	1601909	5745362.2	1510503.1	5761750.3	0:00:17.192	33.2s	0:00:17.106	32.6s	1.1	0.6	83766.5	194019.3	67115.5	165506
+HASH_JOIN	5	0:00:18.367	11.6s	0:00:13.375	9.5s	3.4	1.3	1740835.2	315649.9	824168.2	315649.9	0:00:22.660	5.7s	0:00:22.660	5.7s	1	0	824168.2	315649.9	1153905.4	810560.6
+MULTI_QUERY,COMBINER	3	0:00:49.418	4.8s	0:00:49.418	4.8s	1	0	1000000	0	1000000	0	0:00:17.172	4.9s	0:00:17.172	4.9s	1	0	568058.7	295509.2	0	0
+ORDER_BY	42	0:00:04.673	1.3s	0:00:04.673	1.3s	1	0	11871.3	37742.3	11871.3	37742.3	0:00:11.236	1.2s	0:00:11.236	1.2s	1	0	11871.3	37742.3	11871.3	37742.3
+SAMPLER	42	0:00:04.063	0.9s	0:00:04.063	0.9s	1	0	71.3	82.5	71.3	82.5	0:00:10.699	1s	0:00:10.699	1s	1	0	71.3	82.5	1	0.2
+

@@ -1,0 +1,1341 @@
+13:25:07 INFO  execution.PigScriptHelper  - Found 48 pig script(s) in: /home/bforchhammer/thesis/code/benchmark/build/resources/main/pig-queries
+13:25:07 DEBUG execution.PigScriptHelper  - Found 48 pig scripts.
+13:25:07 DEBUG execution.PigScriptHelper  - Executing ALL pig scripts.
+13:25:07 INFO  execution.ScriptRunner  - ScriptRunner is connecting to: tenemhead2.hpi.uni-potsdam.de:9001
+13:25:07 INFO  execution.ScriptRunner  - ScriptRunner is using SEPARATE PigServer(s) for executing scripts.
+13:25:07 INFO  benchmark.Main  - PigScript[properties_by_url] - RUNNING
+13:25:08 DEBUG execution.ScriptRunner  - Created new pig server.
+13:25:08 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+13:25:09 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+13:28:16 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+13:28:16 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   urlPredAll = FOREACH quads GENERATE graph, predicate;
+3   urlPred = DISTINCT urlPredAll;
+4   propGroups = GROUP urlPred BY predicate;
+5   propStatements = FOREACH propGroups GENERATE group AS predicate, COUNT(urlPred) AS cnt;
+6   propSorted = ORDER propStatements BY cnt DESC;
+7   propSortedTop = FILTER propSorted BY cnt > 1;
+
+13:28:16 INFO  reporting.ExecutionStats  - Statistics for PROPERTIES_BY_URL
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:03:06.846
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0143	1	1	0:00:29.772	0:00:29.772	0:00:29.772	0:00:19.489	0:00:19.489	0:00:19.489	quads,urlPredAll	DISTINCT	
+job_201307100854_0144	2	1	0:00:10.653	0:00:07.298	0:00:08.975	0:00:13.973	0:00:13.973	0:00:13.973	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201307100854_0145	1	1	0:00:03.961	0:00:03.961	0:00:03.961	0:00:10.667	0:00:10.667	0:00:10.667	propSorted	SAMPLER	
+job_201307100854_0146	1	1	0:00:07.934	0:00:07.934	0:00:07.934	0:00:10.621	0:00:10.621	0:00:10.621	propSorted	ORDER_BY	./results-properties_by_url,
+
+13:28:16 INFO  benchmark.Main  - PigScript[number_of_properties_per_url] - RUNNING
+13:28:16 INFO  execution.ScriptRunner  - Shutting down pig server.
+13:28:17 DEBUG execution.ScriptRunner  - Created new pig server.
+13:28:17 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+13:28:17 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+13:30:50 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+13:30:50 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByUrl = GROUP quads BY graph;
+3   predicatesCount = FOREACH quadsByUrl {
+  predicates = DISTINCT quads.predicate;
+  GENERATE group AS url, COUNT(predicates) AS predicate_cnt;
+};
+4   predicatesTopK = ORDER predicatesCount BY predicate_cnt DESC;
+
+13:30:50 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_PROPERTIES_PER_URL
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:32.923
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0147	1	1	0:00:35.922	0:00:35.922	0:00:35.922	0:00:14.271	0:00:14.271	0:00:14.271	2-7,predicatesCount,quads,quadsByUrl	GROUP_BY,COMBINER	
+job_201307100854_0148	1	1	0:00:04.961	0:00:04.961	0:00:04.961	0:00:09.408	0:00:09.408	0:00:09.408	predicatesTopK	SAMPLER	
+job_201307100854_0149	1	1	0:00:09.733	0:00:09.733	0:00:09.733	0:00:17.958	0:00:17.958	0:00:17.958	predicatesTopK	ORDER_BY	./results-number_of_properties_per_url,
+
+13:30:50 INFO  benchmark.Main  - PigScript[number_of_properties_per_tld] - RUNNING
+13:30:50 INFO  execution.ScriptRunner  - Shutting down pig server.
+13:30:50 DEBUG execution.ScriptRunner  - Created new pig server.
+13:30:50 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+13:30:50 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+13:33:07 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+13:33:07 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByUrl = GROUP quads BY de.wbsg.loddesc.functions.TopLevelDomain(graph);
+3   predicatesCount = FOREACH quadsByUrl {
+  predicates = DISTINCT quads.predicate;
+  GENERATE group AS tld, COUNT(predicates) AS predicate_cnt;
+};
+4   predicatesTopK = ORDER predicatesCount BY predicate_cnt DESC;
+
+13:33:07 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_PROPERTIES_PER_TLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:16.489
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0150	1	1	0:00:43.766	0:00:43.766	0:00:43.766	0:00:09.409	0:00:09.409	0:00:09.409	3-7,predicatesCount,quads,quadsByUrl	GROUP_BY,COMBINER	
+job_201307100854_0151	1	1	0:00:03.644	0:00:03.644	0:00:03.644	0:00:10.621	0:00:10.621	0:00:10.621	predicatesTopK	SAMPLER	
+job_201307100854_0152	1	1	0:00:04.246	0:00:04.246	0:00:04.246	0:00:11.257	0:00:11.257	0:00:11.257	predicatesTopK	ORDER_BY	./results-number_of_properties_per_tld,
+
+13:33:07 INFO  benchmark.Main  - PigScript[classes_by_url] - RUNNING
+13:33:07 INFO  execution.ScriptRunner  - Shutting down pig server.
+13:33:07 DEBUG execution.ScriptRunner  - Created new pig server.
+13:33:07 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+13:33:07 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+13:35:40 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+13:35:40 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classesAndDomainsA = FOREACH typedstuff GENERATE object.value AS class,graph;
+4   classesAndDomains = DISTINCT classesAndDomainsA;
+5   classes = GROUP classesAndDomains BY class;
+6   classCounts = FOREACH classes GENERATE group, COUNT(classesAndDomains) AS cnt;
+7   topClassesByUrls = ORDER classCounts BY cnt DESC;
+
+13:35:40 INFO  reporting.ExecutionStats  - Statistics for CLASSES_BY_URL
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:33.366
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0153	1	1	0:00:22.161	0:00:22.161	0:00:22.161	0:00:10.020	0:00:10.020	0:00:10.020	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201307100854_0154	1	1	0:00:05.161	0:00:05.161	0:00:05.161	0:00:10.626	0:00:10.626	0:00:10.626	classCounts,classes	GROUP_BY,COMBINER	
+job_201307100854_0155	1	1	0:00:03.944	0:00:03.944	0:00:03.944	0:00:10.618	0:00:10.618	0:00:10.618	topClassesByUrls	SAMPLER	
+job_201307100854_0156	1	1	0:00:06.064	0:00:06.064	0:00:06.064	0:00:10.684	0:00:10.684	0:00:10.684	topClassesByUrls	ORDER_BY	./results-classes_by_url,
+
+13:35:40 INFO  benchmark.Main  - PigScript[uri_literal_ratio_per_pld] - RUNNING
+13:35:40 INFO  execution.ScriptRunner  - Shutting down pig server.
+13:35:41 DEBUG execution.ScriptRunner  - Created new pig server.
+13:35:41 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+13:35:41 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+13:38:03 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+13:38:03 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsTld = FOREACH quads GENERATE object.ntype AS ntype, de.wbsg.loddesc.functions.PayLevelDomain(graph) AS domain;
+3   quadsByGraph = GROUP quadsTld BY domain;
+4   ratio = FOREACH quadsByGraph {
+    objectLiterals = FILTER quadsTld BY (ntype == 1) OR (ntype == 2) OR (ntype == 3);
+    literalCount = COUNT(objectLiterals);
+    objectUris = FILTER quadsTld BY (ntype == 4) OR (ntype == 5);
+    uriCount = COUNT(objectUris);
+    GENERATE group, uriCount, literalCount,
+       ((float)uriCount / (float)literalCount) AS uriLiteralRatio,
+       ((float)literalCount / (float)uriCount) AS literalUriRatio;
+};
+5   topK = ORDER ratio BY literalUriRatio DESC;
+
+13:38:03 INFO  reporting.ExecutionStats  - Statistics for URI_LITERAL_RATIO_PER_PLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:22.576
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0157	1	1	0:00:38.608	0:00:38.608	0:00:38.608	0:00:16.071	0:00:16.071	0:00:16.071	objectLiterals,objectUris,quads,quadsByGraph,quadsTld,ratio	GROUP_BY	
+job_201307100854_0158	1	1	0:00:04.245	0:00:04.245	0:00:04.245	0:00:10.634	0:00:10.634	0:00:10.634	topK	SAMPLER	
+job_201307100854_0159	1	1	0:00:04.694	0:00:04.694	0:00:04.694	0:00:10.660	0:00:10.660	0:00:10.660	topK	ORDER_BY	./results-uri_literal_ratio_per_pld,
+
+13:38:03 INFO  benchmark.Main  - PigScript[average_number_of_properties_per_class] - RUNNING
+13:38:03 INFO  execution.ScriptRunner  - Shutting down pig server.
+13:38:03 DEBUG execution.ScriptRunner  - Created new pig server.
+13:38:04 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+13:38:04 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+13:41:37 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+13:41:37 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classMap = FOREACH typedstuff GENERATE subject, object.value AS class;
+4   quadsByUrl = GROUP quads BY subject;
+5   predicatesCount = FOREACH quadsByUrl GENERATE group AS subject, COUNT(quads.predicate) AS cnt;
+6   joined = JOIN classMap BY subject, predicatesCount BY subject;
+7   joinedGrouped = GROUP joined BY class;
+8   classAvg = FOREACH joinedGrouped GENERATE group AS class, AVG(joined.predicatesCount::cnt) AS average;
+9   topK = ORDER classAvg BY average DESC;
+
+13:41:37 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTIES_PER_CLASS
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:03:33.147
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0160	1	1	0:00:43.188	0:00:43.188	0:00:43.188	0:00:09.125	0:00:09.125	0:00:09.125	predicatesCount,quads,quadsByUrl	MULTI_QUERY,COMBINER	
+job_201307100854_0161	5	1	0:00:07.906	0:00:06.984	0:00:07.372	0:00:12.783	0:00:12.783	0:00:12.783	classMap,joined,typedstuff	HASH_JOIN	
+job_201307100854_0162	1	1	0:00:06.677	0:00:06.677	0:00:06.677	0:00:10.631	0:00:10.631	0:00:10.631	classAvg,joinedGrouped	GROUP_BY,COMBINER	
+job_201307100854_0163	1	1	0:00:03.642	0:00:03.642	0:00:03.642	0:00:11.267	0:00:11.267	0:00:11.267	topK	SAMPLER	
+job_201307100854_0164	1	1	0:00:03.642	0:00:03.642	0:00:03.642	0:00:10.623	0:00:10.623	0:00:10.623	topK	ORDER_BY	./results-average_number_of_properties_per_class,
+
+13:41:37 INFO  benchmark.Main  - PigScript[number_of_properties_per_class] - RUNNING
+13:41:37 INFO  execution.ScriptRunner  - Shutting down pig server.
+13:41:37 DEBUG execution.ScriptRunner  - Created new pig server.
+13:41:37 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+13:41:37 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+13:54:24 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+13:54:24 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classMap = FOREACH typedstuff GENERATE subject, object.value AS class;
+4   quads_sp = FOREACH quads GENERATE subject, predicate;
+5   joined = JOIN classMap BY subject, quads_sp BY subject;
+6   joinedGrouped = GROUP joined BY class;
+7   joinedCount = FOREACH joinedGrouped {
+    distinct_predicates = DISTINCT joined.quads_sp::predicate;
+    GENERATE group AS class, COUNT(distinct_predicates) AS property_cnt;
+};
+8   joinedTopK = ORDER joinedCount BY property_cnt DESC;
+
+13:54:24 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_PROPERTIES_PER_CLASS
+Input: 	999881 records (-1 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:12:47.140
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0165	2	1	0:00:29.795	0:00:23.715	0:00:26.755	0:03:38.762	0:03:38.762	0:03:38.762	classMap,joined,quads,quads_sp,typedstuff	HASH_JOIN	
+job_201307100854_0166	96	7	0:05:33.061	0:00:37.668	0:01:20.406	0:05:27.035	0:05:22.575	0:05:25.033	7-11,joinedCount,joinedGrouped	GROUP_BY,COMBINER	
+job_201307100854_0167	1	1	0:00:03.648	0:00:03.648	0:00:03.648	0:00:09.116	0:00:09.116	0:00:09.116	joinedTopK	SAMPLER	
+job_201307100854_0168	1	1	0:00:04.251	0:00:04.251	0:00:04.251	0:00:10.708	0:00:10.708	0:00:10.708	joinedTopK	ORDER_BY	./results-number_of_properties_per_class,
+
+13:54:25 INFO  benchmark.Main  - PigScript[number_of_instances] - RUNNING
+13:54:25 INFO  execution.ScriptRunner  - Shutting down pig server.
+13:54:25 DEBUG execution.ScriptRunner  - Created new pig server.
+13:54:25 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+13:54:25 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+13:55:53 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+13:55:53 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   subjects = FOREACH quads GENERATE subject;
+3   distinctSubjects = DISTINCT subjects;
+4   distinctSubjects_group = GROUP distinctSubjects ALL;
+5   distinctSubjectsCount = FOREACH distinctSubjects_group GENERATE COUNT(distinctSubjects);
+
+13:55:53 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_INSTANCES
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:01:28.459
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0169	1	1	0:00:24.581	0:00:24.581	0:00:24.581	0:00:12.188	0:00:12.188	0:00:12.188	quads,subjects	DISTINCT	
+job_201307100854_0170	1	1	0:00:06.135	0:00:06.135	0:00:06.135	0:00:10.648	0:00:10.648	0:00:10.648	distinctSubjectsCount,distinctSubjects_group	GROUP_BY,COMBINER	./results-number_of_instances,
+
+13:55:53 INFO  benchmark.Main  - PigScript[vocabularies_by_tld] - RUNNING
+13:55:53 INFO  execution.ScriptRunner  - Shutting down pig server.
+13:55:53 DEBUG execution.ScriptRunner  - Created new pig server.
+13:55:54 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+13:55:54 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+13:58:40 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+13:58:40 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   predicateVocabs = FOREACH quads GENERATE de.wbsg.loddesc.functions.Vocab(predicate) AS vocab, de.wbsg.loddesc.functions.PayLevelDomain(graph) AS pld;
+3   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+4   objectVocabs = FOREACH typedstuff GENERATE de.wbsg.loddesc.functions.Vocab(object.value) AS vocab, de.wbsg.loddesc.functions.PayLevelDomain(graph) AS pld;
+5   allVocabsTlds = UNION predicateVocabs, objectVocabs;
+6   vocabsAndTlds = DISTINCT allVocabsTlds;
+7   tlds = GROUP vocabsAndTlds BY (de.wbsg.loddesc.functions.TopLevelDomain(pld),vocab);
+8   tldTypeCounts = FOREACH tlds GENERATE FLATTEN(group) AS (tld,vocab), COUNT(vocabsAndTlds) AS cnt;
+9   topClassesTld = ORDER tldTypeCounts BY tld, cnt DESC;
+
+13:58:40 INFO  reporting.ExecutionStats  - Statistics for VOCABULARIES_BY_TLD
+Input: 	999881 records (-1 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:46.201
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0171	2	1	0:00:42.855	0:00:26.715	0:00:34.785	0:00:20.420	0:00:20.420	0:00:20.420	allVocabsTlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201307100854_0172	1	1	0:00:06.987	0:00:06.987	0:00:06.987	0:00:10.944	0:00:10.944	0:00:10.944	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201307100854_0173	1	1	0:00:03.343	0:00:03.343	0:00:03.343	0:00:11.219	0:00:11.219	0:00:11.219	topClassesTld	SAMPLER	
+job_201307100854_0174	1	1	0:00:03.947	0:00:03.947	0:00:03.947	0:00:09.116	0:00:09.116	0:00:09.116	topClassesTld	ORDER_BY	./results-vocabularies_by_tld,
+
+13:58:40 INFO  benchmark.Main  - PigScript[incoming_property_cooc] - RUNNING
+13:58:40 INFO  execution.ScriptRunner  - Shutting down pig server.
+13:58:40 DEBUG execution.ScriptRunner  - Created new pig server.
+13:58:40 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+13:58:40 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+14:01:30 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+14:01:30 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   resourceObjects = FILTER quads BY (NOT predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') AND (object.ntype == 4 OR object.ntype == 5);
+3   resourceObjectsFlat = FOREACH resourceObjects GENERATE object.value AS resourceObject, predicate;
+4   groups = GROUP resourceObjectsFlat BY resourceObject;
+5   groupsCopy = FOREACH groups GENERATE FLATTEN(resourceObjectsFlat.predicate) AS p1, FLATTEN(resourceObjectsFlat.predicate) AS p2;
+6   propertyCooc = FILTER groupsCopy BY p1 < p2;
+7   propertyCoocGroup = GROUP propertyCooc BY *;
+8   propertyCoocCounts = FOREACH propertyCoocGroup GENERATE FLATTEN(group) AS (p1,p2), COUNT(propertyCooc) AS cnt;
+9   propertyCoocSorted = ORDER propertyCoocCounts BY p1, cnt DESC;
+10   propertyCoocSortedTop = FILTER propertyCoocSorted BY cnt > 1;
+
+14:01:30 INFO  reporting.ExecutionStats  - Statistics for INCOMING_PROPERTY_COOC
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:49.131
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0175	1	1	0:00:21.558	0:00:21.558	0:00:21.558	0:00:21.620	0:00:21.620	0:00:21.620	groups,groupsCopy,propertyCooc,quads,resourceObjects,resourceObjectsFlat	GROUP_BY	
+job_201307100854_0176	1	1	0:00:06.066	0:00:06.066	0:00:06.066	0:00:10.332	0:00:10.332	0:00:10.332	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201307100854_0177	1	1	0:00:03.684	0:00:03.684	0:00:03.684	0:00:10.655	0:00:10.655	0:00:10.655	propertyCoocSorted	SAMPLER	
+job_201307100854_0178	1	1	0:00:03.941	0:00:03.941	0:00:03.941	0:00:10.622	0:00:10.622	0:00:10.622	propertyCoocSorted	ORDER_BY	./results-incoming_property_cooc,
+
+14:01:30 INFO  benchmark.Main  - PigScript[average_number_of_property_values_per_pld] - RUNNING
+14:01:30 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:01:30 DEBUG execution.ScriptRunner  - Created new pig server.
+14:01:30 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:01:30 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+14:04:23 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+14:04:23 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByPredicate = GROUP quads BY (predicate, de.wbsg.loddesc.functions.PayLevelDomain(graph));
+3   valueCounts = FOREACH quadsByPredicate GENERATE group.$1 AS url, COUNT(quads.object) AS count;
+4   valueCountsGrouped = GROUP valueCounts BY url;
+5   average = FOREACH valueCountsGrouped GENERATE group AS url, AVG(valueCounts.count) AS avg;
+6   topK = ORDER average BY avg DESC;
+
+14:04:23 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_PLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:53.439
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0179	1	1	0:00:43.878	0:00:43.878	0:00:43.878	0:00:11.280	0:00:11.280	0:00:11.280	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0180	1	1	0:00:03.336	0:00:03.336	0:00:03.336	0:00:10.937	0:00:10.937	0:00:10.937	average,valueCountsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0181	1	1	0:00:05.479	0:00:05.479	0:00:05.479	0:00:11.219	0:00:11.219	0:00:11.219	topK	SAMPLER	
+job_201307100854_0182	1	1	0:00:05.511	0:00:05.511	0:00:05.511	0:00:10.666	0:00:10.666	0:00:10.666	topK	ORDER_BY	./results-average_number_of_property_values_per_pld,
+
+14:04:23 INFO  benchmark.Main  - PigScript[high_level_classes] - RUNNING
+14:04:23 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:04:24 DEBUG execution.ScriptRunner  - Created new pig server.
+14:04:24 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:04:24 ERROR execution.ScriptRunner  - Error while trying to load pig script.
+org.apache.pig.impl.logicalLayer.FrontendException: ERROR 1000: Error during parsing. <line 4, column 20>  Unexpected character '"'
+	at org.apache.pig.PigServer$Graph.parseQuery(PigServer.java:1607)
+	at org.apache.pig.PigServer$Graph.registerQuery(PigServer.java:1546)
+	at org.apache.pig.PigServer.registerQuery(PigServer.java:516)
+	at org.apache.pig.tools.grunt.GruntParser.processPig(GruntParser.java:991)
+	at org.apache.pig.tools.pigscript.parser.PigScriptParser.parse(PigScriptParser.java:412)
+	at org.apache.pig.tools.grunt.GruntParser.parseStopOnError(GruntParser.java:194)
+	at org.apache.pig.PigServer.registerScript(PigServer.java:590)
+	at org.apache.pig.PigServer.registerScript(PigServer.java:541)
+	at de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner.runScript(ScriptRunner.java:181)
+	at de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner.runScript(ScriptRunner.java:133)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runScript(Main.java:169)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runScripts(Main.java:157)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.main(Main.java:135)
+Caused by: Failed to parse: <line 4, column 20>  Unexpected character '"'
+	at org.apache.pig.parser.QueryParserDriver.parse(QueryParserDriver.java:237)
+	at org.apache.pig.parser.QueryParserDriver.parse(QueryParserDriver.java:177)
+	at org.apache.pig.PigServer$Graph.parseQuery(PigServer.java:1599)
+	... 12 more
+14:04:24 INFO  benchmark.Main  - PigScript[properties_by_tld] - RUNNING
+14:04:24 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:04:24 DEBUG execution.ScriptRunner  - Created new pig server.
+14:04:24 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:04:24 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+14:07:12 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+14:07:12 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   tldPredAll = FOREACH quads GENERATE de.wbsg.loddesc.functions.PayLevelDomain(graph) AS tld, predicate;
+3   tldPred = DISTINCT tldPredAll;
+4   tlds = GROUP tldPred BY (de.wbsg.loddesc.functions.TopLevelDomain(tld),predicate);
+5   tldPredCounts = FOREACH tlds GENERATE FLATTEN(group) AS (tld,predicate), COUNT(tldPred) AS cnt;
+6   topPredicatesTld = ORDER tldPredCounts BY tld, cnt DESC;
+
+14:07:12 INFO  reporting.ExecutionStats  - Statistics for PROPERTIES_BY_TLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:48.340
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0183	1	1	0:00:37.663	0:00:37.663	0:00:37.663	0:00:12.453	0:00:12.453	0:00:12.453	quads,tldPredAll	DISTINCT	
+job_201307100854_0184	1	1	0:00:06.679	0:00:06.679	0:00:06.679	0:00:09.463	0:00:09.463	0:00:09.463	tldPredCounts,tlds	GROUP_BY,COMBINER	
+job_201307100854_0185	1	1	0:00:05.470	0:00:05.470	0:00:05.470	0:00:10.632	0:00:10.632	0:00:10.632	topPredicatesTld	SAMPLER	
+job_201307100854_0186	1	1	0:00:03.951	0:00:03.951	0:00:03.951	0:00:09.419	0:00:09.419	0:00:09.419	topPredicatesTld	ORDER_BY	./results-properties_by_tld,
+
+14:07:12 INFO  benchmark.Main  - PigScript[properties_by_statement] - RUNNING
+14:07:12 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:07:13 DEBUG execution.ScriptRunner  - Created new pig server.
+14:07:13 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:07:13 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+14:09:26 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+14:09:26 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   propGroups = GROUP quads BY predicate;
+3   propStatements = FOREACH propGroups GENERATE group AS predicate, COUNT(quads) AS cnt;
+4   propSorted = ORDER propStatements BY cnt DESC;
+5   propSortedTop = FILTER propSorted BY cnt > 1;
+
+14:09:26 INFO  reporting.ExecutionStats  - Statistics for PROPERTIES_BY_STATEMENT
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:13.027
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0187	1	1	0:00:30.662	0:00:30.662	0:00:30.662	0:00:10.654	0:00:10.654	0:00:10.654	propGroups,propSortedTop,propStatements,quads	GROUP_BY,COMBINER	
+job_201307100854_0188	1	1	0:00:03.642	0:00:03.642	0:00:03.642	0:00:10.628	0:00:10.628	0:00:10.628	propSorted	SAMPLER	
+job_201307100854_0189	1	1	0:00:05.770	0:00:05.770	0:00:05.770	0:00:10.665	0:00:10.665	0:00:10.665	propSorted	ORDER_BY	./results-properties_by_statement,
+
+14:09:26 INFO  benchmark.Main  - PigScript[average_number_of_property_values_per_tld] - RUNNING
+14:09:26 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:09:26 DEBUG execution.ScriptRunner  - Created new pig server.
+14:09:26 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:09:26 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+14:12:18 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+14:12:18 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByPredicate = GROUP quads BY (predicate, de.wbsg.loddesc.functions.TopLevelDomain(graph));
+3   valueCounts = FOREACH quadsByPredicate GENERATE group.$1 AS url, COUNT(quads.object) AS count;
+4   valueCountsGrouped = GROUP valueCounts BY url;
+5   average = FOREACH valueCountsGrouped GENERATE group AS url, AVG(valueCounts.count) AS avg;
+6   topK = ORDER average BY avg DESC;
+
+14:12:18 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_TLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:52.506
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0190	1	1	0:00:39.961	0:00:39.961	0:00:39.961	0:00:10.933	0:00:10.933	0:00:10.933	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0191	1	1	0:00:02.425	0:00:02.425	0:00:02.425	0:00:10.961	0:00:10.961	0:00:10.961	average,valueCountsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0192	1	1	0:00:03.956	0:00:03.956	0:00:03.956	0:00:10.633	0:00:10.633	0:00:10.633	topK	SAMPLER	
+job_201307100854_0193	1	1	0:00:04.549	0:00:04.549	0:00:04.549	0:00:10.708	0:00:10.708	0:00:10.708	topK	ORDER_BY	./results-average_number_of_property_values_per_tld,
+
+14:12:19 INFO  benchmark.Main  - PigScript[number_of_instances_per_datatype] - RUNNING
+14:12:19 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:12:19 DEBUG execution.ScriptRunner  - Created new pig server.
+14:12:19 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:12:20 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+14:14:29 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+14:14:29 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedLiterals = FILTER quads BY object.ntype == 2;
+3   valueTypes = GROUP typedLiterals BY object.dtlang;
+4   instanceCountPerValueType = FOREACH valueTypes {
+  instances = DISTINCT typedLiterals.subject;
+  GENERATE group AS type, COUNT(instances) AS instance_cnt;
+};
+5   valueTypesTopK = ORDER instanceCountPerValueType BY instance_cnt DESC;
+
+14:14:29 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_INSTANCES_PER_DATATYPE
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:09.206
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0194	1	1	0:00:24.053	0:00:24.053	0:00:24.053	0:00:12.754	0:00:12.754	0:00:12.754	16-8,instanceCountPerValueType,quads,typedLiterals,valueTypes	GROUP_BY,COMBINER	
+job_201307100854_0195	1	1	0:00:03.640	0:00:03.640	0:00:03.640	0:00:10.626	0:00:10.626	0:00:10.626	valueTypesTopK	SAMPLER	
+job_201307100854_0196	1	1	0:00:03.638	0:00:03.638	0:00:03.638	0:00:10.934	0:00:10.934	0:00:10.934	valueTypesTopK	ORDER_BY	./results-number_of_instances_per_datatype,
+
+14:14:29 INFO  benchmark.Main  - PigScript[uri_literal_ratio_per_class] - RUNNING
+14:14:29 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:14:29 DEBUG execution.ScriptRunner  - Created new pig server.
+14:14:29 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:14:29 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+14:52:31 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+14:52:31 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classMap = FOREACH typedstuff GENERATE subject, object.value AS class;
+4   quads_so = FOREACH quads GENERATE subject, object.ntype AS ntype;
+5   joined = JOIN classMap BY subject, quads_so BY subject;
+6   joinedGrouped = GROUP joined BY class;
+7   ratio = FOREACH joinedGrouped {
+    objectLiterals = FILTER joined BY (quads_so::ntype == 1) OR (quads_so::ntype == 2) OR (quads_so::ntype == 3);
+    literalCount = COUNT(objectLiterals);
+    objectUris = FILTER joined BY (quads_so::ntype == 4) OR (quads_so::ntype == 5);
+    uriCount = COUNT(objectUris);
+    GENERATE group AS class, uriCount, literalCount,
+       ((float)uriCount / (float)literalCount) AS uriLiteralRatio,
+       ((float)literalCount / (float)uriCount) AS literalUriRatio;
+};
+8   topK = ORDER ratio BY literalUriRatio DESC;
+
+14:52:31 INFO  reporting.ExecutionStats  - Statistics for URI_LITERAL_RATIO_PER_CLASS
+Input: 	999881 records (-1 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:38:02.024
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0197	2	1	0:00:29.489	0:00:28.272	0:00:28.880	0:02:55.004	0:02:55.004	0:02:55.004	classMap,joined,quads,quads_so,typedstuff	HASH_JOIN	
+job_201307100854_0198	77	6	0:03:29.191	0:00:32.992	0:01:15.864	0:31:05.028	0:03:58.502	0:09:19.846	joinedGrouped,objectLiterals,objectUris,ratio	GROUP_BY	
+job_201307100854_0199	1	1	0:00:07.304	0:00:07.304	0:00:07.304	0:00:10.696	0:00:10.696	0:00:10.696	topK	SAMPLER	
+job_201307100854_0200	1	1	0:00:05.340	0:00:05.340	0:00:05.340	0:00:06.378	0:00:06.378	0:00:06.378	topK	ORDER_BY	./results-uri_literal_ratio_per_class,
+
+14:52:32 INFO  benchmark.Main  - PigScript[classes_by_tld] - RUNNING
+14:52:32 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:52:32 DEBUG execution.ScriptRunner  - Created new pig server.
+14:52:32 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:52:32 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+14:55:12 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+14:55:12 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classesAndDomainsA = FOREACH typedstuff GENERATE object.value AS type,de.wbsg.loddesc.functions.PayLevelDomain(graph) AS domain;
+4   classesAndDomains = DISTINCT classesAndDomainsA;
+5   tlds = GROUP classesAndDomains BY (de.wbsg.loddesc.functions.TopLevelDomain(domain),type);
+6   tldTypeCounts = FOREACH tlds GENERATE FLATTEN(group) AS (tld,type), COUNT(classesAndDomains) AS cnt;
+7   topClassesTld = ORDER tldTypeCounts BY tld, cnt DESC;
+
+14:55:12 INFO  reporting.ExecutionStats  - Statistics for CLASSES_BY_TLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:40.183
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0201	1	1	0:00:26.454	0:00:26.454	0:00:26.454	0:00:10.638	0:00:10.638	0:00:10.638	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201307100854_0202	1	1	0:00:03.943	0:00:03.943	0:00:03.943	0:00:12.474	0:00:12.474	0:00:12.474	tldTypeCounts,tlds	GROUP_BY,COMBINER	
+job_201307100854_0203	1	1	0:00:03.642	0:00:03.642	0:00:03.642	0:00:15.536	0:00:15.536	0:00:15.536	topClassesTld	SAMPLER	
+job_201307100854_0204	1	1	0:00:03.945	0:00:03.945	0:00:03.945	0:00:10.949	0:00:10.949	0:00:10.949	topClassesTld	ORDER_BY	./results-classes_by_tld,
+
+14:55:12 INFO  benchmark.Main  - PigScript[number_of_properties_per_pld] - RUNNING
+14:55:12 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:55:13 DEBUG execution.ScriptRunner  - Created new pig server.
+14:55:13 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:55:13 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+14:57:40 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+14:57:40 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByUrl = GROUP quads BY de.wbsg.loddesc.functions.PayLevelDomain(graph);
+3   predicatesCount = FOREACH quadsByUrl {
+  predicates = DISTINCT quads.predicate;
+  GENERATE group AS pld, COUNT(predicates) AS predicate_cnt;
+};
+4   predicatesTopK = ORDER predicatesCount BY predicate_cnt DESC;
+
+14:57:40 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_PROPERTIES_PER_PLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:26.780
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0205	1	1	0:00:52.677	0:00:52.677	0:00:52.677	0:00:11.010	0:00:11.010	0:00:11.010	19-7,predicatesCount,quads,quadsByUrl	GROUP_BY,COMBINER	
+job_201307100854_0206	1	1	0:00:03.648	0:00:03.648	0:00:03.648	0:00:10.648	0:00:10.648	0:00:10.648	predicatesTopK	SAMPLER	
+job_201307100854_0207	1	1	0:00:03.682	0:00:03.682	0:00:03.682	0:00:10.665	0:00:10.665	0:00:10.665	predicatesTopK	ORDER_BY	./results-number_of_properties_per_pld,
+
+14:57:40 INFO  benchmark.Main  - PigScript[average_number_of_properties] - RUNNING
+14:57:40 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:57:40 DEBUG execution.ScriptRunner  - Created new pig server.
+14:57:40 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:57:40 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+14:59:24 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+14:59:24 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsBySubject = GROUP quads BY subject;
+3   predicatesCount = FOREACH quadsBySubject GENERATE COUNT(quads.predicate) AS cnt;
+4   predicatesGroup = GROUP predicatesCount ALL;
+5   predicatesAvg = FOREACH predicatesGroup GENERATE AVG(predicatesCount.cnt) AS avg;
+
+14:59:24 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTIES
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:01:44.055
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0208	1	1	0:00:30.975	0:00:30.975	0:00:30.975	0:00:13.426	0:00:13.426	0:00:13.426	predicatesCount,quads,quadsBySubject	GROUP_BY,COMBINER	
+job_201307100854_0209	1	1	0:00:11.253	0:00:11.253	0:00:11.253	0:00:11.567	0:00:11.567	0:00:11.567	predicatesAvg,predicatesGroup	GROUP_BY,COMBINER	./results-average_number_of_properties,
+
+14:59:24 INFO  benchmark.Main  - PigScript[properties_by_entity] - RUNNING
+14:59:24 INFO  execution.ScriptRunner  - Shutting down pig server.
+14:59:24 DEBUG execution.ScriptRunner  - Created new pig server.
+14:59:24 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+14:59:24 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+15:02:04 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+15:02:04 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   subjPredAll = FOREACH quads GENERATE subject, predicate;
+3   subjPred = DISTINCT subjPredAll;
+4   propGroups = GROUP subjPred BY predicate;
+5   propStatements = FOREACH propGroups GENERATE group AS predicate, COUNT(subjPred) AS cnt;
+6   propSorted = ORDER propStatements BY cnt DESC;
+7   propSortedTop = FILTER propSorted BY cnt > 1;
+
+15:02:04 INFO  reporting.ExecutionStats  - Statistics for PROPERTIES_BY_ENTITY
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:39.498
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0210	1	1	0:00:28.588	0:00:28.588	0:00:28.588	0:00:19.531	0:00:19.531	0:00:19.531	quads,subjPredAll	DISTINCT	
+job_201307100854_0211	2	1	0:00:12.566	0:00:06.689	0:00:09.627	0:00:10.621	0:00:10.621	0:00:10.621	propGroups,propSortedTop,propStatements	GROUP_BY,COMBINER	
+job_201307100854_0212	1	1	0:00:03.394	0:00:03.394	0:00:03.394	0:00:10.961	0:00:10.961	0:00:10.961	propSorted	SAMPLER	
+job_201307100854_0213	1	1	0:00:03.943	0:00:03.943	0:00:03.943	0:00:09.124	0:00:09.124	0:00:09.124	propSorted	ORDER_BY	./results-properties_by_entity,
+
+15:02:04 INFO  benchmark.Main  - PigScript[number_of_properties_per_datatype] - RUNNING
+15:02:04 INFO  execution.ScriptRunner  - Shutting down pig server.
+15:02:04 DEBUG execution.ScriptRunner  - Created new pig server.
+15:02:04 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+15:02:04 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+15:04:06 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+15:04:06 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedLiterals = FILTER quads BY object.ntype == 2;
+3   valueTypes = GROUP typedLiterals BY object.dtlang;
+4   predicatesCountPerValueType = FOREACH valueTypes {
+  predicates = DISTINCT typedLiterals.predicate;
+  GENERATE group AS dtlang, COUNT(predicates) AS predicate_cnt;
+};
+5   valueTypesTopK = ORDER predicatesCountPerValueType BY predicate_cnt DESC;
+
+15:04:06 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_PROPERTIES_PER_DATATYPE
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:01.743
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0214	1	1	0:00:24.003	0:00:24.003	0:00:24.003	0:00:10.658	0:00:10.658	0:00:10.658	22-8,predicatesCountPerValueType,quads,typedLiterals,valueTypes	GROUP_BY,COMBINER	
+job_201307100854_0215	1	1	0:00:05.772	0:00:05.772	0:00:05.772	0:00:10.639	0:00:10.639	0:00:10.639	valueTypesTopK	SAMPLER	
+job_201307100854_0216	1	1	0:00:03.951	0:00:03.951	0:00:03.951	0:00:10.951	0:00:10.951	0:00:10.951	valueTypesTopK	ORDER_BY	./results-number_of_properties_per_datatype,
+
+15:04:06 INFO  benchmark.Main  - PigScript[average_number_of_property_values_per_class] - RUNNING
+15:04:06 INFO  execution.ScriptRunner  - Shutting down pig server.
+15:04:06 DEBUG execution.ScriptRunner  - Created new pig server.
+15:04:06 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+15:04:07 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+15:07:56 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+15:07:56 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classMap = FOREACH typedstuff GENERATE subject, object.value AS class;
+4   quadsByPredicate = GROUP quads BY (subject, predicate);
+5   valueCounts = FOREACH quadsByPredicate GENERATE group.subject AS subject, COUNT(quads.object) AS cnt;
+6   joined = JOIN classMap BY subject, valueCounts BY subject;
+7   joinedGrouped = GROUP joined BY class;
+8   classAvg = FOREACH joinedGrouped GENERATE group AS class, AVG(joined.valueCounts::cnt) AS average;
+9   topK = ORDER classAvg BY average DESC;
+
+15:07:56 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_CLASS
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:03:49.296
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0217	1	1	0:00:49.657	0:00:49.657	0:00:49.657	0:00:20.063	0:00:20.063	0:00:20.063	quads,quadsByPredicate,valueCounts	MULTI_QUERY,COMBINER	
+job_201307100854_0218	5	1	0:00:11.921	0:00:06.133	0:00:08.052	0:00:16.465	0:00:16.465	0:00:16.465	classMap,joined,typedstuff	HASH_JOIN	
+job_201307100854_0219	1	1	0:00:10.972	0:00:10.972	0:00:10.972	0:00:12.162	0:00:12.162	0:00:12.162	classAvg,joinedGrouped	GROUP_BY,COMBINER	
+job_201307100854_0220	1	1	0:00:03.367	0:00:03.367	0:00:03.367	0:00:10.641	0:00:10.641	0:00:10.641	topK	SAMPLER	
+job_201307100854_0221	1	1	0:00:03.951	0:00:03.951	0:00:03.951	0:00:09.121	0:00:09.121	0:00:09.121	topK	ORDER_BY	./results-average_number_of_property_values_per_class,
+
+15:07:56 INFO  benchmark.Main  - PigScript[average_number_of_property_values_per_property] - RUNNING
+15:07:56 INFO  execution.ScriptRunner  - Shutting down pig server.
+15:07:56 DEBUG execution.ScriptRunner  - Created new pig server.
+15:07:56 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+15:07:56 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+15:10:57 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+15:10:57 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByPredicate = GROUP quads BY (subject, predicate);
+3   valueCounts = FOREACH quadsByPredicate GENERATE group.predicate AS predicate, COUNT(quads.object) AS count;
+4   valueCountsGrouped = GROUP valueCounts BY predicate;
+5   average = FOREACH valueCountsGrouped GENERATE group AS property, AVG(valueCounts.count) AS avg;
+6   topK = ORDER average BY avg DESC;
+
+15:10:57 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_PROPERTY
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:03:00.764
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0222	1	1	0:00:38.009	0:00:38.009	0:00:38.009	0:00:19.454	0:00:19.454	0:00:19.454	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0223	1	1	0:00:09.719	0:00:09.719	0:00:09.719	0:00:10.939	0:00:10.939	0:00:10.939	average,valueCountsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0224	1	1	0:00:04.850	0:00:04.850	0:00:04.850	0:00:10.942	0:00:10.942	0:00:10.942	topK	SAMPLER	
+job_201307100854_0225	1	1	0:00:03.944	0:00:03.944	0:00:03.944	0:00:09.398	0:00:09.398	0:00:09.398	topK	ORDER_BY	./results-average_number_of_property_values_per_property,
+
+15:10:57 INFO  benchmark.Main  - PigScript[uri_literal_ratio_per_url] - RUNNING
+15:10:57 INFO  execution.ScriptRunner  - Shutting down pig server.
+15:10:58 DEBUG execution.ScriptRunner  - Created new pig server.
+15:10:58 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+15:10:58 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+15:13:30 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+15:13:30 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByGraph = GROUP quads BY graph;
+3   ratio = FOREACH quadsByGraph {
+    objectLiterals = FILTER quads BY (object.ntype == 1) OR (object.ntype == 2) OR (object.ntype == 3);
+    literalCount = COUNT(objectLiterals);
+    objectUris = FILTER quads BY (object.ntype == 4) OR (object.ntype == 5);
+    uriCount = COUNT(objectUris);
+    GENERATE group, uriCount, literalCount,
+       ((float)uriCount / (float)literalCount) AS uriLiteralRatio,
+       ((float)literalCount / (float)uriCount) AS literalUriRatio;
+};
+4   topK = ORDER ratio BY literalUriRatio DESC;
+
+15:13:30 INFO  reporting.ExecutionStats  - Statistics for URI_LITERAL_RATIO_PER_URL
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:32.098
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0226	1	1	0:00:32.582	0:00:32.582	0:00:32.582	0:00:30.288	0:00:30.288	0:00:30.288	objectLiterals,objectUris,quads,quadsByGraph,ratio	GROUP_BY	
+job_201307100854_0227	1	1	0:00:03.951	0:00:03.951	0:00:03.951	0:00:09.424	0:00:09.424	0:00:09.424	topK	SAMPLER	
+job_201307100854_0228	1	1	0:00:06.367	0:00:06.367	0:00:06.367	0:00:13.810	0:00:13.810	0:00:13.810	topK	ORDER_BY	./results-uri_literal_ratio_per_url,
+
+15:13:30 INFO  benchmark.Main  - PigScript[properties_by_pld] - RUNNING
+15:13:30 INFO  execution.ScriptRunner  - Shutting down pig server.
+15:13:30 DEBUG execution.ScriptRunner  - Created new pig server.
+15:13:30 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+15:13:30 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+15:13:30 ERROR execution.ScriptRunner  - Error while trying to execute pig script.
+org.apache.pig.PigException: ERROR 1002: Unable to store alias propSortedTop
+	at org.apache.pig.PigServer.storeEx(PigServer.java:935)
+	at org.apache.pig.PigServer.store(PigServer.java:898)
+	at org.apache.pig.PigServer.store(PigServer.java:866)
+	at de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner.runScript(ScriptRunner.java:192)
+	at de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner.runScript(ScriptRunner.java:133)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runScript(Main.java:169)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.runScripts(Main.java:157)
+	at de.uni_potsdam.hpi.loddp.benchmark.Main.main(Main.java:135)
+Caused by: org.apache.pig.impl.plan.PlanValidationException: ERROR 1025: 
+<line 2, column 36> Invalid field projection. Projected field [type] does not exist in schema: subject:chararray,predicate:chararray,object:tuple(ntype:int,value:chararray,dtlang:chararray),graph:chararray.
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.findColNum(ProjectExpression.java:183)
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.setColumnNumberFromAlias(ProjectExpression.java:166)
+	at org.apache.pig.newplan.logical.visitor.ColumnAliasConversionVisitor$1.visit(ColumnAliasConversionVisitor.java:53)
+	at org.apache.pig.newplan.logical.expression.ProjectExpression.accept(ProjectExpression.java:207)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.newplan.logical.optimizer.AllExpressionVisitor.visit(AllExpressionVisitor.java:142)
+	at org.apache.pig.newplan.logical.relational.LOInnerLoad.accept(LOInnerLoad.java:128)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.logical.optimizer.AllExpressionVisitor.visit(AllExpressionVisitor.java:124)
+	at org.apache.pig.newplan.logical.relational.LOForEach.accept(LOForEach.java:76)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.PigServer$Graph.compile(PigServer.java:1626)
+	at org.apache.pig.PigServer$Graph.compile(PigServer.java:1621)
+	at org.apache.pig.PigServer$Graph.access$200(PigServer.java:1340)
+	at org.apache.pig.PigServer.storeEx(PigServer.java:930)
+	... 7 more
+15:13:30 INFO  benchmark.Main  - PigScript[uri_literal_ratio_per_tld] - RUNNING
+15:13:30 INFO  execution.ScriptRunner  - Shutting down pig server.
+15:13:30 DEBUG execution.ScriptRunner  - Created new pig server.
+15:13:30 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+15:13:30 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+15:15:53 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+15:15:53 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsTld = FOREACH quads GENERATE object.ntype AS ntype, de.wbsg.loddesc.functions.TopLevelDomain(graph) AS domain;
+3   quadsByGraph = GROUP quadsTld BY domain;
+4   ratio = FOREACH quadsByGraph {
+    objectLiterals = FILTER quadsTld BY (ntype == 1) OR (ntype == 2) OR (ntype == 3);
+    literalCount = COUNT(objectLiterals);
+    objectUris = FILTER quadsTld BY (ntype == 4) OR (ntype == 5);
+    uriCount = COUNT(objectUris);
+    GENERATE group, uriCount, literalCount,
+        ((float)uriCount / (float)literalCount) AS uriLiteralRatio,
+        ((float)literalCount / (float)uriCount) AS literalUriRatio;
+};
+5   topK = ORDER ratio BY literalUriRatio DESC;
+
+15:15:53 INFO  reporting.ExecutionStats  - Statistics for URI_LITERAL_RATIO_PER_TLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:21.959
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0229	1	1	0:00:35.525	0:00:35.525	0:00:35.525	0:00:17.640	0:00:17.640	0:00:17.640	objectLiterals,objectUris,quads,quadsByGraph,quadsTld,ratio	GROUP_BY	
+job_201307100854_0230	1	1	0:00:03.940	0:00:03.940	0:00:03.940	0:00:10.623	0:00:10.623	0:00:10.623	topK	SAMPLER	
+job_201307100854_0231	1	1	0:00:07.649	0:00:07.649	0:00:07.649	0:00:09.726	0:00:09.726	0:00:09.726	topK	ORDER_BY	./results-uri_literal_ratio_per_tld,
+
+15:15:53 INFO  benchmark.Main  - PigScript[property_cooc_by_entities] - RUNNING
+15:15:53 INFO  execution.ScriptRunner  - Shutting down pig server.
+15:15:53 DEBUG execution.ScriptRunner  - Created new pig server.
+15:15:53 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+15:15:53 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+07:41:53 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+07:41:53 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   subjGroups = GROUP quads BY subject;
+3   subjGroupsCopy = FOREACH subjGroups GENERATE FLATTEN(quads.predicate) AS p1, FLATTEN(quads.predicate) AS p2;
+4   propertyCooc = FILTER subjGroupsCopy BY p1 < p2;
+5   propertyCoocGroup = GROUP propertyCooc BY *;
+6   propertyCoocCounts = FOREACH propertyCoocGroup GENERATE FLATTEN(group) AS (p1,p2), COUNT(propertyCooc) AS cnt;
+7   propertyCoocSorted = ORDER propertyCoocCounts BY p1, cnt DESC;
+8   propertyCoocSortedTop = FILTER propertyCoocSorted BY cnt > 1;
+
+07:41:53 INFO  reporting.ExecutionStats  - Statistics for PROPERTY_COOC_BY_ENTITIES
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	16:25:58.030
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0232	1	1	0:00:31.623	0:00:31.623	0:00:31.623	9:35:20.722	9:35:20.722	9:35:20.722	propertyCooc,quads,subjGroups,subjGroupsCopy	GROUP_BY	
+job_201307100854_0233	12267	824	0:01:21.337	0:00:11.444	0:00:24.320	4:11:43.384	0:01:30.553	0:04:38.735	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201307100854_0234	1	1	0:00:16.169	0:00:16.169	0:00:16.169	0:00:19.182	0:00:19.182	0:00:19.182	propertyCoocSorted	SAMPLER	
+job_201307100854_0235	1	1	0:00:07.292	0:00:07.292	0:00:07.292	0:00:11.890	0:00:11.890	0:00:11.890	propertyCoocSorted	ORDER_BY	./results-property_cooc_by_entities,
+
+07:41:53 INFO  benchmark.Main  - PigScript[average_length_of_property_values] - RUNNING
+07:41:53 INFO  execution.ScriptRunner  - Shutting down pig server.
+07:41:54 DEBUG execution.ScriptRunner  - Created new pig server.
+07:41:54 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+07:41:54 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+07:44:35 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+07:44:35 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   strings = FILTER quads BY
+    (object.ntype == 1) OR
+    (object.ntype == 2 AND de.uni_potsdam.hpi.loddp.udf.filtering.StringDataType(object.dtlang)) OR
+    (object.ntype == 3);
+3   lengths = FOREACH strings GENERATE predicate, SIZE(object.value) AS length;
+4   lengthsByPredicate = GROUP lengths BY predicate;
+5   avgLengthsByPredicate = FOREACH lengthsByPredicate GENERATE group, AVG(lengths.length) AS length;
+6   topK = ORDER avgLengthsByPredicate BY length DESC;
+
+07:44:35 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_LENGTH_OF_PROPERTY_VALUES
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:41.839
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0236	1	1	0:00:35.546	0:00:35.546	0:00:35.546	0:00:12.145	0:00:12.145	0:00:12.145	avgLengthsByPredicate,lengths,lengthsByPredicate,quads,strings	GROUP_BY,COMBINER	
+job_201307100854_0237	1	1	0:00:08.824	0:00:08.824	0:00:08.824	0:00:12.447	0:00:12.447	0:00:12.447	topK	SAMPLER	
+job_201307100854_0238	1	1	0:00:14.876	0:00:14.876	0:00:14.876	0:00:13.376	0:00:13.376	0:00:13.376	topK	ORDER_BY	./results-average_length_of_property_values,
+
+07:44:36 INFO  benchmark.Main  - PigScript[average_number_of_properties_per_tld] - RUNNING
+07:44:36 INFO  execution.ScriptRunner  - Shutting down pig server.
+07:44:36 DEBUG execution.ScriptRunner  - Created new pig server.
+07:44:36 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+07:44:36 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+07:47:43 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+07:47:43 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByUrl = GROUP quads BY (subject, de.wbsg.loddesc.functions.TopLevelDomain(graph));
+3   predicatesCount = FOREACH quadsByUrl GENERATE group.$1 AS url, COUNT(quads.predicate) AS cnt;
+4   predicatesGroup = GROUP predicatesCount BY url;
+5   predicatesAvg = FOREACH predicatesGroup GENERATE group AS url, AVG(predicatesCount.cnt) AS average;
+6   topK = ORDER predicatesAvg BY average DESC;
+
+07:47:43 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTIES_PER_TLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:03:07.334
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0239	1	1	0:00:42.232	0:00:42.232	0:00:42.232	0:00:12.679	0:00:12.679	0:00:12.679	predicatesCount,quads,quadsByUrl	GROUP_BY,COMBINER	
+job_201307100854_0240	1	1	0:00:08.197	0:00:08.197	0:00:08.197	0:00:10.943	0:00:10.943	0:00:10.943	predicatesAvg,predicatesGroup	GROUP_BY,COMBINER	
+job_201307100854_0241	1	1	0:00:04.254	0:00:04.254	0:00:04.254	0:00:10.946	0:00:10.946	0:00:10.946	topK	SAMPLER	
+job_201307100854_0242	1	1	0:00:04.556	0:00:04.556	0:00:04.556	0:00:10.614	0:00:10.614	0:00:10.614	topK	ORDER_BY	./results-average_number_of_properties_per_tld,
+
+07:47:43 INFO  benchmark.Main  - PigScript[property_value_ranges_temporal] - RUNNING
+07:47:43 INFO  execution.ScriptRunner  - Shutting down pig server.
+07:47:43 DEBUG execution.ScriptRunner  - Created new pig server.
+07:47:43 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+07:47:43 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+07:49:45 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+07:49:45 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   DEFINE TEMPORAL de.uni_potsdam.hpi.loddp.udf.filtering.TemporalDataType;
+3   DEFINE VALUE_RANGE de.uni_potsdam.hpi.loddp.udf.evaluation.TemporalValueRange;
+4   values = FILTER quads BY object.ntype == 2 AND TEMPORAL(object.dtlang);
+5   values_clean = FOREACH values GENERATE predicate, object;
+6   values_by_property = GROUP values_clean BY predicate;
+7   value_ranges = FOREACH values_by_property GENERATE group AS predicate, VALUE_RANGE(values_clean.object);
+8   topK = ORDER value_ranges BY predicate ASC;
+
+07:49:45 INFO  reporting.ExecutionStats  - Statistics for PROPERTY_VALUE_RANGES_TEMPORAL
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:01.167
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0243	1	1	0:00:21.917	0:00:21.917	0:00:21.917	0:00:16.737	0:00:16.737	0:00:16.737	quads,value_ranges,values,values_by_property,values_clean	GROUP_BY	
+job_201307100854_0244	1	1	0:00:04.555	0:00:04.555	0:00:04.555	0:00:13.099	0:00:13.099	0:00:13.099	topK	SAMPLER	
+job_201307100854_0245	1	1	0:00:04.548	0:00:04.548	0:00:04.548	0:00:10.626	0:00:10.626	0:00:10.626	topK	ORDER_BY	./results-property_value_ranges_temporal,
+
+07:49:45 INFO  benchmark.Main  - PigScript[classes_by_entity] - RUNNING
+07:49:45 INFO  execution.ScriptRunner  - Shutting down pig server.
+07:49:45 DEBUG execution.ScriptRunner  - Created new pig server.
+07:49:45 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+07:49:45 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+07:51:46 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+07:51:46 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classes = GROUP typedstuff BY object.value;
+4   classCounts = FOREACH classes GENERATE group, COUNT(typedstuff) AS cnt;
+5   topClassesByEntities = ORDER classCounts BY cnt DESC;
+
+07:51:46 INFO  reporting.ExecutionStats  - Statistics for CLASSES_BY_ENTITY
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:01.035
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0246	1	1	0:00:24.898	0:00:24.898	0:00:24.898	0:00:10.632	0:00:10.632	0:00:10.632	classCounts,classes,quads,typedstuff	GROUP_BY,COMBINER	
+job_201307100854_0247	1	1	0:00:04.249	0:00:04.249	0:00:04.249	0:00:10.629	0:00:10.629	0:00:10.629	topClassesByEntities	SAMPLER	
+job_201307100854_0248	1	1	0:00:04.050	0:00:04.050	0:00:04.050	0:00:11.842	0:00:11.842	0:00:11.842	topClassesByEntities	ORDER_BY	./results-classes_by_entity,
+
+07:51:46 INFO  benchmark.Main  - PigScript[average_number_of_properties_per_url] - RUNNING
+07:51:46 INFO  execution.ScriptRunner  - Shutting down pig server.
+07:51:46 DEBUG execution.ScriptRunner  - Created new pig server.
+07:51:46 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+07:51:46 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+07:54:47 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+07:54:47 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsGrouped = GROUP quads BY (subject, graph);
+3   predicatesCount = FOREACH quadsGrouped GENERATE group.graph AS url, COUNT(quads.predicate) AS cnt;
+4   predicatesGroup = GROUP predicatesCount BY url;
+5   predicatesAvg = FOREACH predicatesGroup GENERATE group AS url, AVG(predicatesCount.cnt) AS average;
+6   topK = ORDER predicatesAvg BY average DESC;
+
+07:54:47 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTIES_PER_URL
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:03:00.905
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0249	1	1	0:00:34.931	0:00:34.931	0:00:34.931	0:00:13.371	0:00:13.371	0:00:13.371	predicatesCount,quads,quadsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0250	1	1	0:00:09.720	0:00:09.720	0:00:09.720	0:00:11.551	0:00:11.551	0:00:11.551	predicatesAvg,predicatesGroup	GROUP_BY,COMBINER	
+job_201307100854_0251	1	1	0:00:08.257	0:00:08.257	0:00:08.257	0:00:11.232	0:00:11.232	0:00:11.232	topK	SAMPLER	
+job_201307100854_0252	1	1	0:00:08.197	0:00:08.197	0:00:08.197	0:00:10.949	0:00:10.949	0:00:10.949	topK	ORDER_BY	./results-average_number_of_properties_per_url,
+
+07:54:47 INFO  benchmark.Main  - PigScript[property_cooc_by_urls] - RUNNING
+07:54:47 INFO  execution.ScriptRunner  - Shutting down pig server.
+07:54:48 DEBUG execution.ScriptRunner  - Created new pig server.
+07:54:48 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+07:54:48 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:06:09 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:06:09 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   groups = GROUP quads BY graph;
+3   groupsCopy = FOREACH groups GENERATE FLATTEN(quads.predicate) AS p1, FLATTEN(quads.predicate) AS p2;
+4   propertyCooc = FILTER groupsCopy BY p1 < p2;
+5   propertyCoocGroup = GROUP propertyCooc BY *;
+6   propertyCoocCounts = FOREACH propertyCoocGroup GENERATE FLATTEN(group) AS (p1,p2), COUNT(propertyCooc) AS cnt;
+7   propertyCoocSorted = ORDER propertyCoocCounts BY p1, cnt DESC;
+8   propertyCoocSortedTop = FILTER propertyCoocSorted BY cnt > 1;
+
+08:06:09 INFO  reporting.ExecutionStats  - Statistics for PROPERTY_COOC_BY_URLS
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:11:21.334
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0253	1	1	0:00:32.808	0:00:32.808	0:00:32.808	0:03:38.279	0:03:38.279	0:03:38.279	groups,groupsCopy,propertyCooc,quads	GROUP_BY	
+job_201307100854_0254	60	5	0:01:58.879	0:00:33.089	0:01:31.908	0:03:47.047	0:03:42.250	0:03:45.915	propertyCoocCounts,propertyCoocGroup,propertyCoocSortedTop	GROUP_BY,COMBINER	
+job_201307100854_0255	1	1	0:00:05.161	0:00:05.161	0:00:05.161	0:00:13.711	0:00:13.711	0:00:13.711	propertyCoocSorted	SAMPLER	
+job_201307100854_0256	1	1	0:00:07.585	0:00:07.585	0:00:07.585	0:00:11.552	0:00:11.552	0:00:11.552	propertyCoocSorted	ORDER_BY	./results-property_cooc_by_urls,
+
+08:06:09 INFO  benchmark.Main  - PigScript[average_number_of_property_values_per_url] - RUNNING
+08:06:09 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:06:09 DEBUG execution.ScriptRunner  - Created new pig server.
+08:06:09 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:06:09 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:09:15 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:09:15 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByPredicate = GROUP quads BY (graph, predicate);
+3   valueCounts = FOREACH quadsByPredicate GENERATE group.graph AS url, COUNT(quads.object) AS count;
+4   valueCountsGrouped = GROUP valueCounts BY url;
+5   average = FOREACH valueCountsGrouped GENERATE group AS url, AVG(valueCounts.count) AS avg;
+6   topK = ORDER average BY avg DESC;
+
+08:09:15 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_URL
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:03:05.437
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0257	1	1	0:00:41.303	0:00:41.303	0:00:41.303	0:00:19.746	0:00:19.746	0:00:19.746	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0258	1	1	0:00:15.258	0:00:15.258	0:00:15.258	0:00:11.260	0:00:11.260	0:00:11.260	average,valueCountsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0259	1	1	0:00:06.067	0:00:06.067	0:00:06.067	0:00:11.851	0:00:11.851	0:00:11.851	topK	SAMPLER	
+job_201307100854_0260	1	1	0:00:05.766	0:00:05.766	0:00:05.766	0:00:06.985	0:00:06.985	0:00:06.985	topK	ORDER_BY	./results-average_number_of_property_values_per_url,
+
+08:09:15 INFO  benchmark.Main  - PigScript[vocabularies_by_pld] - RUNNING
+08:09:15 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:09:15 DEBUG execution.ScriptRunner  - Created new pig server.
+08:09:15 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:09:15 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:12:01 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:12:01 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   predicateVocabs = FOREACH quads GENERATE de.wbsg.loddesc.functions.Vocab(predicate) AS vocab, de.wbsg.loddesc.functions.PayLevelDomain(graph) AS pld;
+3   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+4   objectVocabs = FOREACH typedstuff GENERATE de.wbsg.loddesc.functions.Vocab(object.value) AS vocab, de.wbsg.loddesc.functions.PayLevelDomain(graph) as pld;
+5   allVocabsPlds = UNION predicateVocabs, objectVocabs;
+6   vocabsPlds = DISTINCT allVocabsPlds;
+7   vocabs = GROUP vocabsPlds BY vocab;
+8   vocabCounts = FOREACH vocabs GENERATE group, COUNT(vocabsPlds) AS cnt;
+9   topVocabsPlds = ORDER vocabCounts BY cnt DESC;
+
+08:12:01 INFO  reporting.ExecutionStats  - Statistics for VOCABULARIES_BY_PLD
+Input: 	999881 records (-1 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:45.726
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0261	2	1	0:00:42.808	0:00:26.514	0:00:34.661	0:00:20.968	0:00:20.968	0:00:20.968	allVocabsPlds,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201307100854_0262	1	1	0:00:02.424	0:00:02.424	0:00:02.424	0:00:11.275	0:00:11.275	0:00:11.275	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201307100854_0263	1	1	0:00:03.667	0:00:03.667	0:00:03.667	0:00:10.630	0:00:10.630	0:00:10.630	topVocabsPlds	SAMPLER	
+job_201307100854_0264	1	1	0:00:03.946	0:00:03.946	0:00:03.946	0:00:10.674	0:00:10.674	0:00:10.674	topVocabsPlds	ORDER_BY	./results-vocabularies_by_pld,
+
+08:12:01 INFO  benchmark.Main  - PigScript[vocabularies_by_url] - RUNNING
+08:12:01 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:12:01 DEBUG execution.ScriptRunner  - Created new pig server.
+08:12:01 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:12:02 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:14:47 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:14:47 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   predicateVocabs = FOREACH quads GENERATE de.wbsg.loddesc.functions.Vocab(predicate) AS vocab, graph;
+3   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+4   objectVocabs = FOREACH typedstuff GENERATE de.wbsg.loddesc.functions.Vocab(object.value) AS vocab, graph;
+5   allVocabsUrls = UNION predicateVocabs, objectVocabs;
+6   vocabsUrls = DISTINCT allVocabsUrls;
+7   vocabs = GROUP vocabsUrls BY vocab;
+8   vocabCounts = FOREACH vocabs GENERATE group, COUNT(vocabsUrls) AS cnt;
+9   topVocabsEntities = ORDER vocabCounts BY cnt DESC;
+
+08:14:47 INFO  reporting.ExecutionStats  - Statistics for VOCABULARIES_BY_URL
+Input: 	999881 records (-1 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:45.207
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0265	2	1	0:00:36.772	0:00:26.417	0:00:31.594	0:00:19.424	0:00:19.424	0:00:19.424	allVocabsUrls,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201307100854_0266	1	1	0:00:07.289	0:00:07.289	0:00:07.289	0:00:10.634	0:00:10.634	0:00:10.634	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201307100854_0267	1	1	0:00:03.955	0:00:03.955	0:00:03.955	0:00:10.635	0:00:10.635	0:00:10.635	topVocabsEntities	SAMPLER	
+job_201307100854_0268	1	1	0:00:04.251	0:00:04.251	0:00:04.251	0:00:10.637	0:00:10.637	0:00:10.637	topVocabsEntities	ORDER_BY	./results-vocabularies_by_url,
+
+08:14:47 INFO  benchmark.Main  - PigScript[average_number_of_property_values_per_class_and_property] - RUNNING
+08:14:47 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:14:47 DEBUG execution.ScriptRunner  - Created new pig server.
+08:14:47 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:14:47 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:18:53 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:18:53 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classMap = FOREACH typedstuff GENERATE subject, object.value AS class;
+4   quadsByPredicate = GROUP quads BY (subject, predicate);
+5   valueCounts = FOREACH quadsByPredicate GENERATE group.subject AS subject, group.predicate AS predicate, COUNT(quads.object) AS cnt;
+6   joined = JOIN classMap BY subject, valueCounts BY subject;
+7   joinedGrouped = GROUP joined BY (class, predicate);
+8   classAvg = FOREACH joinedGrouped GENERATE group.class AS class, group.predicate AS property, AVG(joined.valueCounts::cnt) AS average;
+9   topK = ORDER classAvg BY average DESC;
+
+08:18:53 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_CLASS_AND_PROPERTY
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:04:05.542
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0269	1	1	0:00:56.549	0:00:56.549	0:00:56.549	0:00:18.839	0:00:18.839	0:00:18.839	quads,quadsByPredicate,valueCounts	MULTI_QUERY,COMBINER	
+job_201307100854_0270	6	1	0:00:10.968	0:00:06.077	0:00:08.390	0:00:17.211	0:00:17.211	0:00:17.211	classMap,joined,typedstuff	HASH_JOIN	
+job_201307100854_0271	1	1	0:00:10.080	0:00:10.080	0:00:10.080	0:00:12.181	0:00:12.181	0:00:12.181	classAvg,joinedGrouped	GROUP_BY,COMBINER	
+job_201307100854_0272	1	1	0:00:03.646	0:00:03.646	0:00:03.646	0:00:11.875	0:00:11.875	0:00:11.875	topK	SAMPLER	
+job_201307100854_0273	1	1	0:00:05.771	0:00:05.771	0:00:05.771	0:00:10.637	0:00:10.637	0:00:10.637	topK	ORDER_BY	./results-average_number_of_property_values_per_class_and_property,
+
+08:18:53 INFO  benchmark.Main  - PigScript[number_of_instances_per_class] - RUNNING
+08:18:53 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:18:53 DEBUG execution.ScriptRunner  - Created new pig server.
+08:18:53 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:18:53 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:21:29 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:21:29 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   subjects = FOREACH typedstuff GENERATE object.value AS class, subject;
+4   distinctSubjects = DISTINCT subjects;
+5   subjectsByClass = GROUP distinctSubjects BY class;
+6   subjectCountsByClass = FOREACH subjectsByClass GENERATE group, COUNT(distinctSubjects) AS number;
+7   subjectCountsByClassSorted = ORDER subjectCountsByClass BY number DESC;
+
+08:21:29 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_INSTANCES_PER_CLASS
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:35.772
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0274	1	1	0:00:24.356	0:00:24.356	0:00:24.356	0:00:11.537	0:00:11.537	0:00:11.537	quads,subjects,typedstuff	DISTINCT	
+job_201307100854_0275	1	1	0:00:07.300	0:00:07.300	0:00:07.300	0:00:10.621	0:00:10.621	0:00:10.621	subjectCountsByClass,subjectsByClass	GROUP_BY,COMBINER	
+job_201307100854_0276	1	1	0:00:05.163	0:00:05.163	0:00:05.163	0:00:11.848	0:00:11.848	0:00:11.848	subjectCountsByClassSorted	SAMPLER	
+job_201307100854_0277	1	1	0:00:03.953	0:00:03.953	0:00:03.953	0:00:10.329	0:00:10.329	0:00:10.329	subjectCountsByClassSorted	ORDER_BY	./results-number_of_instances_per_class,
+
+08:21:29 INFO  benchmark.Main  - PigScript[uri_literal_ratio] - RUNNING
+08:21:29 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:21:29 DEBUG execution.ScriptRunner  - Created new pig server.
+08:21:29 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:21:30 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:24:41 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:24:41 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   everything = GROUP quads ALL;
+3   ratio = FOREACH everything {
+    objectLiterals = FILTER quads BY (object.ntype == 1) OR (object.ntype == 2) OR (object.ntype == 3);
+    literalCount = COUNT(objectLiterals);
+    objectUris = FILTER quads BY (object.ntype == 4) OR (object.ntype == 5);
+    uriCount = COUNT(objectUris);
+    GENERATE uriCount, literalCount,
+        ((float)uriCount / (float)literalCount) AS uriLiteralRatio,
+        ((float)literalCount / (float)uriCount) AS literalUriRatio;
+};
+4   topK = ORDER ratio BY literalUriRatio DESC;
+
+08:24:41 INFO  reporting.ExecutionStats  - Statistics for URI_LITERAL_RATIO
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:03:11.784
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0278	1	1	0:00:32.827	0:00:32.827	0:00:32.827	0:01:10.074	0:01:10.074	0:01:10.074	everything,objectLiterals,objectUris,quads,ratio	GROUP_BY	
+job_201307100854_0279	1	1	0:00:05.172	0:00:05.172	0:00:05.172	0:00:10.648	0:00:10.648	0:00:10.648	topK	SAMPLER	
+job_201307100854_0280	1	1	0:00:06.060	0:00:06.060	0:00:06.060	0:00:10.716	0:00:10.716	0:00:10.716	topK	ORDER_BY	./results-uri_literal_ratio,
+
+08:24:41 INFO  benchmark.Main  - PigScript[average_number_of_property_values] - RUNNING
+08:24:41 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:24:42 DEBUG execution.ScriptRunner  - Created new pig server.
+08:24:42 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:24:42 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:26:16 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:26:16 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByPredicate = GROUP quads BY predicate;
+3   valueCounts = FOREACH quadsByPredicate GENERATE COUNT(quads.object) AS count;
+4   valueCountsGrouped = GROUP valueCounts ALL;
+5   average = FOREACH valueCountsGrouped GENERATE AVG(valueCounts.count) AS avg;
+
+08:26:16 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:01:33.755
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0281	1	1	0:00:29.596	0:00:29.596	0:00:29.596	0:00:09.125	0:00:09.125	0:00:09.125	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0282	1	1	0:00:03.736	0:00:03.736	0:00:03.736	0:00:10.634	0:00:10.634	0:00:10.634	average,valueCountsGrouped	GROUP_BY,COMBINER	./results-average_number_of_property_values,
+
+08:26:16 INFO  benchmark.Main  - PigScript[number_of_triples] - RUNNING
+08:26:16 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:26:16 DEBUG execution.ScriptRunner  - Created new pig server.
+08:26:16 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:26:16 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:27:09 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:27:09 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   B = GROUP quads ALL;
+3   C = FOREACH B GENERATE COUNT($1);
+
+08:27:09 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_TRIPLES
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:00:53.722
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0283	1	1	0:00:27.639	0:00:27.639	0:00:27.639	0:00:10.613	0:00:10.613	0:00:10.613	B,C,quads	GROUP_BY,COMBINER	./results-number_of_triples,
+
+08:27:10 INFO  benchmark.Main  - PigScript[number_of_instances_per_language] - RUNNING
+08:27:10 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:27:10 DEBUG execution.ScriptRunner  - Created new pig server.
+08:27:10 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:27:10 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:29:26 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:29:26 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   languageLiterals = FILTER quads BY object.ntype == 3;
+3   languages = GROUP languageLiterals BY object.dtlang;
+4   instanceCountPerLanguage = FOREACH languages {
+  instances = DISTINCT languageLiterals.subject;
+  GENERATE group AS language, COUNT(instances) AS instance_cnt;
+};
+5   languagesTopK = ORDER instanceCountPerLanguage BY instance_cnt DESC;
+
+08:29:26 INFO  reporting.ExecutionStats  - Statistics for NUMBER_OF_INSTANCES_PER_LANGUAGE
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:16.650
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0284	1	1	0:00:37.264	0:00:37.264	0:00:37.264	0:00:12.780	0:00:12.780	0:00:12.780	43-8,instanceCountPerLanguage,languageLiterals,languages,quads	GROUP_BY,COMBINER	
+job_201307100854_0285	1	1	0:00:04.850	0:00:04.850	0:00:04.850	0:00:11.267	0:00:11.267	0:00:11.267	languagesTopK	SAMPLER	
+job_201307100854_0286	1	1	0:00:05.458	0:00:05.458	0:00:05.458	0:00:09.403	0:00:09.403	0:00:09.403	languagesTopK	ORDER_BY	./results-number_of_instances_per_language,
+
+08:29:26 INFO  benchmark.Main  - PigScript[classes_by_pld] - RUNNING
+08:29:26 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:29:27 DEBUG execution.ScriptRunner  - Created new pig server.
+08:29:27 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:29:27 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:32:08 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:32:08 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+3   classesAndDomainsA = FOREACH typedstuff GENERATE object.value AS class,de.wbsg.loddesc.functions.PayLevelDomain(graph) AS domain;
+4   classesAndDomains = DISTINCT classesAndDomainsA;
+5   classes = GROUP classesAndDomains by class;
+6   classCounts = FOREACH classes GENERATE group, COUNT(classesAndDomains) AS cnt;
+7   topClasses = ORDER classCounts BY cnt DESC;
+
+08:32:08 INFO  reporting.ExecutionStats  - Statistics for CLASSES_BY_PLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:41.432
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0287	1	1	0:00:27.963	0:00:27.963	0:00:27.963	0:00:10.930	0:00:10.930	0:00:10.930	classesAndDomainsA,quads,typedstuff	DISTINCT	
+job_201307100854_0288	1	1	0:00:04.134	0:00:04.134	0:00:04.134	0:00:12.492	0:00:12.492	0:00:12.492	classCounts,classes	GROUP_BY,COMBINER	
+job_201307100854_0289	1	1	0:00:03.641	0:00:03.641	0:00:03.641	0:00:10.619	0:00:10.619	0:00:10.619	topClasses	SAMPLER	
+job_201307100854_0290	1	1	0:00:03.949	0:00:03.949	0:00:03.949	0:00:10.627	0:00:10.627	0:00:10.627	topClasses	ORDER_BY	./results-classes_by_pld,
+
+08:32:08 INFO  benchmark.Main  - PigScript[average_number_of_property_values_per_entity] - RUNNING
+08:32:08 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:32:08 DEBUG execution.ScriptRunner  - Created new pig server.
+08:32:08 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:32:09 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:35:25 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:35:25 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByPredicate = GROUP quads BY (subject, predicate);
+3   valueCounts = FOREACH quadsByPredicate GENERATE group.subject AS subject, COUNT(quads.object) AS count;
+4   valueCountsGrouped = GROUP valueCounts BY subject;
+5   average = FOREACH valueCountsGrouped GENERATE group AS entity, AVG(valueCounts.count) AS avg;
+6   topK = ORDER average BY avg DESC;
+
+08:35:25 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTY_VALUES_PER_ENTITY
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:03:16.729
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0291	1	1	0:00:37.987	0:00:37.987	0:00:37.987	0:00:20.659	0:00:20.659	0:00:20.659	quads,quadsByPredicate,valueCounts	GROUP_BY,COMBINER	
+job_201307100854_0292	1	1	0:00:14.566	0:00:14.566	0:00:14.566	0:00:11.550	0:00:11.550	0:00:11.550	average,valueCountsGrouped	GROUP_BY,COMBINER	
+job_201307100854_0293	1	1	0:00:02.728	0:00:02.728	0:00:02.728	0:00:10.634	0:00:10.634	0:00:10.634	topK	SAMPLER	
+job_201307100854_0294	1	1	0:00:06.880	0:00:06.880	0:00:06.880	0:00:12.744	0:00:12.744	0:00:12.744	topK	ORDER_BY	./results-average_number_of_property_values_per_entity,
+
+08:35:25 INFO  benchmark.Main  - PigScript[property_value_ranges_numeric] - RUNNING
+08:35:25 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:35:26 DEBUG execution.ScriptRunner  - Created new pig server.
+08:35:26 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:35:26 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:37:23 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:37:23 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   DEFINE NUMERIC de.uni_potsdam.hpi.loddp.udf.filtering.NumericDataType;
+3   DEFINE VALUE_RANGE de.uni_potsdam.hpi.loddp.udf.evaluation.NumericValueRange;
+4   numeric_values = FILTER quads BY object.ntype == 2 AND NUMERIC(object.dtlang);
+5   numeric_values_clean = FOREACH numeric_values GENERATE predicate, object.value AS value;
+6   numeric_values_by_property = GROUP numeric_values_clean BY predicate;
+7   numeric_value_ranges = FOREACH numeric_values_by_property GENERATE group AS predicate, VALUE_RANGE(numeric_values_clean.value);
+8   topK = ORDER numeric_value_ranges BY predicate ASC;
+
+08:37:23 INFO  reporting.ExecutionStats  - Statistics for PROPERTY_VALUE_RANGES_NUMERIC
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:01:57.679
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0295	1	1	0:00:23.099	0:00:23.099	0:00:23.099	0:00:11.549	0:00:11.549	0:00:11.549	numeric_value_ranges,numeric_values,numeric_values_by_property,numeric_values_clean,quads	GROUP_BY	
+job_201307100854_0296	1	1	0:00:04.250	0:00:04.250	0:00:04.250	0:00:09.109	0:00:09.109	0:00:09.109	topK	SAMPLER	
+job_201307100854_0297	1	1	0:00:07.592	0:00:07.592	0:00:07.592	0:00:10.629	0:00:10.629	0:00:10.629	topK	ORDER_BY	./results-property_value_ranges_numeric,
+
+08:37:23 INFO  benchmark.Main  - PigScript[average_number_of_properties_per_pld] - RUNNING
+08:37:23 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:37:24 DEBUG execution.ScriptRunner  - Created new pig server.
+08:37:24 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:37:24 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:40:30 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:40:30 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   quadsByUrl = GROUP quads BY (subject, de.wbsg.loddesc.functions.PayLevelDomain(graph));
+3   predicatesCount = FOREACH quadsByUrl GENERATE group.$1 AS url, COUNT(quads.predicate) AS cnt;
+4   predicatesGroup = GROUP predicatesCount BY url;
+5   predicatesAvg = FOREACH predicatesGroup GENERATE group AS url, AVG(predicatesCount.cnt) AS average;
+6   topK = ORDER predicatesAvg BY average DESC;
+
+08:40:30 INFO  reporting.ExecutionStats  - Statistics for AVERAGE_NUMBER_OF_PROPERTIES_PER_PLD
+Input: 	999881 records (18327912 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:03:06.609
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0298	1	1	0:00:48.381	0:00:48.381	0:00:48.381	0:00:11.851	0:00:11.851	0:00:11.851	predicatesCount,quads,quadsByUrl	GROUP_BY,COMBINER	
+job_201307100854_0299	1	1	0:00:07.013	0:00:07.013	0:00:07.013	0:00:10.043	0:00:10.043	0:00:10.043	predicatesAvg,predicatesGroup	GROUP_BY,COMBINER	
+job_201307100854_0300	1	1	0:00:05.463	0:00:05.463	0:00:05.463	0:00:09.412	0:00:09.412	0:00:09.412	topK	SAMPLER	
+job_201307100854_0301	1	1	0:00:04.629	0:00:04.629	0:00:04.629	0:00:11.260	0:00:11.260	0:00:11.260	topK	ORDER_BY	./results-average_number_of_properties_per_pld,
+
+08:40:30 INFO  benchmark.Main  - PigScript[vocabularies_by_entity] - RUNNING
+08:40:30 INFO  execution.ScriptRunner  - Shutting down pig server.
+08:40:31 DEBUG execution.ScriptRunner  - Created new pig server.
+08:40:31 INFO  execution.ScriptRunner  - Loading quads from ./data/wdc-rdfa-1M.nq.gz
+08:40:31 DEBUG execution.ScriptRunner  - Starting execution of pig script.
+08:43:16 DEBUG execution.ScriptRunner  - Finished execution of pig script.
+08:43:16 DEBUG execution.ScriptRunner  - Query history:
+1   quads = LOAD './data/wdc-rdfa-1M.nq.gz' USING de.wbsg.loddesc.importer.QuadLoader() AS (subject:chararray, predicate:chararray, object:tuple(ntype:int,value:chararray,dtlang:chararray), graph:chararray);
+2   predicateVocabs = FOREACH quads GENERATE de.wbsg.loddesc.functions.Vocab(predicate) AS vocab, subject;
+3   typedstuff = FILTER quads BY predicate == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
+4   objectVocabs = FOREACH typedstuff GENERATE de.wbsg.loddesc.functions.Vocab(object.value) AS vocab, subject;
+5   allVocabsEntities = UNION predicateVocabs, objectVocabs;
+6   vocabsEntities = DISTINCT allVocabsEntities;
+7   vocabs = GROUP vocabsEntities BY vocab;
+8   vocabCounts = FOREACH vocabs GENERATE group, COUNT(vocabsEntities) AS cnt;
+9   topVocabsEntities = ORDER vocabCounts BY cnt DESC;
+
+08:43:16 INFO  reporting.ExecutionStats  - Statistics for VOCABULARIES_BY_ENTITY
+Input: 	999881 records (-1 Bytes) from DataSet wdc-rdfa, filename = data/wdc-rdfa-1M.nq.gz
+Total time: 	0:02:44.669
+JobId	Maps	Reduces	MaxMapTime	MinMapTime	AvgMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	Alias	Feature	Outputs
+job_201307100854_0302	2	1	0:00:31.581	0:00:26.417	0:00:28.999	0:00:14.603	0:00:14.603	0:00:14.603	allVocabsEntities,objectVocabs,predicateVocabs,quads,typedstuff	DISTINCT	
+job_201307100854_0303	1	1	0:00:08.511	0:00:08.511	0:00:08.511	0:00:10.626	0:00:10.626	0:00:10.626	vocabCounts,vocabs	GROUP_BY,COMBINER	
+job_201307100854_0304	1	1	0:00:03.338	0:00:03.338	0:00:03.338	0:00:12.781	0:00:12.781	0:00:12.781	topVocabsEntities	SAMPLER	
+job_201307100854_0305	1	1	0:00:03.943	0:00:03.943	0:00:03.943	0:00:11.265	0:00:11.265	0:00:11.265	topVocabsEntities	ORDER_BY	./results-vocabularies_by_entity,
+
+08:43:16 INFO  reporting.ReportGenerator  - Scalability (Execution time) for wdc-rdfa:
+Script name	1E6
+average_length_of_property_values	0:02:41.839
+average_number_of_properties	0:01:44.055
+average_number_of_properties_per_class	0:03:33.147
+average_number_of_properties_per_pld	0:03:06.609
+average_number_of_properties_per_tld	0:03:07.334
+average_number_of_properties_per_url	0:03:00.905
+average_number_of_property_values	0:01:33.755
+average_number_of_property_values_per_class	0:03:49.296
+average_number_of_property_values_per_class_and_property	0:04:05.542
+average_number_of_property_values_per_entity	0:03:16.729
+average_number_of_property_values_per_pld	0:02:53.439
+average_number_of_property_values_per_property	0:03:00.764
+average_number_of_property_values_per_tld	0:02:52.506
+average_number_of_property_values_per_url	0:03:05.437
+classes_by_entity	0:02:01.035
+classes_by_pld	0:02:41.432
+classes_by_tld	0:02:40.183
+classes_by_url	0:02:33.366
+incoming_property_cooc	0:02:49.131
+number_of_instances	0:01:28.459
+number_of_instances_per_class	0:02:35.772
+number_of_instances_per_datatype	0:02:09.206
+number_of_instances_per_language	0:02:16.650
+number_of_properties_per_class	0:12:47.140
+number_of_properties_per_datatype	0:02:01.743
+number_of_properties_per_pld	0:02:26.780
+number_of_properties_per_tld	0:02:16.489
+number_of_properties_per_url	0:02:32.923
+number_of_triples	0:00:53.722
+properties_by_entity	0:02:39.498
+properties_by_statement	0:02:13.027
+properties_by_tld	0:02:48.340
+properties_by_url	0:03:06.846
+property_cooc_by_entities	16:25:58.030
+property_cooc_by_urls	0:11:21.334
+property_value_ranges_numeric	0:01:57.679
+property_value_ranges_temporal	0:02:01.167
+uri_literal_ratio	0:03:11.784
+uri_literal_ratio_per_class	0:38:02.024
+uri_literal_ratio_per_pld	0:02:22.576
+uri_literal_ratio_per_tld	0:02:21.959
+uri_literal_ratio_per_url	0:02:32.098
+vocabularies_by_entity	0:02:44.669
+vocabularies_by_pld	0:02:45.726
+vocabularies_by_tld	0:02:46.201
+vocabularies_by_url	0:02:45.207
+
+08:43:16 INFO  reporting.ReportGenerator  - Scalability (Number of output records) for wdc-rdfa:
+Script name	1E6
+average_length_of_property_values	267
+average_number_of_properties	1
+average_number_of_properties_per_class	61
+average_number_of_properties_per_pld	1186
+average_number_of_properties_per_tld	57
+average_number_of_properties_per_url	140843
+average_number_of_property_values	1
+average_number_of_property_values_per_class	61
+average_number_of_property_values_per_class_and_property	658
+average_number_of_property_values_per_entity	168736
+average_number_of_property_values_per_pld	1186
+average_number_of_property_values_per_property	477
+average_number_of_property_values_per_tld	57
+average_number_of_property_values_per_url	140843
+classes_by_entity	61
+classes_by_pld	61
+classes_by_tld	279
+classes_by_url	61
+incoming_property_cooc	245
+number_of_instances	1
+number_of_instances_per_class	61
+number_of_instances_per_datatype	11
+number_of_instances_per_language	51
+number_of_properties_per_class	61
+number_of_properties_per_datatype	11
+number_of_properties_per_pld	1186
+number_of_properties_per_tld	57
+number_of_properties_per_url	140843
+number_of_triples	1
+properties_by_entity	366
+properties_by_statement	392
+properties_by_tld	1694
+properties_by_url	329
+property_cooc_by_entities	3849
+property_cooc_by_urls	6754
+property_value_ranges_numeric	10
+property_value_ranges_temporal	9
+uri_literal_ratio	1
+uri_literal_ratio_per_class	61
+uri_literal_ratio_per_pld	1186
+uri_literal_ratio_per_tld	57
+uri_literal_ratio_per_url	140843
+vocabularies_by_entity	63
+vocabularies_by_pld	63
+vocabularies_by_tld	522
+vocabularies_by_url	63
+
+08:43:16 INFO  reporting.ReportGenerator  - Comparison of script counters (1E6 records) for wdc-rdfa:
+Script name	Time (total)	Number of jobs	Number of maps	Average map time	Number of reduces	Average reduce time
+number_of_properties_per_class	0:12:47.140	4	100	0:01:17.803	10	0:04:11.381
+average_number_of_properties_per_class	0:03:33.147	5	9	0:00:10.445	5	0:00:10.885
+number_of_instances_per_language	0:02:16.650	3	3	0:00:15.857	3	0:00:11.150
+properties_by_url	0:03:06.846	4	5	0:00:11.923	4	0:00:13.687
+uri_literal_ratio_per_pld	0:02:22.576	3	3	0:00:15.849	3	0:00:12.455
+vocabularies_by_pld	0:02:45.726	4	5	0:00:15.871	4	0:00:13.386
+property_cooc_by_urls	0:11:21.334	4	63	0:01:28.254	8	0:02:51.639
+number_of_instances_per_class	0:02:35.772	4	4	0:00:10.193	4	0:00:11.083
+average_number_of_properties_per_url	0:03:00.905	4	4	0:00:15.276	4	0:00:11.775
+average_number_of_property_values_per_class_and_property	0:04:05.542	5	10	0:00:12.638	5	0:00:14.148
+uri_literal_ratio_per_tld	0:02:21.959	3	3	0:00:15.704	3	0:00:12.663
+average_number_of_properties_per_tld	0:03:07.334	4	4	0:00:14.809	4	0:00:11.295
+uri_literal_ratio_per_url	0:02:32.098	3	3	0:00:14.300	3	0:00:17.840
+number_of_properties_per_url	0:02:32.923	3	3	0:00:16.872	3	0:00:13.879
+vocabularies_by_tld	0:02:46.201	4	5	0:00:16.769	4	0:00:12.924
+properties_by_statement	0:02:13.027	3	3	0:00:13.358	3	0:00:10.649
+property_value_ranges_numeric	0:01:57.679	3	3	0:00:11.647	3	0:00:10.429
+average_number_of_properties_per_pld	0:03:06.609	4	4	0:00:16.371	4	0:00:10.641
+classes_by_url	0:02:33.366	4	4	0:00:09.332	4	0:00:10.487
+vocabularies_by_entity	0:02:44.669	4	5	0:00:14.758	4	0:00:12.318
+uri_literal_ratio	0:03:11.784	3	3	0:00:14.686	3	0:00:30.479
+vocabularies_by_url	0:02:45.207	4	5	0:00:15.736	4	0:00:12.832
+number_of_properties_per_pld	0:02:26.780	3	3	0:00:20.002	3	0:00:10.774
+number_of_properties_per_datatype	0:02:01.743	3	3	0:00:11.242	3	0:00:10.749
+average_number_of_property_values_per_tld	0:02:52.506	4	4	0:00:12.722	4	0:00:10.808
+uri_literal_ratio_per_class	0:38:02.024	4	81	0:01:12.986	9	0:06:34.572
+number_of_instances_per_datatype	0:02:09.206	3	3	0:00:10.443	3	0:00:11.438
+property_cooc_by_entities	16:25:58.030	4	12270	0:00:24.318	827	0:05:19.503
+average_number_of_property_values_per_url	0:03:05.437	4	4	0:00:17.098	4	0:00:12.460
+properties_by_entity	0:02:39.498	4	5	0:00:11.035	4	0:00:12.559
+average_length_of_property_values	0:02:41.839	3	3	0:00:19.748	3	0:00:12.656
+number_of_instances	0:01:28.459	2	2	0:00:15.358	2	0:00:11.418
+average_number_of_properties	0:01:44.055	2	2	0:00:21.114	2	0:00:12.496
+classes_by_entity	0:02:01.035	3	3	0:00:11.065	3	0:00:11.034
+incoming_property_cooc	0:02:49.131	4	4	0:00:08.812	4	0:00:13.307
+number_of_triples	0:00:53.722	1	1	0:00:27.639	1	0:00:10.613
+properties_by_tld	0:02:48.340	4	4	0:00:13.440	4	0:00:10.491
+classes_by_tld	0:02:40.183	4	4	0:00:09.496	4	0:00:12.399
+average_number_of_property_values_per_entity	0:03:16.729	4	4	0:00:15.540	4	0:00:13.896
+number_of_properties_per_tld	0:02:16.489	3	3	0:00:17.218	3	0:00:10.429
+average_number_of_property_values_per_property	0:03:00.764	4	4	0:00:14.130	4	0:00:12.683
+average_number_of_property_values_per_class	0:03:49.296	5	9	0:00:12.023	5	0:00:13.690
+classes_by_pld	0:02:41.432	4	4	0:00:09.921	4	0:00:11.167
+property_value_ranges_temporal	0:02:01.167	3	3	0:00:10.340	3	0:00:13.487
+average_number_of_property_values	0:01:33.755	2	2	0:00:16.666	2	0:00:09.879
+average_number_of_property_values_per_pld	0:02:53.439	4	4	0:00:14.551	4	0:00:11.025
+
+08:43:16 INFO  reporting.ReportGenerator  - Comparison of PIG features  (1E6 records) for wdc-rdfa:
+Feature	Usage count	mapMaxTime MEAN	mapMaxTime STD	mapMinTime MEAN	mapMinTime STD	mapNumber MEAN	mapNumber STD	mapInputNumber MEAN	mapInputNumber STD	mapOutputNumber MEAN	mapOutputNumber STD	reduceMaxTime MEAN	reduceMaxTime STD	reduceMinTime MEAN	reduceMinTime STD	reduceNumber MEAN	reduceNumber STD	reduceInputNumber MEAN	reduceInputNumber STD	reduceOutputNumber MEAN	reduceOutputNumber STD
+DISTINCT	12	0:00:31.296	7.1s	0:00:27.300	3.8s	1.3	0.5	1333174.7	492307.4	741974	466965.1	0:00:15.183	4.4s	0:00:15.183	4.4s	1	0	188809.4	258472.1	183951.7	256078.5
+GROUP_BY	10	0:00:47.974	57s	0:00:30.354	6s	8.6	24	3675717.9	8461739.3	3385087.8	8576034.6	1:01:18.801	10851.9s	0:58:36.148	10894.2s	1.5	1.6	3385087.8	8576034.6	895119599.2	2814803115.4
+GROUP_BY,COMBINER	49	0:00:29.750	49.5s	0:00:20.356	15.4s	254.5	1751.9	183765715.8	1272026855.7	183695376.1	1272037194.2	0:05:30.714	2155s	0:00:24.141	54s	18	117.5	70755.9	169079.8	69587.9	169388.4
+HASH_JOIN	5	0:00:18.016	10.7s	0:00:14.236	10.9s	4	1.9	1699779.4	340763.7	812978.4	340763.7	0:01:28.045	100.6s	0:01:28.045	100.6s	1	0	812978.4	340763.7	11244234	15075349.7
+MULTI_QUERY,COMBINER	3	0:00:49.798	6.7s	0:00:49.798	6.7s	1	0	999881	0	999881	0	0:00:16.009	6s	0:00:16.009	6s	1	0	499910	286805.1	0	0
+ORDER_BY	42	0:00:05.427	2.1s	0:00:05.427	2.1s	1	0	17944.8	47974.8	17944.8	47974.8	0:00:10.750	1.7s	0:00:10.750	1.7s	1	0	17944.8	47974.8	17944.8	47974.8
+SAMPLER	42	0:00:04.775	2.2s	0:00:04.775	2.2s	1	0	172.5	585.6	172.5	585.6	0:00:11.205	1.7s	0:00:11.205	1.7s	1	0	172.5	585.6	1	0
+
