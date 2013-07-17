@@ -58,7 +58,6 @@ public class Main {
             .withDescription("Space-separated list of pig script names to execute. Asterisk (*) can be used as a wildcard.")
             .hasArgs()
             .withArgName("number_of_instances")
-            .withValueSeparator(',')
             .create('s'));
         options.addOption(OptionBuilder
             .withLongOpt("cluster")
@@ -72,6 +71,12 @@ public class Main {
                 "Multiple datasets can be specified and are executed in sequence.")
             .hasArgs().withArgName("dbpedia-1M")
             .create('d')
+        );
+        options.addOption(OptionBuilder
+            .withLongOpt("limit")
+            .withDescription("Automatically limit all results sets to the given size.")
+            .hasArg().withArgName("1000")
+            .create('l')
         );
         return options;
     }
@@ -128,6 +133,16 @@ public class Main {
         logInfo(inputFiles);
 
         ScriptRunner runner = new ScriptRunner(hadoopLocation, HDFS_WORKING_DIRECTORY);
+        if (cmd.hasOption("limit")) {
+            int outputLimit = Integer.parseInt(cmd.getOptionValue("limit"));
+            if (outputLimit > 0) {
+                runner.setResultLimit(outputLimit);
+            } else {
+                log.warn("--limit parameter ignored because the specified value was negative or zero (positive " +
+                    "integer expected).");
+            }
+        }
+
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
         for (Iterator<InputFile> it = inputFiles.iterator(); it.hasNext(); ) {
             runScripts(runner, scripts, it.next());

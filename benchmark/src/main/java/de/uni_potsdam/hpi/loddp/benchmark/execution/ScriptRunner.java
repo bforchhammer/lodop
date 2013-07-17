@@ -20,6 +20,7 @@ public class ScriptRunner {
     private final Properties serverProperties;
     private final boolean reuseServer;
     private PigServer pig;
+    private int resultLimit = -1;
 
     /**
      * Constructor.
@@ -134,6 +135,18 @@ public class ScriptRunner {
     }
 
     /**
+     * Automatically limit all results to the given size.
+     *
+     * Theoretically, this could help pig throw away intermediate results earlier and thereby speed up execution of some
+     * scripts. If nothing else, it should at least speed up the final sorting step.
+     *
+     * @param resultLimit The maximum number of results to store.
+     */
+    public void setResultLimit(int resultLimit) {
+        this.resultLimit = resultLimit;
+    }
+
+    /**
      * Execute the given pig script.
      *
      * @param script          A pig script.
@@ -188,6 +201,7 @@ public class ScriptRunner {
         ExecJob job = null;
         try {
             log.debug("Starting execution of pig script.");
+            applyResultLimit();
             String lastAlias = getPig().getPigContext().getLastAlias();
             job = getPig().store(lastAlias, resultsFile);
             log.debug("Finished execution of pig script.");
@@ -198,6 +212,24 @@ public class ScriptRunner {
 
         printHistory();
         return job.getStatistics();
+    }
+
+    /**
+     * Limit the number of entries in the result set to the size specified in the {@link #resultLimit} field by adding a
+     * "result = LIMIT alias k;" statement to the script being executed.
+     */
+    private void applyResultLimit() {
+        if (this.resultLimit <= 0) return;
+        try {
+            String lastAlias = getPig().getPigContext().getLastAlias();
+            StringBuilder sb = new StringBuilder();
+            sb.append(lastAlias).append("_limited")
+                .append(" = LIMIT ").append(lastAlias).append(" ")
+                .append(resultLimit).append(";");
+            getPig().registerQuery(sb.toString());
+        } catch (IOException e) {
+            log.error(String.format("Error while trying to limit the result size to %d entries.", resultLimit), e);
+        }
     }
 
     /**
