@@ -5,4 +5,11 @@ subprojects {
 	repositories{
 		mavenCentral()
 	}
+
+    dependencies {
+        compile 'org.apache.pig:pig:0.11.1'
+        compile('org.slf4j:slf4j-api:1.4.3') { force = true }
+        compile('joda-time:joda-time:2.2') { force = true }
+        compile 'org.apache.hadoop:hadoop-core:1.1.2'
+    }
 }

@@ -1,8 +1,4 @@
 dependencies {
-    compile 'org.apache.pig:pig:0.11.1'
-    compile('org.slf4j:slf4j-api:1.4.3') { force = true }
-    compile('joda-time:joda-time:2.2') { force = true }
-    compile 'org.apache.hadoop:hadoop-core:1.1.2'
     compile 'org.apache.commons:commons-lang3:3.1'
     compile 'net.sourceforge.owlapi:owlapi-apibinding:3.4.4'
 }
