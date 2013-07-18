@@ -1,1 +1,1 @@
-include "benchmark", "loddp-udf", "analyser"
+include "benchmark", "loddp-udf", "analyser", "common"
