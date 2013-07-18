@@ -4,7 +4,7 @@ import de.uni_potsdam.hpi.loddp.benchmark.execution.*;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ExecutionStats;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ReportGenerator;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
-import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptHelper;
+import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
@@ -115,9 +115,9 @@ public class Main {
         // By default execute all scripts.
         Set<PigScript> scripts = null;
         if (cmd.hasOption("scripts")) {
-            scripts = PigScriptHelper.findPigScripts(cmd.getOptionValues("scripts"));
+            scripts = PigScriptFactory.findPigScripts(cmd.getOptionValues("scripts"));
         } else {
-            scripts = PigScriptHelper.findPigScripts();
+            scripts = PigScriptFactory.findPigScripts();
         }
 
         // Determine dataset to run.

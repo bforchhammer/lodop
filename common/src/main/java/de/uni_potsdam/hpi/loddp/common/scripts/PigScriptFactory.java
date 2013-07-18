@@ -6,6 +6,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.URISyntaxException;
@@ -20,20 +21,20 @@ import java.util.jar.JarEntry;
 /**
  * Various helper functions for loading and parsing pig scripts.
  */
-public class PigScriptHelper {
+public class PigScriptFactory {
+    /**
+     * Name of directory containing pig scripts. Used for look-up on classpath in {@link #findPigScripts}.
+     */
+    protected static final String PIG_SCRIPTS_DIRECTORY = "pig-queries";
+    protected static final Log log = LogFactory.getLog(PigScriptFactory.class);
     /**
      * File filter which only accepts files having the "pig" file extension.
      */
-    public static final FileFilter PIG_EXTENSION_FILTER = new FileFilter() {
+    private static final FileFilter PIG_EXTENSION_FILTER = new FileFilter() {
         public boolean accept(File file) {
             return file.isFile() && FilenameUtils.isExtension(file.getName(), "pig");
         }
     };
-    /**
-     * Name of directory containing pig scripts. Used for look-up on classpath in {@link #findPigScripts}.
-     */
-    public static final String PIG_SCRIPTS_DIRECTORY = "pig-queries";
-    protected static final Log log = LogFactory.getLog(PigScriptHelper.class);
 
     /**
      * Loads and returns a set of PigScript objects matching the given list of script names.
@@ -99,7 +100,6 @@ public class PigScriptHelper {
                 // Load pig scripts from a JAR File (Hm, is there a better way to do this..?)
                 URLConnection urlConnection = url.openConnection();
                 if (urlConnection instanceof JarURLConnection) {
-                    log.debug("Looking at: " + url);
                     loadPigScripts((JarURLConnection) urlConnection, scripts);
                 }
 
@@ -116,6 +116,12 @@ public class PigScriptHelper {
         return scripts;
     }
 
+    /**
+     * Load pig scripts from a JAR File.
+     *
+     * @param jarConnection
+     * @param scripts
+     */
     private static void loadPigScripts(JarURLConnection jarConnection, Set<PigScript> scripts) {
         Enumeration<JarEntry> entries;
         try {
@@ -125,20 +131,48 @@ public class PigScriptHelper {
             return;
         }
 
+        Set<PigScript> s = new HashSet<PigScript>();
         while (entries.hasMoreElements()) {
             JarEntry entry = entries.nextElement();
             if (!entry.isDirectory() && entry.getName().startsWith(PIG_SCRIPTS_DIRECTORY)) {
-                log.info("Found pig script: " + entry.getName());
                 try {
-                    PigScript script = JarPigScript.fromJarConnection(jarConnection, entry);
-                    scripts.add(script);
+                    PigScript script = fromJarConnection(jarConnection, entry);
+                    s.add(script);
                 } catch (Exception e) {
                     log.error("Cannot create pig script for: " + entry.getName(), e);
                 }
             }
         }
+        log.info(String.format("Found %d pig script(s) in: %s", s.size(), jarConnection.getURL()));
+        scripts.addAll(s);
     }
 
+    /**
+     * Creates a new PigScript instance.
+     *
+     * @param jarConnection
+     * @param entry
+     *
+     * @return
+     *
+     * @throws PigScriptException
+     */
+    public static PigScript fromJarConnection(JarURLConnection jarConnection, JarEntry entry) throws PigScriptException {
+        try {
+            // Check that jar file can be read by opening an input stream:
+            jarConnection.getJarFile().getInputStream(entry).available();
+            return new JarPigScript(jarConnection, entry);
+        } catch (IOException e) {
+            throw new PigScriptException("Cannot create PigScript from jar connection.", e);
+        }
+    }
+
+    /**
+     * Try loading pig scripts via File object from local FS path.
+     *
+     * @param fileURL
+     * @param scripts
+     */
     private static void loadPigScripts(URL fileURL, Set<PigScript> scripts) {
         File file;
         try {
@@ -156,99 +190,51 @@ public class PigScriptHelper {
         }
 
         File[] files = file.listFiles(PIG_EXTENSION_FILTER);
-        Set<PigScript> s = FilePigScript.fromFiles(files);
+        Set<PigScript> s = fromFiles(files);
         log.info(String.format("Found %d pig script(s) in: %s", s.size(), file));
         scripts.addAll(s);
     }
 
     /**
-     * Blacklist for executing only scripts matching any of the given set of script names.
+     * Creates a PigScript object for the given file.
      *
-     * @param scriptNames
+     * @param file
      *
-     * @return
+     * @return Instance of PigScript, or null in case of error.
+     *
+     * @throws PigScriptException
      */
-    public static Set<String> getBlackList(String[] scriptNames) {
-        Set<String> blacklist = getBlackList(SCRIPT_LIST.NONE);
-        for (String s : scriptNames)
-            blacklist.remove(s);
-        return blacklist;
-    }
-
-    /**
-     * Blacklist for executing only scripts matching the given script name.
-     *
-     * @param scriptName
-     *
-     * @return
-     */
-    public static Set<String> getBlackList(String scriptName) {
-        Set<String> blacklist = getBlackList(SCRIPT_LIST.NONE);
-        blacklist.remove(scriptName);
-        return blacklist;
-    }
-
-    /**
-     * Blacklist for executing certain groups of scripts, depending on type.
-     *
-     * @param type
-     *
-     * @return
-     */
-    public static Set<String> getBlackList(SCRIPT_LIST type) {
-        Set<String> blacklist = new HashSet<String>();
-        switch (type) {
-            case NO_COOC:
-                blacklist.add("incoming_property_cooc");
-                blacklist.add("property_cooc_by_entities");
-                blacklist.add("property_cooc_by_urls");
-                break;
-            case ONLY_COOC:
-                blacklist.add("classes_by_entity");
-                blacklist.add("classes_by_url");
-                blacklist.add("classes_by_tld");
-                blacklist.add("classes_by_pld");
-                //blacklist.add("incoming_property_cooc");
-                blacklist.add("number_of_triples");
-                blacklist.add("number_of_instances");
-                //blacklist.add("property_cooc_by_entities");
-                //blacklist.add("property_cooc_by_urls");
-                blacklist.add("properties_by_entity");
-                blacklist.add("properties_by_pld");
-                blacklist.add("properties_by_statement");
-                blacklist.add("properties_by_tld");
-                blacklist.add("properties_by_url");
-                blacklist.add("vocabularies_by_entity");
-                blacklist.add("vocabularies_by_pld");
-                blacklist.add("vocabularies_by_tld");
-                blacklist.add("vocabularies_by_url");
-                break;
-            case NONE:
-                blacklist.add("classes_by_entity");
-                blacklist.add("classes_by_url");
-                blacklist.add("classes_by_tld");
-                blacklist.add("classes_by_pld");
-                blacklist.add("incoming_property_cooc");
-                blacklist.add("number_of_triples");
-                blacklist.add("number_of_instances");
-                blacklist.add("property_cooc_by_entities");
-                blacklist.add("property_cooc_by_urls");
-                blacklist.add("properties_by_entity");
-                blacklist.add("properties_by_pld");
-                blacklist.add("properties_by_statement");
-                blacklist.add("properties_by_tld");
-                blacklist.add("properties_by_url");
-                blacklist.add("vocabularies_by_entity");
-                blacklist.add("vocabularies_by_pld");
-                blacklist.add("vocabularies_by_tld");
-                blacklist.add("vocabularies_by_url");
-                break;
+    public static PigScript fromFile(File file) throws PigScriptException {
+        try {
+            // Check that we can create a valid input stream.
+            new FileInputStream(file).available();
+            return new FilePigScript(file);
+        } catch (IOException e) {
+            throw new PigScriptException("Cannot create PigScript from file", e);
         }
-        return blacklist;
     }
 
-    public static enum SCRIPT_LIST {
-        ALL, NONE, ONLY_COOC, NO_COOC
+    /**
+     * Creates a list of PigScript objects for the given set of files.
+     *
+     * Tries to automatically determine the result alias for each script file.
+     *
+     * @param files
+     *
+     * @return Set of PigScript instances.
+     *
+     * @see #fromFile
+     */
+    public static Set<PigScript> fromFiles(File[] files) {
+        Set<PigScript> scripts = new HashSet<PigScript>(files.length);
+        for (File file : files) {
+            try {
+                PigScript script = fromFile(file);
+                scripts.add(script);
+            } catch (PigScriptException e) {
+                log.error(e.getMessage(), e.getCause());
+            }
+        }
+        return scripts;
     }
-
 }
