@@ -1,5 +1,6 @@
 package de.uni_potsdam.hpi.loddp.benchmark.execution;
 
+import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.ExecType;

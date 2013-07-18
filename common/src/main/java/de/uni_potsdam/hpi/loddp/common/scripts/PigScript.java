@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.loddp.benchmark.execution;
+package de.uni_potsdam.hpi.loddp.common.scripts;
 
 import java.io.InputStream;
 

@@ -11,6 +11,8 @@ dependencies {
     runtime 'org.antlr:antlr:3.4'
     runtime 'com.google.guava:guava:11.0'
     runtime 'dk.brics.automaton:automaton:1.11-8'
+
+    compile project(':common')
 }
 
 task(run, dependsOn: 'classes', type: JavaExec) {
