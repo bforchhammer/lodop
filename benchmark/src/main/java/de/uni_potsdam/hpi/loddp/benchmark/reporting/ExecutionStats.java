@@ -2,6 +2,7 @@ package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
 import de.uni_potsdam.hpi.loddp.benchmark.Main;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
+import de.uni_potsdam.hpi.loddp.common.GraphvizHelper;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
@@ -11,7 +12,9 @@ import org.apache.pig.tools.pigstats.JobStats;
 import org.apache.pig.tools.pigstats.OutputStats;
 import org.apache.pig.tools.pigstats.PigStats;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.List;
 
 /**
@@ -187,10 +190,12 @@ public class ExecutionStats {
             .append(Main.getJobGraphDirectory())
             .append(getDatasetIdentifier().replace('/', '-')).append('-')
             .append(getInputSize()).append('-')
-            .append(getScriptName()).append(".png").toString();
+            .append(getScriptName()).append("-jobstats.dot").toString();
+        File dotFile = new File(outputFilename);
+        dotFile.getParentFile().mkdirs();
         try {
-            DotPlanDumper dumper = DotPlanDumper.createInstance(pigStats.getJobGraph(), outputFilename);
-            dumper.dumpAsImage();
+            new DotPlanDumper(pigStats.getJobGraph(), new PrintStream(dotFile)).dump();
+            GraphvizHelper.convertToImage("png", dotFile);
         } catch (IOException e) {
             log.error("Cannot output job graph as dot graph.", e);
         }

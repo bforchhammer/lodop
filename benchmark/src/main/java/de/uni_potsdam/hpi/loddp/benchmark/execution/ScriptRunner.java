@@ -1,5 +1,7 @@
 package de.uni_potsdam.hpi.loddp.benchmark.execution;
 
+import de.uni_potsdam.hpi.loddp.benchmark.Main;
+import de.uni_potsdam.hpi.loddp.common.GraphvizHelper;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,6 +12,7 @@ import org.apache.pig.impl.PigContext;
 import org.apache.pig.tools.pigstats.PigStats;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Properties;
@@ -22,6 +25,7 @@ public class ScriptRunner {
     private final boolean reuseServer;
     private PigServer pig;
     private int resultLimit = -1;
+    private boolean planPrinting = false;
 
     /**
      * Constructor.
@@ -71,6 +75,14 @@ public class ScriptRunner {
         Properties properties = new Properties();
         type.setProperties(properties);
         return properties;
+    }
+
+    public void enablePlanPrinting() {
+        this.planPrinting = true;
+    }
+
+    public void disablePlanPrinting() {
+        this.planPrinting = false;
     }
 
     /**
@@ -198,11 +210,23 @@ public class ScriptRunner {
             return null;
         }
 
+        applyResultLimit();
+
+        // Print Operator plans.
+        if (this.planPrinting) {
+            try {
+                String lastAlias = getPig().getPigContext().getLastAlias();
+                String baseFilename = generateOperatorPlanBaseFilename(script);
+                printOperatorPlans(lastAlias, baseFilename);
+            } catch (IOException e) {
+                log.error("Error while trying to print operator plans.", e);
+            }
+        }
+
         // Execute job and store results.
         ExecJob job = null;
         try {
             log.debug("Starting execution of pig script.");
-            applyResultLimit();
             String lastAlias = getPig().getPigContext().getLastAlias();
             job = getPig().store(lastAlias, resultsFile);
             log.debug("Finished execution of pig script.");
@@ -213,6 +237,35 @@ public class ScriptRunner {
 
         printHistory();
         return job.getStatistics();
+    }
+
+    /**
+     * Print the logical, physical and mapreduce operator plans using Pig's EXPLAIN feature. Plans are printed as DOT
+     * graphs and automatically converted to PNGs.
+     *
+     * @throws IOException
+     */
+    protected void printOperatorPlans(String alias, String baseOutputFilename) throws IOException {
+        File logical = new File(baseOutputFilename + "logical.dot");
+        logical.getParentFile().mkdirs();
+        File physical = new File(baseOutputFilename + "physical.dot");
+        File mapreduce = new File(baseOutputFilename + "mapreduce.dot");
+
+        getPig().explain(alias, "dot", false, false,
+            new PrintStream(logical), new PrintStream(physical), new PrintStream(mapreduce));
+
+        GraphvizHelper.convertToImage("png", logical);
+        GraphvizHelper.convertToImage("png", physical);
+        GraphvizHelper.convertToImage("png", mapreduce);
+    }
+
+    /**
+     * The common base name to use for graphs printed by {@link #printOperatorPlans(String, String)}
+     */
+    protected String generateOperatorPlanBaseFilename(PigScript script) {
+        return new StringBuilder()
+            .append(Main.getJobGraphDirectory())
+            .append(script.getScriptName()).append("-").toString();
     }
 
     /**

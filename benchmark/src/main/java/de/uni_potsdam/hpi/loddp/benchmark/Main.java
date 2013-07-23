@@ -1,6 +1,8 @@
 package de.uni_potsdam.hpi.loddp.benchmark;
 
-import de.uni_potsdam.hpi.loddp.benchmark.execution.*;
+import de.uni_potsdam.hpi.loddp.benchmark.execution.HadoopLocation;
+import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
+import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ExecutionStats;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ReportGenerator;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
@@ -80,6 +82,11 @@ public class Main {
             .hasArg().withArgName("1000")
             .create('l')
         );
+        options.addOption(OptionBuilder
+            .withLongOpt("explain")
+            .withDescription("Dumps the logical, physical and mapreduce operator plans as DOT graphs for each script.")
+            .hasArg(false)
+            .create('e'));
         return options;
     }
 
@@ -144,6 +151,9 @@ public class Main {
                     "integer expected).");
             }
         }
+        if (cmd.hasOption("explain")) {
+            runner.enablePlanPrinting();
+        }
 
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
         for (Iterator<InputFile> it = inputFiles.iterator(); it.hasNext(); ) {
@@ -154,6 +164,9 @@ public class Main {
             rg.scalabilityReport();
             rg.scriptComparison();
             rg.featureRuntimeAnalysis();
+
+            // Disable plan printing after the first run, because it would only generate the same files again.
+            runner.disablePlanPrinting();
         }
     }
 
