@@ -11,6 +11,9 @@ import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+/**
+ * DOT plan dumper for a map-reduce statistics plan (Operators are JobStat objects).
+ */
 public class DotPlanDumper extends org.apache.pig.newplan.DotPlanDumper {
 
     protected static final Log log = LogFactory.getLog(DotPlanDumper.class);
