@@ -30,14 +30,7 @@ task packageJar(type: Jar, dependsOn: jar) {
     }
 }
 
-task(copyUdf, dependsOn: ':loddp-udf:packageJar', type: Copy) {
-    from('../loddp-udf') {
-        include 'loddp-udf.jar'
-    }
-    into 'lib'
-}
-
-task(run, dependsOn: ['classes', 'copyUdf'], type: JavaExec) {
+task(run, dependsOn: ['classes', ':loddp-udf:packageJar'], type: JavaExec) {
     main = 'de.uni_potsdam.hpi.loddp.benchmark.Main'
     classpath = files(
             sourceSets.main.runtimeClasspath,
@@ -48,7 +41,7 @@ task(run, dependsOn: ['classes', 'copyUdf'], type: JavaExec) {
     }
 }
 
-task(debug, dependsOn: ['classes', 'copyUdf'], type: JavaExec) {
+task(debug, dependsOn: ['classes', ':loddp-udf:packageJar'], type: JavaExec) {
     main = 'de.uni_potsdam.hpi.loddp.benchmark.Main'
     classpath = files(
             sourceSets.main.runtimeClasspath,

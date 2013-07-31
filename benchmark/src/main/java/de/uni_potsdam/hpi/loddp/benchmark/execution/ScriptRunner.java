@@ -2,10 +2,11 @@ package de.uni_potsdam.hpi.loddp.benchmark.execution;
 
 import de.uni_potsdam.hpi.loddp.benchmark.Main;
 import de.uni_potsdam.hpi.loddp.common.GraphvizHelper;
+import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
+import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pig.ExecType;
 import org.apache.pig.PigServer;
 import org.apache.pig.backend.executionengine.ExecJob;
 import org.apache.pig.impl.PigContext;
@@ -15,13 +16,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Properties;
 
 public class ScriptRunner {
 
     protected static final Log log = LogFactory.getLog(ScriptRunner.class);
     private final String hdfsWorkingDirectory;
-    private final Properties serverProperties;
+    private final HadoopLocation serverLocation;
     private final boolean reuseServer;
     private PigServer pig;
     private int resultLimit = -1;
@@ -51,7 +51,8 @@ public class ScriptRunner {
      */
     public ScriptRunner(HadoopLocation location, boolean reuseServer, String hdfsWorkingDirectory) {
         this.reuseServer = reuseServer;
-        this.serverProperties = generateProperties(location);
+
+        this.serverLocation = location;
         log.info("ScriptRunner is connecting to: " + location);
 
         // Make sure hdfs directory ends with a slash.
@@ -61,20 +62,6 @@ public class ScriptRunner {
 
         log.info(String.format("ScriptRunner is using %s PigServer(s) for executing scripts.",
             reuseServer ? "ONE" : "SEPARATE"));
-    }
-
-    /**
-     * Creates a properties instance with hadoop cluster configuration settings depending on the given Hadoop location.
-     *
-     * @param type The server address (cluster or local).
-     *
-     * @return A properties object with at least the following two properties filled in: "fs.default.name",
-     *         "mapred.job.tracker".
-     */
-    private static Properties generateProperties(HadoopLocation type) {
-        Properties properties = new Properties();
-        type.setProperties(properties);
-        return properties;
     }
 
     public void enablePlanPrinting() {
@@ -91,14 +78,8 @@ public class ScriptRunner {
      * @throws IOException
      */
     private void initialisePig() throws IOException {
-        this.pig = new PigServer(ExecType.MAPREDUCE, serverProperties);
-
-        // Register UDF + required libraries.
-        this.pig.registerJar("loddp-udf.jar");
-        this.pig.registerJar("ldif-single-0.5.1-jar-with-dependencies.jar");
-        this.pig.registerJar("loddesc-core-0.1.jar");
-        this.pig.registerJar("piggybank.jar");
-
+        PigContext context = PigContextUtil.getContext(serverLocation);
+        this.pig = new PigServer(context);
         this.log.debug("Created new pig server.");
     }
 

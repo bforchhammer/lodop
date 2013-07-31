@@ -1,6 +1,6 @@
 package de.uni_potsdam.hpi.loddp.benchmark;
 
-import de.uni_potsdam.hpi.loddp.benchmark.execution.HadoopLocation;
+import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ExecutionStats;

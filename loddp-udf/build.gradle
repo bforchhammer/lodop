@@ -4,7 +4,7 @@ dependencies {
 }
 
 task packageJar(type: Jar, dependsOn: jar) {
-    destinationDir = file(".")
+    destinationDir = file("../pig-udfs")
     from {
         configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
     }

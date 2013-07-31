@@ -217,8 +217,6 @@ public class PigScriptFactory {
     /**
      * Creates a list of PigScript objects for the given set of files.
      *
-     * Tries to automatically determine the result alias for each script file.
-     *
      * @param files
      *
      * @return Set of PigScript instances.
