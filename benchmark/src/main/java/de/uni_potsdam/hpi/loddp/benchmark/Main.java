@@ -99,7 +99,7 @@ public class Main {
         Options options = getCliOptions();
         CommandLineParser parser = new BasicParser();
         CommandLine cmd = null;
-        String cmdLineSyntax = "./gradlew run -PappArgs=\"[args]\"";
+        String cmdLineSyntax = "./gradlew :benchmark:run -PappArgs=\"[args]\"";
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
