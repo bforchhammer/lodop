@@ -30,6 +30,7 @@ public class AnalysedScriptFactory {
         Iterator<PigScript> iterator = scripts.iterator();
         while (iterator.hasNext()) {
             PigScript script = iterator.next();
+            log.info("Analysing script: " + script.getScriptName());
             try {
                 AnalysedScript a = getScriptAnalyser().analyse(script);
                 analysed.add(a);

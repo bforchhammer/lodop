@@ -56,7 +56,7 @@ public class PigScriptFactory {
             else sb.append("\n- ");
             sb.append(it.next().getScriptName());
         }
-        log.debug(String.format("Executing %d pig script(s): %s", scripts_new.size(), sb.toString()));
+        log.info(String.format("Using %d pig script(s): %s", scripts_new.size(), sb.toString()));
 
         return scripts_new;
     }
@@ -79,7 +79,7 @@ public class PigScriptFactory {
      */
     public static Set<PigScript> findPigScripts() {
         Set<PigScript> scripts = loadPigScripts();
-        log.debug(String.format("Executing ALL pig scripts."));
+        log.info(String.format("Using ALL pig scripts."));
         return scripts;
     }
 

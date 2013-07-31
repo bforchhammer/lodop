@@ -14,12 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Main {
-    protected static final Log log;
-
-    static {
-        System.out.println();
-        log = LogFactory.getLog(Main.class);
-    }
+    private static final Log log = LogFactory.getLog(Main.class);
 
     private static Options getCliOptions() {
         Options options = new Options();
