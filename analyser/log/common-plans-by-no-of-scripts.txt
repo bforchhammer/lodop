@@ -1,0 +1,171 @@
+Common plan index (sorted by number of scripts): 
+Plan [2 ops, 26 scripts]: quads:LOLoad > quads:LOForEach
+	 - average_number_of_property_values_per_url
+	 - number_of_properties_per_datatype
+	 - average_number_of_property_values_per_tld
+	 - uri_literal_ratio_per_url
+	 - uri_literal_ratio
+	 - average_number_of_property_values_per_class_and_property
+	 - number_of_instances_per_datatype
+	 - classes_by_entity
+	 - number_of_properties_per_url
+	 - number_of_properties_per_pld
+	 - average_number_of_property_values_per_pld
+	 - average_number_of_properties
+	 - properties_by_statement
+	 - average_number_of_property_values
+	 - average_number_of_property_values_per_class
+	 - number_of_instances_per_language
+	 - average_number_of_properties_per_class
+	 - average_number_of_properties_per_tld
+	 - average_number_of_properties_per_url
+	 - property_cooc_by_entities
+	 - property_cooc_by_urls
+	 - average_number_of_property_values_per_property
+	 - number_of_triples
+	 - average_number_of_properties_per_pld
+	 - average_number_of_property_values_per_entity
+	 - number_of_properties_per_tld
+Plan [2 ops, 26 scripts]: quads:LOLoad > quads:LOForEach
+	 - average_number_of_property_values_per_url
+	 - number_of_properties_per_datatype
+	 - average_number_of_property_values_per_tld
+	 - uri_literal_ratio_per_url
+	 - uri_literal_ratio
+	 - average_number_of_property_values_per_class_and_property
+	 - number_of_instances_per_datatype
+	 - classes_by_entity
+	 - number_of_properties_per_url
+	 - number_of_properties_per_pld
+	 - average_number_of_properties
+	 - average_number_of_property_values_per_pld
+	 - average_number_of_property_values
+	 - properties_by_statement
+	 - average_number_of_property_values_per_class
+	 - number_of_instances_per_language
+	 - average_number_of_properties_per_class
+	 - average_number_of_properties_per_tld
+	 - average_number_of_properties_per_url
+	 - property_cooc_by_entities
+	 - property_cooc_by_urls
+	 - average_number_of_property_values_per_property
+	 - number_of_triples
+	 - average_number_of_properties_per_pld
+	 - average_number_of_property_values_per_entity
+	 - number_of_properties_per_tld
+Plan [2 ops, 18 scripts]: quads:LOLoad > quads:LOForEach
+	 - average_number_of_properties_per_class
+	 - average_number_of_property_values_per_url
+	 - average_number_of_property_values_per_tld
+	 - average_number_of_properties_per_url
+	 - property_cooc_by_entities
+	 - uri_literal_ratio_per_url
+	 - average_number_of_property_values_per_property
+	 - uri_literal_ratio
+	 - number_of_triples
+	 - average_number_of_property_values_per_class_and_property
+	 - number_of_instances_per_datatype
+	 - classes_by_entity
+	 - average_number_of_properties_per_pld
+	 - number_of_properties_per_pld
+	 - average_number_of_properties
+	 - average_number_of_property_values_per_pld
+	 - average_number_of_property_values_per_class
+	 - number_of_instances_per_language
+Plan [2 ops, 6 scripts]: quads:LOLoad > quads:LOForEach
+	 - classes_by_pld
+	 - vocabularies_by_url
+	 - classes_by_tld
+	 - classes_by_url
+	 - vocabularies_by_pld
+	 - vocabularies_by_tld
+Plan [2 ops, 4 scripts]: quads:LOLoad > quads:LOForEach
+	 - property_value_ranges_temporal
+	 - property_value_ranges_numeric
+	 - average_length_of_property_values
+	 - incoming_property_cooc
+Plan [2 ops, 3 scripts]: quads:LOLoad > quads:LOForEach
+	 - number_of_properties_per_class
+	 - uri_literal_ratio_per_class
+	 - number_of_instances_per_class
+Plan [2 ops, 3 scripts]: quads:LOLoad > quads:LOForEach
+	 - property_value_ranges_numeric
+	 - average_length_of_property_values
+	 - incoming_property_cooc
+Plan [3 ops, 3 scripts]: quads:LOLoad > quads:LOForEach > groups:LOCogroup
+	 - number_of_properties_per_url
+	 - property_cooc_by_urls
+	 - uri_literal_ratio_per_url
+Plan [3 ops, 3 scripts]: quads:LOLoad > quads:LOForEach > typedstuff:LOFilter
+	 - classes_by_pld
+	 - classes_by_tld
+	 - classes_by_url
+Plan [4 ops, 3 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > quads:LOSplitOutput
+	 - average_number_of_properties_per_class
+	 - average_number_of_property_values_per_class_and_property
+	 - average_number_of_property_values_per_class
+Plan [4 ops, 3 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > quads:LOSplitOutput
+	 - average_number_of_properties_per_class
+	 - average_number_of_property_values_per_class_and_property
+	 - average_number_of_property_values_per_class
+Plan [6 ops, 3 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > quads:LOSplitOutput > typedstuff:LOFilter > classMap:LOForEach
+	 - average_number_of_properties_per_class
+	 - average_number_of_property_values_per_class_and_property
+	 - average_number_of_property_values_per_class
+Plan [6 ops, 3 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > null:LOForEach > quads:LOSplitOutput > typedstuff:LOFilter
+	 - vocabularies_by_url
+	 - vocabularies_by_pld
+	 - vocabularies_by_tld
+Plan [6 ops, 3 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > null:LOForEach > quads:LOSplitOutput > typedstuff:LOFilter
+	 - number_of_properties_per_class
+	 - uri_literal_ratio_per_class
+	 - vocabularies_by_entity
+Plan [2 ops, 2 scripts]: quads:LOLoad > quads:LOForEach
+	 - average_number_of_property_values_per_url
+	 - average_number_of_property_values
+Plan [2 ops, 2 scripts]: quads:LOLoad > quads:LOForEach
+	 - number_of_instances_per_class
+	 - vocabularies_by_entity
+Plan [3 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > subjGroups:LOCogroup
+	 - property_cooc_by_entities
+	 - average_number_of_properties
+Plan [3 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > quadsByUrl:LOCogroup
+	 - number_of_properties_per_url
+	 - uri_literal_ratio_per_url
+Plan [3 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > quadsByPredicate:LOCogroup
+	 - average_number_of_property_values_per_property
+	 - average_number_of_property_values_per_entity
+Plan [3 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > propGroups:LOCogroup
+	 - average_number_of_property_values
+	 - properties_by_statement
+Plan [3 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > everything:LOCogroup
+	 - uri_literal_ratio
+	 - number_of_triples
+Plan [4 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > typedLiterals:LOFilter > valueTypes:LOCogroup
+	 - number_of_instances_per_datatype
+	 - number_of_properties_per_datatype
+Plan [5 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > null:LOForEach > quads:LOSplitOutput
+	 - vocabularies_by_url
+	 - vocabularies_by_tld
+Plan [5 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > quads:LOSplitOutput > quadsByPredicate:LOCogroup
+	 - average_number_of_property_values_per_class_and_property
+	 - average_number_of_property_values_per_class
+Plan [5 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > typedstuff:LOFilter > classesAndDomainsA:LOForEach > classesAndDomains:LODistinct
+	 - classes_by_pld
+	 - classes_by_tld
+Plan [5 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > null:LOForEach > quads:LOSplitOutput
+	 - vocabularies_by_url
+	 - vocabularies_by_pld
+Plan [5 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > null:LOForEach > quads:LOSplitOutput
+	 - number_of_properties_per_class
+	 - vocabularies_by_entity
+Plan [7 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > null:LOForEach > quads:LOSplitOutput > typedstuff:LOFilter > classMap:LOForEach
+	 - number_of_properties_per_class
+	 - uri_literal_ratio_per_class
+Plan [8 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > null:LOForEach > quads:LOSplitOutput > predicateVocabs:LOForEach > allVocabsTlds:LOUnion > vocabsAndTlds:LODistinct
+	 - vocabularies_by_pld
+	 - vocabularies_by_tld
+Plan [9 ops, 2 scripts]: quads:LOLoad > quads:LOForEach > quads:LOSplit > quads:LOSplitOutput > typedstuff:LOFilter > classMap:LOForEach > joined:LOJoin(HASH) > joinedGrouped:LOCogroup > classAvg:LOForEach
+	 - average_number_of_properties_per_class
+	 - average_number_of_property_values_per_class
+
