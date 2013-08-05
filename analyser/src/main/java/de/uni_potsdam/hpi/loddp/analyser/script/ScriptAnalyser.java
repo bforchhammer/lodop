@@ -56,10 +56,6 @@ public class ScriptAnalyser {
         UDFContext.getUDFContext().reset();
         UDFContext.getUDFContext().setClientSystemProps(pigContext.getProperties());
 
-        LogicalPlan logicalPlan;
-        PhysicalPlan physicalPlan;
-        MROperPlan mapReducePlan;
-
         Map<String, String> fileNameMap = new HashMap<String, String>();
         Map<String, Operator> operators;
         String scope = "" + scopeCounter.incrementAndGet();
@@ -69,7 +65,7 @@ public class ScriptAnalyser {
 
         // Parse the query, which gives us a list of operators and an unoptimized logical plan.
         QueryParserDriver parserDriver = new QueryParserDriver(pigContext, scope, fileNameMap);
-        logicalPlan = parserDriver.parse(query);
+        LogicalPlan logicalPlan = parserDriver.parse(query);
         operators = parserDriver.getOperators();
 
         // Add a fake STORE operation for the last alias in the script.
@@ -83,14 +79,15 @@ public class ScriptAnalyser {
 
         // Build physical plan. Note: this also applies optimizations to the logical plan! The un-optimized plan
         // is still available from pigContext.getExecutionEngine().getNewPlan() if needed.
-        physicalPlan = pigContext.getExecutionEngine().compile(logicalPlan, null);
+        PhysicalPlan physicalPlan = pigContext.getExecutionEngine().compile(logicalPlan, null);
+        LogicalPlan unoptimizedLogicalPlan = pigContext.getExecutionEngine().getNewPlan();
 
         // Build map-reduce plan.
         MapRedUtil.checkLeafIsStore(physicalPlan, pigContext);
         MapReduceLauncher launcher = new MapReduceLauncher();
-        mapReducePlan = launcher.compile(physicalPlan, pigContext);
+        MROperPlan mapReducePlan = launcher.compile(physicalPlan, pigContext);
 
-        return new AnalysedScript(script, logicalPlan, physicalPlan, mapReducePlan);
+        return new AnalysedScript(script, logicalPlan, unoptimizedLogicalPlan, physicalPlan, mapReducePlan);
     }
 
     /**

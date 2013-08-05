@@ -21,18 +21,24 @@ import java.io.PrintStream;
 public class AnalysedScript extends PigScript {
     private PigScript script;
     private LogicalPlan logicalPlan;
+    private LogicalPlan unoptimizedLogicalPlan;
     private PhysicalPlan physicalPlan;
     private MROperPlan mapReducePlan;
 
-    public AnalysedScript(PigScript script, LogicalPlan logicalPlan, PhysicalPlan physicalPlan, MROperPlan mapReducePlan) {
+    public AnalysedScript(PigScript script, LogicalPlan logicalPlan, LogicalPlan unoptimizedLogicalPlan, PhysicalPlan physicalPlan, MROperPlan mapReducePlan) {
         this.script = script;
         this.logicalPlan = logicalPlan;
+        this.unoptimizedLogicalPlan = unoptimizedLogicalPlan;
         this.physicalPlan = physicalPlan;
         this.mapReducePlan = mapReducePlan;
     }
 
     public LogicalPlan getLogicalPlan() {
         return logicalPlan;
+    }
+
+    public LogicalPlan getUnoptimizedLogicalPlan() {
+        return unoptimizedLogicalPlan;
     }
 
     public PhysicalPlan getPhysicalPlan() {
@@ -55,6 +61,7 @@ public class AnalysedScript extends PigScript {
 
     public void dumpPlansAsGraphs() throws IOException {
         dumpPlanAsGraph(logicalPlan);
+        dumpPlanAsGraph(unoptimizedLogicalPlan, getDotOutputFile("logical-unoptimized"));
         dumpPlanAsGraph(physicalPlan);
         dumpPlanAsGraph(mapReducePlan);
     }

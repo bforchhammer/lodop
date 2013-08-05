@@ -25,11 +25,15 @@ public class LogicalPlanMatcher {
         this.plan2 = plan2;
     }
 
+    public static void findCommonPreprocessing(List<AnalysedScript> scripts) {
+        findCommonPreprocessing(scripts, true);
+    }
+
     /**
      * Determines all possible pairs within the given set of scripts, then compares the logical plans of each pair of
      * scripts. The result is printed to the INFO log.
      */
-    public static void findCommonPreprocessing(List<AnalysedScript> scripts) {
+    public static void findCommonPreprocessing(List<AnalysedScript> scripts, boolean useOptimized) {
         CommonPlanIndex commonPPIndex = new CommonPlanIndex();
 
         ListIterator<AnalysedScript> iterator1 = scripts.listIterator();
@@ -44,7 +48,9 @@ public class LogicalPlanMatcher {
             iterator2 = scripts.listIterator(iterator1.nextIndex());
             while (iterator2.hasNext()) {
                 AnalysedScript s2 = iterator2.next();
-                LogicalPlanMatcher matcher = new LogicalPlanMatcher(s1.getLogicalPlan(), s2.getLogicalPlan());
+                LogicalPlanMatcher matcher = new LogicalPlanMatcher(
+                        useOptimized ? s1.getLogicalPlan() : s1.getUnoptimizedLogicalPlan(),
+                        useOptimized ? s2.getLogicalPlan() : s2.getUnoptimizedLogicalPlan());
                 Set<OperatorSubPlan> common = matcher.findCommonPreprocessing();
                 printCommonPlans(common, s1, s2);
                 commonPPIndex.add(common, s1, s2);
