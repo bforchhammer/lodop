@@ -51,7 +51,9 @@ public class LogicalPlanMatcher {
             }
         }
         commonPPIndex.prune();
-        log.info(commonPPIndex);
+
+        log.info("Common plan index (sorted by plan size): \n" + commonPPIndex.toStringSortByPlanSize());
+        log.info("Common plan index (sorted by number of scripts): \n" + commonPPIndex.toStringSortByNumberOfScripts());
     }
 
     private static void printCommonPlans(Set<OperatorSubPlan> common, AnalysedScript script1, AnalysedScript script2) {

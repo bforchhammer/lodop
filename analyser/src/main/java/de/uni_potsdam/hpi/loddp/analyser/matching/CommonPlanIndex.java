@@ -11,7 +11,11 @@ import java.util.*;
 public class CommonPlanIndex extends TreeMap<OperatorSubPlan, Set<AnalysedScript>> {
 
     public CommonPlanIndex() {
-        super(new PlanComparator());
+        this(new PlanComparator());
+    }
+
+    private CommonPlanIndex(Comparator<OperatorSubPlan> comparator) {
+        super(comparator);
     }
 
     public void add(Set<OperatorSubPlan> plans, AnalysedScript s1, AnalysedScript s2) {
@@ -53,8 +57,26 @@ public class CommonPlanIndex extends TreeMap<OperatorSubPlan, Set<AnalysedScript
 
     @Override
     public String toString() {
+        return toString(super.entrySet());
+    }
+
+    protected String toString(Comparator<Map.Entry<OperatorSubPlan, Set<AnalysedScript>>> comparator) {
+        ArrayList<Map.Entry<OperatorSubPlan, Set<AnalysedScript>>> sortedList = new ArrayList<Map.Entry<OperatorSubPlan, Set<AnalysedScript>>>(super.entrySet());
+        Collections.sort(sortedList, Collections.reverseOrder(comparator));
+        return toString(sortedList);
+    }
+
+    public String toStringSortByPlanSize() {
+        return toString(new PlanSizeComparator());
+    }
+
+    public String toStringSortByNumberOfScripts() {
+        return toString(new ScriptNumberComparator());
+    }
+
+    private String toString(Collection<Map.Entry<OperatorSubPlan, Set<AnalysedScript>>> entrySet) {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<OperatorSubPlan, Set<AnalysedScript>> entry : super.entrySet()) {
+        for (Map.Entry<OperatorSubPlan, Set<AnalysedScript>> entry : entrySet) {
             OperatorSubPlan plan = entry.getKey();
             sb.append("Plan [");
             sb.append(plan.size()).append(" ops, ");
@@ -104,4 +126,19 @@ public class CommonPlanIndex extends TreeMap<OperatorSubPlan, Set<AnalysedScript
             return o1.hashCode() - o2.hashCode();
         }
     }
+
+    public static class PlanSizeComparator implements Comparator<Map.Entry<OperatorSubPlan, Set<AnalysedScript>>> {
+        @Override
+        public int compare(Map.Entry<OperatorSubPlan, Set<AnalysedScript>> o1, Map.Entry<OperatorSubPlan, Set<AnalysedScript>> o2) {
+            return o1.getKey().size() - o2.getKey().size();
+        }
+    }
+
+    public static class ScriptNumberComparator implements Comparator<Map.Entry<OperatorSubPlan, Set<AnalysedScript>>> {
+        @Override
+        public int compare(Map.Entry<OperatorSubPlan, Set<AnalysedScript>> o1, Map.Entry<OperatorSubPlan, Set<AnalysedScript>> o2) {
+            return o1.getValue().size() - o2.getValue().size();
+        }
+    }
+
 }

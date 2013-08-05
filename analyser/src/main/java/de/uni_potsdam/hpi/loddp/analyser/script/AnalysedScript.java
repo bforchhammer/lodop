@@ -79,6 +79,7 @@ public class AnalysedScript extends PigScript {
     }
 
     private void dumpPlanAsGraph(Object plan, File dotFile) throws IOException {
+        dotFile.getParentFile().mkdirs();
         PrintStream ps = new PrintStream(dotFile);
         if (plan instanceof LogicalPlan) {
             //new DotPlanDumper(plan, new PrintStream(dotFile)).dump();
