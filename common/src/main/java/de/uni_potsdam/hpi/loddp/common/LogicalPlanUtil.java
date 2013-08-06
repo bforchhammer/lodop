@@ -4,16 +4,17 @@ import org.apache.pig.newplan.logical.relational.LogicalPlan;
 
 public class LogicalPlanUtil {
     public static LogicalPlan clone(LogicalPlan original) {
-        Cloner cloner = new Cloner();
+        LogicalPlanCloner cloner = new LogicalPlanCloner();
         return cloner.deepClone(original);
     }
 
-    protected static class Cloner extends com.rits.cloning.Cloner {
-        public Cloner() {
-            /*dontClone(
-
-            );*/
-            setDumpClonedClasses(true); // for debugging only
+    protected static class LogicalPlanCloner extends com.rits.cloning.Cloner {
+        public LogicalPlanCloner() {
+            dontClone(
+                org.apache.pig.parser.SourceLocation.class,
+                org.apache.hadoop.conf.Configuration.class
+            );
+            //setDumpClonedClasses(true); // for debugging only
         }
 
         @Override
