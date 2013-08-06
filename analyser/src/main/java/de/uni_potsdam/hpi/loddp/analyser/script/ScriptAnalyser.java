@@ -1,5 +1,6 @@
 package de.uni_potsdam.hpi.loddp.analyser.script;
 
+import de.uni_potsdam.hpi.loddp.common.LogicalPlanUtil;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.commons.logging.Log;
@@ -77,10 +78,10 @@ public class ScriptAnalyser {
         // Now, if our target alias wasn't the "last one" in the current plan, we would probably have to build a new
         // plan before we continue, see {@link PigServer.Graph#buildPlan}
 
-        // Build physical plan. Note: this also applies optimizations to the logical plan! The un-optimized plan
-        // is still available from pigContext.getExecutionEngine().getNewPlan() if needed.
+        // Build physical plan. Note: this also applies optimizations to the logical plan! In order to keep the
+        // un-optimized plan, we need to deep-clone it.
+        LogicalPlan unoptimizedLogicalPlan = LogicalPlanUtil.clone(logicalPlan);
         PhysicalPlan physicalPlan = pigContext.getExecutionEngine().compile(logicalPlan, null);
-        LogicalPlan unoptimizedLogicalPlan = pigContext.getExecutionEngine().getNewPlan();
 
         // Build map-reduce plan.
         MapRedUtil.checkLeafIsStore(physicalPlan, pigContext);
