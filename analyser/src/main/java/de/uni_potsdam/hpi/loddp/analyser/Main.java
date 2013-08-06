@@ -70,7 +70,7 @@ public class Main {
 
         // Compare logical plans and try to find common pre-processing steps.
         if (analysedScripts.size() > 2) {
-            LogicalPlanMatcher.findCommonPreprocessing(analysedScripts);
+            LogicalPlanMatcher.findCommonPreprocessing(analysedScripts, false);
         }
     }
 }
