@@ -1,7 +1,8 @@
 package de.uni_potsdam.hpi.loddp.analyser.matching;
 
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
-import org.apache.pig.impl.logicalLayer.FrontendException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.OperatorSubPlan;
 import org.apache.pig.newplan.logical.relational.LogicalRelationalOperator;
@@ -9,6 +10,8 @@ import org.apache.pig.newplan.logical.relational.LogicalRelationalOperator;
 import java.util.*;
 
 public class CommonPlanIndex extends TreeMap<OperatorSubPlan, Set<AnalysedScript>> {
+
+    protected static final Log log = LogFactory.getLog(CommonPlanIndex.class);
 
     public CommonPlanIndex() {
         this(new PlanComparator());
@@ -110,13 +113,14 @@ public class CommonPlanIndex extends TreeMap<OperatorSubPlan, Set<AnalysedScript
         public int compare(OperatorSubPlan o1, OperatorSubPlan o2) {
             try {
                 if (o1.isEqual(o2)) return 0;
-            } catch (FrontendException e) {
-                e.printStackTrace();
+            } catch (Throwable e) {
+                // LOSort and LOCogroup sometimes fail with exceptions (e.g. IndexOutOfBoundsException). We don't care,
+                // and just assume that operators don't match in that case.
+                log.debug("Failed to compare plans", e);
             }
 
             // Establish an arbitrary order via different properties of the two plans; The only important thing is
             // to avoid returning 0 which represents equality. @todo use a hash-based implementation instead (?).
-
 
             // Prefer order by plan size
             int order = o1.size() - o2.size();

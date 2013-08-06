@@ -49,8 +49,8 @@ public class LogicalPlanMatcher {
             while (iterator2.hasNext()) {
                 AnalysedScript s2 = iterator2.next();
                 LogicalPlanMatcher matcher = new LogicalPlanMatcher(
-                        useOptimized ? s1.getLogicalPlan() : s1.getUnoptimizedLogicalPlan(),
-                        useOptimized ? s2.getLogicalPlan() : s2.getUnoptimizedLogicalPlan());
+                    useOptimized ? s1.getLogicalPlan() : s1.getUnoptimizedLogicalPlan(),
+                    useOptimized ? s2.getLogicalPlan() : s2.getUnoptimizedLogicalPlan());
                 Set<OperatorSubPlan> common = matcher.findCommonPreprocessing();
                 printCommonPlans(common, s1, s2);
                 commonPPIndex.add(common, s1, s2);
@@ -107,16 +107,7 @@ public class LogicalPlanMatcher {
     }
 
     private Set<OperatorSubPlan> compare(Operator op1, Operator op2) {
-        boolean match = false;
-        try {
-            match = op1.isEqual(op2);
-            log.debug("Operator Comparison: " + (match ? "MATCHING" : "not matching")
-                + "\n\tOp1: " + op1 + "\n\tOp2: " + op2);
-        } catch (Exception e) {
-            log.error("Failed to compare operators.", e);
-        }
-
-        if (match) {
+        if (operatorsAreEqual(op1, op2)) {
             List<Operator> successors1 = op1.getPlan().getSuccessors(op1);
             List<Operator> successors2 = op2.getPlan().getSuccessors(op2);
             Set<OperatorSubPlan> common = compare(successors1, successors2);
@@ -138,5 +129,26 @@ public class LogicalPlanMatcher {
         }
 
         return new HashSet<OperatorSubPlan>();
+    }
+
+    private boolean operatorsAreEqual(Operator op1, Operator op2) {
+        if (op1 == op2) {
+            return true;
+        }
+        if (op1 == null || op2 == null) {
+            return false;
+        }
+
+        boolean match = false;
+        try {
+            match = op1.isEqual(op2);
+        } catch (Throwable e) {
+            // LOSort and LOCogroup sometimes fail with exceptions (e.g. IndexOutOfBoundsException). We don't care,
+            // and just assume that operators don't match in that case.
+            log.debug("Failed to compare operators", e);
+        }
+        log.debug("Operator Comparison: " + (match ? "MATCHING" : "not matching")
+            + "\n\tOp1: " + op1 + "\n\tOp2: " + op2);
+        return match;
     }
 }
