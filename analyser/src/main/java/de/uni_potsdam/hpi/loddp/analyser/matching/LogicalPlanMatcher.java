@@ -4,7 +4,6 @@ import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.newplan.Operator;
-import org.apache.pig.newplan.OperatorSubPlan;
 import org.apache.pig.newplan.logical.relational.LogicalPlan;
 import org.apache.pig.newplan.logical.relational.LogicalRelationalOperator;
 
@@ -51,7 +50,7 @@ public class LogicalPlanMatcher {
                 LogicalPlanMatcher matcher = new LogicalPlanMatcher(
                     useOptimized ? s1.getLogicalPlan() : s1.getUnoptimizedLogicalPlan(),
                     useOptimized ? s2.getLogicalPlan() : s2.getUnoptimizedLogicalPlan());
-                Set<OperatorSubPlan> common = matcher.findCommonPreprocessing();
+                Set<SubPlan> common = matcher.findCommonPreprocessing();
                 printCommonPlans(common, s1, s2);
                 commonPPIndex.add(common, s1, s2);
             }
@@ -62,13 +61,13 @@ public class LogicalPlanMatcher {
         log.info("Common plan index (sorted by number of scripts): \n" + commonPPIndex.toStringSortByNumberOfScripts());
     }
 
-    private static void printCommonPlans(Set<OperatorSubPlan> common, AnalysedScript script1, AnalysedScript script2) {
+    private static void printCommonPlans(Set<SubPlan> common, AnalysedScript script1, AnalysedScript script2) {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Comparing ").append(script1.getScriptName()).append(" with ").append(script2.getScriptName());
         sb.append(": ").append(common.size()).append(" match(es).");
 
-        for (OperatorSubPlan subPlan : common) {
+        for (SubPlan subPlan : common) {
             sb.append("\n\t- ");
             sb.append(subPlan.size()).append(" operators");
 
@@ -85,12 +84,12 @@ public class LogicalPlanMatcher {
      * Compares two logical plans and tries to determine common pre-processing steps. (I.e. a matching sequence of
      * operators, starting from plan sources).
      */
-    public Set<OperatorSubPlan> findCommonPreprocessing() {
+    public Set<SubPlan> findCommonPreprocessing() {
         return compare(plan1.getSources(), plan2.getSources());
     }
 
-    private Set<OperatorSubPlan> compare(List<Operator> ops1, List<Operator> ops2) {
-        Set<OperatorSubPlan> common = new HashSet<OperatorSubPlan>();
+    private Set<SubPlan> compare(List<Operator> ops1, List<Operator> ops2) {
+        Set<SubPlan> common = new HashSet<SubPlan>();
         if (ops1 != null && ops2 != null) {
             Iterator<Operator> iterator1 = ops1.iterator();
             Iterator<Operator> iterator2;
@@ -106,29 +105,29 @@ public class LogicalPlanMatcher {
         return common;
     }
 
-    private Set<OperatorSubPlan> compare(Operator op1, Operator op2) {
+    private Set<SubPlan> compare(Operator op1, Operator op2) {
         if (operatorsAreEqual(op1, op2)) {
             List<Operator> successors1 = op1.getPlan().getSuccessors(op1);
             List<Operator> successors2 = op2.getPlan().getSuccessors(op2);
-            Set<OperatorSubPlan> common = compare(successors1, successors2);
+            Set<SubPlan> common = compare(successors1, successors2);
 
             // If the given operators match and we don't have any matching trees for successors,
             // then create a new subplan for this operator.
             if (common.isEmpty()) {
-                OperatorSubPlan subPlan = new OperatorSubPlan(op1.getPlan());
+                SubPlan subPlan = new SubPlan(op1.getPlan());
                 subPlan.add(op1);
                 common.add(subPlan);
             }
             // If we have multiple matching successor plans, add the current operator to each of them.
             else {
-                for (OperatorSubPlan plan : common) {
+                for (SubPlan plan : common) {
                     plan.add(op1);
                 }
             }
             return common;
         }
 
-        return new HashSet<OperatorSubPlan>();
+        return new HashSet<SubPlan>();
     }
 
     private boolean operatorsAreEqual(Operator op1, Operator op2) {
