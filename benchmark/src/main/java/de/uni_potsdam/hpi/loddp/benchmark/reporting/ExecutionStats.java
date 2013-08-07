@@ -2,7 +2,7 @@ package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
 import de.uni_potsdam.hpi.loddp.benchmark.Main;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
-import de.uni_potsdam.hpi.loddp.common.GraphvizHelper;
+import de.uni_potsdam.hpi.loddp.common.GraphvizUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
@@ -195,7 +195,7 @@ public class ExecutionStats {
         dotFile.getParentFile().mkdirs();
         try {
             new DotPlanDumper(pigStats.getJobGraph(), new PrintStream(dotFile)).dump();
-            GraphvizHelper.convertToImage("png", dotFile);
+            GraphvizUtil.convertToImage("png", dotFile);
         } catch (IOException e) {
             log.error("Cannot output job graph as dot graph.", e);
         }

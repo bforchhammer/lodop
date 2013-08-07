@@ -1,7 +1,7 @@
 package de.uni_potsdam.hpi.loddp.benchmark.execution;
 
 import de.uni_potsdam.hpi.loddp.benchmark.Main;
-import de.uni_potsdam.hpi.loddp.common.GraphvizHelper;
+import de.uni_potsdam.hpi.loddp.common.GraphvizUtil;
 import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
@@ -235,9 +235,9 @@ public class ScriptRunner {
         getPig().explain(alias, "dot", false, false,
             new PrintStream(logical), new PrintStream(physical), new PrintStream(mapreduce));
 
-        GraphvizHelper.convertToImage("png", logical);
-        GraphvizHelper.convertToImage("png", physical);
-        GraphvizHelper.convertToImage("png", mapreduce);
+        GraphvizUtil.convertToImage("png", logical);
+        GraphvizUtil.convertToImage("png", physical);
+        GraphvizUtil.convertToImage("png", mapreduce);
     }
 
     /**

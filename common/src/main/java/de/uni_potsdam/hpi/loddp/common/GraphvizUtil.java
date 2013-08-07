@@ -5,7 +5,7 @@ import org.apache.commons.io.FilenameUtils;
 import java.io.File;
 import java.io.IOException;
 
-public class GraphvizHelper {
+public class GraphvizUtil {
 
     private static final boolean DEFAULT_DELETE_DOT_FILE = true;
 

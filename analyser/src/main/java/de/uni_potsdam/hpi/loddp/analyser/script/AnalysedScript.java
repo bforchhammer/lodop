@@ -1,6 +1,6 @@
 package de.uni_potsdam.hpi.loddp.analyser.script;
 
-import de.uni_potsdam.hpi.loddp.common.GraphvizHelper;
+import de.uni_potsdam.hpi.loddp.common.GraphvizUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.plans.DotMRPrinter;
 import org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.plans.MROperPlan;
@@ -99,6 +99,6 @@ public class AnalysedScript extends PigScript {
             throw new IllegalArgumentException("Expected plan parameter to be an object of type LogicalPlan, " +
                 "PhysicalPlan, or MROperPlan . Received " + plan.getClass().getName() + " instead.");
         }
-        GraphvizHelper.convertToImage("png", dotFile);
+        GraphvizUtil.convertToImage("png", dotFile);
     }
 }
