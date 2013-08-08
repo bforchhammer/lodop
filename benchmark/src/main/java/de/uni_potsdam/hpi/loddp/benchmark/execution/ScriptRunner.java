@@ -23,6 +23,7 @@ public class ScriptRunner {
     private final String hdfsWorkingDirectory;
     private final HadoopLocation serverLocation;
     private final boolean reuseServer;
+    private PigContext pigContext;
     private PigServer pig;
     private int resultLimit = -1;
     private boolean planPrinting = false;
@@ -78,9 +79,21 @@ public class ScriptRunner {
      * @throws IOException
      */
     private void initialisePig() throws IOException {
-        PigContext context = PigContextUtil.getContext(serverLocation);
-        this.pig = new PigServer(context);
+        this.pig = new PigServer(getPigContext(), false);
         this.log.debug("Created new pig server.");
+    }
+
+    /**
+     * Retrieve the pig context. If none has been created yet, builds a new one and tries to connect
+     *
+     * @throws IOException
+     */
+    protected PigContext getPigContext() throws IOException {
+        if (this.pigContext == null) {
+            this.pigContext = PigContextUtil.getContext(serverLocation);
+            this.pigContext.connect();
+        }
+        return this.pigContext;
     }
 
     /**
