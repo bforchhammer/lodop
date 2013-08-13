@@ -22,7 +22,7 @@ public class PigContextUtil {
      * Creates a new PigContext running in LOCAL mode.
      */
     public static PigContext getContext() throws IOException {
-        return getContext(ExecType.LOCAL);
+        return getContext(ExecType.LOCAL, getProperties());
     }
 
     /**
@@ -31,13 +31,6 @@ public class PigContextUtil {
      */
     public static PigContext getContext(HadoopLocation type) throws IOException {
         return getContext(ExecType.MAPREDUCE, getProperties(type));
-    }
-
-    /**
-     * Creates a new PigContext running in the given mode, with default properties.
-     */
-    protected static PigContext getContext(ExecType type) throws IOException {
-        return getContext(type, getProperties());
     }
 
     /**
