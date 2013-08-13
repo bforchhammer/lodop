@@ -1,99 +1,60 @@
 Common plan index (sorted by number of scripts): 
 Plan [2 ops, 14 scripts]: quads:LOLoad > typedstuff:LOFilter
 	 - classes_by_url
-	 - average_number_of_property_values_per_class
-	 - vocabularies_by_url
-	 - vocabularies_by_pld
-	 - vocabularies_by_entity
-	 - average_number_of_properties_per_class
-	 - vocabularies_by_tld
-	 - number_of_instances_per_class
-	 - number_of_properties_per_class
-	 - classes_by_pld
 	 - classes_by_tld
-	 - uri_literal_ratio_per_class
 	 - classes_by_entity
 	 - average_number_of_property_values_per_class_and_property
-Plan [2 ops, 9 scripts]: quads:LOLoad > typedstuff:LOFilter
-	 - classes_by_url
-	 - vocabularies_by_url
-	 - number_of_instances_per_class
+	 - classes_by_pld
+	 - average_number_of_properties_per_class
+	 - vocabularies_by_tld
 	 - vocabularies_by_pld
 	 - number_of_properties_per_class
-	 - vocabularies_by_entity
-	 - uri_literal_ratio_per_class
-	 - classes_by_entity
-	 - average_number_of_properties_per_class
-Plan [2 ops, 8 scripts]: quads:LOLoad > typedstuff:LOFilter
-	 - average_number_of_property_values_per_class
+	 - number_of_instances_per_class
 	 - vocabularies_by_url
-	 - number_of_instances_per_class
-	 - classes_by_pld
-	 - classes_by_tld
 	 - vocabularies_by_entity
+	 - average_number_of_property_values_per_class
 	 - uri_literal_ratio_per_class
-	 - average_number_of_property_values_per_class_and_property
-Plan [2 ops, 7 scripts]: quads:LOLoad > typedstuff:LOFilter
-	 - number_of_instances_per_class
-	 - classes_by_pld
-	 - number_of_properties_per_class
-	 - classes_by_tld
-	 - vocabularies_by_tld
-	 - average_number_of_properties_per_class
-	 - average_number_of_property_values_per_class_and_property
 Plan [3 ops, 5 scripts]: quads:LOLoad > typedstuff:LOFilter > classMap:LOForEach
+	 - average_number_of_property_values_per_class_and_property
 	 - average_number_of_property_values_per_class
-	 - number_of_properties_per_class
+	 - average_number_of_properties_per_class
 	 - uri_literal_ratio_per_class
-	 - average_number_of_properties_per_class
-	 - average_number_of_property_values_per_class_and_property
-Plan [2 ops, 4 scripts]: quads:LOLoad > typedstuff:LOFilter
-	 - classes_by_pld
-	 - classes_by_tld
-	 - vocabularies_by_tld
-	 - average_number_of_properties_per_class
-Plan [2 ops, 3 scripts]: quads:LOLoad > :LOCogroup
-	 - average_number_of_property_values_per_class
-	 - average_number_of_property_values_per_property
-	 - average_number_of_property_values_per_class_and_property
-Plan [2 ops, 3 scripts]: quads:LOLoad > subjGroups:LOCogroup
-	 - property_cooc_by_entities
-	 - average_number_of_properties
-	 - average_number_of_properties_per_class
-Plan [2 ops, 3 scripts]: quads:LOLoad > quadsByUrl:LOCogroup
-	 - uri_literal_ratio_per_url
-	 - number_of_properties_per_url
-	 - property_cooc_by_urls
-Plan [2 ops, 2 scripts]: quads:LOLoad > subjPredAll:LOForEach
-	 - properties_by_entity
 	 - number_of_properties_per_class
-Plan [2 ops, 2 scripts]: quads:LOLoad > everything:LOCogroup
-	 - uri_literal_ratio
-	 - number_of_triples
-Plan [2 ops, 2 scripts]: quads:LOLoad > quadsByPredicate:LOCogroup
-	 - average_number_of_property_values_per_entity
+Plan [2 ops, 4 scripts]: quads:LOLoad > quadsByPredicate:LOCogroup
 	 - average_number_of_property_values_per_class_and_property
-Plan [2 ops, 2 scripts]: quads:LOLoad > quadsByUrl:LOCogroup
-	 - uri_literal_ratio_per_url
-	 - number_of_properties_per_url
-Plan [2 ops, 2 scripts]: quads:LOLoad > quadsByPredicate:LOCogroup
+	 - average_number_of_property_values_per_class
 	 - average_number_of_property_values_per_entity
 	 - average_number_of_property_values_per_property
-Plan [2 ops, 2 scripts]: quads:LOLoad > propGroups:LOCogroup
-	 - properties_by_statement
-	 - average_number_of_property_values
+Plan [2 ops, 3 scripts]: quads:LOLoad > quadsByUrl:LOCogroup
+	 - average_number_of_properties
+	 - property_cooc_by_entities
+	 - average_number_of_properties_per_class
+Plan [2 ops, 3 scripts]: quads:LOLoad > quadsByGraph:LOCogroup
+	 - number_of_properties_per_url
+	 - uri_literal_ratio_per_url
+	 - property_cooc_by_urls
 Plan [3 ops, 2 scripts]: quads:LOLoad > quadsByPredicate:LOCogroup > valueCounts:LOForEach
 	 - average_number_of_property_values_per_class
 	 - average_number_of_property_values_per_entity
-Plan [3 ops, 2 scripts]: quads:LOLoad > typedLiterals:LOFilter > valueTypes:LOCogroup
-	 - number_of_properties_per_datatype
-	 - number_of_instances_per_datatype
-Plan [4 ops, 2 scripts]: quads:LOLoad > typedstuff:LOFilter > classesAndDomainsA:LOForEach > classesAndDomains:LODistinct
-	 - classes_by_pld
-	 - classes_by_tld
-Plan [5 ops, 2 scripts]: quads:LOLoad > typedstuff:LOFilter > objectVocabs:LOForEach > allVocabsTlds:LOUnion > vocabsAndTlds:LODistinct
-	 - vocabularies_by_pld
-	 - vocabularies_by_tld
 Plan [6 ops, 2 scripts]: quads:LOLoad > typedstuff:LOFilter > classMap:LOForEach > joined:LOJoin(HASH) > joinedGrouped:LOCogroup > classAvg:LOForEach
 	 - average_number_of_property_values_per_class
 	 - average_number_of_properties_per_class
+Plan [4 ops, 2 scripts]: quads:LOLoad > predicateVocabs:LOForEach > allVocabsTlds:LOUnion > vocabsAndTlds:LODistinct
+	 - vocabularies_by_pld
+	 - vocabularies_by_tld
+Plan [3 ops, 2 scripts]: quads:LOLoad > typedLiterals:LOFilter > valueTypes:LOCogroup
+	 - number_of_instances_per_datatype
+	 - number_of_properties_per_datatype
+Plan [2 ops, 2 scripts]: quads:LOLoad > B:LOCogroup
+	 - uri_literal_ratio
+	 - number_of_triples
+Plan [2 ops, 2 scripts]: quads:LOLoad > quads_sp:LOForEach
+	 - properties_by_entity
+	 - number_of_properties_per_class
+Plan [2 ops, 2 scripts]: quads:LOLoad > quadsByPredicate:LOCogroup
+	 - average_number_of_property_values
+	 - properties_by_statement
+Plan [4 ops, 2 scripts]: quads:LOLoad > typedstuff:LOFilter > classesAndDomainsA:LOForEach > classesAndDomains:LODistinct
+	 - classes_by_tld
+	 - classes_by_pld
+
