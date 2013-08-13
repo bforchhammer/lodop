@@ -37,7 +37,7 @@ public class PigContextUtil {
      * Creates a new PigContext running in the given mode, with default properties.
      */
     protected static PigContext getContext(ExecType type) throws IOException {
-        return getContext(type, PropertiesUtil.loadDefaultProperties());
+        return getContext(type, getProperties());
     }
 
     /**
@@ -55,6 +55,14 @@ public class PigContextUtil {
         return pigContext;
     }
 
+    protected static Properties getProperties() {
+        Properties properties = PropertiesUtil.loadDefaultProperties();
+        // Register custom reducer estimator.
+        properties.setProperty("pig.exec.reducer.estimator", "de.uni_potsdam.hpi.loddp.common.optimization.OperationAwareReducerEstimator");
+
+        return properties;
+    }
+
     /**
      * Creates a properties instance with hadoop cluster configuration settings depending on the given Hadoop location.
      *
@@ -64,20 +72,19 @@ public class PigContextUtil {
      *         "mapred.job.tracker".
      */
     protected static Properties getProperties(HadoopLocation type) {
-        Properties properties = PropertiesUtil.loadDefaultProperties();
+        Properties properties = getProperties();
         type.setProperties(properties);
         return properties;
     }
 
     /**
-     * Registers a jar file. Name of the jar file can be an absolute or
-     * relative path.
+     * Registers a jar file. Name of the jar file can be an absolute or relative path.
      *
-     * If multiple resources are found with the specified name, the
-     * first one is registered as returned by getSystemResources.
-     * A warning is issued to inform the user.
+     * If multiple resources are found with the specified name, the first one is registered as returned by
+     * getSystemResources. A warning is issued to inform the user.
      *
      * @param name of the jar file to register
+     *
      * @throws IOException
      */
     public static void registerJar(PigContext context, String name) throws IOException {
@@ -91,7 +98,7 @@ public class PigContextUtil {
             if (resource == null) {
                 FileLocalizer.FetchFileRet[] files = FileLocalizer.fetchFiles(context.getProperties(), name);
 
-                for(FileLocalizer.FetchFileRet file : files) {
+                for (FileLocalizer.FetchFileRet file : files) {
                     File f = file.file;
                     if (!f.canRead()) {
                         int errCode = 4002;
