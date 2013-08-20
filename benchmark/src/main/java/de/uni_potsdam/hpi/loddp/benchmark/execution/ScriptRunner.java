@@ -168,7 +168,9 @@ public class ScriptRunner {
 
         // Handle existing results.
         String scriptName = script.getScriptName();
-        String resultsFile = hdfsWorkingDirectory + "results-" + scriptName;
+        String resultsFile = hdfsWorkingDirectory
+            + "results-" + inputFile.getFileSetIdentifier() + "-" + inputFile.getTupleCount() + "/"
+            + scriptName;
         try {
             if (getPig().existsFile(resultsFile)) {
                 if (replaceExisting) {
