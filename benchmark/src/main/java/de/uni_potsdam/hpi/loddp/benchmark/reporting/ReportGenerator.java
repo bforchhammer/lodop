@@ -17,18 +17,18 @@ public class ReportGenerator {
     protected static final Log log = LogFactory.getLog(ReportGenerator.class);
     private static final NumberFormat DECIMAL_SCIENTIFIC = new DecimalFormat("0.#E0");
     private static final NumberFormat DECIMAL_FLOAT = new DecimalFormat("#.#");
-    private Map<String, Map<String, Map<Long, ExecutionStats>>> statsByNameAndSize = new TreeMap<String, Map<String,
-        Map<Long, ExecutionStats>>>();
-    private Map<String, Map<Long, Map<String, ExecutionStats>>> statsBySizeAndName = new TreeMap<String, Map<Long,
-        Map<String, ExecutionStats>>>();
-    private Set<ExecutionStats> stats;
+    private Map<String, Map<String, Map<Long, ScriptStats>>> statsByNameAndSize = new TreeMap<String, Map<String,
+        Map<Long, ScriptStats>>>();
+    private Map<String, Map<Long, Map<String, ScriptStats>>> statsBySizeAndName = new TreeMap<String, Map<Long,
+        Map<String, ScriptStats>>>();
+    private Set<ScriptStats> stats;
 
     /**
      * Constructor.
      *
      * @param stats
      */
-    public ReportGenerator(Set<ExecutionStats> stats) {
+    public ReportGenerator(Set<ScriptStats> stats) {
         this.stats = stats;
         initialise();
     }
@@ -37,24 +37,24 @@ public class ReportGenerator {
      * Parses the set of execution stats and stores them in grouped maps.
      */
     public void initialise() {
-        this.statsByNameAndSize = new TreeMap<String, Map<String, Map<Long, ExecutionStats>>>();
-        this.statsBySizeAndName = new TreeMap<String, Map<Long, Map<String, ExecutionStats>>>();
+        this.statsByNameAndSize = new TreeMap<String, Map<String, Map<Long, ScriptStats>>>();
+        this.statsBySizeAndName = new TreeMap<String, Map<Long, Map<String, ScriptStats>>>();
 
-        for (ExecutionStats stat : this.stats) {
+        for (ScriptStats stat : this.stats) {
             String dataset = stat.getDatasetIdentifier();
             if (!statsBySizeAndName.containsKey(dataset)) {
-                statsBySizeAndName.put(dataset, new TreeMap<Long, Map<String, ExecutionStats>>());
+                statsBySizeAndName.put(dataset, new TreeMap<Long, Map<String, ScriptStats>>());
             }
             if (!statsByNameAndSize.containsKey(dataset)) {
-                statsByNameAndSize.put(dataset, new TreeMap<String, Map<Long, ExecutionStats>>());
+                statsByNameAndSize.put(dataset, new TreeMap<String, Map<Long, ScriptStats>>());
             }
 
             String name = stat.getScriptName();
             long size = stat.getInputSize();
 
-            Map<String, ExecutionStats> statsByName;
+            Map<String, ScriptStats> statsByName;
             if (!statsBySizeAndName.get(dataset).containsKey(size)) {
-                statsByName = new HashMap<String, ExecutionStats>();
+                statsByName = new HashMap<String, ScriptStats>();
                 statsBySizeAndName.get(dataset).put(size, statsByName);
             } else {
                 statsByName = statsBySizeAndName.get(dataset).get(size);
@@ -62,9 +62,9 @@ public class ReportGenerator {
 
             statsByName.put(name, stat);
 
-            Map<Long, ExecutionStats> statsBySize;
+            Map<Long, ScriptStats> statsBySize;
             if (!statsByNameAndSize.get(dataset).containsKey(name)) {
-                statsBySize = new HashMap<Long, ExecutionStats>();
+                statsBySize = new HashMap<Long, ScriptStats>();
                 statsByNameAndSize.get(dataset).put(name, statsBySize);
             } else {
                 statsBySize = statsByNameAndSize.get(dataset).get(name);
@@ -110,11 +110,11 @@ public class ReportGenerator {
 
         for (String scriptName : statsByNameAndSize.get(dataset).keySet()) {
             sb.append(scriptName);
-            Map<Long, ExecutionStats> statsBySize = statsByNameAndSize.get(dataset).get(scriptName);
+            Map<Long, ScriptStats> statsBySize = statsByNameAndSize.get(dataset).get(scriptName);
             for (Long size : statsBySizeAndName.get(dataset).keySet()) {
                 sb.append("\t");
                 if (statsBySize.containsKey(size)) {
-                    ExecutionStats stat = statsBySize.get(size);
+                    ScriptStats stat = statsBySize.get(size);
                     switch (type) {
                         case EXECUTION_TIME:
                             sb.append(DurationFormatUtils.formatDurationHMS(stat.getTimeTotal()));
@@ -164,8 +164,8 @@ public class ReportGenerator {
         sb.append("\t").append("Average reduce time");
         sb.append("\n");
 
-        Map<String, ExecutionStats> statsByName = statsBySizeAndName.get(dataset).get(inputSize);
-        for (ExecutionStats stat : statsByName.values()) {
+        Map<String, ScriptStats> statsByName = statsBySizeAndName.get(dataset).get(inputSize);
+        for (ScriptStats stat : statsByName.values()) {
             sb.append(stat.getScriptName());
             sb.append("\t").append(DurationFormatUtils.formatDurationHMS(stat.getTimeTotal()));
             sb.append("\t").append(stat.getNumberJobs());
@@ -223,7 +223,7 @@ public class ReportGenerator {
      * Tries to highlight runtime implications of different features used by pig scripts.
      */
     public void featureRuntimeAnalysis(String dataset, long inputSize) {
-        Map<String, ExecutionStats> statsByName = statsBySizeAndName.get(dataset).get(inputSize);
+        Map<String, ScriptStats> statsByName = statsBySizeAndName.get(dataset).get(inputSize);
         Map<String, Map<String, SummaryStatistics>> statsByFeatures = new TreeMap<String, Map<String, SummaryStatistics>>();
 
         final String[] counterTypes = new String[] {
@@ -234,7 +234,7 @@ public class ReportGenerator {
             "mapMaxTime", "mapMinTime", "reduceMaxTime", "reduceMinTime",
         };
 
-        for (ExecutionStats stats : statsByName.values()) {
+        for (ScriptStats stats : statsByName.values()) {
             List<JobStats> jobs = stats.getJobStats();
             for (JobStats js : jobs) {
                 if (!statsByFeatures.containsKey(js.getFeature())) {

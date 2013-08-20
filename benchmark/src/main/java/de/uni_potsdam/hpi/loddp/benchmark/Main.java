@@ -1,10 +1,12 @@
 package de.uni_potsdam.hpi.loddp.benchmark;
 
-import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ExecutionStats;
+import de.uni_potsdam.hpi.loddp.benchmark.reporting.RepeatedExecutionStats;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ReportGenerator;
+import de.uni_potsdam.hpi.loddp.benchmark.reporting.ScriptStats;
+import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
 import org.apache.commons.cli.*;
@@ -47,7 +49,7 @@ public class Main {
         log = LogFactory.getLog(Main.class);
     }
 
-    private static Set<ExecutionStats> statisticsCollection = new HashSet<ExecutionStats>();
+    private static Set<ScriptStats> statisticsCollection = new HashSet<ScriptStats>();
     private static Set<PigScript> scripts;
 
     public static String getJobGraphDirectory() {
@@ -87,6 +89,11 @@ public class Main {
             .withDescription("Dumps the logical, physical and mapreduce operator plans as DOT graphs for each script.")
             .hasArg(false)
             .create('e'));
+        options.addOption(OptionBuilder
+            .withLongOpt("repeat")
+            .withDescription("Repeats the workflow the specified number of times and computes the average runtime.")
+            .hasArg().withArgName("3")
+            .create('r'));
         return options;
     }
 
@@ -155,9 +162,21 @@ public class Main {
             runner.enablePlanPrinting();
         }
 
+        int repeat = 1;
+        if (cmd.hasOption("repeat")) {
+            repeat = Integer.parseInt(cmd.getOptionValue("repeat"));
+            if (repeat < 1) {
+                repeat = 1;
+                log.warn("--repeat parameter ignored because the specified value was negative or zero (positive " +
+                    "integer expected).");
+            }
+        }
+
+        statisticsCollection = new HashSet<ScriptStats>();
         ReportGenerator rg = new ReportGenerator(statisticsCollection);
+
         for (Iterator<InputFile> it = inputFiles.iterator(); it.hasNext(); ) {
-            runScripts(runner, scripts, it.next());
+            runScripts(runner, scripts, it.next(), repeat);
 
             // Generate a bunch of numbers and tables and stuff.
             rg.initialise();
@@ -188,14 +207,15 @@ public class Main {
      * @param runner  A script runner.
      * @param scripts A set of pig scripts.
      * @param input   The quads input file.
+     * @param repeat  How often to execute the given script in order to get average statistics.
      */
-    protected static void runScripts(ScriptRunner runner, Set<PigScript> scripts, InputFile input) {
+    protected static void runScripts(ScriptRunner runner, Set<PigScript> scripts, InputFile input, int repeat) {
         for (PigScript script : scripts) {
             StringBuilder sb = new StringBuilder();
             sb.append(script);
             sb.append(" - RUNNING");
             log.info(sb.toString());
-            runScript(runner, script, input);
+            runScript(runner, script, input, repeat);
         }
     }
 
@@ -205,13 +225,29 @@ public class Main {
      * @param runner A script runner.
      * @param script A pig script.
      * @param input  The quads input file.
+     * @param repeat How often to execute the given script in order to get average statistics.
      */
-    protected static void runScript(ScriptRunner runner, PigScript script, InputFile input) {
-        PigStats stats = runner.runScript(script, input);
-        if (stats != null) {
-            ExecutionStats s = new ExecutionStats(input, stats, script);
-            statisticsCollection.add(s);
-            s.printStats();
+    protected static void runScript(ScriptRunner runner, PigScript script, InputFile input, int repeat) {
+        if (repeat == 1) {
+            PigStats stats = runner.runScript(script, input);
+            if (stats != null) {
+                ExecutionStats s = new ExecutionStats(input, stats, script);
+                statisticsCollection.add(s);
+                s.printStats();
+            }
+        } else {
+            RepeatedExecutionStats avgStats = new RepeatedExecutionStats(input, script);
+            for (int i = 0; i < repeat; i++) {
+                log.info(String.format(" > Iteration %d of %d.", i + 1, repeat));
+                PigStats stats = runner.runScript(script, input);
+                if (stats != null) {
+                    ExecutionStats s = new ExecutionStats(input, stats, script);
+                    s.setIterationNumber(i + 1);
+                    avgStats.add(s);
+                    s.printStats();
+                }
+            }
+            statisticsCollection.add(avgStats);
         }
     }
 

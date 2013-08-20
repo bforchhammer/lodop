@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Contains information about the execution/run of a pig script on a specific set of input data.
  */
-public class ExecutionStats {
+public class ExecutionStats implements ScriptStats {
 
     protected static final Log log = LogFactory.getLog(ExecutionStats.class);
     private final InputFile inputFile;
@@ -31,6 +31,7 @@ public class ExecutionStats {
     private int numberReducesTotal = -1;
     private Long avgMapTimeTotal = -1L;
     private Long avgReduceTimeTotal = -1L;
+    private int iterationNumber = -1;
 
     /**
      * Constructor.
@@ -45,6 +46,10 @@ public class ExecutionStats {
         this.pigScript = pigScript;
         long inputSize = inputFile.getTupleCount();
         this.inputSize = (inputSize > 0) ? inputSize : this.pigStats.getInputStats().get(0).getNumberRecords();
+    }
+
+    public void setIterationNumber(int iterationNumber) {
+        this.iterationNumber = iterationNumber;
     }
 
     public long getOutputSize() {
@@ -122,6 +127,10 @@ public class ExecutionStats {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Statistics for ").append(pigScript.getScriptName().toUpperCase()).append("\n");
+
+        if (iterationNumber != -1) {
+            sb.append("Iteration ").append(iterationNumber).append("\n");
+        }
 
         InputStats is = pigStats.getInputStats().get(0);
         sb.append("Input: \t").append(is.getNumberRecords()).append(" records")
