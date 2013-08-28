@@ -17,6 +17,7 @@ import java.util.Properties;
 
 public class PigContextUtil {
     protected static final Log log = LogFactory.getLog(PigContextUtil.class);
+    private static boolean useCustomReducerEstimator = false;
 
     /**
      * Creates a new PigContext running in LOCAL mode.
@@ -50,8 +51,11 @@ public class PigContextUtil {
 
     protected static Properties getProperties() {
         Properties properties = PropertiesUtil.loadDefaultProperties();
-        // Register custom reducer estimator.
-        properties.setProperty("pig.exec.reducer.estimator", "de.uni_potsdam.hpi.loddp.common.optimization.OperationAwareReducerEstimator");
+
+        if (useCustomReducerEstimator) {
+            // Register custom reducer estimator.
+            properties.setProperty("pig.exec.reducer.estimator", "de.uni_potsdam.hpi.loddp.common.optimization.OperationAwareReducerEstimator");
+        }
 
         return properties;
     }
@@ -125,6 +129,10 @@ public class PigContextUtil {
         }
 
         return resourceLocation;
+    }
+
+    public static void useCustomReducerEstimator() {
+        useCustomReducerEstimator = true;
     }
 
 }
