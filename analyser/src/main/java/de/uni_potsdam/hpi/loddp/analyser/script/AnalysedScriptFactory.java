@@ -26,11 +26,12 @@ public class AnalysedScriptFactory {
     }
 
     public static List<AnalysedScript> analyse(Set<PigScript> scripts, boolean dumpGraphs) throws IOException {
+        log.info("Analysing " + scripts.size() + " scripts.");
         List<AnalysedScript> analysed = new ArrayList<AnalysedScript>();
         Iterator<PigScript> iterator = scripts.iterator();
         while (iterator.hasNext()) {
             PigScript script = iterator.next();
-            log.info("Analysing script: " + script.getScriptName());
+            log.debug("Analysing script: " + script.getScriptName());
             try {
                 AnalysedScript a = getScriptAnalyser().analyse(script);
                 analysed.add(a);
@@ -41,6 +42,7 @@ public class AnalysedScriptFactory {
                 log.error("Could not analyse script: " + script.getScriptName(), e);
             }
         }
+        log.info("Script analysis complete.");
         return analysed;
     }
 }

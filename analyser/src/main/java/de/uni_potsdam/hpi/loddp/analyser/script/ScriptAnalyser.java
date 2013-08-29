@@ -70,7 +70,7 @@ public class ScriptAnalyser {
         operators = parserDriver.getOperators();
 
         // Add a fake STORE operation for the last alias in the script.
-        QueryParserUtils.attachStorePlan(scope, logicalPlan, "fakefile", null, operators.get(pigContext.getLastAlias()), "fake", pigContext);
+        QueryParserUtils.attachStorePlan(scope, logicalPlan, "fakefile", null, operators.get(pigContext.getLastAlias()), script.getScriptName(), pigContext);
 
         // Perform some initial logical plan optimizations (copied straight from PigServer).
         optimize(logicalPlan, pigContext, scope);
