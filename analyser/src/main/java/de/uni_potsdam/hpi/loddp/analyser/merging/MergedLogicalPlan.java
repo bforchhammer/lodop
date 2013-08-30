@@ -3,7 +3,6 @@ package de.uni_potsdam.hpi.loddp.analyser.merging;
 import de.uni_potsdam.hpi.loddp.common.GraphvizUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.logical.DotLOPrinter;
 import org.apache.pig.newplan.logical.relational.LogicalPlan;
 
@@ -14,28 +13,10 @@ import java.io.PrintStream;
 /**
  * A merged logical plan.
  *
- * Can only contain {@link MergedOperator merged operators}.
- *
  * @see LogicalPlanMerger
  */
 public class MergedLogicalPlan extends LogicalPlan {
     protected static final Log log = LogFactory.getLog(MergedLogicalPlan.class);
-
-    /**
-     * Add a new operator, making sure that it's of type MergedOperator.
-     *
-     * @param op
-     */
-    @Override
-    public void add(Operator op) {
-        // Make sure, only instances of "MergedOperator" are added to this logical plan.
-        if (op instanceof MergedOperator) {
-            super.add(op);
-        } else {
-            throw new IllegalArgumentException("Cannot add operator. Expected class: " + MergedOperator.class
-                .getCanonicalName() + ". Given class: " + op.getClass());
-        }
-    }
 
     /**
      * Dump the plan to `dot/all-merged-logical.png` (requires GraphViz to be installed).

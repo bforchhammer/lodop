@@ -17,11 +17,11 @@ import java.util.*;
 public class LogicalPlanMerger {
     protected static final Log log = LogFactory.getLog(LogicalPlanMerger.class);
     private MergedLogicalPlan mergedPlan;
-    private Map<Operator, MergedOperator> mergedOperators;
+    private Map<Operator, Operator> mergedOperators;
 
     public LogicalPlanMerger() {
         mergedPlan = new MergedLogicalPlan();
-        mergedOperators = new HashMap<Operator, MergedOperator>();
+        mergedOperators = new HashMap<Operator, Operator>();
     }
 
     /**
@@ -96,13 +96,13 @@ public class LogicalPlanMerger {
         public void merge(Operator operator) {
             // Look up predecessors in merged plan and check whether they have any common successors in the merged
             // plan. If yes, one of them may be equivalent to the operator which we are currently trying to merge in.
-            Collection<MergedOperator> candidates = new ArrayList<MergedOperator>(mergedOperators.values());
+            Collection<Operator> candidates = new ArrayList<Operator>(mergedOperators.values());
             List<Operator> predecessors = operator.getPlan().getPredecessors(operator);
-            List<MergedOperator> mergedPredecessors = new ArrayList<MergedOperator>();
+            List<Operator> mergedPredecessors = new ArrayList<Operator>();
             if (predecessors != null) {
                 for (Operator predecessor : predecessors) {
                     // Retrieve respective merged operator.
-                    MergedOperator mergedPredecessor = mergedOperators.get(predecessor);
+                    Operator mergedPredecessor = mergedOperators.get(predecessor);
                     if (mergedPredecessor == null) {
                         // This visitor walks the plan in dependency order so all predecessors should have already
                         // been merged in and this should therefore never happen.
@@ -117,11 +117,11 @@ public class LogicalPlanMerger {
             }
 
             List<Operator> softPredecessors = operator.getPlan().getSoftLinkPredecessors(operator);
-            List<MergedOperator> mergedSoftPredecessors = new ArrayList<MergedOperator>();
+            List<Operator> mergedSoftPredecessors = new ArrayList<Operator>();
             if (softPredecessors != null) {
                 for (Operator predecessor : softPredecessors) {
                     // Retrieve respective merged operator.
-                    MergedOperator mergedPredecessor = mergedOperators.get(predecessor);
+                    Operator mergedPredecessor = mergedOperators.get(predecessor);
                     if (mergedPredecessor == null) {
                         // This visitor walks the plan in dependency order so all predecessors should have already
                         // been merged in and this should therefore never happen.
@@ -137,36 +137,24 @@ public class LogicalPlanMerger {
 
             // Compare each of the candidates with the given operator. If we can merge the given operator with one of
             // the candidates, then we are done.
-            for (MergedOperator candidate : candidates) {
-                if (candidate.merge(operator)) {
+            for (Operator candidate : candidates) {
+                if (MergedOperatorFacade.decorate(candidate).merge(operator)) {
                     mergedOperators.put(operator, candidate);
                     return;
                 }
             }
 
             // If we get to this point, then we haven't found a matching operator in the merged plan. We therefore
-            // create, add and connect a new merged operator.
-            MergedOperator mergedOperator = createNewOperator(operator);
-            mergedOperators.put(operator, mergedOperator);
+            // simply add the operator to the merged plan.
+            mergedOperators.put(operator, operator);
+            mergedPlan.add(operator);
+            operator.setPlan(mergedPlan);
             for (Operator predecessor : mergedPredecessors) {
-                mergedPlan.connect(predecessor, mergedOperator);
+                mergedPlan.connect(predecessor, operator);
             }
             for (Operator predecessor : mergedSoftPredecessors) {
-                mergedPlan.createSoftLink(predecessor, mergedOperator);
+                mergedPlan.createSoftLink(predecessor, operator);
             }
-        }
-
-        /**
-         * Instantiates a new {@link MergedOperator} and adds it to the merged plan.
-         *
-         * @param operator An un-merged operator.
-         *
-         * @return The merged operator.
-         */
-        private MergedOperator createNewOperator(Operator operator) {
-            MergedOperator merged = new MergedOperator(operator, mergedPlan);
-            mergedPlan.add(merged);
-            return merged;
         }
 
         @Override
