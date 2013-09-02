@@ -45,11 +45,13 @@ public class LogicalPlanMerger {
      */
     public static MergedLogicalPlan merge(List<AnalysedScript> scripts, boolean useOptimized) {
         LogicalPlanMerger merger = new LogicalPlanMerger();
+        int originalPlanSize = 0;
         log.info(String.format("Merging %s logical plans from %d scripts.",
             useOptimized ? "optimized" : "unoptimized", scripts.size()));
         for (AnalysedScript script : scripts) {
             log.debug("Merging script: " + script.getScriptName());
             LogicalPlan plan = useOptimized ? script.getLogicalPlan() : script.getUnoptimizedLogicalPlan();
+            originalPlanSize += plan.size();
             try {
                 merger.merge(plan);
             } catch (FrontendException e) {
@@ -57,7 +59,7 @@ public class LogicalPlanMerger {
             }
         }
         MergedLogicalPlan plan = merger.getMergedPlan();
-        log.info(String.format("Merging complete. Merged plan contains %s operators.", plan.size()));
+        log.info(String.format("Merging complete. Merged plan contains %d of %d original operators.", plan.size(), originalPlanSize));
         return merger.getMergedPlan();
     }
 

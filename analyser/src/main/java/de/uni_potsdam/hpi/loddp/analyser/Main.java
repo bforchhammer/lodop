@@ -1,15 +1,19 @@
 package de.uni_potsdam.hpi.loddp.analyser;
 
+import de.uni_potsdam.hpi.loddp.analyser.execution.MergedScriptRunner;
 import de.uni_potsdam.hpi.loddp.analyser.matching.LogicalPlanMatcher;
 import de.uni_potsdam.hpi.loddp.analyser.merging.LogicalPlanMerger;
 import de.uni_potsdam.hpi.loddp.analyser.merging.MergedLogicalPlan;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
+import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
+import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pig.impl.PigContext;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,6 +63,9 @@ public class Main {
             dumpPlansAsGraphs = true;
         }
 
+        PigContext pigContext = PigContextUtil.getContext(HadoopLocation.LOCALHOST);
+        pigContext.connect();
+
         // By default execute all scripts.
         Set<PigScript> scripts = null;
         if (cmd.hasOption("scripts")) {
@@ -68,7 +75,7 @@ public class Main {
         }
 
         // Analyse scripts.
-        List<AnalysedScript> analysedScripts = AnalysedScriptFactory.analyse(scripts, dumpPlansAsGraphs);
+        List<AnalysedScript> analysedScripts = AnalysedScriptFactory.analyse(scripts, dumpPlansAsGraphs, pigContext);
 
         boolean analysePreprocessing = false;
         boolean mergeScripts = true;
@@ -81,6 +88,7 @@ public class Main {
         if (mergeScripts && analysedScripts.size() > 1) {
             MergedLogicalPlan plan = LogicalPlanMerger.merge(analysedScripts, false);
             plan.dumpAsGraph();
+            MergedScriptRunner.execute(plan, pigContext);
         }
     }
 }
