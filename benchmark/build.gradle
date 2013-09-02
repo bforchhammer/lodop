@@ -8,6 +8,7 @@ dependencies {
     runtime 'dk.brics.automaton:automaton:1.11-8'
 
     compile project(':common')
+    compile project(':optimization')
 
     // Additional UDFs
     //runtime 'com.linkedin.datafu:datafu:0.0.10'
