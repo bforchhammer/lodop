@@ -1,7 +1,7 @@
 package de.uni_potsdam.hpi.loddp.analyser.script;
 
-import de.uni_potsdam.hpi.loddp.common.ScriptCompilationException;
-import de.uni_potsdam.hpi.loddp.common.ScriptCompiler;
+import de.uni_potsdam.hpi.loddp.common.execution.ScriptCompilerException;
+import de.uni_potsdam.hpi.loddp.common.execution.ScriptCompiler;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,7 +18,7 @@ public class ScriptAnalyser {
         this.pigContext = pigContext;
     }
 
-    public AnalysedScript analyse(PigScript script) throws ScriptCompilationException {
+    public AnalysedScript analyse(PigScript script) throws ScriptCompilerException {
         ScriptCompiler scriptCompiler = new ScriptCompiler(pigContext, script, "fake-input.nq.gz", "fake-output");
         LogicalPlan logicalPlan = scriptCompiler.getLogicalPlan();
         LogicalPlan optimizedLogicalPlan = scriptCompiler.getOptimizedLogicalPlan();

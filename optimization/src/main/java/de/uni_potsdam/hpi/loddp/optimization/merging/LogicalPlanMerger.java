@@ -1,6 +1,5 @@
-package de.uni_potsdam.hpi.loddp.analyser.merging;
+package de.uni_potsdam.hpi.loddp.optimization.merging;
 
-import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.impl.logicalLayer.FrontendException;
@@ -25,32 +24,17 @@ public class LogicalPlanMerger {
     }
 
     /**
-     * Merge (optimized) logical plans for all given scripts into one logical plan.
+     * Merge (optimized) logical plans for all given logical plans into one logical plan.
      *
-     * @param scripts An analysed set of pig scripts.
-     *
-     * @return The merged logical plan.
-     */
-    public static MergedLogicalPlan merge(List<AnalysedScript> scripts) {
-        return merge(scripts, true);
-    }
-
-    /**
-     * Merge logical plans for all given scripts into one logical plan.
-     *
-     * @param scripts      An analysed set of pig scripts.
-     * @param useOptimized Whether to use the optimized or unoptimized logical plans.
+     * @param plans A set of logical plans.
      *
      * @return The merged logical plan.
      */
-    public static MergedLogicalPlan merge(List<AnalysedScript> scripts, boolean useOptimized) {
+    public static MergedLogicalPlan merge(List<LogicalPlan> plans) {
         LogicalPlanMerger merger = new LogicalPlanMerger();
         int originalPlanSize = 0;
-        log.info(String.format("Merging %s logical plans from %d scripts.",
-            useOptimized ? "optimized" : "unoptimized", scripts.size()));
-        for (AnalysedScript script : scripts) {
-            log.debug("Merging script: " + script.getScriptName());
-            LogicalPlan plan = useOptimized ? script.getLogicalPlan() : script.getUnoptimizedLogicalPlan();
+        log.info(String.format("Merging %d logical plans.", plans.size()));
+        for (LogicalPlan plan : plans) {
             originalPlanSize += plan.size();
             try {
                 merger.merge(plan);

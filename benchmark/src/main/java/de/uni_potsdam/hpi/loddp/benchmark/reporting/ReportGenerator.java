@@ -21,14 +21,14 @@ public class ReportGenerator {
         Map<Long, ScriptStats>>>();
     private Map<String, Map<Long, Map<String, ScriptStats>>> statsBySizeAndName = new TreeMap<String, Map<Long,
         Map<String, ScriptStats>>>();
-    private Set<ScriptStats> stats;
+    private Iterable<ScriptStats> stats;
 
     /**
      * Constructor.
      *
      * @param stats
      */
-    public ReportGenerator(Set<ScriptStats> stats) {
+    public ReportGenerator(Iterable<ScriptStats> stats) {
         this.stats = stats;
         initialise();
     }

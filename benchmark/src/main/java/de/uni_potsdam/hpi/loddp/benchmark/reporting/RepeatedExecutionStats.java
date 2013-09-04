@@ -1,7 +1,6 @@
 package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
-import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.pig.tools.pigstats.JobStats;
 
 import java.util.LinkedList;
@@ -15,23 +14,23 @@ import java.util.List;
 public class RepeatedExecutionStats implements ScriptStats {
 
     private final InputFile inputFile;
-    private final PigScript pigScript;
-    private final List<ExecutionStats> stats;
+    private final String scriptName;
+    private final List<ScriptStats> stats;
 
-    public RepeatedExecutionStats(InputFile inputFile, PigScript pigScript) {
+    public RepeatedExecutionStats(InputFile inputFile, String scriptName) {
         this.inputFile = inputFile;
-        this.pigScript = pigScript;
+        this.scriptName = scriptName;
 
-        this.stats = new LinkedList<ExecutionStats>();
+        this.stats = new LinkedList<ScriptStats>();
     }
 
-    public void add(ExecutionStats stats) {
+    public void add(ScriptStats stats) {
         this.stats.add(stats);
     }
 
     @Override
     public String getScriptName() {
-        return pigScript.getScriptName();
+        return scriptName;
     }
 
     @Override
@@ -42,7 +41,7 @@ public class RepeatedExecutionStats implements ScriptStats {
     @Override
     public long getInputSize() {
         long total = 0;
-        for (ExecutionStats s : stats) {
+        for (ScriptStats s : stats) {
             total += s.getInputSize();
         }
         return Math.round(total / stats.size());
@@ -51,7 +50,7 @@ public class RepeatedExecutionStats implements ScriptStats {
     @Override
     public long getOutputSize() {
         long total = 0;
-        for (ExecutionStats s : stats) {
+        for (ScriptStats s : stats) {
             total += s.getOutputSize();
         }
         return Math.round(total / stats.size());
@@ -60,7 +59,7 @@ public class RepeatedExecutionStats implements ScriptStats {
     @Override
     public long getTimeTotal() {
         long total = 0;
-        for (ExecutionStats s : stats) {
+        for (ScriptStats s : stats) {
             total += s.getTimeTotal();
         }
         return Math.round(total / stats.size());
@@ -69,7 +68,7 @@ public class RepeatedExecutionStats implements ScriptStats {
     @Override
     public int getNumberJobs() {
         int total = 0;
-        for (ExecutionStats s : stats) {
+        for (ScriptStats s : stats) {
             total += s.getNumberJobs();
         }
         return Math.round(total / stats.size());
@@ -88,7 +87,7 @@ public class RepeatedExecutionStats implements ScriptStats {
     @Override
     public int getNumberMapsTotal() {
         int total = 0;
-        for (ExecutionStats s : stats) {
+        for (ScriptStats s : stats) {
             total += s.getNumberMapsTotal();
         }
         return Math.round(total / stats.size());
@@ -97,7 +96,7 @@ public class RepeatedExecutionStats implements ScriptStats {
     @Override
     public int getNumberReducesTotal() {
         int total = 0;
-        for (ExecutionStats s : stats) {
+        for (ScriptStats s : stats) {
             total += s.getNumberReducesTotal();
         }
         return Math.round(total / stats.size());
@@ -106,7 +105,7 @@ public class RepeatedExecutionStats implements ScriptStats {
     @Override
     public long getAvgMapTimeTotal() {
         long total = 0;
-        for (ExecutionStats s : stats) {
+        for (ScriptStats s : stats) {
             total += s.getAvgMapTimeTotal();
         }
         return Math.round(total / stats.size());
@@ -115,7 +114,7 @@ public class RepeatedExecutionStats implements ScriptStats {
     @Override
     public long getAvgReduceTimeTotal() {
         long total = 0;
-        for (ExecutionStats s : stats) {
+        for (ScriptStats s : stats) {
             total += s.getAvgReduceTimeTotal();
         }
         return Math.round(total / stats.size());

@@ -1,9 +1,6 @@
 package de.uni_potsdam.hpi.loddp.analyser;
 
-import de.uni_potsdam.hpi.loddp.analyser.execution.MergedScriptRunner;
 import de.uni_potsdam.hpi.loddp.analyser.matching.LogicalPlanMatcher;
-import de.uni_potsdam.hpi.loddp.analyser.merging.LogicalPlanMerger;
-import de.uni_potsdam.hpi.loddp.analyser.merging.MergedLogicalPlan;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
 import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
@@ -77,18 +74,9 @@ public class Main {
         // Analyse scripts.
         List<AnalysedScript> analysedScripts = AnalysedScriptFactory.analyse(scripts, dumpPlansAsGraphs, pigContext);
 
-        boolean analysePreprocessing = false;
-        boolean mergeScripts = true;
-
         // Compare logical plans and try to find common pre-processing steps.
-        if (analysePreprocessing && analysedScripts.size() > 2) {
+        if (analysedScripts.size() > 2) {
             LogicalPlanMatcher.findCommonPreprocessing(analysedScripts, false);
-        }
-
-        if (mergeScripts && analysedScripts.size() > 1) {
-            MergedLogicalPlan plan = LogicalPlanMerger.merge(analysedScripts, false);
-            plan.dumpAsGraph();
-            MergedScriptRunner.execute(plan, pigContext);
         }
     }
 }

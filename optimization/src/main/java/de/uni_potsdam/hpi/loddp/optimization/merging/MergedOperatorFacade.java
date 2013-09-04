@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.loddp.analyser.merging;
+package de.uni_potsdam.hpi.loddp.optimization.merging;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class MergedOperatorFacade {
     protected static final Log log = LogFactory.getLog(MergedOperatorFacade.class);
-    private static final String ANNOTATION_WRAPPED_OPERATORS = "plan.merging.operators-merged";
+    private static final String ANNOTATION_WRAPPED_OPERATORS = "de.uni_potsdam.hpi.loddp.operators-merged";
     private Operator operator;
 
     /**
@@ -33,6 +33,7 @@ public class MergedOperatorFacade {
     }
 
     public List<Operator> getMergedOperators() {
+        @SuppressWarnings("unchecked")
         ArrayList<Operator> operators = (ArrayList<Operator>) operator.getAnnotation(ANNOTATION_WRAPPED_OPERATORS);
         return operators;
     }

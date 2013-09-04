@@ -1,7 +1,7 @@
 package de.uni_potsdam.hpi.loddp.analyser.script;
 
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
-import de.uni_potsdam.hpi.loddp.common.ScriptCompilationException;
+import de.uni_potsdam.hpi.loddp.common.execution.ScriptCompilerException;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -61,7 +61,7 @@ public class AnalysedScriptFactory {
                 if (dumpGraphs) {
                     a.dumpPlansAsGraphs();
                 }
-            } catch (ScriptCompilationException e) {
+            } catch (ScriptCompilerException e) {
                 log.error("Could not analyse script: " + script.getScriptName(), e);
             }
         }

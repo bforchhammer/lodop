@@ -25,7 +25,7 @@ public class ExecutionStats implements ScriptStats {
     protected static final Log log = LogFactory.getLog(ExecutionStats.class);
     private final InputFile inputFile;
     private final PigStats pigStats;
-    private final PigScript pigScript;
+    private final String scriptName;
     private final long inputSize;
     private int numberMapsTotal = -1;
     private int numberReducesTotal = -1;
@@ -38,12 +38,12 @@ public class ExecutionStats implements ScriptStats {
      *
      * @param input
      * @param pigStats
-     * @param pigScript
+     * @param scriptName
      */
-    public ExecutionStats(InputFile input, PigStats pigStats, PigScript pigScript) {
+    public ExecutionStats(InputFile input, PigStats pigStats, String scriptName) {
         this.inputFile = input;
         this.pigStats = pigStats;
-        this.pigScript = pigScript;
+        this.scriptName = scriptName;
         long inputSize = inputFile.getTupleCount();
         this.inputSize = (inputSize > 0) ? inputSize : this.pigStats.getInputStats().get(0).getNumberRecords();
     }
@@ -65,7 +65,7 @@ public class ExecutionStats implements ScriptStats {
     }
 
     public String getScriptName() {
-        return pigScript.getScriptName();
+        return scriptName;
     }
 
     public String getDatasetIdentifier() {
@@ -126,7 +126,7 @@ public class ExecutionStats implements ScriptStats {
     public void printStats() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Statistics for ").append(pigScript.getScriptName().toUpperCase()).append("\n");
+        sb.append("Statistics for ").append(getScriptName().toUpperCase()).append("\n");
 
         if (iterationNumber != -1) {
             sb.append("Iteration ").append(iterationNumber).append("\n");

@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.loddp.analyser.merging;
+package de.uni_potsdam.hpi.loddp.optimization.merging;
 
 import de.uni_potsdam.hpi.loddp.common.GraphvizUtil;
 import org.apache.commons.logging.Log;
