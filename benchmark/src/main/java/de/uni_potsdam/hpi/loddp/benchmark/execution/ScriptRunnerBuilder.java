@@ -11,8 +11,10 @@ public class ScriptRunnerBuilder {
     private HadoopLocation location = HadoopLocation.LOCALHOST;
     private int repeat = 1;
     private String hdfsOutputDirectory = "";
+    private String explainOutputDirectory = "plans/";
     private boolean merged = false;
     private boolean replaceExistingResults = true;
+    private boolean explainPlans = false;
 
     public void setLocation(HadoopLocation location) {
         this.location = location;
@@ -49,13 +51,34 @@ public class ScriptRunnerBuilder {
         this.replaceExistingResults = replaceExistingResults;
     }
 
+    public void setExplainPlans(boolean explainPlans) {
+        this.explainPlans = explainPlans;
+    }
+
+    public void setExplainOutputDirectory(String explainOutputDirectory) {
+        this.explainOutputDirectory = normalizePath(explainOutputDirectory);
+    }
+
     private PigScriptRunner buildPigRunner() {
-        PigRunner runner = new BasePigRunner(location);
-        runner.setReplaceExistingResults(replaceExistingResults);
+        // Create basic pig runner.
+        PigRunner pigRunner = new BasePigRunner(location);
+
+        // Create benchmark-specific pig runner
+        PigScriptRunner runner;
         if (repeat > 1) {
-            return new RepeatedPigScriptRunner(runner, repeat);
+            runner = new RepeatedPigScriptRunner(pigRunner, repeat);
+        } else {
+            runner = new PigScriptRunner(pigRunner);
         }
-        return new PigScriptRunner(runner);
+
+        runner.setReplaceExistingResults(replaceExistingResults);
+
+        if (explainPlans) {
+            runner.setExplainPlans(true);
+            runner.setExplainOutputDirectory(explainOutputDirectory);
+        }
+
+        return runner;
     }
 
     public ScriptRunner build() {

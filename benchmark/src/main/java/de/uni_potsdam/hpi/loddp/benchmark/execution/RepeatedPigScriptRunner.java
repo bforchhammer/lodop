@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Allows to execute scripts repeatedly and merge their execution statistics.
  */
-public class RepeatedPigScriptRunner extends de.uni_potsdam.hpi.loddp.benchmark.execution.PigScriptRunner {
+public class RepeatedPigScriptRunner extends PigScriptRunner {
     private static final Log log = LogFactory.getLog(RepeatedPigScriptRunner.class);
     private int repeat;
 

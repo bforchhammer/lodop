@@ -15,7 +15,10 @@ import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTime;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Main class.
@@ -27,7 +30,7 @@ public class Main {
     protected static final String LOG_FILENAME_APACHE = "apache.log";
     protected static final String LOG_FILENAME_BENCHMARK = "benchmark.log";
     protected static final String LOG_FILENAME_REPORTING = "report.log";
-    protected static final String JOB_GRAPH_DIRECTORY = "jobs";
+    protected static final String JOB_GRAPH_DIRECTORY = "plans";
     protected static final String HDFS_WORKING_DIRECTORY = "";
     protected static final String HDFS_DATA_DIRECTORY = "data";
 
@@ -46,9 +49,6 @@ public class Main {
         // Initialize Logger.
         log = LogFactory.getLog(Main.class);
     }
-
-    private static Set<ScriptStats> statisticsCollection = new HashSet<ScriptStats>();
-    private static Set<PigScript> scripts;
 
     public static String getJobGraphDirectory() {
         return LOG_DIRECTORY + '/' + JOB_GRAPH_DIRECTORY + '/';
@@ -79,12 +79,12 @@ public class Main {
             .withLongOpt("limit")
             .withDescription("Automatically limit all results sets to the given size.")
             .hasArg().withArgName("1000")
-            .create('l'));
+            .create('l'));*/
         options.addOption(OptionBuilder
             .withLongOpt("explain")
             .withDescription("Dumps the logical, physical and mapreduce operator plans as DOT graphs for each script.")
             .hasArg(false)
-            .create('e'));*/
+            .create('e'));
         options.addOption(OptionBuilder
             .withLongOpt("repeat")
             .withDescription("Repeats the workflow the specified number of times and computes the average runtime.")
@@ -156,6 +156,12 @@ public class Main {
         // Determine whether we want to prevent deletion of previous outputs.
         if (cmd.hasOption("no-output-override")) {
             builder.setReplaceExistingResults(false);
+        }
+
+        // Determine whether to dump plans as graphs.
+        if (cmd.hasOption("explain")) {
+            builder.setExplainPlans(true);
+            builder.setExplainOutputDirectory(getJobGraphDirectory());
         }
 
         // By default execute all scripts.

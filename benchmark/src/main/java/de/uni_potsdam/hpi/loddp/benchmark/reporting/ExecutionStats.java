@@ -3,7 +3,6 @@ package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 import de.uni_potsdam.hpi.loddp.benchmark.Main;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
 import de.uni_potsdam.hpi.loddp.common.GraphvizUtil;
-import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -197,9 +196,11 @@ public class ExecutionStats implements ScriptStats {
     public void dumpDotPlan() {
         String outputFilename = new StringBuilder()
             .append(Main.getJobGraphDirectory())
+            .append(getScriptName()).append('/')
+            .append("jobstats-")
             .append(getDatasetIdentifier().replace('/', '-')).append('-')
-            .append(getInputSize()).append('-')
-            .append(getScriptName()).append("-jobstats.dot").toString();
+            .append(getInputSize())
+            .append(".dot").toString();
         File dotFile = new File(outputFilename);
         dotFile.getParentFile().mkdirs();
         try {
