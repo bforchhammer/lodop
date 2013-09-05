@@ -6,7 +6,9 @@ import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.newplan.DependencyOrderWalker;
 import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.OperatorPlan;
-import org.apache.pig.newplan.logical.relational.*;
+import org.apache.pig.newplan.logical.optimizer.AllSameRalationalNodesVisitor;
+import org.apache.pig.newplan.logical.relational.LogicalPlan;
+import org.apache.pig.newplan.logical.relational.LogicalRelationalOperator;
 
 import java.util.*;
 
@@ -69,7 +71,7 @@ public class LogicalPlanMerger {
      * Visits all relational nodes in the given plan in dependency order and adds each visited node to the merged
      * logical plan.
      */
-    private class Visitor extends LogicalRelationalNodesVisitor {
+    private class Visitor extends AllSameRalationalNodesVisitor {
         private Visitor(OperatorPlan plan) throws FrontendException {
             super(plan, new DependencyOrderWalker(plan));
         }
@@ -79,7 +81,8 @@ public class LogicalPlanMerger {
          *
          * @param operator
          */
-        public void merge(Operator operator) {
+        @Override
+        protected void execute(LogicalRelationalOperator operator) throws FrontendException {
             // Look up predecessors in merged plan and check whether they have any common successors in the merged
             // plan. If yes, one of them may be equivalent to the operator which we are currently trying to merge in.
             Collection<Operator> candidates = new ArrayList<Operator>(mergedOperators.values());
@@ -141,101 +144,6 @@ public class LogicalPlanMerger {
             for (Operator predecessor : mergedSoftPredecessors) {
                 mergedPlan.createSoftLink(predecessor, operator);
             }
-        }
-
-        @Override
-        public void visit(LOLoad load) throws FrontendException {
-            merge(load);
-        }
-
-        @Override
-        public void visit(LOFilter filter) throws FrontendException {
-            merge(filter);
-        }
-
-        @Override
-        public void visit(LOStore store) throws FrontendException {
-            merge(store);
-        }
-
-        @Override
-        public void visit(LOJoin join) throws FrontendException {
-            merge(join);
-        }
-
-        @Override
-        public void visit(LOForEach foreach) throws FrontendException {
-            merge(foreach);
-        }
-
-        @Override
-        public void visit(LOGenerate gen) throws FrontendException {
-            merge(gen);
-        }
-
-        @Override
-        public void visit(LOInnerLoad load) throws FrontendException {
-            merge(load);
-        }
-
-        @Override
-        public void visit(LOCube cube) throws FrontendException {
-            merge(cube);
-        }
-
-        @Override
-        public void visit(LOCogroup loCogroup) throws FrontendException {
-            merge(loCogroup);
-        }
-
-        @Override
-        public void visit(LOSplit loSplit) throws FrontendException {
-            merge(loSplit);
-        }
-
-        @Override
-        public void visit(LOSplitOutput loSplitOutput) throws FrontendException {
-            merge(loSplitOutput);
-        }
-
-        @Override
-        public void visit(LOUnion loUnion) throws FrontendException {
-            merge(loUnion);
-        }
-
-        @Override
-        public void visit(LOSort loSort) throws FrontendException {
-            merge(loSort);
-        }
-
-        @Override
-        public void visit(LORank loRank) throws FrontendException {
-            merge(loRank);
-        }
-
-        @Override
-        public void visit(LODistinct loDistinct) throws FrontendException {
-            merge(loDistinct);
-        }
-
-        @Override
-        public void visit(LOLimit loLimit) throws FrontendException {
-            merge(loLimit);
-        }
-
-        @Override
-        public void visit(LOCross loCross) throws FrontendException {
-            merge(loCross);
-        }
-
-        @Override
-        public void visit(LOStream loStream) throws FrontendException {
-            merge(loStream);
-        }
-
-        @Override
-        public void visit(LONative nativeMR) throws FrontendException {
-            merge(nativeMR);
         }
     }
 
