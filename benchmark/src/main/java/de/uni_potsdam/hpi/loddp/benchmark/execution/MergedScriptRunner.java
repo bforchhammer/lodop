@@ -22,12 +22,12 @@ public class MergedScriptRunner extends AbstractScriptRunner {
     protected static final Log log = LogFactory.getLog(MergedScriptRunner.class);
     private boolean mergeOptimizedPlans;
 
-    public MergedScriptRunner(PigScriptRunner pigScriptRunner, String hdfsWorkingDirectory) {
-        this(pigScriptRunner, hdfsWorkingDirectory, false);
+    public MergedScriptRunner(PigScriptRunner pigScriptRunner, String hdfsOutputDirectory) {
+        this(pigScriptRunner, hdfsOutputDirectory, false);
     }
 
-    public MergedScriptRunner(PigScriptRunner pigScriptRunner, String hdfsWorkingDirectory, boolean mergeOptimizedPlans) {
-        super(pigScriptRunner, hdfsWorkingDirectory);
+    public MergedScriptRunner(PigScriptRunner pigScriptRunner, String hdfsOutputDirectory, boolean mergeOptimizedPlans) {
+        super(pigScriptRunner, hdfsOutputDirectory);
         this.mergeOptimizedPlans = mergeOptimizedPlans;
     }
 

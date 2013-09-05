@@ -1,7 +1,6 @@
 package de.uni_potsdam.hpi.loddp.benchmark.execution;
 
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ScriptStats;
-import de.uni_potsdam.hpi.loddp.common.execution.PigRunner;
 import de.uni_potsdam.hpi.loddp.common.execution.PigRunnerException;
 import de.uni_potsdam.hpi.loddp.common.execution.ScriptCompiler;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
@@ -17,8 +16,8 @@ import java.util.List;
 public class DefaultScriptRunner extends AbstractScriptRunner {
     private static final Log log = LogFactory.getLog(DefaultScriptRunner.class);
 
-    public DefaultScriptRunner(PigScriptRunner pigScriptRunner, String hdfsWorkingDirectory) {
-        super(pigScriptRunner, hdfsWorkingDirectory);
+    public DefaultScriptRunner(PigScriptRunner pigScriptRunner, String hdfsOutputDirectory) {
+        super(pigScriptRunner, hdfsOutputDirectory);
     }
 
     @Override

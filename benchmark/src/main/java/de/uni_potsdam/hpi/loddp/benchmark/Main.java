@@ -2,7 +2,7 @@ package de.uni_potsdam.hpi.loddp.benchmark;
 
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunner;
-import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunnerFactory;
+import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunnerBuilder;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ReportGenerator;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ScriptStats;
 import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
@@ -74,19 +74,17 @@ public class Main {
                 HDFS_WORKING_DIRECTORY + HDFS_DATA_DIRECTORY + "/[dataset].nq.gz." +
                 "Multiple datasets can be specified and are executed in sequence.")
             .hasArgs().withArgName("dbpedia-1M")
-            .create('d')
-        );
-        options.addOption(OptionBuilder
+            .create('d'));
+        /*options.addOption(OptionBuilder
             .withLongOpt("limit")
             .withDescription("Automatically limit all results sets to the given size.")
             .hasArg().withArgName("1000")
-            .create('l')
-        );
+            .create('l'));
         options.addOption(OptionBuilder
             .withLongOpt("explain")
             .withDescription("Dumps the logical, physical and mapreduce operator plans as DOT graphs for each script.")
             .hasArg(false)
-            .create('e'));
+            .create('e'));*/
         options.addOption(OptionBuilder
             .withLongOpt("repeat")
             .withDescription("Repeats the workflow the specified number of times and computes the average runtime.")
@@ -97,6 +95,16 @@ public class Main {
             .withDescription("Merge scripts and execute the merged plan.")
             .hasArg(false)
             .create('m'));
+        options.addOption(OptionBuilder
+            .withLongOpt("output-directory")
+            .withDescription("Output directory on HDFS to store results in.")
+            .hasArg().withArgName("test-1")
+            .create('o'));
+        options.addOption(OptionBuilder
+            .withLongOpt("no-output-override")
+            .withDescription("By default, any existing output is removed before execution.")
+            .hasArg(false)
+            .create());
         return options;
     }
 
@@ -123,14 +131,35 @@ public class Main {
             return;
         }
 
+        ScriptRunnerBuilder builder = new ScriptRunnerBuilder();
+
         // Determine hadoop location, by default use localhost.
-        HadoopLocation hadoopLocation = HadoopLocation.LOCALHOST;
         if (cmd.hasOption("cluster")) {
-            hadoopLocation = HadoopLocation.HPI_CLUSTER;
+            builder.setLocation(HadoopLocation.HPI_CLUSTER);
+        }
+
+        // Determine whether to repeat execution.
+        if (cmd.hasOption("repeat")) {
+            builder.setRepeat(Integer.parseInt(cmd.getOptionValue("repeat")));
+        }
+
+        // Determine whether to merge plans together.
+        if (cmd.hasOption("merge")) {
+            builder.setMerged(true);
+        }
+
+        // Determine output directory.
+        if (cmd.hasOption("output-directory")) {
+            builder.setHdfsOutputDirectory(normalizePath(cmd.getOptionValue("output-directory")));
+        }
+
+        // Determine whether we want to prevent deletion of previous outputs.
+        if (cmd.hasOption("no-output-override")) {
+            builder.setReplaceExistingResults(false);
         }
 
         // By default execute all scripts.
-        Set<PigScript> scripts = null;
+        Set<PigScript> scripts;
         if (cmd.hasOption("scripts")) {
             scripts = PigScriptFactory.findPigScripts(cmd.getOptionValues("scripts"));
         } else {
@@ -147,36 +176,30 @@ public class Main {
             }
         } else {
             // Use DBpedia 1M.
-            inputFiles.add(new InputFile(HDFS_DATA_DIRECTORY + "/dbpedia-1M.nq.gz"));
+            inputFiles.add(new InputFile(normalizeDatasetFilename("dbpedia-1M")));
         }
         logInfo(inputFiles);
 
-        int repeat = 1;
-        if (cmd.hasOption("repeat")) {
-            repeat = Integer.parseInt(cmd.getOptionValue("repeat"));
-            if (repeat < 1) {
-                repeat = 1;
-                log.warn("--repeat parameter ignored because the specified value was negative or zero (positive " +
-                    "integer expected).");
-            }
-            log.info(String.format("Repeating each script %d times.", repeat));
-        }
-
-        boolean mergeScripts = false;
-        if (cmd.hasOption("merge")) {
-            mergeScripts = true;
-            log.info("Scripts are merged into one large plan.");
-        }
-
-        ScriptRunner runner = ScriptRunnerFactory.getScriptRunner(hadoopLocation, HDFS_WORKING_DIRECTORY,
-            mergeScripts, repeat);
-
+        // Build ScriptRunner and execute all the things.
+        ScriptRunner runner = builder.build();
         List<ScriptStats> statistics = runner.execute(scripts, inputFiles);
 
+        // Crunch some numbers based on collected statistics.
         ReportGenerator rg = new ReportGenerator(statistics);
         rg.scalabilityReport();
         rg.scriptComparison();
         rg.featureRuntimeAnalysis();
+    }
+
+    private static String normalizePath(String path) {
+        // prepend "working directory" value unless we have an absolute path.
+        if (!HDFS_WORKING_DIRECTORY.isEmpty() && FilenameUtils.getPrefixLength(path) <= 0) {
+            StringBuilder sb = new StringBuilder(HDFS_WORKING_DIRECTORY);
+            if (!HDFS_WORKING_DIRECTORY.endsWith("/")) sb.append("/");
+            sb.append(path);
+            return sb.toString();
+        }
+        return path;
     }
 
     private static String normalizeDatasetFilename(String value) {
@@ -188,7 +211,7 @@ public class Main {
         if (FilenameUtils.indexOfExtension(value) == -1) {
             sb.append(".nq.gz");
         }
-        return sb.toString();
+        return normalizePath(sb.toString());
     }
 
     private static void logInfo(List<InputFile> inputFiles) {

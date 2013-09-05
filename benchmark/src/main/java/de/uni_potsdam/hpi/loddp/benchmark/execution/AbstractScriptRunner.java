@@ -12,18 +12,18 @@ import org.apache.commons.logging.LogFactory;
  */
 public abstract class AbstractScriptRunner implements ScriptRunner {
     private static final Log log = LogFactory.getLog(AbstractScriptRunner.class);
-    protected final String hdfsWorkingDirectory;
+    protected final String hdfsOutputDirectory;
     protected PigScriptRunner pigScriptRunner;
 
     /**
      * Constructor.
      *
      * @param pigScriptRunner
-     * @param hdfsWorkingDirectory
+     * @param hdfsOutputDirectory
      */
-    public AbstractScriptRunner(PigScriptRunner pigScriptRunner, String hdfsWorkingDirectory) {
+    protected AbstractScriptRunner(PigScriptRunner pigScriptRunner, String hdfsOutputDirectory) {
         this.pigScriptRunner = pigScriptRunner;
-        this.hdfsWorkingDirectory = hdfsWorkingDirectory;
+        this.hdfsOutputDirectory = hdfsOutputDirectory;
     }
 
     /**
@@ -42,12 +42,12 @@ public abstract class AbstractScriptRunner implements ScriptRunner {
     }
 
     protected String getInputFilename(InputFile file) {
-        return hdfsWorkingDirectory + file.getFilename();
+        return file.getFilename();
     }
 
     protected String getOutputFilename(PigScript script, InputFile file) {
-        return hdfsWorkingDirectory + "results-" + file.getFileSetIdentifier() + "-" + file.getTupleCount() + "/" +
-            script.getScriptName();
+        return hdfsOutputDirectory + "results-" + file.getFileSetIdentifier() + "-" +
+            file.getTupleCount() + "/" + script.getScriptName();
     }
 
     /**
