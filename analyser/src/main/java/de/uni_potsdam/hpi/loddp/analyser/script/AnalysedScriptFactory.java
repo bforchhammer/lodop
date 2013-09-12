@@ -1,7 +1,6 @@
 package de.uni_potsdam.hpi.loddp.analyser.script;
 
-import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
-import de.uni_potsdam.hpi.loddp.common.execution.ScriptCompilerException;
+import de.uni_potsdam.hpi.loddp.common.execution.ScriptCompiler;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,37 +14,9 @@ import java.util.Set;
 
 public class AnalysedScriptFactory {
     private static final Log log = LogFactory.getLog(AnalysedScriptFactory.class);
-    private static ScriptAnalyser scriptAnalyser = null;
-
-    protected static ScriptAnalyser getScriptAnalyser(PigContext pigContext) throws IOException {
-        if (scriptAnalyser == null) {
-            scriptAnalyser = new ScriptAnalyser(pigContext);
-        }
-        return scriptAnalyser;
-    }
-
-    protected static PigContext createPigContext() throws IOException {
-        PigContext pigContext = PigContextUtil.getContext();
-
-        // Used to skip some validation rules, e.g. checking of input/output files.
-        pigContext.inExplain = true;
-
-        // Initialise connection to local Hadoop instance.
-        pigContext.connect();
-
-        return pigContext;
-    }
-
-    public static List<AnalysedScript> analyse(Set<PigScript> scripts) throws IOException {
-        return analyse(scripts, false, createPigContext());
-    }
 
     public static List<AnalysedScript> analyse(Set<PigScript> scripts, PigContext pigContext) throws IOException {
         return analyse(scripts, false, pigContext);
-    }
-
-    public static List<AnalysedScript> analyse(Set<PigScript> scripts, boolean dumpGraphs) throws IOException {
-        return analyse(scripts, dumpGraphs, createPigContext());
     }
 
     public static List<AnalysedScript> analyse(Set<PigScript> scripts, boolean dumpGraphs, PigContext pigContext) throws IOException {
@@ -55,14 +26,11 @@ public class AnalysedScriptFactory {
         while (iterator.hasNext()) {
             PigScript script = iterator.next();
             log.debug("Analysing script: " + script.getScriptName());
-            try {
-                AnalysedScript a = getScriptAnalyser(pigContext).analyse(script);
-                analysed.add(a);
-                if (dumpGraphs) {
-                    a.dumpPlansAsGraphs();
-                }
-            } catch (ScriptCompilerException e) {
-                log.error("Could not analyse script: " + script.getScriptName(), e);
+            ScriptCompiler scriptCompiler = new ScriptCompiler(pigContext, script, "fake-input.nq.gz", "fake-output");
+            AnalysedScript a = new AnalysedScript(script, scriptCompiler);
+            analysed.add(a);
+            if (dumpGraphs) {
+                a.dumpPlansAsGraphs();
             }
         }
         log.info("Script analysis complete.");

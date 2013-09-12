@@ -61,6 +61,7 @@ public class Main {
         }
 
         PigContext pigContext = PigContextUtil.getContext(HadoopLocation.LOCALHOST);
+        pigContext.inExplain = true; // Used to skip some validation rules, e.g. checking of input/output files.
         pigContext.connect();
 
         // By default execute all scripts.
