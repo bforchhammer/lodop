@@ -2,6 +2,7 @@ package de.uni_potsdam.hpi.loddp.common.execution;
 
 import de.uni_potsdam.hpi.loddp.common.LogicalPlanUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher;
@@ -148,7 +149,7 @@ public class ScriptCompiler {
 
                 // Attach a STORE operator for the last alias in the script.
                 QueryParserUtils.attachStorePlan(currentScope, logicalPlan, outputFilename, null,
-                    logicalPlanOperators.get(pigContext.getLastAlias()), "store", pigContext);
+                    logicalPlanOperators.get(pigContext.getLastAlias()), FilenameUtils.getName(outputFilename), pigContext);
 
                 // Perform some initial logical plan optimizations (copied straight from PigServer).
                 optimizeLogicalPlan();
