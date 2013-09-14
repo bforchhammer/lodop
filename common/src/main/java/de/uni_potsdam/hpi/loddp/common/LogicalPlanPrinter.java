@@ -50,6 +50,7 @@ public class LogicalPlanPrinter extends PlanDumper {
             ps.println("digraph plan {");
             ps.println("compound=true;");
             //ps.println("ratio=auto;");
+            ps.println("rankdir=LR;");
             ps.println("forcelabels=true;");
             ps.println("node [shape=rect];");
         }
