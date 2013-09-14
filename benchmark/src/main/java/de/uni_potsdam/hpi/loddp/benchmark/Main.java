@@ -64,6 +64,11 @@ public class Main {
             .withArgName("number_of_instances")
             .create('s'));
         options.addOption(OptionBuilder
+            .withLongOpt("inverse")
+            .withDescription("Use --scripts as a blacklist, i.e., execute all scripts except the ones specified with --scripts.")
+            .hasArg(false)
+            .create('i'));
+        options.addOption(OptionBuilder
             .withLongOpt("cluster")
             .withDescription("Use tenemhead2 cluster for computation.")
             .hasArg(false)
@@ -167,7 +172,8 @@ public class Main {
         // By default execute all scripts.
         Set<PigScript> scripts;
         if (cmd.hasOption("scripts")) {
-            scripts = PigScriptFactory.findPigScripts(cmd.getOptionValues("scripts"));
+            boolean inverse = cmd.hasOption("inverse");
+            scripts = PigScriptFactory.findPigScripts(cmd.getOptionValues("scripts"), inverse);
         } else {
             scripts = PigScriptFactory.findPigScripts();
         }

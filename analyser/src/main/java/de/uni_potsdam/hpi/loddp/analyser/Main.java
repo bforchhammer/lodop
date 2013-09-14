@@ -3,7 +3,6 @@ package de.uni_potsdam.hpi.loddp.analyser;
 import de.uni_potsdam.hpi.loddp.analyser.matching.LogicalPlanMatcher;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
-import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
@@ -28,6 +27,11 @@ public class Main {
             .hasArgs()
             .withArgName("classes_*")
             .create('s'));
+        options.addOption(OptionBuilder
+            .withLongOpt("inverse")
+            .withDescription("Use --scripts as a blacklist, i.e., execute all scripts except the ones specified with --scripts.")
+            .hasArg(false)
+            .create('i'));
         options.addOption(OptionBuilder
             .withLongOpt("graphs")
             .withDescription("Output PNG graphs of plans for all analysed scripts.")
@@ -67,7 +71,8 @@ public class Main {
         // By default execute all scripts.
         Set<PigScript> scripts = null;
         if (cmd.hasOption("scripts")) {
-            scripts = PigScriptFactory.findPigScripts(cmd.getOptionValues("scripts"));
+            boolean inverse = cmd.hasOption("inverse");
+            scripts = PigScriptFactory.findPigScripts(cmd.getOptionValues("scripts"), inverse);
         } else {
             scripts = PigScriptFactory.findPigScripts();
         }

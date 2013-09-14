@@ -40,11 +40,19 @@ public class PigScriptFactory {
      * Loads and returns a set of PigScript objects matching the given list of script names.
      */
     public static Set<PigScript> findPigScripts(String[] whitelist) {
+        return findPigScripts(whitelist, false);
+    }
+
+    /**
+     * Loads and returns a set of PigScript objects matching the given list of script names. If inverse is set to true,
+     * returns all scripts which are NOT matching the given list of script names.
+     */
+    public static Set<PigScript> findPigScripts(String[] whitelist, boolean inverse) {
         Set<PigScript> scripts = loadPigScripts();
         Set<PigScript> scripts_new = new HashSet<PigScript>();
         String regex = stringToPattern(whitelist);
         for (PigScript s : scripts) {
-            if (s.getScriptName().matches(regex)) {
+            if (s.getScriptName().matches(regex) != inverse) {
                 scripts_new.add(s);
             }
         }
