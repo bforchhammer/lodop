@@ -16,6 +16,7 @@ import org.apache.pig.impl.plan.CompilationMessageCollector;
 import org.apache.pig.impl.util.UDFContext;
 import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.logical.relational.LOLoad;
+import org.apache.pig.newplan.logical.relational.LOStore;
 import org.apache.pig.newplan.logical.relational.LogicalPlan;
 import org.apache.pig.newplan.logical.visitor.*;
 import org.apache.pig.parser.QueryParserDriver;
@@ -91,6 +92,7 @@ public class ScriptCompiler {
         resetPhysicalPlan();
     }
 
+    @Deprecated
     private void replaceSourceFilename(LogicalPlan plan, String filename) throws ScriptCompilerException {
         List<Operator> sources = plan.getSources();
         Map<LOLoad, LOLoad> replacements = new HashMap<LOLoad, LOLoad>();
@@ -147,9 +149,12 @@ public class ScriptCompiler {
                 // Compile the logical plan.
                 compileLogicalPlan(pigQuery);
 
-                // Attach a STORE operator for the last alias in the script.
-                QueryParserUtils.attachStorePlan(currentScope, logicalPlan, outputFilename, null,
-                    logicalPlanOperators.get(pigContext.getLastAlias()), FilenameUtils.getName(outputFilename), pigContext);
+                // Attach a STORE operator for the last alias in the script (unless there is already one).
+                Operator lastOperator = logicalPlanOperators.get(pigContext.getLastAlias());
+                if (!(lastOperator instanceof LOStore)) {
+                    QueryParserUtils.attachStorePlan(currentScope, logicalPlan, outputFilename, null, lastOperator,
+                        FilenameUtils.getName(outputFilename), pigContext);
+                }
 
                 // Perform some initial logical plan optimizations (copied straight from PigServer).
                 optimizeLogicalPlan();
