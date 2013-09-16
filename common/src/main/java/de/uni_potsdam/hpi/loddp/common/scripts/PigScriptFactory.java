@@ -25,7 +25,7 @@ public class PigScriptFactory {
     /**
      * Name of directory containing pig scripts. Used for look-up on classpath in {@link #findPigScripts}.
      */
-    protected static final String PIG_SCRIPTS_DIRECTORY = "pig-queries";
+    protected static String PIG_SCRIPTS_DIRECTORY = "pig-queries";
     protected static final Log log = LogFactory.getLog(PigScriptFactory.class);
     /**
      * File filter which only accepts files having the "pig" file extension.
@@ -35,6 +35,10 @@ public class PigScriptFactory {
             return file.isFile() && FilenameUtils.isExtension(file.getName(), "pig");
         }
     };
+
+    public static void setPigScriptsDirectory(String PIG_SCRIPTS_DIRECTORY) {
+        PigScriptFactory.PIG_SCRIPTS_DIRECTORY = PIG_SCRIPTS_DIRECTORY;
+    }
 
     /**
      * Loads and returns a set of PigScript objects matching the given list of script names.

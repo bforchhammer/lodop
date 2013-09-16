@@ -3,6 +3,7 @@ package de.uni_potsdam.hpi.loddp.analyser;
 import de.uni_potsdam.hpi.loddp.analyser.matching.LogicalPlanMatcher;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
+import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
@@ -28,6 +29,12 @@ public class Main {
             .withArgName("classes_*")
             .create('s'));
         options.addOption(OptionBuilder
+            .withLongOpt("scripts-directory")
+            .withDescription("Directory to load scripts from, relative to resource-path.")
+            .hasArg()
+            .withArgName("pig-queries")
+            .create());
+        options.addOption(OptionBuilder
             .withLongOpt("inverse")
             .withDescription("Use --scripts as a blacklist, i.e., execute all scripts except the ones specified with --scripts.")
             .hasArg(false)
@@ -44,7 +51,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Options options = getCliOptions();
         CommandLineParser parser = new BasicParser();
-        CommandLine cmd = null;
+        CommandLine cmd;
         String cmdLineSyntax = "./gradlew :analyser:run -PappArgs=\"[args]\"";
         try {
             cmd = parser.parse(options, args);
@@ -62,6 +69,12 @@ public class Main {
         boolean dumpPlansAsGraphs = false;
         if (cmd.hasOption("graphs")) {
             dumpPlansAsGraphs = true;
+        }
+
+        // Determine scripts directory.
+        if (cmd.hasOption("scripts-directory")) {
+            // @todo convert PigScriptFactory into a "Loader" class following the Builder pattern.
+            PigScriptFactory.setPigScriptsDirectory(cmd.getOptionValue("scripts-directory"));
         }
 
         PigContext pigContext = PigContextUtil.getContext(HadoopLocation.LOCALHOST);

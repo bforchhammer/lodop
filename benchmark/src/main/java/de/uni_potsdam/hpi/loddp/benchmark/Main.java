@@ -64,6 +64,12 @@ public class Main {
             .withArgName("number_of_instances")
             .create('s'));
         options.addOption(OptionBuilder
+            .withLongOpt("scripts-directory")
+            .withDescription("Directory to load scripts from, relative to resource-path.")
+            .hasArg()
+            .withArgName("pig-queries")
+            .create());
+        options.addOption(OptionBuilder
             .withLongOpt("inverse")
             .withDescription("Use --scripts as a blacklist, i.e., execute all scripts except the ones specified with --scripts.")
             .hasArg(false)
@@ -121,7 +127,7 @@ public class Main {
     public static void main(String[] args) {
         Options options = getCliOptions();
         CommandLineParser parser = new BasicParser();
-        CommandLine cmd = null;
+        CommandLine cmd;
         String cmdLineSyntax = "./gradlew :benchmark:run -PappArgs=\"[args]\"";
         try {
             cmd = parser.parse(options, args);
@@ -167,6 +173,12 @@ public class Main {
         if (cmd.hasOption("explain")) {
             builder.setExplainPlans(true);
             builder.setExplainOutputDirectory(getJobGraphDirectory());
+        }
+
+        // Determine scripts directory.
+        if (cmd.hasOption("scripts-directory")) {
+            // @todo convert PigScriptFactory into a "Loader" class following the Builder pattern.
+            PigScriptFactory.setPigScriptsDirectory(cmd.getOptionValue("scripts-directory"));
         }
 
         // By default execute all scripts.
