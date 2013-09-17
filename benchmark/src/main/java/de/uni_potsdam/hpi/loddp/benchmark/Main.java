@@ -25,20 +25,23 @@ import java.util.Set;
  */
 public class Main {
 
-    protected static final Log log;
-    protected static final String LOG_DIRECTORY;
     protected static final String LOG_FILENAME_APACHE = "apache.log";
     protected static final String LOG_FILENAME_BENCHMARK = "benchmark.log";
     protected static final String LOG_FILENAME_REPORTING = "report.log";
     protected static final String JOB_GRAPH_DIRECTORY = "plans";
     protected static final String HDFS_WORKING_DIRECTORY = "";
     protected static final String HDFS_DATA_DIRECTORY = "data";
+    protected static Log log;
 
-    static {
-        // Setup directory for log files (this will only work, if executed before any logger is initialised.
-        LOG_DIRECTORY = String.format("logs/%s", new DateTime().toString("YYYY-MM-dd-HH-mm-ss"));
-        new File(LOG_DIRECTORY).mkdirs();
-        System.setProperty("log.directory", LOG_DIRECTORY);
+    private static void initLogging(String jobName) {
+        // Setup directory for log files (this will only work if executed before any logger is initialised.
+        StringBuilder logDirectory = new StringBuilder("logs/");
+        logDirectory.append(new DateTime().toString("YYYY-MM-dd-HH-mm-ss"));
+        if (jobName != null && !jobName.isEmpty()) {
+            logDirectory.append('-').append(jobName);
+        }
+        new File(logDirectory.toString()).mkdirs();
+        System.setProperty("log.directory", logDirectory.toString());
         System.out.println("Logging to = " + System.getProperty("log.directory"));
 
         // Configure file names for log files.
@@ -51,12 +54,18 @@ public class Main {
     }
 
     public static String getJobGraphDirectory() {
-        return LOG_DIRECTORY + '/' + JOB_GRAPH_DIRECTORY + '/';
+        return System.getProperty("log.directory") + '/' + JOB_GRAPH_DIRECTORY + '/';
     }
 
     private static Options getCliOptions() {
         Options options = new Options();
         options.addOption("h", "help", false, "Print this help message.");
+        options.addOption(OptionBuilder
+            .withLongOpt("job-name")
+            .withDescription("Name of the benchmark job, used for the name of the log directory.")
+            .hasArg()
+            .withArgName("experiment-77")
+            .create('n'));
         options.addOption(OptionBuilder
             .withLongOpt("scripts")
             .withDescription("Space-separated list of pig script names to execute. Asterisk (*) can be used as a wildcard.")
@@ -132,7 +141,7 @@ public class Main {
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
-            log.error(e.getMessage());
+            System.out.println(e.getMessage());
             new HelpFormatter().printHelp(cmdLineSyntax, options);
             return;
         }
@@ -141,6 +150,9 @@ public class Main {
             new HelpFormatter().printHelp(cmdLineSyntax, options);
             return;
         }
+
+        // Setup logging.
+        initLogging(cmd.getOptionValue("job-name"));
 
         ScriptRunnerBuilder builder = new ScriptRunnerBuilder();
 

@@ -30,7 +30,7 @@ public class DefaultScriptRunner extends AbstractScriptRunner {
                     stats.add(this.execute(compiler, script.getScriptName(), file));
                 } catch (PigRunnerException e) {
                     log.error(String.format("Failed to execute pig script %s on %s / %d.", script.getScriptName(),
-                        file.getFileSetIdentifier(), file.getTupleCount()));
+                        file.getFileSetIdentifier(), file.getTupleCount()), e);
                 }
             }
         }
