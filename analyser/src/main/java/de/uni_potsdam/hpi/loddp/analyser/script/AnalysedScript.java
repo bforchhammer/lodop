@@ -130,9 +130,13 @@ public class AnalysedScript extends PigScript {
         if (plan instanceof LogicalPlan) {
             new LogicalPlanPrinter((LogicalPlan) plan, ps).dump();
         } else if (plan instanceof PhysicalPlan) {
-            new DotPOPrinter((PhysicalPlan) plan, ps).dump();
+            DotPOPrinter printer = new DotPOPrinter((PhysicalPlan) plan, ps);
+            printer.setVerbose(false);
+            printer.dump();
         } else if (plan instanceof MROperPlan) {
-            new DotMRPrinter((MROperPlan) plan, ps).dump();
+            DotMRPrinter printer = new DotMRPrinter((MROperPlan) plan, ps);
+            printer.setVerbose(false);
+            printer.dump();
         } else {
             throw new IllegalArgumentException("Expected plan parameter to be an object of type LogicalPlan, " +
                 "PhysicalPlan, or MROperPlan . Received " + plan.getClass().getName() + " instead.");
