@@ -128,7 +128,9 @@ public class AnalysedScript extends PigScript {
         dotFile.getParentFile().mkdirs();
         PrintStream ps = new PrintStream(dotFile);
         if (plan instanceof LogicalPlan) {
-            new LogicalPlanPrinter((LogicalPlan) plan, ps).dump();
+            LogicalPlanPrinter printer = new LogicalPlanPrinter((LogicalPlan) plan, ps);
+            printer.setVerbose(false);
+            printer.dump();
         } else if (plan instanceof PhysicalPlan) {
             DotPOPrinter printer = new DotPOPrinter((PhysicalPlan) plan, ps);
             printer.setVerbose(false);

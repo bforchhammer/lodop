@@ -8,6 +8,7 @@ dependencies {
     runtime 'dk.brics.automaton:automaton:1.11-8'
 
     compile project(':common')
+    compile project(':optimization')
 }
 
 task(run, dependsOn: ['classes', ':loddp-udf:packageJar'], type: JavaExec) {

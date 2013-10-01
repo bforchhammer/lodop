@@ -3,14 +3,16 @@ package de.uni_potsdam.hpi.loddp.analyser;
 import de.uni_potsdam.hpi.loddp.analyser.matching.LogicalPlanMatcher;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
-import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
+import de.uni_potsdam.hpi.loddp.optimization.merging.LogicalPlanMerger;
+import de.uni_potsdam.hpi.loddp.optimization.merging.MergedLogicalPlan;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.impl.PigContext;
+import org.apache.pig.newplan.logical.relational.LogicalPlan;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,8 +45,17 @@ public class Main {
             .withLongOpt("graphs")
             .withDescription("Output PNG graphs of plans for all analysed scripts.")
             .hasArg(false)
-            .create('g')
-        );
+            .create('g'));
+        options.addOption(OptionBuilder
+            .withLongOpt("merge")
+            .withDescription("Merge scripts and analyse the merged plan.")
+            .hasArg(false)
+            .create('m'));
+        options.addOption(OptionBuilder
+            .withLongOpt("analyse-preprocessing")
+            .withDescription("Analyse common pre-processing.")
+            .hasArg(false)
+            .create('p'));
         return options;
     }
 
@@ -77,7 +88,7 @@ public class Main {
             PigScriptFactory.setPigScriptsDirectory(cmd.getOptionValue("scripts-directory"));
         }
 
-        PigContext pigContext = PigContextUtil.getContext(HadoopLocation.LOCALHOST);
+        PigContext pigContext = PigContextUtil.getContext();
         pigContext.inExplain = true; // Used to skip some validation rules, e.g. checking of input/output files.
         pigContext.connect();
 
@@ -90,12 +101,27 @@ public class Main {
             scripts = PigScriptFactory.findPigScripts();
         }
 
+        boolean findCommonPreprocessing = cmd.hasOption("analyse-preprocessing");
+        boolean mergePlans = cmd.hasOption("merge");
+
         // Analyse scripts.
         List<AnalysedScript> analysedScripts = AnalysedScriptFactory.analyse(scripts, dumpPlansAsGraphs, pigContext);
 
         // Compare logical plans and try to find common pre-processing steps.
-        if (analysedScripts.size() > 2) {
+        if (findCommonPreprocessing && analysedScripts.size() > 1) {
             LogicalPlanMatcher.findCommonPreprocessing(analysedScripts, false);
+        }
+
+        // Merge plans into one monster plan.
+        MergedLogicalPlan mergedPlan = null;
+        if (mergePlans && analysedScripts.size() > 0) {
+            LogicalPlanMerger merger = new LogicalPlanMerger();
+            for (AnalysedScript script : analysedScripts) {
+                LogicalPlan plan = script.getUnoptimizedLogicalPlan();
+                if (plan != null) merger.merge(plan);
+            }
+            mergedPlan = merger.getMergedPlan();
+            mergedPlan.dumpAsGraph("dot/all-merged-logical.dot");
         }
     }
 }
