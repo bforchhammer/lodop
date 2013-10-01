@@ -6,6 +6,7 @@ import de.uni_potsdam.hpi.loddp.common.GraphvizUtil;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.mapred.JobID;
 import org.apache.pig.tools.pigstats.InputStats;
 import org.apache.pig.tools.pigstats.JobStats;
 import org.apache.pig.tools.pigstats.OutputStats;
@@ -122,6 +123,72 @@ public class ExecutionStats implements ScriptStats {
         return avgReduceTimeTotal;
     }
 
+    private String buildPhaseStatistics() {
+        StringBuilder time_sb = new StringBuilder("Time overview:\n");
+        time_sb.append("JobId\tSetup\tMap\tReduces\tCleanup\tTotal\n");
+
+        StringBuilder bytes_sb = new StringBuilder("I/O overview:\n");
+        bytes_sb.append("JobId\tPhase\tHDFS read\tLocal read\tHDFS written\tLocal written\n");
+
+        List<JobStats> jobs = pigStats.getJobGraph().getJobList();
+
+        // map: map, combine?
+        // reduce: shuffle, sort, reduce?
+        long previousJobFinished = 0;
+        for (JobStats js : jobs) {
+            JobID jobId = JobID.forName(js.getJobId());
+            try {
+                TaskPhaseStatistics setup = TaskPhaseStatistics.getTaskPhaseStatistics("setup",
+                    pigStats.getJobClient().getSetupTaskReports(jobId));
+                TaskPhaseStatistics maps = TaskPhaseStatistics.getTaskPhaseStatistics("map",
+                    pigStats.getJobClient().getMapTaskReports(jobId));
+                TaskPhaseStatistics reduces = TaskPhaseStatistics.getTaskPhaseStatistics("reduce",
+                    pigStats.getJobClient().getReduceTaskReports(jobId));
+                TaskPhaseStatistics cleanups = TaskPhaseStatistics.getTaskPhaseStatistics("cleanup",
+                    pigStats.getJobClient().getCleanupTaskReports(jobId));
+                TaskPhaseStatistics[] allPhases = new TaskPhaseStatistics[] {setup, maps, reduces, cleanups};
+                TaskPhaseStatistics total = new TaskPhaseStatistics("total", allPhases);
+
+                // @todo this should consider the job DAG (not all jobs are sequential).
+                // @todo also, we should include stats for when something was started from PIG.
+                // @todo and best output the whole thing in a graph.
+                if (previousJobFinished != 0) {
+                    time_sb.append("Between jobs\t\t\t\t").append(total.getStartTime() - previousJobFinished).append("\n");
+                }
+                previousJobFinished = total.getFinishTime();
+
+                time_sb.append(jobId.toString()).append("\t");
+                for (TaskPhaseStatistics stat : allPhases) {
+                    time_sb.append(stat.getDuration()).append("\t");
+                }
+                time_sb.append(total.getDuration()).append("\n");
+
+                for (TaskPhaseStatistics stat : allPhases) {
+                    bytes_sb.append(jobId.toString()).append("\t");
+                    bytes_sb.append(stat.getLabel()).append("\t");
+                    bytes_sb.append(stat.getHdfsBytesRead()).append("\t");
+                    bytes_sb.append(stat.getLocalBytesRead()).append("\t");
+                    bytes_sb.append(stat.getHdfsBytesWritten()).append("\t");
+                    bytes_sb.append(stat.getLocalBytesWritten()).append("\n");
+                }
+                bytes_sb.append(jobId.toString()).append("\t");
+                bytes_sb.append(total.getLabel()).append("\t");
+                bytes_sb.append(total.getHdfsBytesRead()).append("\t");
+                bytes_sb.append(total.getLocalBytesRead()).append("\t");
+                bytes_sb.append(total.getHdfsBytesWritten()).append("\t");
+                bytes_sb.append(total.getLocalBytesWritten()).append("\n");
+            } catch (IOException e) {
+                log.error("Failed to grab task reports for something.", e);
+                time_sb.append(e.getMessage());
+                bytes_sb.append(e.getMessage());
+            }
+        }
+        time_sb.append("\n");
+        time_sb.append(bytes_sb);
+        time_sb.append("\n");
+        return time_sb.toString();
+    }
+
     public void printStats() {
         StringBuilder sb = new StringBuilder();
 
@@ -138,6 +205,8 @@ public class ExecutionStats implements ScriptStats {
             .append(", filename = ").append(inputFile.getFilename()).append("\n");
 
         sb.append("Total time: \t").append(DurationFormatUtils.formatDurationHMS(pigStats.getDuration())).append("\n");
+
+        sb.append(buildPhaseStatistics());
 
         sb.append("JobId\tMaps\tReduces\tMaxMapTime\tMinMapTime\tAvgMapTime\tMaxReduceTime\t" +
             "MinReduceTime\tAvgReduceTime\tAlias\tFeature\tOutputs\n");
@@ -175,7 +244,6 @@ public class ExecutionStats implements ScriptStats {
             }
             sb.append("\n");
         }
-
 
         log.info(sb.toString());
 
