@@ -1,6 +1,6 @@
 package de.uni_potsdam.hpi.loddp.optimization;
 
-import de.uni_potsdam.hpi.loddp.optimization.merging.rules.MergeIdenticalOperators;
+import de.uni_potsdam.hpi.loddp.optimization.rules.MergeIdenticalOperators;
 import org.apache.pig.newplan.OperatorPlan;
 import org.apache.pig.newplan.logical.optimizer.ProjectionPatcher;
 import org.apache.pig.newplan.logical.optimizer.SchemaPatcher;

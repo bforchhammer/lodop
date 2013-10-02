@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.loddp.optimization.merging.rules;
+package de.uni_potsdam.hpi.loddp.optimization.rules;
 
 import de.uni_potsdam.hpi.loddp.common.OperatorPlanUtil;
 import org.apache.pig.impl.logicalLayer.FrontendException;
@@ -55,7 +55,6 @@ public abstract class MergingRule extends Rule {
     protected class SiblingListCreator extends AllSameRalationalNodesVisitor {
         private List<Operator> seenOperators = new ArrayList<Operator>();
         private List<OperatorPlan> siblingsLists = new ArrayList<OperatorPlan>();
-        private Class<? extends LogicalRelationalOperator> typeRestriction;
 
         public SiblingListCreator(OperatorPlan plan) throws FrontendException {
             super(plan, new DepthFirstWalker(plan));
