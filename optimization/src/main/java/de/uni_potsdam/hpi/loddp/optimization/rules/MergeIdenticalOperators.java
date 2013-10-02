@@ -24,7 +24,7 @@ public class MergeIdenticalOperators extends MergingRule {
         return new MergeIdenticalOperatorsTransformer();
     }
 
-    protected class MergeIdenticalOperatorsTransformer extends Transformer {
+    protected class MergeIdenticalOperatorsTransformer extends SiblingTransformer {
 
         Map<Operator, Operator> replacements = new HashMap<Operator, Operator>();
 
@@ -56,15 +56,6 @@ public class MergeIdenticalOperators extends MergingRule {
             } catch (Throwable e) {
                 return false;
             }
-        }
-
-        private List<Operator> getOperatorList(OperatorPlan plan) {
-            Iterator<Operator> iterator = plan.getOperators();
-            List<Operator> operators = new ArrayList<Operator>();
-            while (iterator.hasNext()) {
-                operators.add(iterator.next());
-            }
-            return operators;
         }
 
         @Override
