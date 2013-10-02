@@ -13,7 +13,7 @@ import java.util.*;
  *
  */
 public class MergeIdenticalOperators extends MergingRule {
-    private static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.merge-identical-operators";
+    public static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.merge-identical-operators";
 
     public MergeIdenticalOperators() {
         super(NAME);
@@ -27,6 +27,28 @@ public class MergeIdenticalOperators extends MergingRule {
     protected class MergeIdenticalOperatorsTransformer extends Transformer {
 
         Map<Operator, Operator> replacements = new HashMap<Operator, Operator>();
+
+        @Override
+        public boolean check(OperatorPlan plan) throws FrontendException {
+            List<Operator> operators = getOperatorList(plan);
+            for (int i = 0; i < operators.size(); i++) {
+                // This is the pivot operator; if we find any matching operators we will replace them with this one.
+                Operator pivot = operators.get(i);
+
+                // If the current pivot operator is already being replaced by another one, then skip it.
+                if (replacements.containsKey(pivot)) {
+                    continue;
+                }
+
+                for (int j = i + 1; j < operators.size(); j++) {
+                    // If they are equal, replace matched with the pivot operator.
+                    if (operatorsAreEqual(operators.get(j), pivot)) {
+                        replacements.put(operators.get(j), pivot);
+                    }
+                }
+            }
+            return !replacements.isEmpty();
+        }
 
         private boolean operatorsAreEqual(Operator op1, Operator op2) {
             try {
@@ -43,28 +65,6 @@ public class MergeIdenticalOperators extends MergingRule {
                 operators.add(iterator.next());
             }
             return operators;
-        }
-
-        @Override
-        public boolean check(OperatorPlan plan) throws FrontendException {
-            List<Operator> operators = getOperatorList(plan);
-            for (int i = 0; i < operators.size(); i++) {
-                // This is the pivot operator; if we find any matching operators we will replace them with this one.
-                Operator pivot = operators.get(i);
-
-                // If the pivot is already being replaced, skip it.
-                if (replacements.containsKey(pivot)) {
-                    continue;
-                }
-
-                for (int j = i + 1; j < operators.size(); j++) {
-                    // If they are equal, replace the later with the former.
-                    if (operatorsAreEqual(operators.get(i), operators.get(j))) {
-                        replacements.put(operators.get(j), operators.get(i));
-                    }
-                }
-            }
-            return !replacements.isEmpty();
         }
 
         @Override
