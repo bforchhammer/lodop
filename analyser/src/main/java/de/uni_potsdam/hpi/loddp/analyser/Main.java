@@ -6,6 +6,7 @@ import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
+import de.uni_potsdam.hpi.loddp.optimization.LogicalPlanOptimizer;
 import de.uni_potsdam.hpi.loddp.optimization.merging.LogicalPlanMerger;
 import de.uni_potsdam.hpi.loddp.optimization.merging.MergedLogicalPlan;
 import org.apache.commons.cli.*;
@@ -122,6 +123,12 @@ public class Main {
             }
             mergedPlan = merger.getMergedPlan();
             mergedPlan.dumpAsGraph("dot/all-merged-logical.dot");
+
+            // Merge identical operators in merged plan.
+            LogicalPlanOptimizer optimizer = new LogicalPlanOptimizer(mergedPlan);
+            optimizer.optimize();
+
+            mergedPlan.dumpAsGraph("dot/all-merged-logical-optimized.dot");
         }
     }
 }
