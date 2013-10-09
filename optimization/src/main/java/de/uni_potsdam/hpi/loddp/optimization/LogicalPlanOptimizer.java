@@ -1,5 +1,6 @@
 package de.uni_potsdam.hpi.loddp.optimization;
 
+import de.uni_potsdam.hpi.loddp.optimization.rules.CombineFilters;
 import de.uni_potsdam.hpi.loddp.optimization.rules.MergeIdenticalOperators;
 import org.apache.pig.newplan.OperatorPlan;
 import org.apache.pig.newplan.logical.optimizer.ProjectionPatcher;
@@ -27,6 +28,11 @@ public class LogicalPlanOptimizer extends PlanOptimizer {
         Set<Rule> mergeIdentical = new HashSet<Rule>();
         mergeIdentical.add(new MergeIdenticalOperators());
         rules.add(mergeIdentical);
+
+        Set<Rule> combineFilters = new HashSet<Rule>();
+        //combineFilters.add(new LogicalExpressionSimplifier("FilterLogicExpressionSimplifier"));
+        combineFilters.add(new CombineFilters());
+        rules.add(combineFilters);
 
         return rules;
     }
