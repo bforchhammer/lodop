@@ -31,7 +31,7 @@ public class CombineProjections extends MergingRule {
         }
 
         @Override
-        public void transform(OperatorPlan matched) throws FrontendException {
+        public void transformPlan(OperatorPlan matched) throws FrontendException {
             // Merge and combine all expression plans of remaining operators.
             // Replace all of them with new operator and new expression plan.
         }

@@ -59,16 +59,12 @@ public class MergeIdenticalOperators extends MergingRule {
         }
 
         @Override
-        public void transform(OperatorPlan plan) throws FrontendException {
+        public void transformPlan(OperatorPlan plan) throws FrontendException {
             for (Map.Entry<Operator, Operator> pair : replacements.entrySet()) {
                 OperatorPlanUtil.replace(pair.getKey(), pair.getValue());
+                //changes.add(pair.getValue());
             }
             replacements.clear();
-        }
-
-        @Override
-        public OperatorPlan reportChanges() {
-            return new OperatorSubPlan(currentPlan);
         }
     }
 }

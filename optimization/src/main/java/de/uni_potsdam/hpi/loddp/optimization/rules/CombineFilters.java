@@ -56,7 +56,7 @@ public class CombineFilters extends MergingRule {
         }
 
         @Override
-        public void transform(OperatorPlan plan) throws FrontendException {
+        public void transformPlan(OperatorPlan plan) throws FrontendException {
             changes = new OperatorSubPlan(currentPlan);
 
             for (Map.Entry<Operator, Set<Operator>> pair : containments.entrySet()) {
