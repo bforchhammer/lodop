@@ -11,7 +11,8 @@ task packageJar(type: Jar, dependsOn: jar) {
     from {
         zipTree(project.jar.archivePath)
     }
-    from {
-        fileTree(dir: './lib', includes: ['**/*.jar'])
-    }
+}
+
+artifacts {
+    archives packageJar
 }
