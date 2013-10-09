@@ -62,7 +62,7 @@ public class MergeIdenticalOperators extends MergingRule {
         public void transformPlan(OperatorPlan plan) throws FrontendException {
             for (Map.Entry<Operator, Operator> pair : replacements.entrySet()) {
                 OperatorPlanUtil.replace(pair.getKey(), pair.getValue());
-                //changes.add(pair.getValue());
+                changes.add(pair.getValue());
             }
             replacements.clear();
         }

@@ -109,4 +109,27 @@ public class OperatorPlanUtil {
 
         remove(oldOperator);
     }
+
+    /**
+     * Same as {@link org.apache.pig.newplan.BaseOperatorPlan#insertBetween(Operator, Operator, Operator)}, but only
+     * connects the new operator to its predecessor if it is not connected already.
+     *
+     * @param pred
+     * @param operatorToInsert
+     * @param succ
+     *
+     * @throws FrontendException
+     */
+    public static void insertBetween(Operator pred, Operator operatorToInsert,
+                                     Operator succ) throws FrontendException {
+        OperatorPlan plan = operatorToInsert.getPlan();
+        plan.add(operatorToInsert);
+        Pair<Integer, Integer> pos = plan.disconnect(pred, succ);
+
+        List<Operator> predecessors = plan.getPredecessors(operatorToInsert);
+        if (predecessors != null && !predecessors.contains(pred)) {
+            plan.connect(pred, pos.first, operatorToInsert, 0);
+        }
+        plan.connect(operatorToInsert, 0, succ, pos.second);
+    }
 }
