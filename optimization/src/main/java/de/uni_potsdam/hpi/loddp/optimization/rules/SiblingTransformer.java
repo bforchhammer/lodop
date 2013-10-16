@@ -51,6 +51,13 @@ public abstract class SiblingTransformer extends Transformer {
         }
     }
 
+    protected Operator getParentOperator(OperatorPlan siblingPlan) {
+        Operator firstSibling = siblingPlan.getSinks().get(0);
+        OperatorPlan realPlan = firstSibling.getPlan();
+        // Because we are working on siblings that parent will be the common parent of all operators in the plan.
+        return realPlan.getPredecessors(firstSibling).get(0);
+    }
+
     @Override
     public OperatorPlan reportChanges() {
         return changes;

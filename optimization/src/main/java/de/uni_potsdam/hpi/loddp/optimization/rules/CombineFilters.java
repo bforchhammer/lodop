@@ -101,8 +101,10 @@ public class CombineFilters extends MergingRule {
             }
         }
 
-        // combine the condition of two filters. The condition of second filter
-        // is added into the condition of first filter with an OR operator.
+        /**
+         * Combine the condition of two filters. The condition of second filter is added into the condition of first
+         * filter with an OR operator.
+         */
         private void combineFilterConditions(LOFilter targetFilter, LOFilter otherFilter) throws FrontendException {
             LogicalExpressionPlan p1 = targetFilter.getFilterPlan();
             // Create a new logical expression plan for the targetFilter if it does not have one yet.
