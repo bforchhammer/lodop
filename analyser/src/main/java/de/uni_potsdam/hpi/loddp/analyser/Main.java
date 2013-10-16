@@ -4,6 +4,8 @@ import de.uni_potsdam.hpi.loddp.analyser.matching.LogicalPlanMatcher;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
+import de.uni_potsdam.hpi.loddp.common.printing.GraphvizDumper;
+import de.uni_potsdam.hpi.loddp.common.printing.LOFilterPrinter;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
 import de.uni_potsdam.hpi.loddp.optimization.LogicalPlanOptimizer;
@@ -123,17 +125,21 @@ public class Main {
                 if (plan != null) merger.merge(plan);
             }
             mergedPlan = merger.getMergedPlan();
-            mergedPlan.dumpAsGraph("dot/all-merged-logical.dot");
+
+            GraphvizDumper dumper = new GraphvizDumper("dot/");
+            dumper.setFilenamePrefix("all-merged-");
+            dumper.setPlanDumper(LogicalPlan.class, LOFilterPrinter.class);
+            dumper.print(mergedPlan);
 
             // Apply our optimization rules to merged plan.
             LogicalPlanOptimizer optimizer = new LogicalPlanOptimizer(mergedPlan);
             optimizer.optimize();
-            mergedPlan.dumpAsGraph("dot/all-merged-logical-optimized.dot");
+            dumper.print(mergedPlan, "optimized");
 
             // Apply Pig's default optimization rules to merged plan.
             new org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer(mergedPlan, 100,
                 new HashSet<String>()).optimize();
-            mergedPlan.dumpAsGraph("dot/all-merged-logical-fully-optimized.dot");
+            dumper.print(mergedPlan, "optimized-fully");
         }
     }
 }

@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.loddp.common;
+package de.uni_potsdam.hpi.loddp.common.printing;
 
 import org.apache.commons.io.FilenameUtils;
 
