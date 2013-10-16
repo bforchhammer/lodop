@@ -75,8 +75,10 @@ public class ReportGenerator {
     }
 
     public void scalabilityReport() {
-        for (String dataset : statsByNameAndSize.keySet()) {
-            scalabilityReport(dataset);
+        if (statsByNameAndSize.size() > 1 && statsBySizeAndName.size() > 1) {
+            for (String dataset : statsByNameAndSize.keySet()) {
+                scalabilityReport(dataset);
+            }
         }
     }
 
