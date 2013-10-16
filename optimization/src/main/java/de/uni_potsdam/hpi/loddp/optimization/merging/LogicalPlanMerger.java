@@ -7,8 +7,7 @@ import org.apache.pig.newplan.DependencyOrderWalker;
 import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.OperatorPlan;
 import org.apache.pig.newplan.logical.optimizer.AllSameRalationalNodesVisitor;
-import org.apache.pig.newplan.logical.relational.LogicalPlan;
-import org.apache.pig.newplan.logical.relational.LogicalRelationalOperator;
+import org.apache.pig.newplan.logical.relational.*;
 
 import java.util.List;
 
@@ -54,8 +53,8 @@ public class LogicalPlanMerger {
         return mergedPlan;
     }
 
-    private class Merger extends AllSameRalationalNodesVisitor {
-        private Merger(OperatorPlan plan) throws FrontendException {
+    protected class Merger extends AllSameRalationalNodesVisitor {
+        public Merger(OperatorPlan plan) throws FrontendException {
             super(plan, new DependencyOrderWalker(plan));
         }
 
@@ -81,6 +80,31 @@ public class LogicalPlanMerger {
                     mergedPlan.createSoftLink(predecessor, operator);
                 }
             }
+        }
+
+        @Override
+        public void visit(LOInnerLoad load) throws FrontendException {
+            execute(load);
+        }
+
+        @Override
+        public void visit(LOGenerate gen) throws FrontendException {
+            execute(gen);
+        }
+
+        @Override
+        public void visit(LOCube cube) throws FrontendException {
+            execute(cube);
+        }
+
+        @Override
+        public void visit(LOLimit loLimit) throws FrontendException {
+            execute(loLimit);
+        }
+
+        @Override
+        public void visit(LONative nativeMR) throws FrontendException {
+            execute(nativeMR);
         }
     }
 }
