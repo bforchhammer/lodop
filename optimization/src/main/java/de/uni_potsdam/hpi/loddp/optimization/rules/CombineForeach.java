@@ -16,11 +16,11 @@ import java.util.List;
 /**
  *
  */
-public class CombineProjections extends MergingRule {
-    public static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.combine-projections";
+public class CombineForeach extends MergingRule {
+    public static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.combine-foreach";
     protected List<LOForEach> mergedForEachs = new ArrayList<LOForEach>();
 
-    public CombineProjections() {
+    public CombineForeach() {
         super(NAME, LOForEach.class);
     }
 

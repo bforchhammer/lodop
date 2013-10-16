@@ -1,7 +1,7 @@
 package de.uni_potsdam.hpi.loddp.optimization;
 
-import de.uni_potsdam.hpi.loddp.optimization.rules.CombineFilters;
-import de.uni_potsdam.hpi.loddp.optimization.rules.CombineProjections;
+import de.uni_potsdam.hpi.loddp.optimization.rules.CombineFilter;
+import de.uni_potsdam.hpi.loddp.optimization.rules.CombineForeach;
 import de.uni_potsdam.hpi.loddp.optimization.rules.MergeIdenticalOperators;
 import org.apache.pig.newplan.OperatorPlan;
 import org.apache.pig.newplan.logical.optimizer.ProjectionPatcher;
@@ -32,11 +32,11 @@ public class LogicalPlanOptimizer extends PlanOptimizer {
 
         Set<Rule> combineFilters = new HashSet<Rule>();
         //combineFilters.add(new LogicalExpressionSimplifier("FilterLogicExpressionSimplifier"));
-        combineFilters.add(new CombineFilters());
+        combineFilters.add(new CombineFilter());
         rules.add(combineFilters);
 
         Set<Rule> combineProjections = new HashSet<Rule>();
-        combineProjections.add(new CombineProjections());
+        combineProjections.add(new CombineForeach());
         //combineProjections.add(new IgnoreProjections());
         rules.add(combineProjections);
 

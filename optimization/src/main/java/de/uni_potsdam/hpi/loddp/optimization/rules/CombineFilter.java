@@ -21,11 +21,11 @@ import java.util.List;
 /**
  * Rule which tries to combine filter statements if they are contained with each other.
  */
-public class CombineFilters extends MergingRule {
-    public static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.combine-filters";
+public class CombineFilter extends MergingRule {
+    public static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.combine-filter";
     protected List<LOFilter> mergedFilters = new ArrayList<LOFilter>();
 
-    public CombineFilters() {
+    public CombineFilter() {
         super(NAME, LOFilter.class);
     }
 
