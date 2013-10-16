@@ -116,6 +116,11 @@ public class Main {
             .hasArg(false)
             .create('m'));
         options.addOption(OptionBuilder
+            .withLongOpt("optimize")
+            .withDescription("Apply custom optimization rules, i.e., merge filters, projections etc.)")
+            .hasArg(false)
+            .create());
+        options.addOption(OptionBuilder
             .withLongOpt("output-directory")
             .withDescription("Output directory on HDFS to store results in.")
             .hasArg().withArgName("test-1")
@@ -169,6 +174,12 @@ public class Main {
         // Determine whether to merge plans together.
         if (cmd.hasOption("merge")) {
             builder.setMerged(true);
+        }
+
+        // Determine whether merged plans should be optimized via custom rules (combine identical operators,
+        // foreach operators, filters, ...)
+        if (cmd.hasOption("optimize")) {
+            builder.setOptimizeMerged(true);
         }
 
         // Determine output directory.

@@ -13,6 +13,7 @@ public class ScriptRunnerBuilder {
     private String hdfsOutputDirectory = "";
     private String explainOutputDirectory = "plans/";
     private boolean merged = false;
+    private boolean optimizeMerged = false;
     private boolean replaceExistingResults = true;
     private boolean explainPlans = false;
 
@@ -44,6 +45,13 @@ public class ScriptRunnerBuilder {
         this.merged = merged;
         if (merged) {
             log.info("Scripts are merged into one large plan.");
+        }
+    }
+
+    public void setOptimizeMerged(boolean optimizeMerged) {
+        this.optimizeMerged = optimizeMerged;
+        if (optimizeMerged) {
+            log.info("Merged scripts are optimized.");
         }
     }
 
@@ -85,7 +93,7 @@ public class ScriptRunnerBuilder {
         PigScriptRunner pigScriptRunner = buildPigRunner();
         ScriptRunner scriptRunner;
         if (merged) {
-            scriptRunner = new MergedScriptRunner(pigScriptRunner, hdfsOutputDirectory);
+            scriptRunner = new MergedScriptRunner(pigScriptRunner, hdfsOutputDirectory, optimizeMerged);
         } else {
             scriptRunner = new DefaultScriptRunner(pigScriptRunner, hdfsOutputDirectory);
         }
