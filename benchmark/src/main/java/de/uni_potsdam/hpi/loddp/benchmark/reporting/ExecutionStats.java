@@ -2,7 +2,7 @@ package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
 import de.uni_potsdam.hpi.loddp.benchmark.Main;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFile;
-import de.uni_potsdam.hpi.loddp.common.GraphvizUtil;
+import de.uni_potsdam.hpi.loddp.common.printing.GraphvizUtil;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
