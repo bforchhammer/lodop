@@ -423,6 +423,8 @@ public class LogicalPlanPrinter extends PlanDumper {
                 sb.append("[").append(pr.getStartCol()).append(" .. ").append(pr.getEndCol()).append("]");
             else
                 sb.append(pr.getColNum());
+        } else if (op instanceof LOInnerLoad) {
+            sb.append("\\n").append(getName(((LOInnerLoad) op).getProjection()));
         }
         if (op instanceof LogicalRelationalOperator) {
             LogicalRelationalOperator operator = (LogicalRelationalOperator) op;
