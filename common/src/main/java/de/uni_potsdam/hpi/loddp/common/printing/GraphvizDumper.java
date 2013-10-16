@@ -61,7 +61,7 @@ public class GraphvizDumper {
     }
 
     public boolean outputExists() {
-        return outputDirectory.exists();
+        return outputDirectory.list().length > 0;
     }
 
     public void setVerbose(boolean verbose) {

@@ -99,6 +99,7 @@ public class PigScriptRunner implements PigRunner {
 
         // We only want to do this once for each script, therefore check whether the output directory exists already.
         if (dumper.outputExists()) {
+            log.debug("Skipped dumping of operator plans because graphs seem to exist already.");
             return;
         }
 
