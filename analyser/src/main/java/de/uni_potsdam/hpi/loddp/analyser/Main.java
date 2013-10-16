@@ -16,6 +16,7 @@ import org.apache.pig.impl.PigContext;
 import org.apache.pig.newplan.logical.relational.LogicalPlan;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -124,11 +125,15 @@ public class Main {
             mergedPlan = merger.getMergedPlan();
             mergedPlan.dumpAsGraph("dot/all-merged-logical.dot");
 
-            // Merge identical operators in merged plan.
+            // Apply our optimization rules to merged plan.
             LogicalPlanOptimizer optimizer = new LogicalPlanOptimizer(mergedPlan);
             optimizer.optimize();
-
             mergedPlan.dumpAsGraph("dot/all-merged-logical-optimized.dot");
+
+            // Apply Pig's default optimization rules to merged plan.
+            new org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer(mergedPlan, 100,
+                new HashSet<String>()).optimize();
+            mergedPlan.dumpAsGraph("dot/all-merged-logical-fully-optimized.dot");
         }
     }
 }
