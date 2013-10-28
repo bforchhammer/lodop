@@ -6,15 +6,17 @@ import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.OperatorPlan;
 import org.apache.pig.newplan.logical.expression.LogicalExpressionPlan;
+import org.apache.pig.newplan.logical.expression.ProjectExpression;
 import org.apache.pig.newplan.logical.relational.*;
 import org.apache.pig.newplan.optimizer.Transformer;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
+ * Rule which tries to combine foreach statements, if they have the same predecessor, and do not contain nested foreach
+ * loops nor FLATTEN operators.
  *
+ * Correctness is ensured by the addition of simple projections as children of the combined foreach operator.
  */
 public class CombineForeach extends MergingRule {
     public static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.combine-foreach";
@@ -75,6 +77,7 @@ public class CombineForeach extends MergingRule {
                 }
             }
 
+            // We can only combine foreachs if there is at least two of them.
             return matched.size() > 1;
         }
 
@@ -92,10 +95,11 @@ public class CombineForeach extends MergingRule {
                 LOForEach foreach = (LOForEach) operators.next();
                 LOForEach newForeach = mergeAndAdjust(mergedForEach, foreach);
 
-                // Move old ForEach operator underneith merged operator.
+                // Add adjusted old ForEach operator underneith the merged operator.
                 OperatorPlanUtil.attachChild(mergedForEach.getForeach(), newForeach);
+                changes.add(newForeach);
 
-                // Replace old foreach operator with adjusted one (=copy list of successors).
+                // Replace old foreach operator with adjusted one (=copies list of successors).
                 OperatorPlanUtil.replace(foreach, newForeach);
             }
 
@@ -112,17 +116,35 @@ public class CombineForeach extends MergingRule {
             LOForEachBuilder newForeach = new LOForEachBuilder(currentPlan);
             newForeach.setAlias(foreach.getAlias() + "'");
 
-            // Merge inner plans by merging all LOGenerate expressions. We should end up with only one generate,
-            // and one LOInnerLoad for each expression. When we merge the expression plans we want to avoid
-            // identities so we don't perform the same work twice.
+            // Merge inner plans by merging all LOGenerate expressions. We should end up with only one generate. When
+            // we merge the expression plans we want to avoid identities so we don't perform the same work twice.
             for (int i = 0; i < generateExpressions.size(); i++) {
-                LOInnerLoad innerLoad = (LOInnerLoad) foreachInnerPlan.getSources().get(i);
+                // The inputs of each expression is determined by the leaves of the expression plan; each leaf should
+                // be an LOProject operator referencing LOInnerLoad inputs. In order to properly merge the
+                // expression we need to find and also merge all respective LOInnerLoad operators.
+                List<Operator> expressionSinks = generateExpressions.get(i).getSinks();
+                Map<Integer, Integer> inputColumnNumberMap = new HashMap<Integer, Integer>();
+                for (int j = 0; j < expressionSinks.size(); j++) {
+                    Operator op = expressionSinks.get(j);
+                    if (op instanceof ProjectExpression) {
+                        int inputNumber = ((ProjectExpression) op).getInputNum();
+                        if (foreachInnerPlan.getSources().size() <= inputNumber) {
+                            // Something is not right.
+                            throw new RuntimeException("Faulty input number.");
+                        }
+                        LOInnerLoad innerLoad = (LOInnerLoad) foreachInnerPlan.getSources().get(inputNumber);
+                        inputColumnNumberMap.put(inputNumber, innerLoad.getColNum());
+                    } else {
+                        throw new FrontendException("Expression plan has a leaf operator which is not a projection");
+                    }
+                }
+
                 LogicalSchema userSchema = null;
                 if (generate.getUserDefinedSchema() != null && generate.getUserDefinedSchema().get(i) != null) {
                     userSchema = generate.getUserDefinedSchema().get(i);
                 }
-                int columnId = mergedForeach.mergeGenerateExpression(innerLoad.getColNum(),
-                    generateExpressions.get(i), userSchema);
+                int columnId = mergedForeach.addGenerateExpression(inputColumnNumberMap,
+                    generateExpressions.get(i).deepCopy(), userSchema);
                 newForeach.addSimpleProjection(columnId);
             }
 

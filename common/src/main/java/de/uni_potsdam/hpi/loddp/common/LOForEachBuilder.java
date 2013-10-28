@@ -7,9 +7,7 @@ import org.apache.pig.newplan.logical.expression.LogicalExpressionPlan;
 import org.apache.pig.newplan.logical.expression.ProjectExpression;
 import org.apache.pig.newplan.logical.relational.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class for constructing LOForEach operators.
@@ -35,20 +33,74 @@ public class LOForEachBuilder {
         foreach.setAlias(alias);
     }
 
-    public int addGenerateExpression(LOInnerLoad innerLoad, LogicalExpressionPlan expression) {
-        return addGenerateExpression(innerLoad, expression, null);
+    /**
+     * Add and connect an LOInnerLoad operator, if it doesn't exist already. Return the number of the input, i.e. the
+     * number of the load in the list of plan sources.
+     *
+     * @param load
+     *
+     * @return
+     */
+    protected int addInnerLoad(LOInnerLoad load) {
+        // Check if there is already a matching LOInnerLoad operator; if yes return its' input position.
+        List<Operator> sources = foreachInnerPlan.getSources();
+        if (sources != null) {
+            for (int i = 0; i < sources.size(); i++) {
+                if (operatorsAreEqual(sources.get(i), load)) {
+                    return i;
+                }
+            }
+        }
+
+        // No matching input found, then add and connect the given load operator and return the new input number.
+        foreachInnerPlan.add(load);
+        foreachInnerPlan.connect(load, generate);
+        return foreachInnerPlan.getSources().size() - 1;
     }
 
-    public int addGenerateExpression(LOInnerLoad innerLoad, LogicalExpressionPlan expression,
-                                     LogicalSchema userSchema) {
-        // Attach input.
-        foreachInnerPlan.add(innerLoad);
-        foreachInnerPlan.connect(innerLoad, generate);
+    protected boolean operatorsAreEqual(Operator op1, Operator op2) {
+        try {
+            return op1.isEqual(op2);
+        } catch (Throwable e) {
+            System.out.println(e.getMessage()); // @todo
+        }
+        return false;
+    }
 
-        // Add expression plan.
-        List<LogicalExpressionPlan> plans = generate.getOutputPlans();
-        int expressionNumber = plans.size();
-        plans.add(expression);
+    protected boolean expressionsAreEqual(LogicalExpressionPlan plan1, LogicalExpressionPlan plan2) {
+        try {
+            return plan1.isEqual(plan2);
+        } catch (FrontendException e) {
+            System.out.println(e.getMessage()); // @todo
+        }
+        return false;
+    }
+
+    /**
+     * @param innerLoads A list mapping old "input numbers" to new LOInnerLoad operators. All of these operators are
+     *                   added and connected in the new inner plan. The old input number is used to correctly update any
+     *                   ProjectExpression in the given logical expression.
+     * @param expression The logical expression to add to the expression plan.
+     * @param userSchema A user defined schema for the given expression; can be NULL.
+     *
+     * @return
+     */
+    protected int _addGenerateExpression(Map<Integer, LOInnerLoad> innerLoads, LogicalExpressionPlan expression,
+                                         LogicalSchema userSchema) {
+
+        // Map of old input numbers to new ones.
+        Map<Integer, Integer> inputNumberMap = new HashMap<Integer, Integer>();
+
+        // Attach inputs.
+        for (Map.Entry<Integer, LOInnerLoad> entry : innerLoads.entrySet()) {
+            int oldInputNumber = entry.getKey();
+            if (inputNumberMap.containsKey(oldInputNumber)) {
+                // Should never happen.
+                throw new RuntimeException("Multiple LOInnerLoad operators for the same old input found.");
+            }
+
+            inputNumberMap.put(oldInputNumber, addInnerLoad(entry.getValue()));
+        }
 
         // Make sure that ProjectExpressions contain valid references.
         Iterator<Operator> expressions = expression.getOperators();
@@ -56,9 +108,28 @@ public class LOForEachBuilder {
             Operator operator = expressions.next();
             if (operator instanceof ProjectExpression) {
                 ((ProjectExpression) operator).setAttachedRelationalOp(generate);
-                ((ProjectExpression) operator).setInputNum(expressionNumber);
+                int oldInputNumber = ((ProjectExpression) operator).getInputNum();
+                if (inputNumberMap.containsKey(oldInputNumber)) {
+                    ((ProjectExpression) operator).setInputNum(inputNumberMap.get(oldInputNumber));
+                } else {
+                    // Should never happen.
+                    throw new RuntimeException("Cannot map old input number to new input.");
+                }
             }
         }
+
+        // Check if equivalent expression exists already; in case of success return number of existing expression.
+        List<LogicalExpressionPlan> plans = generate.getOutputPlans();
+        for (int i = 0; i < plans.size(); i++) {
+            if (expressionsAreEqual(plans.get(i), expression)) {
+                return i;
+            }
+        }
+
+        // Expression does not exist yet, so let's add it. We also need to fix up the user defined schema and flatten
+        // flag on the generate operator (see below).
+        int expressionNumber = plans.size();
+        plans.add(expression);
 
         // Set user defined schema if provided.
         if (userSchema != null) {
@@ -84,32 +155,25 @@ public class LOForEachBuilder {
         return expressionNumber;
     }
 
-    public int addGenerateExpression(int columnId, LogicalExpressionPlan expression) {
-        return addGenerateExpression(columnId, expression, null);
-    }
-
-    public int addGenerateExpression(int columnId, LogicalExpressionPlan expression, LogicalSchema userSchema) {
-        LOInnerLoad load = new LOInnerLoad(foreachInnerPlan, foreach, columnId);
-        return addGenerateExpression(load, expression, userSchema);
+    public int addGenerateExpression(Map<Integer, Integer> inputColumnNumberMap, LogicalExpressionPlan expression, LogicalSchema userSchema) {
+        Map<Integer, LOInnerLoad> loads = new HashMap<Integer, LOInnerLoad>();
+        for (Map.Entry<Integer, Integer> entry : inputColumnNumberMap.entrySet()) {
+            loads.put(entry.getKey(), new LOInnerLoad(foreachInnerPlan, foreach, entry.getValue()));
+        }
+        return _addGenerateExpression(loads, expression, userSchema);
     }
 
     public int addSimpleProjection(int columnId) {
         // Build Projection expression.
         LogicalExpressionPlan expression = new LogicalExpressionPlan();
-        new ProjectExpression(expression, 0, -1, generate);
 
-        return addGenerateExpression(columnId, expression);
-    }
+        int inputNumber = 0;
+        new ProjectExpression(expression, inputNumber, -1, generate);
 
-    public int mergeGenerateExpression(int columnId, LogicalExpressionPlan expression,
-                                       LogicalSchema userSchema) throws FrontendException {
-        List<LogicalExpressionPlan> plans = generate.getOutputPlans();
-        for (int i = 0; i < plans.size(); i++) {
-            if (plans.get(i).isEqual(expression)) {
-                return i;
-            }
-        }
-        return addGenerateExpression(columnId, expression, userSchema);
+        Map<Integer, Integer> inputColumnNumberMap = new HashMap<Integer, Integer>();
+        inputColumnNumberMap.put(inputNumber, columnId);
+
+        return addGenerateExpression(inputColumnNumberMap, expression, null);
     }
 
     public LOForEach getForeach() {
