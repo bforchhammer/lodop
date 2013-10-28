@@ -76,6 +76,14 @@ public class GraphvizDumper {
         this.filenamePrefix = filenamePrefix;
     }
 
+    /**
+     * Change the class for dumping a certain plan type.
+     *
+     * Usage example: <code>dumper.setPlanDumper(LogicalPlan.class, LOFilterPrinter.class);</code>
+     *
+     * @param operatorPlanClass
+     * @param planDumperClass
+     */
     public void setPlanDumper(Class operatorPlanClass, Class planDumperClass) {
         planDumpers.put(operatorPlanClass, planDumperClass);
     }
@@ -144,6 +152,7 @@ public class GraphvizDumper {
 
         // "newplan" implementation -> logical plan printers.
         if (PlanDumper.class.isAssignableFrom(dumperClass)) {
+            @SuppressWarnings("unchecked")
             PlanDumper dumper = getPlanDumperInstance((Class<? extends PlanDumper>) dumperClass,
                 new Class[] {BaseOperatorPlan.class, PrintStream.class}, operatorPlan, ps);
             dumper.setVerbose(verbose);
@@ -151,6 +160,7 @@ public class GraphvizDumper {
         }
         // "old" implementation -> physicla and mapreduce plan printers.
         else if (org.apache.pig.impl.plan.PlanDumper.class.isAssignableFrom(dumperClass)) {
+            @SuppressWarnings("unchecked")
             org.apache.pig.impl.plan.PlanDumper dumper = getPlanDumperInstance((Class<? extends org.apache.pig.impl.plan.PlanDumper>) dumperClass,
                 new Class[] {operatorPlan.getClass(), PrintStream.class}, operatorPlan, ps);
             dumper.setVerbose(verbose);
@@ -163,4 +173,3 @@ public class GraphvizDumper {
     }
 
 }
-

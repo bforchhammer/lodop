@@ -5,7 +5,6 @@ import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.printing.GraphvizDumper;
-import de.uni_potsdam.hpi.loddp.common.printing.LOFilterPrinter;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
 import de.uni_potsdam.hpi.loddp.optimization.LogicalPlanOptimizer;
@@ -97,7 +96,7 @@ public class Main {
         pigContext.connect();
 
         // By default execute all scripts.
-        Set<PigScript> scripts = null;
+        Set<PigScript> scripts;
         if (cmd.hasOption("scripts")) {
             boolean inverse = cmd.hasOption("inverse");
             scripts = PigScriptFactory.findPigScripts(cmd.getOptionValues("scripts"), inverse);
@@ -117,7 +116,7 @@ public class Main {
         }
 
         // Merge plans into one monster plan.
-        MergedLogicalPlan mergedPlan = null;
+        MergedLogicalPlan mergedPlan;
         if (mergePlans && analysedScripts.size() > 0) {
             LogicalPlanMerger merger = new LogicalPlanMerger();
             for (AnalysedScript script : analysedScripts) {
@@ -128,18 +127,17 @@ public class Main {
 
             GraphvizDumper dumper = new GraphvizDumper("dot/");
             dumper.setFilenamePrefix("all-merged-");
-            dumper.setPlanDumper(LogicalPlan.class, LOFilterPrinter.class);
             dumper.print(mergedPlan);
 
             // Apply our optimization rules to merged plan.
             LogicalPlanOptimizer optimizer = new LogicalPlanOptimizer(mergedPlan);
             optimizer.optimize();
-            dumper.print(mergedPlan, "optimized");
+            dumper.print(mergedPlan, "-optimized");
 
             // Apply Pig's default optimization rules to merged plan.
             new org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer(mergedPlan, 100,
                 new HashSet<String>()).optimize();
-            dumper.print(mergedPlan, "optimized-fully");
+            dumper.print(mergedPlan, "-optimized-fully");
         }
     }
 }
