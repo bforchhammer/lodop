@@ -3,6 +3,7 @@ package de.uni_potsdam.hpi.loddp.optimization;
 import de.uni_potsdam.hpi.loddp.optimization.rules.CombineFilter;
 import de.uni_potsdam.hpi.loddp.optimization.rules.CombineForeach;
 import de.uni_potsdam.hpi.loddp.optimization.rules.MergeIdenticalOperators;
+import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.newplan.OperatorPlan;
 import org.apache.pig.newplan.logical.optimizer.ProjectionPatcher;
 import org.apache.pig.newplan.logical.optimizer.SchemaPatcher;
@@ -17,10 +18,32 @@ import java.util.Set;
 /**
  */
 public class LogicalPlanOptimizer extends PlanOptimizer {
+
+    private boolean combineFilters = true;
+    private boolean combineForeachs = true;
+    private boolean ignoreProjections = true;
+
     public LogicalPlanOptimizer(OperatorPlan p) {
         super(p, null, 500);
-        ruleSets = buildRuleSets();
         addListeners();
+    }
+
+    @Override
+    public void optimize() throws FrontendException {
+        ruleSets = buildRuleSets();
+        super.optimize();
+    }
+
+    public void setCombineFilters(boolean combineFilters) {
+        this.combineFilters = combineFilters;
+    }
+
+    public void setCombineForeachs(boolean combineForeachs) {
+        this.combineForeachs = combineForeachs;
+    }
+
+    public void setIgnoreProjections(boolean ignoreProjections) {
+        this.ignoreProjections = ignoreProjections;
     }
 
     protected List<Set<Rule>> buildRuleSets() {
@@ -30,18 +53,28 @@ public class LogicalPlanOptimizer extends PlanOptimizer {
         mergeIdentical.add(new MergeIdenticalOperators());
         rules.add(mergeIdentical);
 
-        Set<Rule> combineFilters = new HashSet<Rule>();
-        //combineFilters.add(new LogicalExpressionSimplifier("FilterLogicExpressionSimplifier"));
-        combineFilters.add(new CombineFilter());
-        rules.add(combineFilters);
+        if (combineFilters) {
+            Set<Rule> combineFilters = new HashSet<Rule>();
+            combineFilters.add(new CombineFilter());
+            rules.add(combineFilters);
+        }
 
-        Set<Rule> combineProjections = new HashSet<Rule>();
-        combineProjections.add(new CombineForeach());
-        //combineProjections.add(new IgnoreProjections());
-        rules.add(combineProjections);
+        if (combineForeachs) {
+            Set<Rule> combineForeach = new HashSet<Rule>();
+            combineForeach.add(new CombineForeach());
+            rules.add(combineForeach);
+        }
 
-        // Repeat "identical merge" rules.
-        /*rules.add(mergeIdentical);*/
+        if (ignoreProjections) {
+            Set<Rule> ignoreProjections = new HashSet<Rule>();
+            //ignoreProjections.add(new IgnoreProjections());
+            rules.add(ignoreProjections);
+        }
+
+        if (combineFilters || combineForeachs || ignoreProjections) {
+            // Repeat "identical merge" rules?
+            rules.add(mergeIdentical);
+        }
 
         return rules;
     }
