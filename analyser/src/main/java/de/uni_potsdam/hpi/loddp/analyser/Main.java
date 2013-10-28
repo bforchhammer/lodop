@@ -7,7 +7,7 @@ import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.printing.GraphvizDumper;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
-import de.uni_potsdam.hpi.loddp.optimization.LogicalPlanOptimizer;
+import de.uni_potsdam.hpi.loddp.optimization.PlanOptimizerBuilder;
 import de.uni_potsdam.hpi.loddp.optimization.merging.LogicalPlanMerger;
 import de.uni_potsdam.hpi.loddp.optimization.merging.MergedLogicalPlan;
 import org.apache.commons.cli.*;
@@ -130,8 +130,11 @@ public class Main {
             dumper.print(mergedPlan);
 
             // Apply our optimization rules to merged plan.
-            LogicalPlanOptimizer optimizer = new LogicalPlanOptimizer(mergedPlan);
-            optimizer.optimize();
+            PlanOptimizerBuilder optimizer = new PlanOptimizerBuilder();
+            optimizer.setCombineFilters(false);
+            optimizer.setCombineForeachs(true);
+            optimizer.setIgnoreProjections(false);
+            optimizer.getInstance(mergedPlan).optimize();
             dumper.print(mergedPlan, "-optimized");
 
             // Apply Pig's default optimization rules to merged plan.

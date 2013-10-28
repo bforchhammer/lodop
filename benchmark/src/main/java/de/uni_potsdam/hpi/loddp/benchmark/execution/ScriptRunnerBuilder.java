@@ -3,6 +3,7 @@ package de.uni_potsdam.hpi.loddp.benchmark.execution;
 import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
 import de.uni_potsdam.hpi.loddp.common.execution.BasePigRunner;
 import de.uni_potsdam.hpi.loddp.common.execution.PigRunner;
+import de.uni_potsdam.hpi.loddp.optimization.PlanOptimizerBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -14,6 +15,9 @@ public class ScriptRunnerBuilder {
     private String explainOutputDirectory = "plans/";
     private boolean merged = false;
     private boolean optimizeMerged = false;
+    private boolean optimizerCombineForeachs = true;
+    private boolean optimizerCombineFilters = true;
+    private boolean optimizerIgnoreProjections = true;
     private boolean replaceExistingResults = true;
     private boolean explainPlans = false;
 
@@ -55,6 +59,21 @@ public class ScriptRunnerBuilder {
         }
     }
 
+    public void setOptimizerCombineForeachs(boolean optimizerCombineForeachs) {
+        setOptimizeMerged(true);
+        this.optimizerCombineForeachs = optimizerCombineForeachs;
+    }
+
+    public void setOptimizerCombineFilters(boolean optimizerCombineFilters) {
+        setOptimizeMerged(true);
+        this.optimizerCombineFilters = optimizerCombineFilters;
+    }
+
+    public void setOptimizerIgnoreProjections(boolean optimizerIgnoreProjections) {
+        setOptimizeMerged(true);
+        this.optimizerIgnoreProjections = optimizerIgnoreProjections;
+    }
+
     public void setReplaceExistingResults(boolean replaceExistingResults) {
         this.replaceExistingResults = replaceExistingResults;
     }
@@ -93,10 +112,21 @@ public class ScriptRunnerBuilder {
         PigScriptRunner pigScriptRunner = buildPigRunner();
         ScriptRunner scriptRunner;
         if (merged) {
-            scriptRunner = new MergedScriptRunner(pigScriptRunner, hdfsOutputDirectory, optimizeMerged);
+            scriptRunner = new MergedScriptRunner(pigScriptRunner, hdfsOutputDirectory, getCustomOptimizer());
         } else {
             scriptRunner = new DefaultScriptRunner(pigScriptRunner, hdfsOutputDirectory);
         }
         return scriptRunner;
+    }
+
+    protected PlanOptimizerBuilder getCustomOptimizer() {
+        PlanOptimizerBuilder builder = null;
+        if (optimizeMerged) {
+            builder = new PlanOptimizerBuilder();
+            builder.setCombineFilters(optimizerCombineFilters);
+            builder.setCombineForeachs(optimizerCombineForeachs);
+            builder.setIgnoreProjections(optimizerIgnoreProjections);
+        }
+        return builder;
     }
 }
