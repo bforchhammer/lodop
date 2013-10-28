@@ -1,8 +1,6 @@
 package de.uni_potsdam.hpi.loddp.optimization;
 
-import de.uni_potsdam.hpi.loddp.optimization.rules.CombineFilter;
-import de.uni_potsdam.hpi.loddp.optimization.rules.CombineForeach;
-import de.uni_potsdam.hpi.loddp.optimization.rules.MergeIdenticalOperators;
+import de.uni_potsdam.hpi.loddp.optimization.rules.*;
 import org.apache.pig.newplan.logical.relational.LogicalPlan;
 import org.apache.pig.newplan.optimizer.PlanOptimizer;
 
@@ -42,20 +40,20 @@ public class PlanOptimizerBuilder {
         LogicalPlanOptimizer optimizer = new LogicalPlanOptimizer(plan);
 
         if (combineFilters) {
-            optimizer.addRule(new CombineFilter());
+            optimizer.addRuleSet(new CombineFilter());
         }
 
         if (combineForeachs) {
-            optimizer.addRule(new CombineForeach());
+            optimizer.addRuleSet(new CombineForeach(), new RemoveRedundantProjections());
         }
 
         if (ignoreProjections) {
-            //optimizer.addRule(new IgnoreProjections());
+            optimizer.addRuleSet(new IgnoreProjections());
         }
 
         if (combineFilters || combineForeachs || ignoreProjections) {
             // Repeat "identical merge" rules?
-            optimizer.addRule(new MergeIdenticalOperators());
+            optimizer.addRuleSet(new MergeIdenticalOperators());
         }
 
         return optimizer;

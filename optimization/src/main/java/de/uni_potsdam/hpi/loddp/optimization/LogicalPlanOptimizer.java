@@ -20,15 +20,16 @@ public class LogicalPlanOptimizer extends PlanOptimizer {
 
         // Initialise rule sets, add basic merging rule.
         ruleSets = new ArrayList<Set<Rule>>();
-        addRule(new MergeIdenticalOperators());
+        addRuleSet(new MergeIdenticalOperators());
 
         // Add listeners for plan changes.
         addListeners();
     }
 
-    public void addRule(Rule rule) {
+    public void addRuleSet(Rule... rules) {
         Set<Rule> ruleSet = new HashSet<Rule>();
-        ruleSet.add(rule);
+        for (Rule rule : rules)
+            ruleSet.add(rule);
         ruleSets.add(ruleSet);
     }
 
