@@ -39,15 +39,19 @@ public abstract class SiblingTransformer extends Transformer {
 
     protected void markPredecessorsChanged(Operator operator) {
         List<Operator> operators = operator.getPlan().getPredecessors(operator);
-        for (Operator op : operators) {
-            changes.add(op);
+        if (operators != null) {
+            for (Operator op : operators) {
+                changes.add(op);
+            }
         }
     }
 
     protected void markSuccessorsChanged(Operator operator) {
         List<Operator> operators = operator.getPlan().getSuccessors(operator);
-        for (Operator op : operators) {
-            changes.add(op);
+        if (operators != null) {
+            for (Operator op : operators) {
+                changes.add(op);
+            }
         }
     }
 
