@@ -2,6 +2,8 @@ package de.uni_potsdam.hpi.loddp.optimization.rules;
 
 import de.uni_potsdam.hpi.loddp.common.LOForEachBuilder;
 import de.uni_potsdam.hpi.loddp.common.OperatorPlanUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.OperatorPlan;
@@ -20,10 +22,15 @@ import java.util.*;
  */
 public class CombineForeach extends MergingRule {
     public static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.combine-foreach";
-    protected List<LOForEach> mergedForEachs = new ArrayList<LOForEach>();
+    protected static final Log log = LogFactory.getLog(CombineForeach.class);
+    protected static List<LOForEach> mergedForEachs = new ArrayList<LOForEach>();
 
     public CombineForeach() {
         super(NAME, LOForEach.class);
+    }
+
+    public static void resetCombinedList() {
+        mergedForEachs = new ArrayList<LOForEach>();
     }
 
     @Override
@@ -83,6 +90,9 @@ public class CombineForeach extends MergingRule {
 
         @Override
         public void transformPlan(OperatorPlan matched) throws FrontendException {
+            StringBuilder logMessage = new StringBuilder();
+            logMessage.append("Combined ").append(matched.size()).append(" LOForEach operators:");
+
             LOForEachBuilder mergedForEach = new LOForEachBuilder(currentPlan);
             mergedForEach.setAlias("combined projection");
 
@@ -93,11 +103,13 @@ public class CombineForeach extends MergingRule {
             Iterator<Operator> operators = matched.getOperators();
             while (operators.hasNext()) {
                 LOForEach foreach = (LOForEach) operators.next();
+                logMessage.append(" ").append(foreach.getAlias());
+
+                // Merge foreach into merged one and create adjusted version (=simple projection).
                 LOForEach newForeach = mergeAndAdjust(mergedForEach, foreach);
 
                 // Add adjusted old ForEach operator underneith the merged operator.
                 OperatorPlanUtil.attachChild(mergedForEach.getForeach(), newForeach);
-                changes.add(newForeach);
 
                 // Replace old foreach operator with adjusted one (=copies list of successors).
                 OperatorPlanUtil.replace(foreach, newForeach);
@@ -105,6 +117,9 @@ public class CombineForeach extends MergingRule {
 
             mergedForEachs.add(mergedForEach.getForeach());
             changes.add(mergedForEach.getForeach());
+            markSuccessorsChanged(mergedForEach.getForeach());
+
+            log.info(logMessage);
         }
 
         private LOForEach mergeAndAdjust(LOForEachBuilder mergedForeach, LOForEach foreach) throws FrontendException {

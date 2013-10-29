@@ -1,5 +1,7 @@
 package de.uni_potsdam.hpi.loddp.common;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.OperatorPlan;
@@ -13,6 +15,7 @@ import java.util.*;
  * Class for constructing LOForEach operators.
  */
 public class LOForEachBuilder {
+    protected static final Log log = LogFactory.getLog(LOForEachBuilder.class);
     private LOForEach foreach;
     private LogicalPlan foreachInnerPlan;
     private LOGenerate generate;
@@ -62,7 +65,7 @@ public class LOForEachBuilder {
         try {
             return op1.isEqual(op2);
         } catch (Throwable e) {
-            System.out.println(e.getMessage()); // @todo
+            log.error("Failed to compare operators.", e);
         }
         return false;
     }
@@ -71,7 +74,7 @@ public class LOForEachBuilder {
         try {
             return plan1.isEqual(plan2);
         } catch (FrontendException e) {
-            System.out.println(e.getMessage()); // @todo
+            log.error("Failed to compare expression plans.", e);
         }
         return false;
     }

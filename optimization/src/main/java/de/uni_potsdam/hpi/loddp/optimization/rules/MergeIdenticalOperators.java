@@ -1,19 +1,23 @@
 package de.uni_potsdam.hpi.loddp.optimization.rules;
 
 import de.uni_potsdam.hpi.loddp.common.OperatorPlanUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.OperatorPlan;
-import org.apache.pig.newplan.OperatorSubPlan;
 import org.apache.pig.newplan.optimizer.Transformer;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
  */
 public class MergeIdenticalOperators extends MergingRule {
     public static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.merge-identical-operators";
+    protected static final Log log = LogFactory.getLog(MergeIdenticalOperators.class);
 
     public MergeIdenticalOperators() {
         super(NAME);
@@ -60,10 +64,16 @@ public class MergeIdenticalOperators extends MergingRule {
 
         @Override
         public void transformPlan(OperatorPlan plan) throws FrontendException {
+            int originalSize = currentPlan.size();
             for (Map.Entry<Operator, Operator> pair : replacements.entrySet()) {
-                OperatorPlanUtil.replace(pair.getKey(), pair.getValue());
                 changes.add(pair.getValue());
+                markSuccessorsChanged(pair.getKey());
+
+                OperatorPlanUtil.replace(pair.getKey(), pair.getValue());
             }
+            log.info("Merged identical operators: replaced " + replacements.size() + " operator(s) with " + changes
+                .size() + " identical one(s). Plan size reduced from " + originalSize + " to " + currentPlan.size() +
+                ".");
             replacements.clear();
         }
     }

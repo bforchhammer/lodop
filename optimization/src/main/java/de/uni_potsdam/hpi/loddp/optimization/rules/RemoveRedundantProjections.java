@@ -1,5 +1,7 @@
 package de.uni_potsdam.hpi.loddp.optimization.rules;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.OperatorPlan;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 public class RemoveRedundantProjections extends Rule {
     public static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.remove-redundant-projections";
+    protected static final Log log = LogFactory.getLog(RemoveRedundantProjections.class);
 
     public RemoveRedundantProjections() {
         super(NAME, false);
@@ -90,10 +93,16 @@ public class RemoveRedundantProjections extends Rule {
 
         @Override
         public void transformPlan(OperatorPlan matched) throws FrontendException {
+            StringBuilder logMessage = new StringBuilder();
+            logMessage.append("Removed ").append(matched.size()).append(" redundant simple projections:");
             Iterator<Operator> operators = matched.getOperators();
             while (operators.hasNext()) {
-                currentPlan.removeAndReconnect(operators.next());
+                Operator operator = operators.next();
+                logMessage.append(" ").append(((LogicalRelationalOperator) operator).getAlias());
+                markSuccessorsChanged(operator);
+                currentPlan.removeAndReconnect(operator);
             }
+            log.info(logMessage);
         }
     }
 }

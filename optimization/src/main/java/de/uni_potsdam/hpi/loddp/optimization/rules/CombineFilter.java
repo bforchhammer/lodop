@@ -1,6 +1,8 @@
 package de.uni_potsdam.hpi.loddp.optimization.rules;
 
 import de.uni_potsdam.hpi.loddp.common.OperatorPlanUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.newplan.Operator;
 import org.apache.pig.newplan.OperatorPlan;
@@ -23,10 +25,15 @@ import java.util.List;
  */
 public class CombineFilter extends MergingRule {
     public static final String NAME = "de.uni_potsdam.hpi.loddp.optimization.combine-filter";
-    protected List<LOFilter> mergedFilters = new ArrayList<LOFilter>();
+    protected static final Log log = LogFactory.getLog(CombineFilter.class);
+    protected static List<LOFilter> mergedFilters = new ArrayList<LOFilter>();
 
     public CombineFilter() {
         super(NAME, LOFilter.class);
+    }
+
+    public static void resetCombinedList() {
+        mergedFilters = new ArrayList<LOFilter>();
     }
 
     @Override
@@ -53,17 +60,20 @@ public class CombineFilter extends MergingRule {
 
         @Override
         public void transformPlan(OperatorPlan plan) throws FrontendException {
+            StringBuilder logMessage = new StringBuilder();
+            logMessage.append("Combined ").append(plan.size()).append(" LOFilter operators:");
+
             LogicalPlan logicalPlan = (LogicalPlan) currentPlan;
 
             // Create merged filter as new child to common sibling parent.
             LOFilter combinedFilter = new LOFilter(logicalPlan);
             combinedFilter.setAlias("Combined");
             mergedFilters.add(combinedFilter);
-            changes.add(combinedFilter);
 
             Iterator<Operator> operators = plan.getOperators();
             while (operators.hasNext()) {
                 LOFilter filter = (LOFilter) operators.next();
+                logMessage.append(" ").append(filter.getAlias());
                 currentPlan.connect(filter.getInput(logicalPlan), combinedFilter);
                 combineFilterConditions(combinedFilter, filter);
             }
@@ -87,7 +97,6 @@ public class CombineFilter extends MergingRule {
                     combinedFilter.setAlias(filter.getAlias());
                 } else {
                     OperatorPlanUtil.insertBetween(filter.getInput(logicalPlan), combinedFilter, filter);
-                    changes.add(filter);
                 }
             }
 
@@ -99,6 +108,11 @@ public class CombineFilter extends MergingRule {
                     ((ProjectExpression) expression).setAttachedRelationalOp(combinedFilter);
                 }
             }
+
+            changes.add(combinedFilter);
+            markSuccessorsChanged(combinedFilter);
+
+            log.info(logMessage);
         }
 
         /**
