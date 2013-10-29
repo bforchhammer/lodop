@@ -20,6 +20,7 @@ import java.util.*;
  * Different to {@link org.apache.pig.newplan.logical.DotLOPrinter}, this class also prints soft links (dashed).
  */
 public class LogicalPlanPrinter extends PlanDumper {
+    public static String ANNOTATION_OPERATOR_HIGHLIGHT = "operator.highlight";
     protected Set<Operator> mSubgraphs;
     protected Set<Operator> mMultiInputSubgraphs;
     protected Set<Operator> mMultiOutputSubgraphs;
@@ -449,6 +450,12 @@ public class LogicalPlanPrinter extends PlanDumper {
             label.replace(":", ",\\n");
             attributes.put("fillcolor", "gray");
         }
+
+        String highlightColor = (String) op.getAnnotation(ANNOTATION_OPERATOR_HIGHLIGHT);
+        if (highlightColor != null && !highlightColor.isEmpty()) {
+            attributes.put("fillcolor", highlightColor);
+        }
+
         attributes.put("label", label);
 
         return attributes;
