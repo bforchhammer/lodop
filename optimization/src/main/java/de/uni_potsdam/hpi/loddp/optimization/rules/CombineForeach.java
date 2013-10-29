@@ -51,7 +51,7 @@ public class CombineForeach extends MergingRule {
                 Operator input = currentPlan.getPredecessors(foreach).get(0);
                 if (mergedForEachs.contains(input)) {
                     operators.remove();
-                    break operatorLoop;
+                    continue operatorLoop;
                 }
 
                 // Check that the foreach has only LOGenerate and LOInnerLoad, i.e., ignore nested foreach loops.
@@ -62,7 +62,7 @@ public class CombineForeach extends MergingRule {
                         log.debug("Skipped combination of LOForEach: inner plan contains more than just LOInnerLoad " +
                             "and LOGenerate.");
                         operators.remove();
-                        break operatorLoop;
+                        continue operatorLoop;
                     }
                 }
 
@@ -72,7 +72,7 @@ public class CombineForeach extends MergingRule {
                     if (flatten) {
                         log.debug("Skipped combination of LOForEach: LOGenerate contains FLATTEN operators.");
                         operators.remove();
-                        break operatorLoop;
+                        continue operatorLoop;
                     }
                 }
             }
