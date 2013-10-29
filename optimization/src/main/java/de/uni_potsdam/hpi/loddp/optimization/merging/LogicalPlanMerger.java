@@ -16,13 +16,13 @@ import java.util.List;
  */
 public class LogicalPlanMerger {
     protected static final Log log = LogFactory.getLog(LogicalPlanMerger.class);
-    private MergedLogicalPlan mergedPlan;
+    private LogicalPlan mergedPlan;
 
     public LogicalPlanMerger() {
-        mergedPlan = new MergedLogicalPlan();
+        mergedPlan = new LogicalPlan();
     }
 
-    public static MergedLogicalPlan merge(List<LogicalPlan> plans) {
+    public static LogicalPlan merge(List<LogicalPlan> plans) {
         LogicalPlanMerger merger = new LogicalPlanMerger();
         log.info(String.format("Merging %d logical plans.", plans.size()));
         for (LogicalPlan plan : plans) {
@@ -49,7 +49,7 @@ public class LogicalPlanMerger {
      *
      * @return The merged logical plan
      */
-    public MergedLogicalPlan getMergedPlan() {
+    public LogicalPlan getMergedPlan() {
         return mergedPlan;
     }
 

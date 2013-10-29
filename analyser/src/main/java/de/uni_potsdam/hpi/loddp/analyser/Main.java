@@ -9,7 +9,6 @@ import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
 import de.uni_potsdam.hpi.loddp.optimization.PlanOptimizerBuilder;
 import de.uni_potsdam.hpi.loddp.optimization.merging.LogicalPlanMerger;
-import de.uni_potsdam.hpi.loddp.optimization.merging.MergedLogicalPlan;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -116,7 +115,7 @@ public class Main {
         }
 
         // Merge plans into one monster plan.
-        MergedLogicalPlan mergedPlan;
+        LogicalPlan mergedPlan;
         if (mergePlans && analysedScripts.size() > 0) {
             LogicalPlanMerger merger = new LogicalPlanMerger();
             for (AnalysedScript script : analysedScripts) {
