@@ -48,7 +48,7 @@ public class PlanOptimizerBuilder {
         }
 
         if (ignoreProjections) {
-            optimizer.addRuleSet(new IgnoreProjections());
+            //optimizer.addRuleSet(new IgnoreProjections());
         }
 
         if (combineFilters || combineForeachs || ignoreProjections) {
