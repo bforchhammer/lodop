@@ -32,6 +32,36 @@ public interface ScriptStats {
     public long getTimeTotal();
 
     /**
+     * The total amount of time taken up by Apache Pig.
+     */
+    public long getTimePig();
+
+    /**
+     * The total amount of time taken up by Hadoop.
+     */
+    public long getTimeMapReduce();
+
+    /**
+     * The total amount of time taken up by map reduce job setup.
+     */
+    public long getTimeMapReduceJobSetup();
+
+    /**
+     * The total amount of time taken up by map reduce job cleanup.
+     */
+    public long getTimeMapReduceJobCleanup();
+
+    /**
+     * The total amount of time taken up by map phase execution.
+     */
+    public long getTimeMap();
+
+    /**
+     * The total amount of time taken up by reduce phase execution.
+     */
+    public long getTimeReduce();
+
+    /**
      * The number of map reduce jobs needed for the script.
      */
     public int getNumberJobs();
@@ -47,15 +77,4 @@ public interface ScriptStats {
      * The total number of reduce phases.
      */
     public int getNumberReducesTotal();
-
-    /**
-     * The average time needed for executing one map.
-     */
-    public long getAvgMapTimeTotal();
-
-    /**
-     * The average time needed for executing one reduce.
-     */
-    public long getAvgReduceTimeTotal();
-
 }

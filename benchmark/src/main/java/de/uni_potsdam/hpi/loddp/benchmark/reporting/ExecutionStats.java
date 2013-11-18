@@ -29,9 +29,11 @@ public class ExecutionStats implements ScriptStats {
     private final long inputSize;
     private int numberMapsTotal = -1;
     private int numberReducesTotal = -1;
-    private Long avgMapTimeTotal = -1L;
-    private Long avgReduceTimeTotal = -1L;
+    private long totalMapTime = -1L;
+    private long totalReduceTime = -1L;
     private int iterationNumber = -1;
+    private long totalSetupTime = -1;
+    private long totalCleanupTime = -1;
 
     /**
      * Constructor.
@@ -52,22 +54,27 @@ public class ExecutionStats implements ScriptStats {
         this.iterationNumber = iterationNumber;
     }
 
+    @Override
     public long getOutputSize() {
         return pigStats.getRecordWritten();
     }
 
+    @Override
     public long getInputSize() {
         return inputSize;
     }
 
+    @Override
     public long getTimeTotal() {
         return pigStats.getDuration();
     }
 
+    @Override
     public String getScriptName() {
         return scriptName;
     }
 
+    @Override
     public String getDatasetIdentifier() {
         return inputFile.getFileSetIdentifier();
     }
@@ -82,45 +89,82 @@ public class ExecutionStats implements ScriptStats {
         numberMapsTotal = 0;
         numberReducesTotal = 0;
 
-        Long mapTimeTotal = 0L;
-        Long reduceTimeTotal = 0L;
+        totalSetupTime = 0L;
+        totalMapTime = 0L;
+        totalReduceTime = 0L;
+        totalCleanupTime = 0L;
+
         for (JobStats js : arr) {
             numberMapsTotal += js.getNumberMaps();
             numberReducesTotal += js.getNumberReduces();
-            mapTimeTotal += js.getAvgMapTime() * js.getNumberMaps();
-            reduceTimeTotal += js.getAvgREduceTime() * js.getNumberReduces();
+            totalMapTime += js.getMaxMapTime();
+            totalReduceTime += js.getMaxReduceTime();
+            JobID jobId = JobID.forName(js.getJobId());
+            try {
+                totalSetupTime += TaskPhaseStatistics.getTaskPhaseStatistics("setup",
+                    pigStats.getJobClient().getSetupTaskReports(jobId)).getDuration();
+                totalCleanupTime += TaskPhaseStatistics.getTaskPhaseStatistics("cleanup",
+                    pigStats.getJobClient().getCleanupTaskReports(jobId)).getDuration();
+            } catch (IOException e) {
+                log.error("Failed to grab task reports for something.", e);
+            }
         }
-
-        avgMapTimeTotal = (numberMapsTotal > 0) ? mapTimeTotal / numberMapsTotal : 0;
-        avgReduceTimeTotal = (numberReducesTotal > 0) ? reduceTimeTotal / numberReducesTotal : 0;
     }
 
+    @Override
     public List<JobStats> getJobStats() {
         return pigStats.getJobGraph().getSuccessfulJobs();
     }
 
+    @Override
     public int getNumberJobs() {
         return pigStats.getNumberJobs();
     }
 
+    @Override
     public int getNumberMapsTotal() {
         if (numberMapsTotal < 0) summarizeJobStats();
         return numberMapsTotal;
     }
 
+    @Override
     public int getNumberReducesTotal() {
         if (numberReducesTotal < 0) summarizeJobStats();
         return numberReducesTotal;
     }
 
-    public long getAvgMapTimeTotal() {
-        if (avgMapTimeTotal < 0) summarizeJobStats();
-        return avgMapTimeTotal;
+    @Override
+    public long getTimePig() {
+        return getTimeTotal() - getTimeMapReduce();
     }
 
-    public long getAvgReduceTimeTotal() {
-        if (avgReduceTimeTotal < 0) summarizeJobStats();
-        return avgReduceTimeTotal;
+    @Override
+    public long getTimeMapReduce() {
+        return getTimeMapReduceJobSetup() + getTimeMap() + getTimeReduce() + getTimeMapReduceJobCleanup();
+    }
+
+    @Override
+    public long getTimeMap() {
+        if (totalMapTime < 0) summarizeJobStats();
+        return totalMapTime;
+    }
+
+    @Override
+    public long getTimeReduce() {
+        if (totalReduceTime < 0) summarizeJobStats();
+        return totalReduceTime;
+    }
+
+    @Override
+    public long getTimeMapReduceJobSetup() {
+        if (totalSetupTime < 0) summarizeJobStats();
+        return totalSetupTime;
+    }
+
+    @Override
+    public long getTimeMapReduceJobCleanup() {
+        if (totalCleanupTime < 0) summarizeJobStats();
+        return totalCleanupTime;
     }
 
     private String buildPhaseStatistics() {
@@ -130,7 +174,7 @@ public class ExecutionStats implements ScriptStats {
         StringBuilder bytes_sb = new StringBuilder("I/O overview:\n");
         bytes_sb.append("JobId\tPhase\tHDFS read\tLocal read\tHDFS written\tLocal written\n");
 
-        List<JobStats> jobs = pigStats.getJobGraph().getJobList();
+        List<JobStats> jobs = getJobStats();
 
         // map: map, combine?
         // reduce: shuffle, sort, reduce?

@@ -159,22 +159,30 @@ public class ReportGenerator {
 
         sb.append("Script name");
         sb.append("\t").append("Time (total)");
+        sb.append("\t").append("Time (Pig)");
+        sb.append("\t").append("Time (MapReduce)");
+        sb.append("\t").append("Time (Setup)");
+        sb.append("\t").append("Time (Map)");
+        sb.append("\t").append("Time (Reduce)");
+        sb.append("\t").append("Time (Cleanup)");
         sb.append("\t").append("Number of jobs");
         sb.append("\t").append("Number of maps");
-        sb.append("\t").append("Average map time");
         sb.append("\t").append("Number of reduces");
-        sb.append("\t").append("Average reduce time");
         sb.append("\n");
 
         Map<String, ScriptStats> statsByName = statsBySizeAndName.get(dataset).get(inputSize);
         for (ScriptStats stat : statsByName.values()) {
             sb.append(stat.getScriptName());
-            sb.append("\t").append(DurationFormatUtils.formatDurationHMS(stat.getTimeTotal()));
+            sb.append("\t").append(stat.getTimeTotal());
+            sb.append("\t").append(stat.getTimePig());
+            sb.append("\t").append(stat.getTimeMapReduce());
+            sb.append("\t").append(stat.getTimeMapReduceJobSetup());
+            sb.append("\t").append(stat.getTimeMap());
+            sb.append("\t").append(stat.getTimeReduce());
+            sb.append("\t").append(stat.getTimeMapReduceJobCleanup());
             sb.append("\t").append(stat.getNumberJobs());
             sb.append("\t").append(stat.getNumberMapsTotal());
-            sb.append("\t").append(DurationFormatUtils.formatDurationHMS(stat.getAvgMapTimeTotal()));
             sb.append("\t").append(stat.getNumberReducesTotal());
-            sb.append("\t").append(DurationFormatUtils.formatDurationHMS(stat.getAvgReduceTimeTotal()));
             sb.append("\n");
         }
 

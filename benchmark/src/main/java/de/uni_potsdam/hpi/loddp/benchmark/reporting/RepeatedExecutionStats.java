@@ -103,19 +103,55 @@ public class RepeatedExecutionStats implements ScriptStats {
     }
 
     @Override
-    public long getAvgMapTimeTotal() {
+    public long getTimePig() {
         long total = 0;
         for (ScriptStats s : stats) {
-            total += s.getAvgMapTimeTotal();
+            total += s.getTimePig();
         }
         return Math.round(total / stats.size());
     }
 
     @Override
-    public long getAvgReduceTimeTotal() {
+    public long getTimeMapReduce() {
         long total = 0;
         for (ScriptStats s : stats) {
-            total += s.getAvgReduceTimeTotal();
+            total += s.getTimeMapReduce();
+        }
+        return Math.round(total / stats.size());
+    }
+
+    @Override
+    public long getTimeMapReduceJobSetup() {
+        long total = 0;
+        for (ScriptStats s : stats) {
+            total += s.getTimeMapReduceJobSetup();
+        }
+        return Math.round(total / stats.size());
+    }
+
+    @Override
+    public long getTimeMapReduceJobCleanup() {
+        long total = 0;
+        for (ScriptStats s : stats) {
+            total += s.getTimeMapReduceJobCleanup();
+        }
+        return Math.round(total / stats.size());
+    }
+
+    @Override
+    public long getTimeMap() {
+        long total = 0;
+        for (ScriptStats s : stats) {
+            total += s.getTimeMap();
+        }
+        return Math.round(total / stats.size());
+    }
+
+    @Override
+    public long getTimeReduce() {
+        long total = 0;
+        for (ScriptStats s : stats) {
+            total += s.getTimeReduce();
         }
         return Math.round(total / stats.size());
     }
