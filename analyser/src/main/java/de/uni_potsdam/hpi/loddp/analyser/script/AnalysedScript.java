@@ -89,8 +89,8 @@ public class AnalysedScript extends PigScript {
     }
 
     @Override
-    public String getScriptName() {
-        return script.getScriptName();
+    public String getScriptFileName() {
+        return script.getScriptFileName();
     }
 
     public void dumpPlansAsGraphs() throws IOException {

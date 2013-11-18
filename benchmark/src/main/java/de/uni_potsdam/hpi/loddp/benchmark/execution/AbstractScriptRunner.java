@@ -47,7 +47,7 @@ public abstract class AbstractScriptRunner implements ScriptRunner {
 
     protected String getOutputFilename(PigScript script, InputFile file) {
         return hdfsOutputDirectory + "results-" + file.getFileSetIdentifier() + "-" +
-            file.getTupleCount() + "/" + script.getScriptName();
+            file.getTupleCount() + "/" + script.getScriptFileName();
     }
 
     /**

@@ -9,18 +9,19 @@ import org.apache.pig.impl.PigContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class AnalysedScriptFactory {
     private static final Log log = LogFactory.getLog(AnalysedScriptFactory.class);
 
-    public static List<AnalysedScript> analyse(Set<PigScript> scripts, PigContext pigContext) throws IOException {
+    public static List<AnalysedScript> analyse(List<PigScript> scripts, PigContext pigContext) throws IOException {
         return analyse(scripts, false, pigContext);
     }
 
-    public static List<AnalysedScript> analyse(Set<PigScript> scripts, boolean dumpGraphs, PigContext pigContext) throws IOException {
+    public static List<AnalysedScript> analyse(Collection<PigScript> scripts, boolean dumpGraphs,
+                                               PigContext pigContext) throws IOException {
         log.info("Analysing " + scripts.size() + " scripts.");
         List<AnalysedScript> analysed = new ArrayList<AnalysedScript>();
         Iterator<PigScript> iterator = scripts.iterator();

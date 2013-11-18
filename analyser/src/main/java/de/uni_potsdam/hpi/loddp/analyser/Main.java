@@ -95,7 +95,7 @@ public class Main {
         pigContext.connect();
 
         // By default execute all scripts.
-        Set<PigScript> scripts;
+        List<PigScript> scripts;
         if (cmd.hasOption("scripts")) {
             boolean inverse = cmd.hasOption("inverse");
             scripts = PigScriptFactory.findPigScripts(cmd.getOptionValues("scripts"), inverse);

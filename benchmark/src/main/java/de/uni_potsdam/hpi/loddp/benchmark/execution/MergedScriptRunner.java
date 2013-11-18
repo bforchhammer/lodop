@@ -84,11 +84,11 @@ public class MergedScriptRunner extends AbstractScriptRunner {
                     merger.merge(compiler.getLogicalPlan());
                 }
             } catch (ScriptCompilerException e) {
-                log.error("Failed to compile script " + script.getScriptName(), e);
+                log.error("Failed to compile script " + script.getScriptFileName(), e);
             } catch (PigRunnerException e) {
-                log.error("Failed to merge script " + script.getScriptName(), e);
+                log.error("Failed to merge script " + script.getScriptFileName(), e);
             } catch (FrontendException e) {
-                log.error("Failed to merge script " + script.getScriptName(), e);
+                log.error("Failed to merge script " + script.getScriptFileName(), e);
             }
         }
 

@@ -12,20 +12,13 @@ import java.net.JarURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.jar.JarEntry;
 
 /**
  * Various helper functions for loading and parsing pig scripts.
  */
 public class PigScriptFactory {
-    /**
-     * Name of directory containing pig scripts. Used for look-up on classpath in {@link #findPigScripts}.
-     */
-    protected static String PIG_SCRIPTS_DIRECTORY = "pig-queries";
     protected static final Log log = LogFactory.getLog(PigScriptFactory.class);
     /**
      * File filter which only accepts files having the "pig" file extension.
@@ -35,6 +28,10 @@ public class PigScriptFactory {
             return file.isFile() && FilenameUtils.isExtension(file.getName(), "pig");
         }
     };
+    /**
+     * Name of directory containing pig scripts. Used for look-up on classpath in {@link #findPigScripts}.
+     */
+    protected static String PIG_SCRIPTS_DIRECTORY = "pig-queries";
 
     public static void setPigScriptsDirectory(String PIG_SCRIPTS_DIRECTORY) {
         PigScriptFactory.PIG_SCRIPTS_DIRECTORY = PIG_SCRIPTS_DIRECTORY;
@@ -43,7 +40,7 @@ public class PigScriptFactory {
     /**
      * Loads and returns a set of PigScript objects matching the given list of script names.
      */
-    public static Set<PigScript> findPigScripts(String[] whitelist) {
+    public static List<PigScript> findPigScripts(String[] whitelist) {
         return findPigScripts(whitelist, false);
     }
 
@@ -51,15 +48,23 @@ public class PigScriptFactory {
      * Loads and returns a set of PigScript objects matching the given list of script names. If inverse is set to true,
      * returns all scripts which are NOT matching the given list of script names.
      */
-    public static Set<PigScript> findPigScripts(String[] whitelist, boolean inverse) {
-        Set<PigScript> scripts = loadPigScripts();
-        Set<PigScript> scripts_new = new HashSet<PigScript>();
+    public static List<PigScript> findPigScripts(String[] whitelist, boolean inverse) {
+        List<PigScript> scripts = loadPigScripts();
+        List<PigScript> scripts_new = new ArrayList<PigScript>();
         String regex = stringToPattern(whitelist);
         for (PigScript s : scripts) {
-            if (s.getScriptName().matches(regex) != inverse) {
+            if (s.getScriptFileName().matches(regex) != inverse) {
                 scripts_new.add(s);
             }
         }
+
+        // Sort scripts according to script name
+        Collections.sort(scripts_new, new Comparator<PigScript>() {
+            @Override
+            public int compare(PigScript o1, PigScript o2) {
+                return o1.getScriptName().compareToIgnoreCase(o2.getScriptFileName());
+            }
+        });
 
         StringBuilder sb = new StringBuilder();
         Iterator<PigScript> it = scripts_new.iterator();
@@ -89,8 +94,8 @@ public class PigScriptFactory {
     /**
      * Loads and returns a set of PigScript objects for all scripts found in the resources folder.
      */
-    public static Set<PigScript> findPigScripts() {
-        Set<PigScript> scripts = loadPigScripts();
+    public static List<PigScript> findPigScripts() {
+        List<PigScript> scripts = loadPigScripts();
         log.info(String.format("Using ALL pig scripts."));
         return scripts;
     }
@@ -101,8 +106,8 @@ public class PigScriptFactory {
      * The method looks for folders named {@link #PIG_SCRIPTS_DIRECTORY} on the class path, and then loads all files
      * contained within these folders and ending in <code>*.pig</code>.
      */
-    private static Set<PigScript> loadPigScripts() {
-        Set<PigScript> scripts = new HashSet<PigScript>();
+    private static List<PigScript> loadPigScripts() {
+        List<PigScript> scripts = new ArrayList<PigScript>();
         try {
             Enumeration<URL> urls = ClassLoader.getSystemClassLoader().getResources(PIG_SCRIPTS_DIRECTORY);
 
@@ -134,7 +139,7 @@ public class PigScriptFactory {
      * @param jarConnection
      * @param scripts
      */
-    private static void loadPigScripts(JarURLConnection jarConnection, Set<PigScript> scripts) {
+    private static void loadPigScripts(JarURLConnection jarConnection, List<PigScript> scripts) {
         Enumeration<JarEntry> entries;
         try {
             entries = jarConnection.getJarFile().entries();
@@ -143,7 +148,7 @@ public class PigScriptFactory {
             return;
         }
 
-        Set<PigScript> s = new HashSet<PigScript>();
+        List<PigScript> s = new ArrayList<PigScript>();
         while (entries.hasMoreElements()) {
             JarEntry entry = entries.nextElement();
             if (!entry.isDirectory() && entry.getName().startsWith(PIG_SCRIPTS_DIRECTORY)) {
@@ -185,7 +190,7 @@ public class PigScriptFactory {
      * @param fileURL
      * @param scripts
      */
-    private static void loadPigScripts(URL fileURL, Set<PigScript> scripts) {
+    private static void loadPigScripts(URL fileURL, List<PigScript> scripts) {
         File file;
         try {
             file = new File(fileURL.toURI());
@@ -202,7 +207,7 @@ public class PigScriptFactory {
         }
 
         File[] files = file.listFiles(PIG_EXTENSION_FILTER);
-        Set<PigScript> s = fromFiles(files);
+        List<PigScript> s = fromFiles(files);
         log.info(String.format("Found %d pig script(s) in: %s", s.size(), file));
         scripts.addAll(s);
     }
@@ -235,8 +240,8 @@ public class PigScriptFactory {
      *
      * @see #fromFile
      */
-    public static Set<PigScript> fromFiles(File[] files) {
-        Set<PigScript> scripts = new HashSet<PigScript>(files.length);
+    public static List<PigScript> fromFiles(File[] files) {
+        List<PigScript> scripts = new ArrayList<PigScript>(files.length);
         for (File file : files) {
             try {
                 PigScript script = fromFile(file);

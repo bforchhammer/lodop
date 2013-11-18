@@ -1,5 +1,7 @@
 package de.uni_potsdam.hpi.loddp.common.scripts;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,11 +20,23 @@ public abstract class PigScript {
     public abstract InputStream getNewInputStream();
 
     /**
+     * Returns the name of the script, usually derived from the filename.
+     *
+     * @return
+     */
+    public String getScriptName() {
+        String name = getScriptFileName();
+
+        // Convert underscores to whitespace, then capitalize words.
+        return StringUtils.capitalize(name.replace('_', ' '));
+    }
+
+    /**
      * Returns the filename of the pig script (without the extension).
      *
      * @return the name of the pig script.
      */
-    public abstract String getScriptName();
+    public abstract String getScriptFileName();
 
     /**
      * Returns the contents of this script by completely reading the input stream from {@link #getNewInputStream()}.

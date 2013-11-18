@@ -32,7 +32,7 @@ public class JarPigScript extends PigScript {
     }
 
     @Override
-    public String getScriptName() {
+    public String getScriptFileName() {
         return FilenameUtils.getBaseName(entry.getName());
     }
 }

@@ -18,7 +18,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Main class.
@@ -205,7 +204,7 @@ public class Main {
         }
 
         // By default execute all scripts.
-        Set<PigScript> scripts;
+        List<PigScript> scripts;
         if (cmd.hasOption("scripts")) {
             boolean inverse = cmd.hasOption("inverse");
             scripts = PigScriptFactory.findPigScripts(cmd.getOptionValues("scripts"), inverse);
