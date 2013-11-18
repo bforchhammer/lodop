@@ -4,10 +4,11 @@ import de.uni_potsdam.hpi.loddp.analyser.matching.LogicalPlanMatcher;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
+import de.uni_potsdam.hpi.loddp.common.printing.GraphvizDumper;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
+import de.uni_potsdam.hpi.loddp.optimization.PlanOptimizerBuilder;
 import de.uni_potsdam.hpi.loddp.optimization.merging.LogicalPlanMerger;
-import de.uni_potsdam.hpi.loddp.optimization.merging.MergedLogicalPlan;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +16,7 @@ import org.apache.pig.impl.PigContext;
 import org.apache.pig.newplan.logical.relational.LogicalPlan;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -93,7 +95,7 @@ public class Main {
         pigContext.connect();
 
         // By default execute all scripts.
-        Set<PigScript> scripts = null;
+        Set<PigScript> scripts;
         if (cmd.hasOption("scripts")) {
             boolean inverse = cmd.hasOption("inverse");
             scripts = PigScriptFactory.findPigScripts(cmd.getOptionValues("scripts"), inverse);
@@ -113,7 +115,7 @@ public class Main {
         }
 
         // Merge plans into one monster plan.
-        MergedLogicalPlan mergedPlan = null;
+        LogicalPlan mergedPlan;
         if (mergePlans && analysedScripts.size() > 0) {
             LogicalPlanMerger merger = new LogicalPlanMerger();
             for (AnalysedScript script : analysedScripts) {
@@ -121,7 +123,23 @@ public class Main {
                 if (plan != null) merger.merge(plan);
             }
             mergedPlan = merger.getMergedPlan();
-            mergedPlan.dumpAsGraph("dot/all-merged-logical.dot");
+
+            GraphvizDumper dumper = new GraphvizDumper("dot/");
+            dumper.setFilenamePrefix("all-merged-");
+            dumper.print(mergedPlan);
+
+            // Apply our optimization rules to merged plan.
+            PlanOptimizerBuilder optimizer = new PlanOptimizerBuilder();
+            optimizer.setCombineFilters(false);
+            optimizer.setCombineForeachs(true);
+            optimizer.setIgnoreProjections(false);
+            optimizer.getInstance(mergedPlan).optimize();
+            dumper.print(mergedPlan, "-optimized");
+
+            // Apply Pig's default optimization rules to merged plan.
+            new org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer(mergedPlan, 100,
+                new HashSet<String>()).optimize();
+            dumper.print(mergedPlan, "-optimized-fully");
         }
     }
 }

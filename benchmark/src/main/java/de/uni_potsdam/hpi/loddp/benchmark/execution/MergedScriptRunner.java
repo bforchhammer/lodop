@@ -5,10 +5,12 @@ import de.uni_potsdam.hpi.loddp.common.execution.PigRunnerException;
 import de.uni_potsdam.hpi.loddp.common.execution.ScriptCompiler;
 import de.uni_potsdam.hpi.loddp.common.execution.ScriptCompilerException;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
+import de.uni_potsdam.hpi.loddp.optimization.PlanOptimizerBuilder;
 import de.uni_potsdam.hpi.loddp.optimization.merging.LogicalPlanMerger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pig.impl.logicalLayer.FrontendException;
+import org.apache.pig.newplan.optimizer.PlanOptimizer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,15 +22,24 @@ import java.util.List;
 public class MergedScriptRunner extends AbstractScriptRunner {
 
     protected static final Log log = LogFactory.getLog(MergedScriptRunner.class);
-    private boolean mergeOptimizedPlans;
+    private boolean mergeOptimizedPlans = false;
+    private PlanOptimizerBuilder customOptimizer;
 
     public MergedScriptRunner(PigScriptRunner pigScriptRunner, String hdfsOutputDirectory) {
-        this(pigScriptRunner, hdfsOutputDirectory, false);
+        this(pigScriptRunner, hdfsOutputDirectory, null);
     }
 
-    public MergedScriptRunner(PigScriptRunner pigScriptRunner, String hdfsOutputDirectory, boolean mergeOptimizedPlans) {
+    public MergedScriptRunner(PigScriptRunner pigScriptRunner, String hdfsOutputDirectory, PlanOptimizerBuilder customOptimizer) {
         super(pigScriptRunner, hdfsOutputDirectory);
+        this.customOptimizer = customOptimizer;
+    }
+
+    public void setMergeOptimizedPlans(boolean mergeOptimizedPlans) {
         this.mergeOptimizedPlans = mergeOptimizedPlans;
+    }
+
+    public void setCustomOptimizer(PlanOptimizerBuilder customOptimizer) {
+        this.customOptimizer = customOptimizer;
     }
 
     /**
@@ -80,6 +91,17 @@ public class MergedScriptRunner extends AbstractScriptRunner {
                 log.error("Failed to merge script " + script.getScriptName(), e);
             }
         }
+
+        // Apply custom optimization rules if set.
+        if (customOptimizer != null) {
+            PlanOptimizer optimizer = customOptimizer.getInstance(merger.getMergedPlan());
+            try {
+                optimizer.optimize();
+            } catch (FrontendException e) {
+                throw new PigRunnerException("Failed to optimize merged plan.", e);
+            }
+        }
+
         return new ScriptCompiler(pigScriptRunner.getPigContext(), merger.getMergedPlan(), mergeOptimizedPlans);
     }
 }

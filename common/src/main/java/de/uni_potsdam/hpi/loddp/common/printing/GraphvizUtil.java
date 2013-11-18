@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.loddp.common;
+package de.uni_potsdam.hpi.loddp.common.printing;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -26,7 +26,7 @@ public class GraphvizUtil {
     public static void convertToImage(String imageType, File dotFile, File imageFile, boolean deleteDotFile) throws IOException {
         try {
             Runtime rt = Runtime.getRuntime();
-            String[] args = {"/usr/bin/dot",
+            String[] args = {"dot",
                 "-T" + imageType,
                 dotFile.getAbsolutePath(),
                 "-o", imageFile.getAbsolutePath()
