@@ -1,5 +1,6 @@
 package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
+import de.uni_potsdam.hpi.loddp.benchmark.execution.DefaultComparator;
 import de.uni_potsdam.hpi.loddp.benchmark.execution.InputFileSet;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.NotImplementedException;
@@ -37,16 +38,18 @@ public class ReportGenerator {
      * Parses the set of execution stats and stores them in grouped maps.
      */
     public void initialise() {
-        this.statsByNameAndSize = new TreeMap<String, Map<String, Map<Long, ScriptStats>>>();
-        this.statsBySizeAndName = new TreeMap<String, Map<Long, Map<String, ScriptStats>>>();
+        Comparator<String> stringComparator = DefaultComparator.getInstance();
+        Comparator<Long> longComparator = DefaultComparator.getInstance();
+        this.statsByNameAndSize = new TreeMap<String, Map<String, Map<Long, ScriptStats>>>(stringComparator);
+        this.statsBySizeAndName = new TreeMap<String, Map<Long, Map<String, ScriptStats>>>(stringComparator);
 
         for (ScriptStats stat : this.stats) {
             String dataset = stat.getDatasetIdentifier();
             if (!statsBySizeAndName.containsKey(dataset)) {
-                statsBySizeAndName.put(dataset, new TreeMap<Long, Map<String, ScriptStats>>());
+                statsBySizeAndName.put(dataset, new TreeMap<Long, Map<String, ScriptStats>>(longComparator));
             }
             if (!statsByNameAndSize.containsKey(dataset)) {
-                statsByNameAndSize.put(dataset, new TreeMap<String, Map<Long, ScriptStats>>());
+                statsByNameAndSize.put(dataset, new TreeMap<String, Map<Long, ScriptStats>>(stringComparator));
             }
 
             String name = stat.getScriptName();
@@ -54,7 +57,7 @@ public class ReportGenerator {
 
             Map<String, ScriptStats> statsByName;
             if (!statsBySizeAndName.get(dataset).containsKey(size)) {
-                statsByName = new HashMap<String, ScriptStats>();
+                statsByName = new TreeMap<String, ScriptStats>(stringComparator);
                 statsBySizeAndName.get(dataset).put(size, statsByName);
             } else {
                 statsByName = statsBySizeAndName.get(dataset).get(size);
@@ -64,7 +67,7 @@ public class ReportGenerator {
 
             Map<Long, ScriptStats> statsBySize;
             if (!statsByNameAndSize.get(dataset).containsKey(name)) {
-                statsBySize = new HashMap<Long, ScriptStats>();
+                statsBySize = new TreeMap<Long, ScriptStats>(longComparator);
                 statsByNameAndSize.get(dataset).put(name, statsBySize);
             } else {
                 statsBySize = statsByNameAndSize.get(dataset).get(name);
