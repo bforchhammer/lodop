@@ -26,12 +26,7 @@ public class TaskPhaseStatistics {
     public TaskPhaseStatistics(String label, TaskPhaseStatistics... phases) {
         this(label);
         for (TaskPhaseStatistics phase : phases) {
-            updateStartTime(phase.getStartTime());
-            updateFinishTime(phase.getFinishTime());
-            addHdfsBytesRead(phase.getHdfsBytesRead());
-            addHdfsBytesWritten(phase.getHdfsBytesWritten());
-            addLocalBytesRead(phase.getLocalBytesRead());
-            addLocalBytesWritten(phase.getLocalBytesWritten());
+            update(phase);
         }
     }
 
@@ -52,6 +47,20 @@ public class TaskPhaseStatistics {
             }
         }
         return phase;
+    }
+
+    /**
+     * Update with data from another phase statistics object.
+     *
+     * @param phase
+     */
+    public void update(TaskPhaseStatistics phase) {
+        updateStartTime(phase.getStartTime());
+        updateFinishTime(phase.getFinishTime());
+        addHdfsBytesRead(phase.getHdfsBytesRead());
+        addHdfsBytesWritten(phase.getHdfsBytesWritten());
+        addLocalBytesRead(phase.getLocalBytesRead());
+        addLocalBytesWritten(phase.getLocalBytesWritten());
     }
 
     public String getLabel() {
