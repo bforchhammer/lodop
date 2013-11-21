@@ -3,6 +3,7 @@ package de.uni_potsdam.hpi.loddp.benchmark.reporting;
 
 import org.apache.hadoop.mapred.JobClient;
 import org.apache.hadoop.mapred.JobID;
+import org.apache.hadoop.mapred.TaskReport;
 import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.newplan.*;
 import org.apache.pig.tools.pigstats.JobStats;
@@ -12,9 +13,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class JobStatsVisitor extends PlanVisitor {
-    Map<JobID, TaskPhaseStatistics> cleanupStatistics = new HashMap<JobID, TaskPhaseStatistics>();
-    Map<JobID, TaskPhaseStatistics> setupStatistics = new HashMap<JobID, TaskPhaseStatistics>();
     TaskPhaseStatistics totalMapReduceStatistics = new TaskPhaseStatistics("MapReduce total");
+    private Map<JobPhase, Map<JobID, TaskPhaseStatistics>> phaseStatistics = new HashMap<JobPhase, Map<JobID,
+        TaskPhaseStatistics>>();
     private JobClient jobClient;
     private int numberMapsTotal = 0;
     private int numberReducesTotal = 0;
@@ -81,42 +82,70 @@ public class JobStatsVisitor extends PlanVisitor {
         return totalMapReduceTime;
     }
 
-    protected TaskPhaseStatistics getSetupStatistics(JobID jobID) throws FrontendException {
-        if (!setupStatistics.containsKey(jobID)) {
-            try {
-                TaskPhaseStatistics statistics = TaskPhaseStatistics.getTaskPhaseStatistics("setup",
-                    jobClient.getSetupTaskReports(jobID));
-                totalMapReduceStatistics.update(statistics);
-                setupStatistics.put(jobID, statistics);
-            } catch (IOException e) {
-                throw new FrontendException("Failed to grab task reports for something.", e);
-            }
-        }
-        return setupStatistics.get(jobID);
-    }
-
     protected TaskPhaseStatistics getSetupStatistics(JobStats jobStats) throws FrontendException {
-        JobID jobId = JobID.forName(jobStats.getJobId());
-        return getSetupStatistics(jobId);
+        return getTaskPhaseStatistics(JobPhase.SETUP, jobStats);
     }
 
-    protected TaskPhaseStatistics getCleanupStatistics(JobID jobID) throws FrontendException {
-        if (!cleanupStatistics.containsKey(jobID)) {
-            try {
-                TaskPhaseStatistics statistics = TaskPhaseStatistics.getTaskPhaseStatistics("cleanup",
-                    jobClient.getCleanupTaskReports(jobID));
-                totalMapReduceStatistics.update(statistics);
-                cleanupStatistics.put(jobID, statistics);
-            } catch (IOException e) {
-                throw new FrontendException("Failed to grab task reports for something.", e);
-            }
-        }
-        return cleanupStatistics.get(jobID);
+    protected TaskPhaseStatistics getMapStatistics(JobStats jobStats) throws FrontendException {
+        return getTaskPhaseStatistics(JobPhase.MAP, jobStats);
+    }
+
+    protected TaskPhaseStatistics getReduceStatistics(JobStats jobStats) throws FrontendException {
+        return getTaskPhaseStatistics(JobPhase.REDUCE, jobStats);
     }
 
     protected TaskPhaseStatistics getCleanupStatistics(JobStats jobStats) throws FrontendException {
+        return getTaskPhaseStatistics(JobPhase.CLEANUP, jobStats);
+    }
+
+    protected TaskPhaseStatistics getTaskPhaseStatistics(JobPhase phase, JobStats jobStats) throws FrontendException {
         JobID jobId = JobID.forName(jobStats.getJobId());
-        return getCleanupStatistics(jobId);
+        return getTaskPhaseStatistics(phase, jobId);
+    }
+
+    protected TaskPhaseStatistics getTaskPhaseStatistics(JobPhase phase, JobID jobID) throws FrontendException {
+        if (!phaseStatistics.containsKey(phase)) {
+            phaseStatistics.put(phase, new HashMap<JobID, TaskPhaseStatistics>());
+        }
+        Map<JobID, TaskPhaseStatistics> phaseStats = phaseStatistics.get(phase);
+
+        if (!phaseStats.containsKey(jobID)) {
+            TaskPhaseStatistics statistics = null;
+            if (phase == JobPhase.ALL) {
+                TaskPhaseStatistics[] phases = new TaskPhaseStatistics[] {
+                    getTaskPhaseStatistics(JobPhase.SETUP, jobID),
+                    getTaskPhaseStatistics(JobPhase.MAP, jobID),
+                    getTaskPhaseStatistics(JobPhase.REDUCE, jobID),
+                    getTaskPhaseStatistics(JobPhase.CLEANUP, jobID)
+                };
+                statistics = new TaskPhaseStatistics(phase.name(), phases);
+            } else {
+                try {
+                    TaskReport[] reports = null;
+                    switch (phase) {
+                        case SETUP:
+                            reports = jobClient.getSetupTaskReports(jobID);
+                            break;
+                        case MAP:
+                            reports = jobClient.getMapTaskReports(jobID);
+                            break;
+                        case REDUCE:
+                            reports = jobClient.getReduceTaskReports(jobID);
+                            break;
+                        case CLEANUP:
+                            reports = jobClient.getCleanupTaskReports(jobID);
+                            break;
+                    }
+                    statistics = TaskPhaseStatistics.getTaskPhaseStatistics(phase.name(), reports);
+                } catch (IOException e) {
+                    throw new FrontendException("Failed to grab task reports for something.", e);
+                }
+            }
+
+            totalMapReduceStatistics.update(statistics);
+            phaseStats.put(jobID, statistics);
+        }
+        return phaseStats.get(jobID);
     }
 
     public void visit(JobStats js) throws FrontendException {
@@ -124,26 +153,29 @@ public class JobStatsVisitor extends PlanVisitor {
             numberMapsTotal += js.getNumberMaps();
             numberReducesTotal += js.getNumberReduces();
 
+            totalSetupTime += getSetupStatistics(js).getDuration();
             totalMapTime += js.getMaxMapTime();
             totalReduceTime += js.getMaxReduceTime();
-            totalSetupTime += getSetupStatistics(js).getDuration();
             totalCleanupTime += getCleanupStatistics(js).getDuration();
 
             // Calculcate pig time between operators.
             List<Operator> predecessors = plan.getPredecessors(js);
             if (predecessors != null) {
-                long pigEndTime = getSetupStatistics(js).getStartTime();
-                TaskPhaseStatistics predecessorStatistics = new TaskPhaseStatistics("predecessor cleanups");
+                long pigEndTime = getTaskPhaseStatistics(JobPhase.ALL, js).getStartTime();
+                long pigStartTime = Long.MIN_VALUE;
                 for (Operator predecessor : predecessors) {
                     JobStats pred = (JobStats) predecessor;
                     if (pred.isSuccessful()) {
-                        predecessorStatistics.update(getCleanupStatistics(pred));
+                        long prevFinishTime = getTaskPhaseStatistics(JobPhase.ALL, pred).getFinishTime();
+                        if (prevFinishTime > pigStartTime) pigStartTime = prevFinishTime;
                     }
                 }
-                totalPigTime += (pigEndTime - predecessorStatistics.getFinishTime());
+                totalPigTime += (pigEndTime - pigStartTime);
             }
         }
     }
+
+    enum JobPhase {ALL, SETUP, MAP, REDUCE, CLEANUP}
 
     protected static class JobGraphWalker extends DependencyOrderWalker {
         public JobGraphWalker(OperatorPlan plan) {
