@@ -28,15 +28,15 @@ public class ExecutionStats implements ScriptStats {
     private final PigStats pigStats;
     private final String scriptName;
     private final long inputSize;
+    private int iterationNumber = -1;
     private int numberMapsTotal = -1;
     private int numberReducesTotal = -1;
     private long totalPigTime = -1;
     private long totalMapReduceTime = -1;
+    private long totalSetupTime = -1L;
     private long totalMapTime = -1L;
     private long totalReduceTime = -1L;
-    private int iterationNumber = -1;
-    private long totalSetupTime = -1;
-    private long totalCleanupTime = -1;
+    private long totalCleanupTime = -1L;
 
     /**
      * Constructor.

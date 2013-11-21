@@ -115,8 +115,23 @@ public class Main {
             .hasArg(false)
             .create('m'));
         options.addOption(OptionBuilder
-            .withLongOpt("optimize")
-            .withDescription("Apply custom optimization rules, i.e., merge filters, projections etc.)")
+            .withLongOpt("optimize-identicals")
+            .withDescription("Apply 'MergeIdentical' optimization rule.")
+            .hasArg(false)
+            .create());
+        options.addOption(OptionBuilder
+            .withLongOpt("optimize-all")
+            .withDescription("Apply all custom optimization rules.")
+            .hasArg(false)
+            .create());
+        options.addOption(OptionBuilder
+            .withLongOpt("optimize-filters")
+            .withDescription("Apply 'CombineFilters' optimization rule.")
+            .hasArg(false)
+            .create());
+        options.addOption(OptionBuilder
+            .withLongOpt("optimize-aggregations")
+            .withDescription("Apply 'CombineForeach' optimization rule.")
             .hasArg(false)
             .create());
         options.addOption(OptionBuilder
@@ -177,8 +192,20 @@ public class Main {
 
         // Determine whether merged plans should be optimized via custom rules (combine identical operators,
         // foreach operators, filters, ...)
-        if (cmd.hasOption("optimize")) {
+        if (cmd.hasOption("optimize-all")) {
             builder.setOptimizeMerged(true);
+            builder.setOptimizerCombineFilters(true);
+            builder.setOptimizerCombineForeachs(true);
+            //builder.setOptimizerIgnoreProjections(true);
+        }
+        if (cmd.hasOption("optimize-identicals")) {
+            builder.setOptimizeMerged(true);
+        }
+        if (cmd.hasOption("optimize-filters")) {
+            builder.setOptimizerCombineFilters(true);
+        }
+        if (cmd.hasOption("optimize-aggregations")) {
+            builder.setOptimizerCombineForeachs(true);
         }
 
         // Determine output directory.

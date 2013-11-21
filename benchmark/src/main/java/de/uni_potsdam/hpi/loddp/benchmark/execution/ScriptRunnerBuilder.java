@@ -15,9 +15,9 @@ public class ScriptRunnerBuilder {
     private String explainOutputDirectory = "plans/";
     private boolean merged = false;
     private boolean optimizeMerged = false;
-    private boolean optimizerCombineForeachs = true;
-    private boolean optimizerCombineFilters = true;
-    private boolean optimizerIgnoreProjections = true;
+    private boolean optimizerCombineForeachs = false;
+    private boolean optimizerCombineFilters = false;
+    private boolean optimizerIgnoreProjections = false;
     private boolean replaceExistingResults = true;
     private boolean explainPlans = false;
 
