@@ -6,6 +6,7 @@ import de.uni_potsdam.hpi.loddp.benchmark.execution.ScriptRunnerBuilder;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ReportGenerator;
 import de.uni_potsdam.hpi.loddp.benchmark.reporting.ScriptStats;
 import de.uni_potsdam.hpi.loddp.common.HadoopLocation;
+import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
 import org.apache.commons.cli.*;
@@ -61,13 +62,14 @@ public class Main {
         options.addOption("h", "help", false, "Print this help message.");
         options.addOption(OptionBuilder
             .withLongOpt("job-name")
-            .withDescription("Name of the benchmark job, used for the name of the log directory.")
+            .withDescription("Name of the benchmark job. This is used for the name of the logging directory.")
             .hasArg()
             .withArgName("experiment-77")
             .create('n'));
         options.addOption(OptionBuilder
             .withLongOpt("scripts")
-            .withDescription("Space-separated list of pig script names to execute. Asterisk (*) can be used as a wildcard.")
+            .withDescription("Space-separated list of pig script file names to execute. Asterisk (*) can be used as a" +
+                " wildcard.")
             .hasArgs()
             .withArgName("number_of_instances")
             .create('s'));
@@ -79,29 +81,26 @@ public class Main {
             .create());
         options.addOption(OptionBuilder
             .withLongOpt("inverse")
-            .withDescription("Use --scripts as a blacklist, i.e., execute all scripts except the ones specified with --scripts.")
+            .withDescription("Use this option to turn --scripts into a blacklist, i.e., " +
+                "execute all scripts except the ones specified with the --scripts argument.")
             .hasArg(false)
             .create('i'));
         options.addOption(OptionBuilder
             .withLongOpt("cluster")
-            .withDescription("Use tenemhead2 cluster for computation.")
+            .withDescription("Execute scripts on the HPI cluster (tenemhead2).")
             .hasArg(false)
             .create('c'));
         options.addOption(OptionBuilder
             .withLongOpt("datasets")
-            .withDescription("Filename of the dataset to be loaded. Dataset will be loaded from hdfs://" +
-                HDFS_WORKING_DIRECTORY + HDFS_DATA_DIRECTORY + "/[dataset].nq.gz." +
-                "Multiple datasets can be specified and are executed in sequence.")
+            .withDescription("Space-separated list of file names for datasets to be loaded. Datasets need to " +
+                "manually be placed on HDFS. Relative file names are loaded from " +
+                (HDFS_WORKING_DIRECTORY.isEmpty() ? "~/" : HDFS_WORKING_DIRECTORY) + HDFS_DATA_DIRECTORY +
+                "/[dataset]. The file extension '.nq.gz' can be omitted.")
             .hasArgs().withArgName("dbpedia-1M")
             .create('d'));
-        /*options.addOption(OptionBuilder
-            .withLongOpt("limit")
-            .withDescription("Automatically limit all results sets to the given size.")
-            .hasArg().withArgName("1000")
-            .create('l'));*/
         options.addOption(OptionBuilder
             .withLongOpt("explain")
-            .withDescription("Dumps the logical, physical and mapreduce operator plans as DOT graphs for each script.")
+            .withDescription("Dumps the logical, physical and map-reduce operator plans as graphs for each script.")
             .hasArg(false)
             .create('e'));
         options.addOption(OptionBuilder
@@ -115,13 +114,13 @@ public class Main {
             .hasArg(false)
             .create('m'));
         options.addOption(OptionBuilder
-            .withLongOpt("optimize-identicals")
-            .withDescription("Apply 'MergeIdentical' optimization rule.")
+            .withLongOpt("optimize-all")
+            .withDescription("Apply all custom optimization rules.")
             .hasArg(false)
             .create());
         options.addOption(OptionBuilder
-            .withLongOpt("optimize-all")
-            .withDescription("Apply all custom optimization rules.")
+            .withLongOpt("optimize-identicals")
+            .withDescription("Apply 'MergeIdentical' optimization rule.")
             .hasArg(false)
             .create());
         options.addOption(OptionBuilder
@@ -141,7 +140,14 @@ public class Main {
             .create('o'));
         options.addOption(OptionBuilder
             .withLongOpt("no-output-override")
-            .withDescription("By default, any existing output is removed before execution.")
+            .withDescription("By default, any existing output is removed before execution. Specify this option to " +
+                "display an error message instead and skip the respective script.")
+            .hasArg(false)
+            .create());
+        options.addOption(OptionBuilder
+            .withLongOpt("disable-pig-mqo")
+            .withDescription("Disable Apache Pig's Multi-Query Optimization features. Can help with avoiding memory " +
+                "errors for large sets of scripts.")
             .hasArg(false)
             .create());
         return options;
@@ -174,6 +180,10 @@ public class Main {
         initLogging(cmd.getOptionValue("job-name"));
 
         ScriptRunnerBuilder builder = new ScriptRunnerBuilder();
+
+        if (cmd.hasOption("disable-pig-mqo")) {
+            PigContextUtil.disablePigMQO();
+        }
 
         // Determine hadoop location, by default use localhost.
         if (cmd.hasOption("cluster")) {

@@ -18,6 +18,7 @@ import java.util.Properties;
 public class PigContextUtil {
     protected static final Log log = LogFactory.getLog(PigContextUtil.class);
     private static boolean useCustomReducerEstimator = false;
+    private static boolean disablePigMQO = false;
 
     /**
      * Creates a new PigContext running in LOCAL mode.
@@ -55,6 +56,14 @@ public class PigContextUtil {
         if (useCustomReducerEstimator) {
             // Register custom reducer estimator.
             properties.setProperty("pig.exec.reducer.estimator", "de.uni_potsdam.hpi.loddp.common.optimization.OperationAwareReducerEstimator");
+        }
+
+        // Stop on failures right away, because repeated attempts would skew performance statistics and we would
+        // rather restart the complete job.
+        properties.setProperty("stop.on.failure", "true");
+
+        if (disablePigMQO) {
+            properties.setProperty("opt.multiquery", "false");
         }
 
         return properties;
@@ -135,4 +144,7 @@ public class PigContextUtil {
         useCustomReducerEstimator = true;
     }
 
+    public static void disablePigMQO() {
+        disablePigMQO = true;
+    }
 }
