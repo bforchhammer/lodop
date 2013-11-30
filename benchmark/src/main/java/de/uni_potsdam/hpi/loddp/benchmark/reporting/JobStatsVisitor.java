@@ -170,7 +170,9 @@ public class JobStatsVisitor extends PlanVisitor {
                         if (prevFinishTime > pigStartTime) pigStartTime = prevFinishTime;
                     }
                 }
-                totalPigTime += (pigEndTime - pigStartTime);
+                if (pigStartTime != Long.MIN_VALUE) {
+                    totalPigTime += (pigEndTime - pigStartTime);
+                }
             }
         }
     }

@@ -190,16 +190,20 @@ public class ExecutionStats implements ScriptStats {
                 // @todo this should consider the job DAG (not all jobs are sequential).
                 // @todo also, we should include stats for when something was started from PIG.
                 // @todo and best output the whole thing in a graph.
-                if (previousJobFinished != 0) {
+                /*if (previousJobFinished != 0) {
                     time_sb.append("Between jobs\t\t\t\t").append(total.getStartTime() - previousJobFinished).append("\n");
                 }
-                previousJobFinished = total.getFinishTime();
+                previousJobFinished = total.getFinishTime();*/
 
                 time_sb.append(jobId.toString()).append("\t");
                 for (TaskPhaseStatistics stat : allPhases) {
                     time_sb.append(stat.getDuration()).append("\t");
                 }
-                time_sb.append(total.getDuration()).append("\n");
+                time_sb.append(total.getDuration());
+                if (!js.isSuccessful()) {
+                    time_sb.append("\t").append("not successful");
+                }
+                time_sb.append("\n");
 
                 for (TaskPhaseStatistics stat : allPhases) {
                     bytes_sb.append(jobId.toString()).append("\t");
@@ -214,7 +218,11 @@ public class ExecutionStats implements ScriptStats {
                 bytes_sb.append(total.getHdfsBytesRead()).append("\t");
                 bytes_sb.append(total.getLocalBytesRead()).append("\t");
                 bytes_sb.append(total.getHdfsBytesWritten()).append("\t");
-                bytes_sb.append(total.getLocalBytesWritten()).append("\n");
+                bytes_sb.append(total.getLocalBytesWritten());
+                if (!js.isSuccessful()) {
+                    bytes_sb.append("\t").append("not successful");
+                }
+                bytes_sb.append("\n");
             } catch (IOException e) {
                 log.error("Failed to grab task reports for something.", e);
                 time_sb.append(e.getMessage());

@@ -51,7 +51,7 @@ public class CombineForeach extends MergingRule {
                 if (predecessorsCount != 1) {
                     // If plans are constructed properly then this should never happen!
                     throw new FrontendException("Found foreach with " + predecessorsCount + " predecessors instead of" +
-                        " just one.");
+                        " just one: " + foreach.getAlias());
                 }
 
                 // Check that we are not trying to merge the same siblings multiple times.
@@ -67,7 +67,7 @@ public class CombineForeach extends MergingRule {
                     Operator op = it.next();
                     if (!(op instanceof LOGenerate || op instanceof LOInnerLoad)) {
                         log.debug("Skipped combination of LOForEach: inner plan contains more than just LOInnerLoad " +
-                            "and LOGenerate.");
+                            "and LOGenerate: " + foreach.getAlias());
                         operators.remove();
                         continue operatorLoop;
                     }
@@ -77,7 +77,8 @@ public class CombineForeach extends MergingRule {
                 LOGenerate generate = (LOGenerate) foreach.getInnerPlan().getSinks().get(0);
                 for (boolean flatten : generate.getFlattenFlags()) {
                     if (flatten) {
-                        log.debug("Skipped combination of LOForEach: LOGenerate contains FLATTEN operators.");
+                        log.debug("Skipped combination of LOForEach: LOGenerate contains FLATTEN operators: " +
+                            foreach.getAlias());
                         operators.remove();
                         continue operatorLoop;
                     }
