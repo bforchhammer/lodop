@@ -66,7 +66,7 @@ public class MergedScriptRunner extends AbstractScriptRunner {
             } /*catch (ScriptCompilerException e) {
                 log.error("Failed to merge scripts.", e);
             } */ catch (PigRunnerException e) {
-                log.error("Failed to merge scripts.", e);
+                log.error("Failed to execute merged scripts.", e);
             }
         }
 
