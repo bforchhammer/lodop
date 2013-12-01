@@ -60,7 +60,7 @@ public class PigContextUtil {
 
         // Stop on failures right away, because repeated attempts would skew performance statistics and we would
         // rather restart the complete job.
-        properties.setProperty("stop.on.failure", "true");
+        //properties.setProperty("stop.on.failure", "true");
 
         if (disablePigMQO) {
             properties.setProperty("opt.multiquery", "false");

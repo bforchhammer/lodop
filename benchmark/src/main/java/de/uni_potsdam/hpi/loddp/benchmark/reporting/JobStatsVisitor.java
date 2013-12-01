@@ -82,22 +82,6 @@ public class JobStatsVisitor extends PlanVisitor {
         return totalMapReduceTime;
     }
 
-    protected TaskPhaseStatistics getSetupStatistics(JobStats jobStats) throws FrontendException {
-        return getTaskPhaseStatistics(JobPhase.SETUP, jobStats);
-    }
-
-    protected TaskPhaseStatistics getMapStatistics(JobStats jobStats) throws FrontendException {
-        return getTaskPhaseStatistics(JobPhase.MAP, jobStats);
-    }
-
-    protected TaskPhaseStatistics getReduceStatistics(JobStats jobStats) throws FrontendException {
-        return getTaskPhaseStatistics(JobPhase.REDUCE, jobStats);
-    }
-
-    protected TaskPhaseStatistics getCleanupStatistics(JobStats jobStats) throws FrontendException {
-        return getTaskPhaseStatistics(JobPhase.CLEANUP, jobStats);
-    }
-
     protected TaskPhaseStatistics getTaskPhaseStatistics(JobPhase phase, JobStats jobStats) throws FrontendException {
         JobID jobId = JobID.forName(jobStats.getJobId());
         return getTaskPhaseStatistics(phase, jobId);
@@ -137,12 +121,12 @@ public class JobStatsVisitor extends PlanVisitor {
                             break;
                     }
                     statistics = TaskPhaseStatistics.getTaskPhaseStatistics(phase.name(), reports);
+                    totalMapReduceStatistics.update(statistics);
                 } catch (IOException e) {
                     throw new FrontendException("Failed to grab task reports for something.", e);
                 }
             }
 
-            totalMapReduceStatistics.update(statistics);
             phaseStats.put(jobID, statistics);
         }
         return phaseStats.get(jobID);
@@ -150,13 +134,17 @@ public class JobStatsVisitor extends PlanVisitor {
 
     public void visit(JobStats js) throws FrontendException {
         if (js.isSuccessful()) {
+            // Gather all phase statistics for this JObStats object to make sure that total
+            // (totalMapReduceStatistics variable) is completed.
+            getTaskPhaseStatistics(JobPhase.ALL, js);
+
             numberMapsTotal += js.getNumberMaps();
             numberReducesTotal += js.getNumberReduces();
 
-            totalSetupTime += getSetupStatistics(js).getDuration();
+            totalSetupTime += getTaskPhaseStatistics(JobPhase.SETUP, js).getDuration();
             totalMapTime += js.getMaxMapTime();
             totalReduceTime += js.getMaxReduceTime();
-            totalCleanupTime += getCleanupStatistics(js).getDuration();
+            totalCleanupTime += getTaskPhaseStatistics(JobPhase.CLEANUP, js).getDuration();
 
             // Calculcate pig time between operators.
             List<Operator> predecessors = plan.getPredecessors(js);

@@ -172,7 +172,6 @@ public class ExecutionStats implements ScriptStats {
 
         // map: map, combine?
         // reduce: shuffle, sort, reduce?
-        long previousJobFinished = 0;
         for (JobStats js : jobs) {
             JobID jobId = JobID.forName(js.getJobId());
             try {
@@ -186,14 +185,6 @@ public class ExecutionStats implements ScriptStats {
                     pigStats.getJobClient().getCleanupTaskReports(jobId));
                 TaskPhaseStatistics[] allPhases = new TaskPhaseStatistics[] {setup, maps, reduces, cleanups};
                 TaskPhaseStatistics total = new TaskPhaseStatistics("total", allPhases);
-
-                // @todo this should consider the job DAG (not all jobs are sequential).
-                // @todo also, we should include stats for when something was started from PIG.
-                // @todo and best output the whole thing in a graph.
-                /*if (previousJobFinished != 0) {
-                    time_sb.append("Between jobs\t\t\t\t").append(total.getStartTime() - previousJobFinished).append("\n");
-                }
-                previousJobFinished = total.getFinishTime();*/
 
                 time_sb.append(jobId.toString()).append("\t");
                 for (TaskPhaseStatistics stat : allPhases) {
