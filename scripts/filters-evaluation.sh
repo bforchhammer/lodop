@@ -9,14 +9,14 @@ NAME="filters-evaluation-ex1-1M-r3"
 
 # with pig MQ
 $RESTART
-./gradlew :benchmark:run -PappArgs="-c -e -m -d $DATASETS -r 3 -n $NAME-normal -s $SCRIPTS -o $OUTPUT"
+./gradlew :benchmark:run -PappArgs="-c -m -d $DATASETS -r 3 -n $NAME-normal -s $SCRIPTS -o $OUTPUT"
 
 $RESTART
-./gradlew :benchmark:run -PappArgs="-c -e -m -d $DATASETS -r 3 -n $NAME-optimized -s $SCRIPTS -o $OUTPUT --optimize-filters"
+./gradlew :benchmark:run -PappArgs="-c -m -d $DATASETS -r 3 -n $NAME-optimized -s $SCRIPTS -o $OUTPUT --optimize-filters"
 
 # without pig MQ
 $RESTART
-./gradlew :benchmark:run -PappArgs="-c -e -m -d $DATASETS -r 3 -n $NAME-normal-nopigmq -s $SCRIPTS -o $OUTPUT --disable-pig-mqo"
+./gradlew :benchmark:run -PappArgs="-c -m -d $DATASETS -r 3 -n $NAME-normal-nopigmq -s $SCRIPTS -o $OUTPUT --disable-pig-mqo"
 
 $RESTART
-./gradlew :benchmark:run -PappArgs="-c -e -m -d $DATASETS -r 3 -n $NAME-optimized-nopigmq -s $SCRIPTS -o $OUTPUT --optimize-filters --disable-pig-mqo"
+./gradlew :benchmark:run -PappArgs="-c -m -d $DATASETS -r 3 -n $NAME-optimized-nopigmq -s $SCRIPTS -o $OUTPUT --optimize-filters --disable-pig-mqo"
