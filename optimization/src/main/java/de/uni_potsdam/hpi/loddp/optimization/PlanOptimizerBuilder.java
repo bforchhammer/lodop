@@ -1,6 +1,9 @@
 package de.uni_potsdam.hpi.loddp.optimization;
 
-import de.uni_potsdam.hpi.loddp.optimization.rules.*;
+import de.uni_potsdam.hpi.loddp.optimization.rules.CombineFilter;
+import de.uni_potsdam.hpi.loddp.optimization.rules.CombineForeach;
+import de.uni_potsdam.hpi.loddp.optimization.rules.MergeIdenticalOperators;
+import de.uni_potsdam.hpi.loddp.optimization.rules.RemoveRedundantProjections;
 import org.apache.pig.newplan.logical.relational.LogicalPlan;
 import org.apache.pig.newplan.optimizer.PlanOptimizer;
 
@@ -9,9 +12,19 @@ import org.apache.pig.newplan.optimizer.PlanOptimizer;
  */
 public class PlanOptimizerBuilder {
 
-    private boolean combineFilters = true;
-    private boolean combineForeachs = true;
-    private boolean ignoreProjections = true;
+    private boolean combineFilters;
+    private boolean combineForeachs;
+    private boolean ignoreProjections;
+
+    public PlanOptimizerBuilder() {
+        this(true);
+    }
+
+    public PlanOptimizerBuilder(boolean defaultValue) {
+        combineFilters = defaultValue;
+        combineForeachs = defaultValue;
+        ignoreProjections = defaultValue;
+    }
 
     /**
      * Returns a custom plan optimizer instance which simply applies ALL available rules.

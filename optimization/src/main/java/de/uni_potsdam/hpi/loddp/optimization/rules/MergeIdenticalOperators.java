@@ -71,9 +71,8 @@ public class MergeIdenticalOperators extends MergingRule {
 
                 OperatorPlanUtil.replace(pair.getKey(), pair.getValue());
             }
-            log.info("Merged identical operators: replaced " + replacements.size() + " operator(s) with " + changes
-                .size() + " identical one(s). Plan size reduced from " + originalSize + " to " + currentPlan.size() +
-                ".");
+            log.info("Merged identical operators: replaced " + replacements.size() + " operator(s) with identical " +
+                "one(s). Plan size reduced from " + originalSize + " to " + currentPlan.size() + ".");
             replacements.clear();
         }
     }

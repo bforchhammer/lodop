@@ -5,6 +5,7 @@ import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.printing.GraphvizDumper;
+import de.uni_potsdam.hpi.loddp.common.printing.LOFilterPrinter;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScriptFactory;
 import de.uni_potsdam.hpi.loddp.optimization.PlanOptimizerBuilder;
@@ -18,7 +19,6 @@ import org.apache.pig.newplan.logical.relational.LogicalPlan;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Main {
     private static final Log log = LogFactory.getLog(Main.class);
@@ -58,6 +58,26 @@ public class Main {
             .withDescription("Analyse common pre-processing.")
             .hasArg(false)
             .create('p'));
+        options.addOption(OptionBuilder
+            .withLongOpt("filter-dumper")
+            .withDescription("Use a special graph output printer that dumps the expressions of filter operations.")
+            .hasArg(false)
+            .create());
+        options.addOption(OptionBuilder
+            .withLongOpt("optimize-all")
+            .withDescription("Apply all custom optimization rules.")
+            .hasArg(false)
+            .create());
+        options.addOption(OptionBuilder
+            .withLongOpt("optimize-filters")
+            .withDescription("Apply 'CombineFilters' optimization rule.")
+            .hasArg(false)
+            .create());
+        options.addOption(OptionBuilder
+            .withLongOpt("optimize-aggregations")
+            .withDescription("Apply 'CombineForeach' optimization rule.")
+            .hasArg(false)
+            .create());
         return options;
     }
 
@@ -125,14 +145,22 @@ public class Main {
             mergedPlan = merger.getMergedPlan();
 
             GraphvizDumper dumper = new GraphvizDumper("dot/");
+            if (cmd.hasOption("filter-dumper")) {
+                dumper.setPlanDumper(LogicalPlan.class, LOFilterPrinter.class);
+            }
+
             dumper.setFilenamePrefix("all-merged-");
             dumper.print(mergedPlan);
 
             // Apply our optimization rules to merged plan.
-            PlanOptimizerBuilder optimizer = new PlanOptimizerBuilder();
-            optimizer.setCombineFilters(false);
-            optimizer.setCombineForeachs(true);
-            optimizer.setIgnoreProjections(false);
+            PlanOptimizerBuilder optimizer = new PlanOptimizerBuilder(false);
+            if (cmd.hasOption("optimize-all") || cmd.hasOption("optimize-filters")) {
+                optimizer.setCombineFilters(true);
+            }
+            if (cmd.hasOption("optimize-all") || cmd.hasOption("optimize-aggregations")) {
+                optimizer.setCombineForeachs(true);
+            }
+
             optimizer.getInstance(mergedPlan).optimize();
             dumper.print(mergedPlan, "-optimized");
 
