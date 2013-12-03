@@ -3,9 +3,9 @@ cd "$(dirname "$0")/.."
 RESTART="$(dirname "$0")/scripts/cluster-restart-mapred.sh"
 
 SCRIPTS="number_of_resources_by_datatype property_value_ranges_numeric property_value_ranges_temporal"
-DATASETS="dbpedia-1M freebase-1M species-1M wdc-rdfa-1M"
+DATASETS="dbpedia-10M freebase-10M species-1M wdc-rdfa-10M"
 OUTPUT="filters-evaluation"
-NAME="filters-evaluation-ex1-1M-r3"
+NAME="filters-evaluation-ex1-r3"
 
 # with pig MQ
 $RESTART
