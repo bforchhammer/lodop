@@ -2,4 +2,4 @@
 cd "$(dirname "$0")"
 
 ./filters-evaluation.sh
-./agregations-evaluation.sh
+./aggregations-evaluation.sh
