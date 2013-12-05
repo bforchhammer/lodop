@@ -3,6 +3,7 @@ package de.uni_potsdam.hpi.loddp.analyser;
 import de.uni_potsdam.hpi.loddp.analyser.matching.LogicalPlanMatcher;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
+import de.uni_potsdam.hpi.loddp.common.OperatorCounter;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
 import de.uni_potsdam.hpi.loddp.common.printing.GraphvizDumper;
 import de.uni_potsdam.hpi.loddp.common.printing.LOFilterPrinter;
@@ -78,7 +79,36 @@ public class Main {
             .withDescription("Apply 'CombineForeach' optimization rule.")
             .hasArg(false)
             .create());
+        options.addOption(OptionBuilder
+            .withLongOpt("count-operators")
+            .withDescription("Count used operators in plans.")
+            .hasArg(false)
+            .create());
         return options;
+    }
+
+    protected static void countOperators(List<AnalysedScript> scripts) {
+        OperatorCounter counter = new OperatorCounter("logical unoptimized");
+        OperatorCounter optimizedCounter = new OperatorCounter("logical optimized");
+        OperatorCounter physicalCounter = new OperatorCounter("physical");
+        OperatorCounter mrCounter = new OperatorCounter("map-reduce");
+
+        for (AnalysedScript script : scripts) {
+            counter.count(script.getUnoptimizedLogicalPlan());
+            optimizedCounter.count(script.getLogicalPlan());
+            physicalCounter.count(script.getPhysicalPlan());
+            mrCounter.count(script.getMapReducePlan());
+        }
+        counter.dump();
+        optimizedCounter.dump();
+        physicalCounter.dump();
+        mrCounter.dump();
+    }
+
+    protected static void countOperators(String name, LogicalPlan plan) {
+        OperatorCounter counter = new OperatorCounter(name);
+        counter.count(plan);
+        counter.dump();
     }
 
     public static void main(String[] args) throws IOException {
@@ -129,6 +159,10 @@ public class Main {
         // Analyse scripts.
         List<AnalysedScript> analysedScripts = AnalysedScriptFactory.analyse(scripts, dumpPlansAsGraphs, pigContext);
 
+        if (cmd.hasOption("count-operators")) {
+            countOperators(analysedScripts);
+        }
+
         // Compare logical plans and try to find common pre-processing steps.
         if (findCommonPreprocessing && analysedScripts.size() > 1) {
             LogicalPlanMatcher.findCommonPreprocessing(analysedScripts, false);
@@ -151,6 +185,7 @@ public class Main {
 
             dumper.setFilenamePrefix("all-merged-");
             dumper.print(mergedPlan);
+            countOperators("merged", mergedPlan);
 
             // Apply our optimization rules to merged plan.
             PlanOptimizerBuilder optimizer = new PlanOptimizerBuilder(false);
@@ -163,11 +198,13 @@ public class Main {
 
             optimizer.getInstance(mergedPlan).optimize();
             dumper.print(mergedPlan, "-optimized");
+            countOperators("merged-optimized", mergedPlan);
 
             // Apply Pig's default optimization rules to merged plan.
             new org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer(mergedPlan, 100,
                 new HashSet<String>()).optimize();
             dumper.print(mergedPlan, "-optimized-fully");
+            countOperators("merged-optimized-fully", mergedPlan);
         }
     }
 }
