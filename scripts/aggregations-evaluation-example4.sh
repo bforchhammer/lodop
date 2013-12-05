@@ -20,4 +20,3 @@ $RESTART
 
 $RESTART
 ./gradlew :benchmark:run -PappArgs="-c -m -d $DATASETS -n $NAME-optimized-nopigmq -s $SCRIPTS -o $OUTPUT --optimize-aggregations --disable-pig-mqo"
-
