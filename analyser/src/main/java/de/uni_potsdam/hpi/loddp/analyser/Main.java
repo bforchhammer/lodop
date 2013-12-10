@@ -5,6 +5,8 @@ import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScript;
 import de.uni_potsdam.hpi.loddp.analyser.script.AnalysedScriptFactory;
 import de.uni_potsdam.hpi.loddp.common.OperatorCounter;
 import de.uni_potsdam.hpi.loddp.common.PigContextUtil;
+import de.uni_potsdam.hpi.loddp.common.execution.ScriptCompiler;
+import de.uni_potsdam.hpi.loddp.common.execution.ScriptCompilerException;
 import de.uni_potsdam.hpi.loddp.common.printing.GraphvizDumper;
 import de.uni_potsdam.hpi.loddp.common.printing.LOFilterPrinter;
 import de.uni_potsdam.hpi.loddp.common.scripts.PigScript;
@@ -14,6 +16,7 @@ import de.uni_potsdam.hpi.loddp.optimization.merging.LogicalPlanMerger;
 import org.apache.commons.cli.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.plans.MROperPlan;
 import org.apache.pig.impl.PigContext;
 import org.apache.pig.newplan.logical.relational.LogicalPlan;
 
@@ -111,6 +114,12 @@ public class Main {
         counter.dump();
     }
 
+    protected static void countOperators(String name, MROperPlan plan) {
+        OperatorCounter counter = new OperatorCounter(name);
+        counter.count(plan);
+        counter.dump();
+    }
+
     public static void main(String[] args) throws IOException {
         Options options = getCliOptions();
         CommandLineParser parser = new BasicParser();
@@ -187,6 +196,8 @@ public class Main {
             dumper.print(mergedPlan);
             countOperators("merged", mergedPlan);
 
+            //countMROperators(pigContext, mergedPlan);
+
             // Apply our optimization rules to merged plan.
             PlanOptimizerBuilder optimizer = new PlanOptimizerBuilder(false);
             if (cmd.hasOption("optimize-all") || cmd.hasOption("optimize-filters")) {
@@ -200,11 +211,24 @@ public class Main {
             dumper.print(mergedPlan, "-optimized");
             countOperators("merged-optimized", mergedPlan);
 
+            //countMROperators(pigContext, mergedPlan);
+
             // Apply Pig's default optimization rules to merged plan.
             new org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer(mergedPlan, 100,
                 new HashSet<String>()).optimize();
             dumper.print(mergedPlan, "-optimized-fully");
             countOperators("merged-optimized-fully", mergedPlan);
         }
+    }
+
+    private static void countMROperators(PigContext pigContext, LogicalPlan mergedPlan) {
+        // count MR jobs
+        ScriptCompiler mergedCompiler = new ScriptCompiler(pigContext, mergedPlan, false);
+        try {
+            countOperators("Merged MR jobs", mergedCompiler.getMapReducePlan());
+        } catch (ScriptCompilerException e) {
+            log.error("Meh", e);
+        }
+
     }
 }
