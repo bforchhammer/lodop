@@ -5,3 +5,4 @@ cd "$(dirname "$0")"
 ./aggregations-evaluation-example2.sh
 ./aggregations-evaluation-example3.sh
 ./aggregations-evaluation-example4.sh
+./aggregations-evaluation-example5.sh
