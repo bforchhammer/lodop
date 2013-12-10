@@ -95,6 +95,7 @@ public class CombineFilter extends MergingRule {
                 if (filter.isEqual(combinedFilter)) {
                     OperatorPlanUtil.replace(filter, combinedFilter);
                     combinedFilter.setAlias(filter.getAlias());
+                    log.info("Combined filter equals " + filter.getAlias());
                 } else {
                     OperatorPlanUtil.insertBetween(filter.getInput(logicalPlan), combinedFilter, filter);
                 }
